@@ -8,9 +8,9 @@ import { getAuthAdminTokens, resetSessionForShopUsers } from 'app/configs/utils/
 import { getAdminAccessToken,  } from '../utils/opsUtils'
 import { toast } from 'react-toastify'
 
-const API_BASE_URL = `http://localhost:8000`
+// const API_BASE_URL = `http://localhost:8000`
 
-// const API_BASE_URL = 'https://coral-app-n8ox9.ondigitalocean.app'
+const API_BASE_URL = 'https://coral-app-n8ox9.ondigitalocean.app'
 
 // const API_BASE_URL2 = 'https://coral-app-n8ox9.ondigitalocean.app'
 

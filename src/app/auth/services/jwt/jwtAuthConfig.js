@@ -1,10 +1,6 @@
-const baseUrl = 'http://localhost:8000'
-// const baseUrl = 'https://sea-turtle-app-c6p3o.ondigitalocean.app'  //Chariz Homes
+// const baseUrl = 'http://localhost:8000'
 
-// import { adminSignIn } from "app/configs/data/client/clientToApiRoutes";
-
-// const baseUrl = 'https://coral-app-n8ox9.ondigitalocean.app' //Africanshops
-
+const baseUrl = 'https://coral-app-n8ox9.ondigitalocean.app' //Africanshops
 
 
 

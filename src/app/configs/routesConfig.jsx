@@ -36,7 +36,7 @@ import ShopsPosAppConfig from '../main/vendors-shop/pos/ShopsPosAppConfig';
 const routeConfigs = [
 	// SignOutConfig,
 	SignInConfig,
-	SignUpConfig,
+	// SignUpConfig,
 	SignAcceptInviteConfig,
 	forgotPasswordConfig,
 	resetPasswordConfig,
