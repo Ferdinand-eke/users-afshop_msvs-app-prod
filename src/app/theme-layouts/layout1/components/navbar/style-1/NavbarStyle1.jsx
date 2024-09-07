@@ -52,17 +52,20 @@ function NavbarStyle1() {
 	return (
 		<>
 			<Hidden lgDown>
-				<StyledNavBar
+			{user?.role?.toString() === 'merchant' && <StyledNavBar
 					className="sticky top-0 z-20 h-screen flex-auto shrink-0 flex-col overflow-hidden shadow"
 					open={navbar.open}
 					position={config.navbar.position}
 				>
 					<NavbarStyle1Content />
-				</StyledNavBar>
+					{/* {user?.role?.toString() === 'merchant' && <NavbarStyle1Content />} */}
+				</StyledNavBar>}
+				
 			</Hidden>
 
 			<Hidden lgUp>
-				<StyledNavBarMobile
+
+				{user?.role?.toString() === 'merchant' && <StyledNavBarMobile
 					classes={{
 						paper: 'flex-col flex-auto h-full'
 					}}
@@ -76,11 +79,12 @@ function NavbarStyle1() {
 						keepMounted: true // Better open performance on mobile.
 					}}
 				>
+					<NavbarStyle1Content />
 					
-					
-					{user?.role?.toString() === 'merchant' && <NavbarStyle1Content />}
+					{/* {user?.role?.toString() === 'merchant' && <NavbarStyle1Content />} */}
 
-				</StyledNavBarMobile>
+				</StyledNavBarMobile>}
+				
 			</Hidden>
 		</>
 	);
