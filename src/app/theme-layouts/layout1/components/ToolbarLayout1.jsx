@@ -16,6 +16,7 @@ import NavigationShortcuts from '../../shared-components/navigation/NavigationSh
 import NavigationSearch from '../../shared-components/navigation/NavigationSearch';
 import UserMenu from '../../shared-components/UserMenu';
 import QuickPanelToggleButton from '../../shared-components/quickPanel/QuickPanelToggleButton';
+import LinkPanelButton from './shared/LinkPanelButton';
 
 /**
  * The toolbar layout 1.
@@ -66,6 +67,9 @@ function ToolbarLayout1(props) {
 					</div>
 
 					<div className="flex h-full items-center overflow-x-auto px-8">
+					{/* <LinkPanelButton /> */}
+					{/* <LinkPanelButton /> */}
+					<LinkPanelButton />
 						<LanguageSwitcher />
 						{/* <AdjustFontSize /> */}
 						{/* <FullScreenToggle /> */}

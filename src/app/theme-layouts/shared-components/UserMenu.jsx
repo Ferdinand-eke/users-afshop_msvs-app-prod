@@ -64,15 +64,6 @@ function UserMenu() {
 						{/* 100000000000 */}
 						{/* NGN {shopAccount?.data?.accountBalance} */}
 					</Typography>
-
-					{/* <Typography
-			className={clsx(
-				'inline text-12 font-semibold py-4 px-12 rounded-full truncate',
-				'bg-green text-white'
-			)}
-		>
-			100000000000
-		</Typography> */}
 				</div>
 
 				{user.data.photoURL ? (

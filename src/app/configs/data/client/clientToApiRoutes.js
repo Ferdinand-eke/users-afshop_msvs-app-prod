@@ -142,6 +142,13 @@ export const authShopResetPasword = (formData) =>
  * ==========================================================
  */
 
+/***Post categories */
+export const getPostcats = () => Api().get("/postcats"); //done
+//Posts
+export const getBlogPosts = () => Api().get('/posts');
+export const getBlogPostsById = (slug) =>
+  Api().get(`/posts/by/${slug}`);
+
 //Tradehubs
 export const getTradehubs = () => Api().get('/tradehubs');
 export const getTradehubById = (id) =>
