@@ -11,6 +11,7 @@ import config from "./jwtAuthConfig";
 import { useSnackbar } from "notistack";
 import Cookie from "js-cookie";
 import { toast } from "react-toastify";
+import { useNavigate } from "react-router";
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -83,9 +84,13 @@ function JwtAuthProvider(props) {
    */
   const setUserCredentialsStorage = useCallback((userCredentials) => {
     console.log("UserCredentials TO-SET", userCredentials);
-    // Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
+	const stringifiedUser = JSON.stringify({ userCredentials })
 
-	localStorage.setItem(config.adminCredentials, JSON.stringify({ userCredentials }));
+    // Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
+	
+
+	// localStorage.setItem(config.adminCredentials, JSON.stringify({ userCredentials }));
+	localStorage.setItem(config.adminCredentials, stringifiedUser);
   }, []);
 
   /**Get User credentials */
@@ -104,9 +109,10 @@ function JwtAuthProvider(props) {
 	 const { userCredentials } = localStorage.getItem("jwt_auth_credentials")
       ? JSON.parse(localStorage.getItem("jwt_auth_credentials"))
       : "";
-    if (userCredentials) {
-      return userCredentials;
-    }
+    // if (userCredentials) {
+    //   return userCredentials;
+    // }
+	return userCredentials;
 
 
   }, []);
@@ -136,6 +142,7 @@ function JwtAuthProvider(props) {
   /**
    * Handle sign-in success
    */
+//   const navigate = useNavigate()
   const handleSignInSuccess = useCallback((userData, accessToken) => {
     setSession(accessToken);
     // setIsAuthenticated(true);
@@ -144,6 +151,7 @@ function JwtAuthProvider(props) {
     // setUser(userData);
     setUserCredentialsStorage(userData);
     window.location.reload();
+	// navigate('/shop-dashboard')
   }, []); //here is where token is stored
   /**
    * Handle sign-up success

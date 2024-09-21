@@ -7,6 +7,7 @@ import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import MainSidebar from './sidebars/main/MainSidebar';
 import ContactSidebar from './sidebars/contact/ContactSidebar';
 import UserSidebar from './sidebars/user/UserSidebar';
+import VendorModernReversedComingSoonPage from '../vendors-shop/vendorcomingsoon/VendorModernReversedComingSoonPage';
 
 const drawerWidth = 400;
 export const ChatAppContext = createContext({
@@ -63,6 +64,9 @@ function MessengerApp() {
 		}),
 		[setMainSidebarOpen, setContactSidebarOpen, setUserSidebarOpen]
 	);
+
+	return <VendorModernReversedComingSoonPage />
+
 	return (
 		<ChatAppContext.Provider value={ChatAppContextData}>
 			<Root

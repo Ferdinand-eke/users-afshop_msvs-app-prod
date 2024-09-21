@@ -23,7 +23,7 @@ function PosTable() {
     const [qty, setQty] = useState(1);
   
     const addItemToInvoice = (cartItem) => {
-        console.log("AddClicked", cartItem)
+        // console.log("AddClicked", cartItem)
 
         // return
       addItem(

@@ -11,6 +11,7 @@ import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import AboutTab from './tabs/about/AboutTab';
 import PhotosVideosTab from './tabs/photos-videos/PhotosVideosTab';
 import TimelineTab from './tabs/timeline/TimelineTab';
+import VendorModernReversedComingSoonPage from '../vendorcomingsoon/VendorModernReversedComingSoonPage';
 
 const Root = styled(FusePageSimple)(({ theme }) => ({
 	'& .FusePageSimple-header': {
@@ -34,6 +35,8 @@ function ProfileApp() {
 	function handleTabChange(event, value) {
 		setSelectedTab(value);
 	}
+
+	return <VendorModernReversedComingSoonPage />
 
 	return (
 		<Root

@@ -11,6 +11,7 @@ import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useAppSelector } from 'app/store/hooks';
 import FaqList from '../faqs/FaqList';
 import { useGetHelpCenterMostlyFaqsQuery } from '../HelpCenterApi';
+import VendorModernReversedComingSoonPage from '../../vendorcomingsoon/VendorModernReversedComingSoonPage';
 
 /**
  * The help center home.
@@ -18,6 +19,8 @@ import { useGetHelpCenterMostlyFaqsQuery } from '../HelpCenterApi';
 function HelpCenterHome() {
 	const mainThemeDark = useAppSelector(selectMainThemeDark);
 	const { data: faqsMost } = useGetHelpCenterMostlyFaqsQuery();
+
+	return <VendorModernReversedComingSoonPage />
 	return (
 		<div className="flex flex-col flex-auto min-w-0">
 			<ThemeProvider theme={mainThemeDark}>
