@@ -17,6 +17,7 @@ const ShopsPosAppConfig = {
 			config: {}
 		}
 	},
+	
 	routes: [
 		{
 			path: 'africanshops/shops',

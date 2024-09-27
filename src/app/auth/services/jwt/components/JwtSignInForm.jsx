@@ -45,15 +45,7 @@ function JwtSignInForm() {
     resolver: zodResolver(schema),
   });
   const { isValid, dirtyFields, errors } = formState;
-  // useEffect(() => {
-  // 	setValue('email', 'admin@fusetheme.com', { shouldDirty: true, shouldValidate: true });
-  // 	setValue('password', 'admin', { shouldDirty: true, shouldValidate: true });
-  // }, [setValue]);
-
-  // useEffect(() => {
-  // 	setValue('email', defaultValues.email, { shouldDirty: true, shouldValidate: true });
-  // 	setValue('password', defaultValues.password, { shouldDirty: true, shouldValidate: true });
-  // }, [setValue]);
+ 
 
   function onSubmit(formData) {
     console.log("Login-Values", formData);

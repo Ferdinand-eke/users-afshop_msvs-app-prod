@@ -12,6 +12,8 @@ import { useSnackbar } from "notistack";
 import Cookie from "js-cookie";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+// import { useAdminLogin } from "app/configs/data/server-calls/merchant-auth";
+import { useShopAdminLogin } from "app/configs/data/server-calls/auth/admin-auth";
 
 const defaultAuthContext = {
   isAuthenticated: false,
@@ -25,7 +27,9 @@ const defaultAuthContext = {
   setIsLoading: () => {},
   authStatus: "configuring",
 };
+
 export const JwtAuthContext = createContext(defaultAuthContext);
+
 
 function JwtAuthProvider(props) {
   /**
@@ -84,35 +88,35 @@ function JwtAuthProvider(props) {
    */
   const setUserCredentialsStorage = useCallback((userCredentials) => {
     console.log("UserCredentials TO-SET", userCredentials);
-	const stringifiedUser = JSON.stringify({ userCredentials })
+	// const stringifiedUser = JSON.stringify({ userCredentials })
 
-    // Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
+    Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
 	
 
 	// localStorage.setItem(config.adminCredentials, JSON.stringify({ userCredentials }));
-	localStorage.setItem(config.adminCredentials, stringifiedUser);
+	// localStorage.setItem(config.adminCredentials, stringifiedUser);
   }, []);
 
   /**Get User credentials */
   const getUserCredentialsStorage = useCallback(() => {
 
 	//Get Item in Cookie-based-SETTERS
-    // const { userCredentials } = Cookie.get("jwt_auth_credentials")
-    //   ? JSON.parse(Cookie.get("jwt_auth_credentials"))
-    //   : "";
-    // if (userCredentials) {
-    //   return userCredentials;
-    // }
+    const { userCredentials } = Cookie.get("jwt_auth_credentials")
+      ? JSON.parse(Cookie.get("jwt_auth_credentials"))
+      : "";
+    if (userCredentials) {
+      return userCredentials;
+    }
 
 
 	/**Get Item in localstorage-based-SETTERS */
-	 const { userCredentials } = localStorage.getItem("jwt_auth_credentials")
-      ? JSON.parse(localStorage.getItem("jwt_auth_credentials"))
-      : "";
-    // if (userCredentials) {
-    //   return userCredentials;
-    // }
-	return userCredentials;
+	//  const { userCredentials } = localStorage.getItem("jwt_auth_credentials")
+  //     ? JSON.parse(localStorage.getItem("jwt_auth_credentials"))
+  //     : "";
+  //   // if (userCredentials) {
+  //   //   return userCredentials;
+  //   // }
+	// return userCredentials;
 
 
   }, []);
@@ -133,11 +137,6 @@ function JwtAuthProvider(props) {
   const [authStatus, setAuthStatus] = useState(getIsAuthStatusStorage()); //'configuring'
   const { children } = props;
 
-  // console.log("isAuthenticated-RENDERING", isAuthenticated)
-  // console.log("AUTH-STATUS", authStatus)
-  // console.log("AUTH-USER", user)
-  // console.log("userFromStorage", getUserCredentialsStorage())
-  // console.log("setting-user-from-storage", Cookie.get('jwt_auth_credentials'))
 
   /**
    * Handle sign-in success
@@ -290,6 +289,10 @@ function JwtAuthProvider(props) {
     getAccessToken,
     isAuthenticated,
   ]);
+
+
+
+  const adminLogIn = useShopAdminLogin()
   const handleRequest = async (
     url,
     data,
@@ -300,42 +303,31 @@ function JwtAuthProvider(props) {
   ) => {
     // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     try {
-      const response = await axios.post(url, data);
+      // const response = await axios.post(url, data);
 
-      console.log("Request-SUCESS User", response?.data?.data);
-      console.log("Request-SUCESS TOKEN", response?.data?._nnip_shop_ASHP_ALOG);
-      // return
-      if (response?.data?.data && response?.data?._nnip_shop_ASHP_ALOG) {
-        const transFormedUser = {
-          id: response?.data?.data?._id,
-          name: response?.data?.data?.shopname,
-          email: response?.data?.data?.shopemail,
-          role: "merchant",
-          shopplan: response?.data?.user?.shopplan,
-          // name:response?.data?.user?.name,
-          // name:response?.data?.user?.name,
-        };
+      // if (response?.data?.data && response?.data?._nnip_shop_ASHP_ALOG) {
+      //   const transFormedUser = {
+      //     id: response?.data?.data?._id,
+      //     name: response?.data?.data?.shopname,
+      //     email: response?.data?.data?.shopemail,
+      //     role: "merchant",
+      //     shopplan: response?.data?.user?.shopplan,
+        
+      //   };
 
-        // const userData = transFormedUser;
-        const accessToken = response?.data?._nnip_shop_ASHP_ALOG;
-        handleSignInSuccess(transFormedUser, accessToken);
-        return transFormedUser;
-      }
+   
+      //   const accessToken = response?.data?._nnip_shop_ASHP_ALOG;
+      //   handleSignInSuccess(transFormedUser, accessToken);
+      //   return transFormedUser;
+      // }
 
-      if (response.data.error) {
-        // enqueueSnackbar(`${response?.data?.error?.message}`)
-        // window.alert(`${response?.data?.error?.message}`)
-        toast.error(`${response?.data?.error?.message}`);
-        return;
-      }
+      // if (response.data.error) {
+      //   toast.error(`${response?.data?.error?.message}`);
+      //   return;
+      // }
 
-      // return
+      adminLogIn.mutate(data)
 
-      // console.log("Request-SUCESS", response.data) accessToken
-      // console.log("Request-SUCESS User", userData)
-      // console.log("Request-SUCESS TOKEN", accessToken)
-      //handleSignInSuccess
-      // handleSuccess(userData, accessToken);
     } catch (error) {
       const axiosError = error;
       console.log("Request-Error", error);
