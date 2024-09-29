@@ -1,7 +1,6 @@
 
 import { CONTROL_API_ENDPOINTS } from '../endpoints'
 import axios from 'axios'
-// import { getAuthAdminTokens, logOutRoutHandler } from '@/config/utils/authUtils'
 import Cookies from 'js-cookie'
 // import { message } from 'antd'
 import { getAuthAdminTokens, resetSessionForShopUsers } from 'app/configs/utils/authUtils'
