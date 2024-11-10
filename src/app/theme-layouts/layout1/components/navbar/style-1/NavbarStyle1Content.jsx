@@ -9,6 +9,9 @@ import UserNavbarHeader from "../../../../shared-components/UserNavbarHeader";
 import { useGetMyShopAndPlan } from "app/configs/data/server-calls/shopdetails/useShopDetails";
 import { Typography } from "@mui/material";
 import RealEstateNavigation from "app/theme-layouts/shared-components/navigation/accountsnavigation/RealEstateNavigation";
+import HotelsApartmentsNavigation from "app/theme-layouts/shared-components/navigation/hotelsnavigation/HotelsApartmentsNavigation";
+import LogisticsNavigation from "app/theme-layouts/shared-components/navigation/logisticsnavigation/LogisticsNavigation";
+import FoodMartNavigation from "app/theme-layouts/shared-components/navigation/foodmartnavigation/FoodMartNavigation";
 
 
 const Root = styled("div")(({ theme }) => ({
@@ -44,7 +47,7 @@ useEffect(() =>{
 },[
   myshopData?.data?.shopplan?.plankey
 ])
-  console.log("navigationSliceUser", myshopData?.data?.shopplan?.plankey)
+  // console.log("navigationSliceUser", myshopData?.data?.shopplan?.plankey)
   return (
     <Root
       className={clsx(
@@ -65,7 +68,7 @@ useEffect(() =>{
         option={{ suppressScrollX: true, wheelPropagation: false }}
       >
         <UserNavbarHeader />
-
+        
 
         {
           isLoading ? <>
@@ -76,9 +79,19 @@ useEffect(() =>{
           
           {myshopData?.data?.shopplan?.plankey === 'WHOLESALEANDRETAILERS' && <><Navigation layout="vertical" /></>} 
           {myshopData?.data?.shopplan?.plankey === 'MANUFACTURERS' && <><Navigation layout="vertical" /></> }
+
+
           {myshopData?.data?.shopplan?.plankey === 'REALESTATES' && <><RealEstateNavigation layout="vertical"/></>}
+
+          {myshopData?.data?.shopplan?.plankey === 'HOTELSANDAPARTMENTS' && <><HotelsApartmentsNavigation layout="vertical"/></>}
+          
+          {myshopData?.data?.shopplan?.plankey === 'FOODVENDORS' && <><FoodMartNavigation layout="vertical"/></>}
+
+          {myshopData?.data?.shopplan?.plankey === 'LOGISTICS' && <><LogisticsNavigation layout="vertical"/></>}
+          
+
    
-          {/* {
+          {/* {  
           ( myshopData?.data?.shopplan?.plankey !== 'RETAIL' || 
            myshopData?.data?.shopplan?.plankey !== 'WHOLESALEANDRETAILERS' ||
            myshopData?.data?.shopplan?.plankey !== 'MANUFACTURERS' ||
@@ -89,12 +102,15 @@ useEffect(() =>{
         }
        
 
-        <div className="flex-0 flex items-center justify-center py-48 opacity-10">
+        <div className="flex-0 flex items-center justify-center py-48 opacity-20">
           <img
             className="w-full max-w-64"
             // src="assets/images/logo/logo.svg"
-            src="assets/images/afslogo/afLogo.svg"
+            // src="assets/images/afslogo/afLogo.svg"
+            src="assets/images/afslogo/afslogo.png"
             alt="footer logo"
+            width={45}
+				height={45}
           />
         </div>
       </StyledContent>

@@ -35,4 +35,5 @@ function RealEstateNavigation(props) {
 	}, [dispatch, isMobile, navigation, active, className, dense, layout]);
 }
 
+
 export default withSlices([estatesNavigationSlice])(RealEstateNavigation);

@@ -36,6 +36,8 @@ import HomeAppConfig from "../main/vendors-shop/home/HomeAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
 import LandingCenterHome from "../main/vendors-shop/home/home/LandingCenterHome";
 import MerchantMailboxAppConfig from "../main/vendors-shop/mailbox/MerchantMailboxAppConfig";
+import ManagedBookingsListingsAppConfig from "../main/hotelsandapartments/managed-booking-listings/ManagedBookingsListingsAppConfig";
+import ManagedFoodMartsAppConfig from "../main/vendor-foodmarts/managed-foood-mart/ManagedFoodMartsAppConfig";
 // import AfricanshopsMessengerAppConfig from '../main/africanshops-messenger/AfricanshopsMessengerAppConfig';
 
 const routeConfigs = [
@@ -52,9 +54,17 @@ const routeConfigs = [
   // StaffAppConfig,
   // PropertiesAppConfig,
   // ServiceTypesAppConfig,
+  /*****Estates Homes and estate management */
   ManagedListingsAppConfig,
+
+  /******Hotels, apartment and suites management */
+  ManagedBookingsListingsAppConfig,
+
   // PropertyTypesAppConfig,
-  ManagedUserListingsAppConfig,
+  // ManagedUserListingsAppConfig,
+  /*****Food Mart (Restaurants, Bakeries etc) */
+  ManagedFoodMartsAppConfig,
+  
   /***User management and properties starts */
 
   /****Africanshops Dashboard Configs Starts Here */

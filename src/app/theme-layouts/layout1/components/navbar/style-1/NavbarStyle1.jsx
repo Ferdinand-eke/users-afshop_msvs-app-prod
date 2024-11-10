@@ -81,6 +81,7 @@ function NavbarStyle1() {
 				>
 					<NavbarStyle1Content />
 					
+					
 					{/* {user?.role?.toString() === 'merchant' && <NavbarStyle1Content />} */}
 
 				</StyledNavBarMobile>}

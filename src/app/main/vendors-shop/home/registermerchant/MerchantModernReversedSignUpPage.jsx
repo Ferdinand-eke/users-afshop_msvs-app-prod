@@ -192,12 +192,12 @@ function MerchantModernReversedSignUpPage() {
     shopplan: accountId,
   };
 
+
   function onSubmit() {
     if (images?.length > 0) {
       const fileName = new Date().getTime() + images[0]?.id;
       const storage = getStorage(firebaseApp);
       const storageRef = ref(storage, `/shopbanners/${fileName}`);
-      //   const uploadTask = uploadBytesResumable(storageRef, images[0]?.url);
       const uploadTask = uploadString(storageRef, images[0]?.url, "data_url");
 
       uploadTask.then((snapshot) => {
@@ -350,6 +350,7 @@ function MerchantModernReversedSignUpPage() {
       }
     }
   }
+
 
   let bodyContent = (
     <div className="flex flex-col gap-8">
@@ -670,7 +671,7 @@ function MerchantModernReversedSignUpPage() {
           // as="h3"
           className="px-[40px] xs:px-[30px] pt-[26px] pb-[25px] text-dark dark:text-white/[.87] text-[18px] font-semibold border-b border-regular dark:border-white/10"
         >
-          Shop Bio : Provide a brief bio about your business
+          Business Bio : Provide a brief bio about your business
         </Typography>
         <>
           <Controller
@@ -784,30 +785,13 @@ function MerchantModernReversedSignUpPage() {
               {/* This plan enables you to.... */}
               {plan?.data?.planinfo}
             </div>
-            {/* <div className="mt-32 flex items-center">
-              <AvatarGroup
-                sx={{
-                  "& .MuiAvatar-root": {
-                    borderColor: "primary.main",
-                  },
-                }}
-              >
-                <Avatar src="assets/images/avatars/female-18.jpg" />
-                <Avatar src="assets/images/avatars/female-11.jpg" />
-                <Avatar src="assets/images/avatars/male-09.jpg" />
-                <Avatar src="assets/images/avatars/male-16.jpg" />
-              </AvatarGroup>
-
-              <div className="ml-16 font-medium tracking-tight text-gray-400">
-                More than 17k people joined us, it's your turn
-              </div>
-            </div> */}
+            
           </div>
         </Box>
 
         
         
-        {(plan?.data?.plankey === 'MANUFACTURERS' || plan?.data?.plankey === 'WHOLESALEANDRETAILERS' || plan?.data?.plankey === 'RETAIL' ) &&
+        {/* {(plan?.data?.plankey === 'MANUFACTURERS' || plan?.data?.plankey === 'WHOLESALEANDRETAILERS' || plan?.data?.plankey === 'RETAIL' ) && */}
         <>
         {!remoteResponseToken.length > 0 ? (
           <div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
@@ -879,9 +863,9 @@ function MerchantModernReversedSignUpPage() {
           <MerchantModernReversedActivatePage resendOTP={resendOTP} />
         )}
         </>
-        }
+        {/* } */}
         
-        {(plan?.data?.plankey === 'REALESTATES') &&
+        {/* {(plan?.data?.plankey === 'REALESTATES') &&
         
         <div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
             <div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
@@ -902,7 +886,8 @@ function MerchantModernReversedSignUpPage() {
               </div>
             </div>
         </div>
-        }
+        } */}
+
 
 
 

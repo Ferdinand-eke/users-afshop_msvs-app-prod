@@ -37,7 +37,7 @@ export function useSingleShopEstateProperty(slug) {
   );
 }
 
-//create new product
+//create new property
 export function useAddShopEstatePropertyMutation() {
   const navigate = useNavigate()
   const queryClient = useQueryClient();
@@ -77,7 +77,7 @@ export function useAddShopEstatePropertyMutation() {
   );
 }
 
-//update existing product
+//update existing property
 export function useEstatePropertyUpdateMutation() {
   const queryClient = useQueryClient();
 
@@ -85,8 +85,8 @@ export function useEstatePropertyUpdateMutation() {
     onSuccess: (data) => {
       console.log('Updated Producr clientController', data);
 
-      if (data) {
-        message.success('product updated successfully!!');
+      if (data?.data?.success) {
+       toast.success('product updated successfully!!');
 
         queryClient.invalidateQueries('__myshop_estateproperties');
         // queryClient.refetchQueries('__myshop_estateproperties', { force: true });
@@ -114,7 +114,7 @@ export function useEstatePropertyUpdateMutation() {
 //       console.log('push Product clientController', data);
 
 //       if (data) {
-//         message.success('product pushed to export successfully!!');
+//        toast.success('product pushed to export successfully!!');
 
 //         queryClient.invalidateQueries('__myshop_estateproperties');
 //         queryClient.invalidateQueries([
@@ -144,7 +144,7 @@ export function useEstatePropertyUpdateMutation() {
 //       console.log('Pull Product clientController', data);
 
 //       if (data) {
-//         message.success('product pulled successfully!!');
+//        toast.success('product pulled successfully!!');
 
 //         // queryClient.invalidateQueries('__myshop_estateproperties');
 //         queryClient.invalidateQueries([

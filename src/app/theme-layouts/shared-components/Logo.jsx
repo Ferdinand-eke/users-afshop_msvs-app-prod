@@ -23,13 +23,15 @@ function Logo() {
 		<Root className="flex items-center">
 			{/* h-40 w-40 */}
 			<img
-				className="mt-14 logo-icon "
+				className="mt-14 logo-icon opacity-70"
 				// src="assets/images/logo/logo.svg"
-				src="assets/images/afslogo/afLogo.svg"
-				width={100}
-				height={100}
+				// src="assets/images/afslogo/afLogo.svg"
+				src="assets/images/afslogo/afslogo.png"
+				width={45}
+				height={45}
 				alt="logo"
 			/>
+			<h1>Africanshops</h1>
 			{/* <div className="flex space-x-6 px-8 items-center">
 				<div
 					className="badge flex items-end justify-end rounded-4 w-24 h-24 px-3"

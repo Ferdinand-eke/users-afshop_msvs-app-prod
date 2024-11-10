@@ -43,13 +43,13 @@ const estatesNavigationConfig = [
 		icon: 'heroicons-outline:home',
 		translate: 'PROPERTIES',
 		children: [
-			{
-				id: 'properties.list',
-				title: 'Properties',
-				type: 'item',
-				icon: 'heroicons-outline:clipboard-check',
-				url: '/properties/listings'
-			},
+			// {
+			// 	id: 'properties.list',
+			// 	title: 'Properties',
+			// 	type: 'item',
+			// 	icon: 'heroicons-outline:clipboard-check',
+			// 	url: '/properties/listings'
+			// },
 
 			{
 				id: 'properties.managedlist',
@@ -58,27 +58,14 @@ const estatesNavigationConfig = [
 				icon: 'heroicons-outline:clipboard-check',
 				url: '/property/managed-listings'
 			},
-			{
-				id: 'properties.manageduserlist',
-				title: 'Managed USER Properties',
-				type: 'item',
-				icon: 'heroicons-outline:clipboard-check',
-				url: '/userlistings'
-			},
 			// {
-			// 	id: 'users.user',
-			// 	title: 'Uers',
+			// 	id: 'properties.manageduserlist',
+			// 	title: 'Managed USER Properties',
 			// 	type: 'item',
 			// 	icon: 'heroicons-outline:clipboard-check',
-			// 	url: '/users/user'
+			// 	url: '/userlistings'
 			// },
-			// {
-			// 	id: 'users.vendors',
-			// 	title: 'Property Managers',
-			// 	type: 'item',
-			// 	icon: 'heroicons-outline:clipboard-check',
-			// 	url: '/users/vendors'
-			// },
+			
 			
 		]
 	},

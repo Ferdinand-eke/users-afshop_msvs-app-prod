@@ -117,7 +117,7 @@ function UserMenu() {
 							</ListItemIcon>
 							<ListItemText primary="Sign In" />
 						</MenuItem>
-						<MenuItem
+						{/* <MenuItem
 							component={Link}
 							to="/sign-up"
 							role="button"
@@ -126,7 +126,7 @@ function UserMenu() {
 								<FuseSvgIcon>heroicons-outline:user-add </FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign up" />
-						</MenuItem>
+						</MenuItem> */}
 					</>
 				) : (
 					<>

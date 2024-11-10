@@ -2,8 +2,8 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const ManagedListingApp = lazy(() => import('./ManagedListingApp'));
-const PropertyListing = lazy(() => import('./product/PropertyListing'));
-const Products = lazy(() => import('./products/Products'));
+const PropertyListing = lazy(() => import('./property/PropertyListing'));
+const Properties = lazy(() => import('./properties/Properties'));
 const ProfileApp = lazy(() => import('./manageprofile/ProfileApp'));
 // const Order = lazy(() => import('./order/Order'));
 // const Orders = lazy(() => import('./orders/Orders'));
@@ -28,7 +28,7 @@ const ManagedListingsAppConfig = {
 				},
 				{
 					path: 'managed-listings',
-					element: <Products />
+					element: <Properties />
 				},
 				{
 					path: 'managed-listings/:productId/*',
@@ -38,6 +38,7 @@ const ManagedListingsAppConfig = {
 					path: 'managed-listings/:productId/manage',
 					element: <ProfileApp />
 				},
+
 				// {
 				// 	path: 'orders',
 				// 	element: <Orders />

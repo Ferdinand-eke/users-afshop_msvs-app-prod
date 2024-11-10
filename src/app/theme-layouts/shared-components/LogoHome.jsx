@@ -26,10 +26,11 @@ function LogoHome() {
 			<Link to={`/home`}>
 			<img
 				className="mt-14 logo-icon cursor-pointer"
-				// src="assets/images/logo/logo.svg"
-				src="assets/images/afslogo/afLogo.svg"
-				width={70}
-				height={70}
+				// src="assets/images/logo/logo.svg" 
+				// src="assets/images/afslogo/afLogo.svg"
+				src="assets/images/afslogo/afslogo.png"
+				width={40}
+				height={40}
 				alt="logo"
 			/>
 			</Link>

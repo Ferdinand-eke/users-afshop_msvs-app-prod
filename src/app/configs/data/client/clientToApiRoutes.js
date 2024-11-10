@@ -11,7 +11,6 @@ import { toast } from 'react-toastify'
 
 const API_BASE_URL = 'https://coral-app-n8ox9.ondigitalocean.app'
 
-// const API_BASE_URL2 = 'https://coral-app-n8ox9.ondigitalocean.app'
 
 /***================================================================================================================= */
 export const customHeaders = {
@@ -384,23 +383,13 @@ export const storePreShopUserData = (formData) =>
  * HANDLE SHOP ESTATE PRPERTIES STARTS HERE
  * ############################################################################################
  */
-
 // {===============================shop estate property handling starts=======================================}
-// export const storeProductImages = (formData) =>
-//   AuthApi().post('/api/usersprodimages/uploadimages', formData);
-
-// export const removeProductImagesById = (formData) =>
-//   AuthApi().post('/api/usersprodimages/removeimage', formData);
-
 export const getShopEstateProperties = () => AuthApi().get('/api/myshop/get-my-estate-properties'); //newDashboard
 
 
 export const storeShopEstateProperty = (formData) =>
   AuthApi().post('/api/myshop/create-estate-property', formData);
 
-
-// export const getMyShopProductById = (id) =>
-//   AuthApi().get(`/api/myshop-products/${id}`);
 
 export const getMyShopEstatePropertyBySlug = (id) =>
   AuthApi().get(`/api/myshop-estateproperty/${id}`);
@@ -413,10 +402,53 @@ export const updateMyShopEstatePropertyById = (productFormData ) =>
 
 
 export const deleteShopEstateProperty = (id) =>
-  AuthApi().delete(`/myshop/usersproducts/${id}`);
-// {===============================shop product handling ends   =======================================}
+  AuthApi().delete(`/myshop/delete-estateproperty/${id}`);
+// {===============================shop estate handling ends   =======================================}
+/***
+ * #############################################################################################
+ * HANDLE SHOP ESTATE PRPERTIES ENDS HERE
+ * ############################################################################################
+ */
+
+/***
+ * #############################################################################################
+ * HANDLE SHOP ESTATE PRPERTIES STARTS HERE
+ * ############################################################################################
+ */
+// {===============================shop estate property handling starts=======================================}
+export const getShopBookingsProperties = () => AuthApi().get('/api/myshop/get-my-booking-properties'); //newDashboard
 
 
+export const storeShopBookingsProperty = (formData) =>
+  AuthApi().post('/api/myshop/create-booking-property', formData);
+
+
+export const getMyShopBookingsPropertyBySlug = (id) =>
+  AuthApi().get(`/api/myshop-bookingproperty/${id}`);
+
+export const updateMyShopBookingsPropertyById = (productFormData ) =>
+  AuthApi().put(
+    `/api/myshop/update-bookingproperty/${productFormData?._id}`,
+    productFormData
+  );
+
+
+export const deleteShopBookingsProperty = (id) =>
+  AuthApi().delete(`/myshop/delete-bookingproperty/${id}`);
+// {===============================shop estate handling ends   =======================================}
+/***
+ * #############################################################################################
+ * HANDLE SHOP ESTATE PRPERTIES ENDS HERE
+ * ############################################################################################
+ */
+
+
+
+/***
+ * #############################################################################################
+ * HANDLE USER AUTHENTICATED SESSION STARTS HERE
+ * ############################################################################################
+ */
 //Shop Users Logout functionality  usersproducts
 export const MyShopLogOutSession = () => AuthApi().post(`/shop/logout`);
 export const logOut = () => {

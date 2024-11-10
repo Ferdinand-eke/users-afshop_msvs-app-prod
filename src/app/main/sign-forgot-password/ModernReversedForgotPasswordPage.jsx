@@ -141,9 +141,9 @@ function ModernReversedForgotPasswordPage() {
 				<div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
 					<div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
 						<img
-							className="w-48"
+							className="w-40"
 							// src="assets/images/logo/logo.svg"
-							src="assets/images/afslogo/afLogo.svg"
+							src="assets/images/afslogo/afslogo.png"
 							alt="logo"
 						/>
 

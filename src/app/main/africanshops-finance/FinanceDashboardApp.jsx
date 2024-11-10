@@ -173,6 +173,7 @@ function FinanceDashboardApp() {
                 className="xl:col-span-2 flex flex-col flex-auto"
               >
                 {/* <RecentTransactionsWidget /> */}
+                
 
                 
               </motion.div>
