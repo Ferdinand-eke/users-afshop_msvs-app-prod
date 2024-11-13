@@ -412,7 +412,7 @@ export const deleteShopEstateProperty = (id) =>
 
 /***
  * #############################################################################################
- * HANDLE SHOP ESTATE PRPERTIES STARTS HERE
+ * HANDLE SHOP HOMES, HOTELS and APARTMENT BOOKINGS STARTS HERE
  * ############################################################################################
  */
 // {===============================shop estate property handling starts=======================================}
@@ -438,10 +438,61 @@ export const deleteShopBookingsProperty = (id) =>
 // {===============================shop estate handling ends   =======================================}
 /***
  * #############################################################################################
- * HANDLE SHOP ESTATE PRPERTIES ENDS HERE
+ * HANDLE SHOP HOMES, HOTELS and APARTMENT BOOKINGS ENDS HERE
  * ############################################################################################
  */
 
+/***
+ * #############################################################################################
+ * HANDLE SHOP FOOD MART STARTS HERE
+ * ############################################################################################
+ */
+// {===============================shop estate property handling starts=======================================}
+export const getShopFoodMarts = () => AuthApi().get('/api/myshop/food-mart/get-my-food-marts'); //newDashboard
+
+
+export const storeShopFoodMart = (formData) =>
+  AuthApi().post('/api/myshop/food-mart/create-new-food-mart', formData);
+
+
+export const getMyShopFoodMartBySlug = (slug) =>
+  AuthApi().get(`/api/myshop-foodmart/${slug}`);
+
+export const updateMyShopFoodMartById = (productFormData ) =>
+  AuthApi().put(
+    `/api/myshop/update-foodmart/${productFormData?._id}`,
+    productFormData
+  );
+
+
+export const deleteShopFoodMart = (id) =>
+  AuthApi().delete(`/myshop/delete-foodmart/${id}`);
+// {===============================shop estate handling ends   =======================================}
+/***
+ * #############################################################################################
+ * HANDLE SHOP FOOD MART ENDS HERE
+ * ############################################################################################
+ */
+
+/***
+ * #############################################################################################
+ * HANDLE SHOP FOOD MART-MENUS ITEMS STARTS HERE
+ * ############################################################################################
+ */
+// {===============================shop estate property handling starts /myshop/food-mart/get-my-menu/:foodMartId=======================================}
+export const getShopFoodMartMenus = (foodMartId) => AuthApi().get(`/api/myshop/food-mart/get-my-menu/${foodMartId}`); //newDashboard
+
+export const getMyShopFoodMartMenuBySlug = (slug) =>
+  AuthApi().get(`/myshop/foodmart-menu/${slug}`);
+
+export const storeShopFoodMartMenu = (formData) =>
+  AuthApi().post(`/api/myshop/food-mart/create-menu/${formData?.martId}`, formData);
+
+/***
+ * #############################################################################################
+ * HANDLE SHOP FOOD  MART-MENUS ITEMS ENDS HERE
+ * ############################################################################################
+ */
 
 
 /***

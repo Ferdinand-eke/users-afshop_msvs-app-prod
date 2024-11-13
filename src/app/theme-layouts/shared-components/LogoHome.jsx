@@ -33,7 +33,9 @@ function LogoHome() {
 				height={40}
 				alt="logo"
 			/>
+			
 			</Link>
+			<h2  className="react-text text-16 font-semibold">Africanshops</h2>
 			
 			{/* <div className="flex space-x-6 px-8 items-center">
 				<div

@@ -2,9 +2,9 @@ import { lazy } from 'react';
 import { Navigate } from 'react-router-dom';
 
 const ManagedFoodMartApp = lazy(() => import('./ManagedFoodMartApp'));
-const BookingPropertyListing = lazy(() => import('./foodmart/FoodMartListing'));
+const FoodMartListing = lazy(() => import('./foodmart/FoodMartListing'));
 const FoodMerchants = lazy(() => import('./foodmarts/FoodMerchants'));
-const BookingProfileApp = lazy(() => import('./manageprofile/BookingProfileApp'));
+const FoodMartProfileApp = lazy(() => import('./manageprofile/FoodMartProfileApp'));
 /**
  * The E-Commerce app configuration.
  */
@@ -29,11 +29,11 @@ const ManagedFoodMartsAppConfig = {
 				},
 				{
 					path: 'managed-foodmerchants/:productId/*',
-					element: <BookingPropertyListing />
+					element: <FoodMartListing />
 				},
 				{
-					path: 'managed-foodmerchants/:productId/manage',
-					element: <BookingProfileApp />
+					path: 'management-portal/:foodMartId/manage',
+					element: <FoodMartProfileApp />
 				},
 
 			]

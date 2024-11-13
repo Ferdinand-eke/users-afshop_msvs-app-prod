@@ -13,6 +13,7 @@ import {
 } from '../ECommerceApi';
 // import { useAddShopEstatePropertyMutation, useEstatePropertyUpdateMutation } from 'app/configs/data/server-calls/estateproperties/useShopEstateProperties';
 import { useAddShopBookingsPropertyMutation, useBookingsPropertyUpdateMutation } from 'app/configs/data/server-calls/hotelsandapartments/useShopBookingsProperties';
+import { useAddShopFoodMartMutation } from 'app/configs/data/server-calls/foodmart/useShopFoodMarts';
 
 /**
  * The product header.
@@ -30,7 +31,7 @@ function FoodMartHeader() {
 	const navigate = useNavigate();
 	const {title, name, images, featuredImageId } = watch();
 
-	// const addBookingsProperty = useAddShopBookingsPropertyMutation()
+	const addNewFoodMart = useAddShopFoodMartMutation()
 	// const updateBookingsProperty = useBookingsPropertyUpdateMutation()
 
 	function handleSaveFoodMart() {
@@ -39,7 +40,7 @@ function FoodMartHeader() {
 
 	function handleCreateFoodMart() {
 		console.log("creating food mart...", getValues())
-		// addBookingsProperty.mutate(getValues())
+		addNewFoodMart.mutate(getValues())
 	}
 
 
@@ -143,7 +144,7 @@ function FoodMartHeader() {
 						variant="contained"
 						color="secondary"
 						disabled={_.isEmpty(dirtyFields) || !isValid  
-						// || addBookingsProperty.isLoading
+						// || addNewFoodMart.isLoading
 						}
 						onClick={handleCreateFoodMart}
 					>

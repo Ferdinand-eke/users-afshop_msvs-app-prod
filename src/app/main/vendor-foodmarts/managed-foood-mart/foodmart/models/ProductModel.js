@@ -25,6 +25,8 @@ const ProductModel = (data) =>
 		// extraShippingFee: 0,
 		price: '',
 		active: true,
+		busniessOpenPeriod:'',
+		busniessClosePeriod:'',
 		image: '',
 		total: ''
 	});

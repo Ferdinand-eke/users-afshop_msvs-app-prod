@@ -445,7 +445,7 @@ function BasicInfoTabFoodMart() {
             {...field}
             className="mt-8 mb-16"
             required
-            label="Name"
+            label="address"
             autoFocus
             id="address"
             variant="outlined"

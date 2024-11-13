@@ -13,11 +13,14 @@ import FuseLoading from '@fuse/core/FuseLoading';
 import ActivityItem from './ActivityItem';
 import PostItem from './PostItem';
 import { useGetProfileTimelineQuery } from '../../ProfileApi';
+import { toggleFoodMartMenuPanel } from '../../formpanels/foodmartMenuPanelSlice';
+import { useAppDispatch } from 'app/store/hooks';
 
 /**
  * The timeline tab.
  */
 function TimelineTab() {
+	const dispatch = useAppDispatch();
 	const { data: timeline, isLoading } = useGetProfileTimelineQuery();
 
 	if (isLoading) {
@@ -115,12 +118,15 @@ function TimelineTab() {
 									color="secondary"
 									size="small"
 									aria-label="post"
+									onClick={() => dispatch(toggleFoodMartMenuPanel())}
+
 								>
-									Post
+									Post Menu
 								</Button>
 							</div>
 						</Box>
 					</Card>
+					
 
 					{timeline.posts.map((post) => (
 						<motion.div

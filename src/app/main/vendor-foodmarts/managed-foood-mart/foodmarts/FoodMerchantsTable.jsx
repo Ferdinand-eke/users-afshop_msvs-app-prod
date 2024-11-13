@@ -11,48 +11,51 @@ import clsx from 'clsx';
 import Button from '@mui/material/Button';
 // import useMyShopEstateProperties from 'app/configs/data/server-calls/estateproperties/useShopEstateProperties';
 import useMyShopBookingsProperties from 'app/configs/data/server-calls/hotelsandapartments/useShopBookingsProperties';
+import useMyShopFoodMarts from 'app/configs/data/server-calls/foodmart/useShopFoodMarts';
 
 function FoodMerchantsTable() {
 	
 
-	const {data:listingData, isLoading:listingIsLoading} = useMyShopBookingsProperties()
-	// console.log("BOOKING LISTING_DATA", listingData)
+	const {data:foodMartData, isLoading:foodMartIsLoading} = useMyShopFoodMarts()
+	// console.log("BOOKING LISTING_DATA", foodMartData)
 	
 	const columns = useMemo(
 		() => [
-			// {
-			// 	accessorFn: (row) => row.featuredImageId,
-			// 	id: 'featuredImageId',
-			// 	header: '',
-			// 	enableColumnFilter: false,
-			// 	enableColumnDragging: false,
-			// 	size: 64,
-			// 	enableSorting: false,
-			// 	Cell: ({ row }) => (
-			// 		<div className="flex items-center justify-center">
-			// 			{row.original?.images?.length > 0 && row.original.featuredImageId ? (
-			// 				<img
-			// 					className="w-full max-h-40 max-w-40 block rounded"
-			// 					src={_.find(row.original.images, { id: row.original.featuredImageId })?.url}
-			// 					alt={row.original.name}
-			// 				/>
-			// 			) : (
-			// 				<img
-			// 					className="w-full max-h-40 max-w-40 block rounded"
-			// 					src="assets/images/apps/ecommerce/product-image-placeholder.png"
-			// 					alt={row.original.name}
-			// 				/>
-			// 			)}
-			// 		</div>
-			// 	)
-			// },
+			{
+				accessorFn: (row) => row.featuredImageId,
+				id: 'featuredImageId',
+				header: '',
+				enableColumnFilter: false,
+				enableColumnDragging: false,
+				size: 64,
+				enableSorting: false,
+				Cell: ({ row }) => (
+					<div className="flex items-center justify-center">
+						{row.original?.imageSrcs?.length > 0  ? (
+							<img
+								className="w-full max-h-60 max-w-40 block rounded"
+								src={row.original?.imageSrcs[0]?.url}
+								alt={row.original.titke}
+								// width={60}
+								// height={60}
+							/>
+						) : (
+							<img
+								className="w-full max-h-40 max-w-40 block rounded"
+								src="assets/images/apps/ecommerce/product-image-placeholder.png"
+								alt={row.original.title}
+							/>
+						)}
+					</div>
+				)
+			},
 			{
 				accessorKey: 'name',
 				header: 'Name',
 				Cell: ({ row }) => (
 					<Typography
 						component={Link}
-						to={`/bookings/managed-listings/${row.original.slug}/${row.original.title}`}
+						to={`/foodmarts/managed-foodmerchants/${row.original.slug}/${row.original.title}`}
 						className="underline"
 						color="secondary"
 						role="button"
@@ -79,7 +82,7 @@ function FoodMerchantsTable() {
 			// 	)
 			// },
 			{
-				accessorKey: 'categories',
+				accessorKey: 'foodMartCategory',
 				header: 'Category',
 				accessorFn: (row) => (
 					<div className="flex flex-wrap space-x-2">
@@ -98,33 +101,17 @@ function FoodMerchantsTable() {
 								className="text-11"
 								size="small"
 								color="default"
-								label={row?.category}
+								label={row?.foodMartCategory}
 							/>
 					</div>
 				)
 			},
-			{
-				accessorKey: 'priceTaxIncl',
-				header: 'Price',
-				accessorFn: (row) => `NGN ${row?.price}`
-			},
-			{
-				accessorKey: 'quantity',
-				header: 'Room Count',
-				accessorFn: (row) => (
-					<div className="flex items-center space-x-8">
-						<span>{row?.roomCount} rooms</span>
-						{/* <i
-							className={clsx(
-								'inline-block w-8 h-8 rounded',
-								row.quantity <= 5 && 'bg-red',
-								row.quantity > 5 && row.quantity <= 25 && 'bg-orange',
-								row.quantity > 25 && 'bg-green'
-							)}
-						/> */}
-					</div>
-				)
-			},
+			// {
+			// 	accessorKey: 'priceTaxIncl',
+			// 	header: 'Price',
+			// 	accessorFn: (row) => `NGN ${row?.price}`
+			// },
+	
 			{
 				accessorKey: 'active',
 				header: 'Active',
@@ -150,6 +137,57 @@ function FoodMerchantsTable() {
 			},
 
 			{
+				accessorKey: 'busniessOpenPeriod',
+				header: 'Open From',
+				accessorFn: (row) => (
+					<div className="flex flex-wrap space-x-2">
+						{/* {row.categories.map((item) => (
+							<Chip
+								key={item}
+								className="text-11"
+								size="small"
+								color="default"
+								label={item} busniessClosePeriod
+							/>
+						))}
+						 */}
+						 <Chip
+								// key={item}
+								className="text-11"
+								size="small"
+								color="default"
+								label={row?.busniessOpenPeriod}
+							/>
+					</div>
+				)
+			},
+			{
+				accessorKey: 'busniessClosePeriod',
+				header: 'Close By',
+				accessorFn: (row) => (
+					<div className="flex flex-wrap space-x-2">
+						{/* {row.categories.map((item) => (
+							<Chip
+								key={item}
+								className="text-11"
+								size="small"
+								color="default"
+								label={item} 
+							/>
+						))}
+						 */}
+						 <Chip
+								// key={item}
+								className="text-11"
+								size="small"
+								color="default"
+								label={row?.busniessClosePeriod}
+							/>
+					</div>
+				)
+			},
+
+			{
 				accessorKey: 'management',
 				header: 'Management Console',
 				Cell: ({ row }) => (
@@ -158,11 +196,11 @@ function FoodMerchantsTable() {
 						 <Chip
 								// key={item}
 								component={Link}
-						to={`/bookings/managed-listings/${row.original._id}/manage`}
+						to={`/foodmarts/management-portal/${row.original._id}/manage`}
 								className="text-11 cursor-pointer"
 								size="small"
 								color="default"
-								label="Manage this listing"
+								label="Manage this food mart listing"
 							/>
 					</div>
 				)
@@ -172,19 +210,19 @@ function FoodMerchantsTable() {
 		[]
 	);
 
-	if (listingIsLoading) {
+	if (foodMartIsLoading) {
 		return <FuseLoading />;
 	}
 	
 //MBookingProperty
-	if (!listingData?.data?.data) {
+	if (!foodMartData?.data?.data) {
 		return (
 			<div className="flex flex-1 items-center justify-center h-full">
 				<Typography
 					color="text.secondary"
 					variant="h5"
 				>
-					There are no listings!
+					There are no food marts listed on this account!
 				</Typography>
 			</div>
 		);
@@ -196,7 +234,7 @@ function FoodMerchantsTable() {
 			elevation={0}
 		>
 			<DataTable
-				data={listingData?.data?.data}
+				data={foodMartData?.data?.data}
 				columns={columns}
 			
 			/>

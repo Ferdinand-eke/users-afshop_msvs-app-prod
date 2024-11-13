@@ -23,6 +23,7 @@ import ProductModel from './models/ProductModel';
 import useGetMyShopDetails from 'app/configs/data/server-calls/shopdetails/useShopDetails';
 import { useSingleShopEstateProperty } from 'app/configs/data/server-calls/estateproperties/useShopEstateProperties';
 import { useSingleShopBookingsProperty } from 'app/configs/data/server-calls/hotelsandapartments/useShopBookingsProperties';
+import  { useSingleShopFoodMart } from 'app/configs/data/server-calls/foodmart/useShopFoodMarts';
 /**
  * Form Validation Schema
  */
@@ -37,7 +38,7 @@ const schema = z.object({
 });
 
 /**
- * The propertyList page.
+ * The foodMartList page.
  */
 function FoodMartListing() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
@@ -47,29 +48,32 @@ function FoodMartListing() {
 	const { data: shopData, isLoading: shopDataLoading } = useGetMyShopDetails();
 
 	const {
-		data: propertyList,
+		data: foodMartList,
 		isLoading,
 		isError
-	} = useSingleShopBookingsProperty(productId, {
+	} = useSingleShopFoodMart(productId, {
 		skip: !productId || productId === 'new'
 	});
 
-	console.log("SINGLE-BOOKING", propertyList?.data)
+	// console.log("SINGLE-BOOKING", foodMartList?.data)
+
 
 	const [tabValue, setTabValue] = useState(0);
 	const methods = useForm({
 		mode: 'onChange',
 		defaultValues: {
 			title: '',
-			category: '',
-            guestCount: 0,
-            roomCount: 0,
-            sittingroomCount: 0,
-            price: 0,
-           
             description: '',
-            // servicetypeId: '',
-            // proptypeId: '',
+
+
+			foodMartCategory: '',
+            foodMartCountry: '',
+			foodMartState: '',
+			foodMartLga: '',
+			busniessOpenPeriod: '',
+			busniessClosePeriod: '',
+			address: '',
+           
 		},
 		resolver: zodResolver(schema)
 	});
@@ -81,12 +85,11 @@ function FoodMartListing() {
 		}
 	}, [productId, reset]);
 	useEffect(() => {
-		if (propertyList?.data) {
-			reset({ ...propertyList?.data });
+		if (foodMartList?.data) {
+			reset({ ...foodMartList?.data });
 		}
-	}, [propertyList, reset]);
+	}, [foodMartList, reset]);
 
-	// console.log("EstatePropertyData", propertyList?.data)
 
 	/**
 	 * Tab Change
@@ -130,9 +133,9 @@ function FoodMartListing() {
 	}
 
 	/**
-	 * Wait while propertyList data is loading and form is setted
+	 * Wait while foodMartList data is loading and form is setted
 	 */
-	if (_.isEmpty(form) || (propertyList?.data && routeParams.productId !== propertyList?.data?.slug && routeParams.productId !== 'new')) {
+	if (_.isEmpty(form) || (foodMartList?.data && routeParams.productId !== foodMartList?.data?.slug && routeParams.productId !== 'new')) {
 		return <FuseLoading />;
 	}
 

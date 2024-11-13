@@ -5,6 +5,7 @@ const initialState = false;
 /**
  * The notificationPanel state slice.
  */
+
 export const notificationPanelSlice = createSlice({
 	name: 'notificationPanel',
 	initialState,
