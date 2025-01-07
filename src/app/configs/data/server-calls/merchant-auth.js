@@ -66,6 +66,7 @@ export function useAdminLogin() {
   });
 }
 
+
 export function useShopForgotPass() {
   const navigate = useNavigate();
   return useMutation(shopForgotPasswordInit, {
@@ -102,6 +103,7 @@ export function useShopForgotPass() {
     },
   });
 }
+
 
 export function useResetShopPass() {
   const history = useNavigate();

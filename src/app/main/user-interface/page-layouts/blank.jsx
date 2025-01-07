@@ -12,6 +12,7 @@ function BlankSample() {
 	return (
 		<Root>
 			<DemoContent />
+			
 		</Root>
 	);
 }

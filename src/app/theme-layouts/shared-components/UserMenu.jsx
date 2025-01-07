@@ -7,25 +7,21 @@ import ListItemText from '@mui/material/ListItemText';
 import MenuItem from '@mui/material/MenuItem';
 import Popover from '@mui/material/Popover';
 import Typography from '@mui/material/Typography';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { selectUser } from 'src/app/auth/user/store/userSlice';
+
 import useAuth from 'src/app/auth/useAuth';
 import { darken } from '@mui/material/styles';
-import { useAppSelector } from 'app/store/hooks';
 import Divider from '@mui/material/Divider';
-// import { useGetShopAccountBalance } from 'app/configs/data/server-calls/shopdetails/useShopDetails';
 
 /**
  * The user menu.
  */
 
 
-function UserMenu() {
-	// const {data:shopAccount, isLoading:accountLoading} = useGetShopAccountBalance()
-	const user = useAppSelector(selectUser);
-	
+function UserMenu({user}) {
+
 	const { signOut } = useAuth();
 	const [userMenu, setUserMenu] = useState(null);
 	const userMenuClick = (event) => {
@@ -35,11 +31,8 @@ function UserMenu() {
 		setUserMenu(null);
 	};
 
-	if (!user) {
-		return null;
-	}
 
-	// console.log("Account-BALANCE", shopAccount?.data?.accountBalance)
+
 
 	return (
 		<>
@@ -56,13 +49,12 @@ function UserMenu() {
 						{user.name ? user.name : user.data.displayName}
 					</Typography>
 					<Typography
-						className=" rounded-full font-semibold py-4 px-4  text-11 font-medium capitalize"
+						className=" rounded-full font-semibold py-4 px-4  text-11 capitalize"
 						color="text.secondary"
 					>
 						{user.role?.toString()}
 						{(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && 'Guest'}
-						{/* 100000000000 */}
-						{/* NGN {shopAccount?.data?.accountBalance} */}
+					
 					</Typography>
 				</div>
 
@@ -117,7 +109,7 @@ function UserMenu() {
 							</ListItemIcon>
 							<ListItemText primary="Sign In" />
 						</MenuItem>
-						{/* <MenuItem
+						<MenuItem
 							component={Link}
 							to="/sign-up"
 							role="button"
@@ -126,13 +118,13 @@ function UserMenu() {
 								<FuseSvgIcon>heroicons-outline:user-add </FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Sign up" />
-						</MenuItem> */}
+						</MenuItem>
 					</>
 				) : (
 					<>
 						<MenuItem
 							component={Link}
-							to="/merchant/profile"
+							to="/user/profile"
 							onClick={userMenuClose}
 							role="button"
 						>
@@ -151,6 +143,42 @@ function UserMenu() {
 								<FuseSvgIcon>heroicons-outline:mail-open</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Inbox" />
+						</MenuItem>
+
+						<MenuItem
+							component={Link}
+							to="/bookings/my-reservations"
+							onClick={userMenuClose}
+							role="button"
+						>
+							<ListItemIcon className="min-w-40">
+								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+							</ListItemIcon>
+							<ListItemText primary="My Trips" />
+						</MenuItem>
+
+						<MenuItem
+							component={Link}
+							to="/marketplace/user/orders"
+							onClick={userMenuClose}
+							role="button"
+						>
+							<ListItemIcon className="min-w-40">
+								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+							</ListItemIcon>
+							<ListItemText primary="Orders" />
+						</MenuItem>
+
+						<MenuItem
+							component={Link}
+							to="/foodmarts/user/food-orders"
+							onClick={userMenuClose}
+							role="button"
+						>
+							<ListItemIcon className="min-w-40">
+								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+							</ListItemIcon>
+							<ListItemText primary="Food Orders" />
 						</MenuItem>
 
 						<MenuItem

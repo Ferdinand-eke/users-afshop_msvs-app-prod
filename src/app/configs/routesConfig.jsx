@@ -19,18 +19,18 @@ import ServiceTypesAppConfig from "../main/homes/servicetypes/ServiceTypesAppCon
 import ManagedListingsAppConfig from "../main/homes/managedproperties/ManagedListingsAppConfig";
 import PropertyTypesAppConfig from "../main/homes/propertytypes/PropertyTypesAppConfig";
 import SignAcceptInviteConfig from "../main/sign-accept-invite/SignAcceptInviteConfig";
-import ManagedUserListingsAppConfig from "../main/homes/managedusersandproperties/ManagedUserListingsAppConfig";
-import ShopDashboardAppConfig from "../main/vendors-shop/dasboard/ShopDashboardAppConfig";
-import ShopProductsAppConfig from "../main/vendors-shop/products/ShopProductsAppConfig";
-import ShopOrdersAppConfig from "../main/vendors-shop/orders/ShopOrdersAppConfig";
+// import ManagedUserListingsAppConfig from "../main/homes/managedusersandproperties/ManagedUserListingsAppConfig";
+// import ShopDashboardAppConfig from "../main/vendors-shop/dasboard/ShopDashboardAppConfig";
+// import ShopProductsAppConfig from "../main/vendors-shop/products/ShopProductsAppConfig";
+// import ShopOrdersAppConfig from "../main/vendors-shop/orders/ShopOrdersAppConfig";
 import SupportHelpCenterAppConfig from "../main/vendors-shop/support-center/SupportHelpCenterAppConfig";
 import AfricanshopsFinanceDashboardAppConfig from "../main/africanshops-finance/AfricanshopsFinanceDashboardAppConfig";
 import AfricanshopsMessengerAppConfig from "../main/africanshops-messenger/AfricanshopsMessengerAppConfig";
 import forgotPasswordConfig from "../main/sign-forgot-password/forgotPasswordPagesConfig";
 import resetPasswordConfig from "../main/sign-reset-password/resetPasswordPagesConfig";
-import merchantProfileAppConfig from "../main/vendors-shop/profile/merchantProfileAppConfig";
-import SettingsAppConfig from "../main/vendors-shop/settings/SettingsAppConfig";
-import ShopsPosAppConfig from "../main/vendors-shop/pos/ShopsPosAppConfig";
+// import merchantProfileAppConfig from "../main/vendors-shop/profile/merchantProfileAppConfig";
+// import SettingsAppConfig from "../main/vendors-shop/settings/SettingsAppConfig";
+// import ShopsPosAppConfig from "../main/vendors-shop/pos/ShopsPosAppConfig";
 import blogAppConfig from "../main/newsblog/blogAppConfig";
 import HomeAppConfig from "../main/vendors-shop/home/HomeAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
@@ -38,61 +38,163 @@ import LandingCenterHome from "../main/vendors-shop/home/home/LandingCenterHome"
 import MerchantMailboxAppConfig from "../main/vendors-shop/mailbox/MerchantMailboxAppConfig";
 import ManagedBookingsListingsAppConfig from "../main/hotelsandapartments/managed-booking-listings/ManagedBookingsListingsAppConfig";
 import ManagedFoodMartsAppConfig from "../main/vendor-foodmarts/managed-foood-mart/ManagedFoodMartsAppConfig";
+import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
+import SingleProduct from "../main/zrootclient/buz-marketplace/shops/SingleProduct";
+import Cart from "../main/zrootclient/buz-marketplace/shops/Cart";
+import BookingsPage from "../main/zrootclient/buz-bookings/BookingsPage";
+import RealEstatesPage from "../main/zrootclient/buz-realestates/RealEstatesPage";
+import BookingSinglePage from "../main/zrootclient/buz-bookings/BookingSinglePage";
+import MerchantShopPage from "../main/zrootclient/buz-marketplace/shops/MerchantShopPage";
+import RealEstateSinglePage from "../main/zrootclient/buz-realestates/RealEstateSinglePage";
+import FoodMartsPage from "../main/zrootclient/buz-foodmart/FoodMartsPage";
+import VisitFoodMartPage from "../main/zrootclient/buz-foodmart/VisitFoodMartPage";
+import FoodMartsPageSecond from "../main/zrootclient/buz-foodmart/FoodMartsPageSecond";
+import FoodMartsPageSecondResponsive from "../main/zrootclient/buz-foodmart/FoodMartsPageSecondResponsive";
+import userReservationPagesConfig from "../main/zrootclient/buz-bookings/user-reservations/userReservationPagesConfig";
+import FoodMartSingleMenu from "../main/zrootclient/buz-foodmart/FoodMartSingleMenu";
+import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
+import userFoodMartPagesConfig from "../main/zrootclient/buz-foodmart/userFoodMartPagesConfig";
+import UserSettingsAppConfig from "../main/zrootclient/settings/UserSettingsAppConfig";
+import userProfileAppConfig from "../main/zrootclient/profile/userProfileAppConfig";
+import MarketplaceProductsByCat from "../main/zrootclient/buz-marketplace/shops/MarketplaceProductsByCat";
+// import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
+
+
+// import FoodMartMenu from "../main/zrootclient/buz-foodmart/FoodMartMenu";
+// import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
 // import AfricanshopsMessengerAppConfig from '../main/africanshops-messenger/AfricanshopsMessengerAppConfig';
 
 const routeConfigs = [
+  /***
+   * ##########################################################################
+   * Authentication concern routes starts here
+   * ############################################################################
+   * */
   // SignOutConfig,
   SignInConfig,
-  // SignUpConfig,
+  SignUpConfig,
   SignAcceptInviteConfig,
   forgotPasswordConfig,
   resetPasswordConfig,
   // DocumentationConfig,
+  /***
+   * ##########################################################################
+   * Authentication concern routes ends here
+   * ############################################################################
+   * */
 
-  /***User management and properties starts ManagedUserListingsAppConfig*/
+  /***
+   * ##########################################################################
+   * User management and properties starts here
+   * ############################################################################
+   * */
   // UsersAppConfig,
   // StaffAppConfig,
   // PropertiesAppConfig,
   // ServiceTypesAppConfig,
+
+
   /*****Estates Homes and estate management */
-  ManagedListingsAppConfig,
+  // ManagedListingsAppConfig,
 
   /******Hotels, apartment and suites management */
-  ManagedBookingsListingsAppConfig,
+  // ManagedBookingsListingsAppConfig,
 
   // PropertyTypesAppConfig,
   // ManagedUserListingsAppConfig,
   /*****Food Mart (Restaurants, Bakeries etc) */
-  ManagedFoodMartsAppConfig,
-  
-  /***User management and properties starts */
+  // ManagedFoodMartsAppConfig,
 
-  /****Africanshops Dashboard Configs Starts Here */
-  ShopDashboardAppConfig,
-  ShopProductsAppConfig,
-  ShopOrdersAppConfig,
+  /***
+   * ##############################################################################
+   * User management and properties starts
+   * #######################################################################################
+   * */
+
+  /****
+   * #########################################################################################
+   * Africanshops Dashboard Configs Starts Here
+   * #########################################################################################
+   * */
+  // ShopDashboardAppConfig,
+  // ShopProductsAppConfig,
+  // ShopOrdersAppConfig,
   SupportHelpCenterAppConfig,
   AfricanshopsFinanceDashboardAppConfig,
   AfricanshopsMessengerAppConfig,
-  merchantProfileAppConfig,
+  // merchantProfileAppConfig,
   MerchantMailboxAppConfig,
 
-  SettingsAppConfig,
-  ShopsPosAppConfig,
-
-  /****Africanshops Dashboard Configs Ends Here */
+  // SettingsAppConfig,
+  // ShopsPosAppConfig,
+  UserSettingsAppConfig,
+  userProfileAppConfig,
 
   /****
-   *
+   * ############################################################################################
+   * Africanshops Dashboard Configs Ends Here
+   * ############################################################################################
+   * ----------------------------------------------------------------------------------------------------
+   * */
+    /****
+   * #########################################################################################
+   * Africanshops BOOKINGS-ROUTES Configs starts Here
+   * #########################################################################################
+   * */
+  userReservationPagesConfig,
+  
+    /****
+   * #########################################################################################
+   * Africanshops BOOKINGS-ROUTES Configs ends Here
+   * #########################################################################################
+   * -------------------------------------------------------------------------------------------------------
+   * */
+
+  
+    /****
+   * #########################################################################################
+   * Africanshops MARKET-PLACE_ROUTES Configs starts Here
+   * #########################################################################################
+   * */
+    userMarketPlacePagesConfig,
+  
+    /****
+   * #########################################################################################
+   * Africanshops BOOKINGS-ROUTES Configs ends Here
+   * #########################################################################################
+   * -------------------------------------------------------------------------------------------------------
+   * */
+
+
+        /****
+   * #########################################################################################
+   * Africanshops MARKET-PLACE_ROUTES Configs starts Here
+   * #########################################################################################
+   * */
+        userFoodMartPagesConfig,
+  
+        /****
+       * #########################################################################################
+       * Africanshops BOOKINGS-ROUTES Configs ends Here
+       * #########################################################################################
+       * -------------------------------------------------------------------------------------------------------
+       * */
+
+    
+   
+  /****
+   *#################################################################################################
    * Start of Un-Authenticated pages are listed below here
+   * #######################################################################
    */
-//   HomeAppConfig,
-HomeAppConfig,
+  //   HomeAppConfig,
+  HomeAppConfig,
   blogAppConfig,
 
   /****
-   *
+   *################################################################################################
    * End of Un-Authenticated pages are listed below here
+   * ###############################################################################################
    */
 
   /**Routes Below to be disabled */
@@ -113,8 +215,9 @@ const routes = [
   {
     path: "/",
     // element: <Navigate to="/dashboards/project" />,
-    element: <Navigate to="/shop-dashboard" />,
-    auth: settingsConfig.defaultAuth,
+    // element: <Navigate to="/home" />,
+    // auth: settingsConfig.defaultAuth,
+    element: <LandingCenterHome />,
   },
   {
     path: "loading",
@@ -128,31 +231,396 @@ const routes = [
     path: "*",
     element: <Navigate to="404" />,
   },
-
+//
   {
     path: "/home",
-	settings: {
-		layout: {
-			config: {
-				navbar: {
-					display: false
-				},
-				toolbar: {
-					display: true
-				},
-				footer: {
-					display: false
-				},
-				leftSidePanel: {
-					display: false
-				},
-				rightSidePanel: {
-					display: false
-				}
-			}
-		}
-	},
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
     element: <LandingCenterHome />,
   },
+
+  /****
+   * ##############################################################
+   * Marketplace activiies starts
+   * ##############################################################
+   */
+  {
+    path: "/marketplace/shop",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <MarketplaceShops />,
+  },
+  {
+    path: "/marketplace/product/:productId/:productSlug",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <SingleProduct />,
+  },
+
+  {
+    path: "/marketplace/products/:id/by-category",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <MarketplaceProductsByCat />,
+  },
+
+  // {
+  //   path: "/marketplace/cart",
+  //   settings: {
+  //     layout: {
+  //       config: {
+  //         navbar: {
+  //           display: false,
+  //         },
+  //         toolbar: {
+  //           display: true,
+  //         },
+  //         footer: {
+  //           display: false,
+  //         },
+  //         leftSidePanel: {
+  //           display: false,
+  //         },
+  //         rightSidePanel: {
+  //           display: false,
+  //         },
+  //       },
+  //     },
+  //   },
+  //   element: <Cart />,
+  // },
+
+  {
+    path: "/marketplace/merchant/:shopId/portal",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <MerchantShopPage />,
+  },
+
+  //
+   /****
+   * ##############################################################
+   * Marketplace activiies ends
+   * ##############################################################
+   */
+  /**############################################################### */
+  /****
+   * ##############################################################
+   * BOOKINGS activities starts
+   * ##############################################################
+   */
+  {
+    path: "/bookings/listings",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <BookingsPage />,
+  },
+
+  {
+    path: "/bookings/listings/:bookingId/:slug",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <BookingSinglePage />,
+  },
+
+  
+  /****
+   * ##############################################################
+   * BOOKINGS activities ends
+   * ##############################################################
+   */
+  /**############################################################### */
+  /**############################################################### */
+  /****
+   * ##############################################################
+   * REAL-ESTATE activities starts 
+   * ##############################################################
+   */
+  {
+    path: "/realestate/listings",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <RealEstatesPage />,
+  },
+
+  {
+    path: "/realestate/listings/:propertyId/:slug",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <RealEstateSinglePage />,
+  },
+
+  /****
+   * ##############################################################
+   * REALE-STATE activities ends
+   * ##############################################################
+   */
+  /**############################################################### */
+
+
+  //
+  /**############################################################### */
+  /****
+   * ##############################################################
+   * FOOD_MARTS activities starts
+   * ##############################################################
+   */
+  {
+    path: "/foodmarts/listings",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <FoodMartsPage />,
+    // element: <FoodMartsPageSecond />,
+    // element: <FoodMartsPageSecondResponsive />,
+  },
+
+  {
+    path: "/foodmarts/listings/visit-mart/:martId/:id",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <VisitFoodMartPage />,
+  },
+
+  {
+    path: "/foodmarts/menu/:menuId",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <FoodMartSingleMenu />,
+  },
+
+  /****
+   * ##############################################################
+   * FOOD_MARTS activities ends 
+   * ##############################################################
+   */
+  /**############################################################### */
 ];
 export default routes;

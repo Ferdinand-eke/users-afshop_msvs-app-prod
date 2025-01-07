@@ -1,10 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import {
-  // createProdCat,
-  getProdCatById,
-  getProdCats,
-  // updateProdCatById,
-} from '../../client/clientToApiRoutes';
+import { getProdCatById, getProdCats } from '../../client/RepositoryClient';
+// import {
+//   // createProdCat,
+//   getProdCatById,
+//   getProdCats,
+//   // updateProdCatById,
+// } from '../../client/clientToApiRoutes';
 
 export default function useProductCats() {
   return useQuery(['__productcats'], getProdCats);
@@ -21,6 +22,7 @@ export function useSingleProductCat(proCatId) {
     }
   );
 }
+
 
 // //create new product category
 // export function useAddProductCatMutation() {

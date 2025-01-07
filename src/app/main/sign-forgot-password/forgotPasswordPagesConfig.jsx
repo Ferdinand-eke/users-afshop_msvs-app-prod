@@ -36,6 +36,7 @@ const forgotPasswordConfig = {
 			path: 'forgot-password',
 			element: <ModernReversedForgotPasswordPage />
 		},
+		
 
 		// {
 		// 	path: 'forgot-password',

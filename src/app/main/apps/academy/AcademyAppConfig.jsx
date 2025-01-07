@@ -7,6 +7,7 @@ const Courses = lazy(() => import('./courses/Courses'));
 /**
  * The Academy app config.
  */
+
 const AcademyAppConfig = {
 	settings: {
 		layout: {}

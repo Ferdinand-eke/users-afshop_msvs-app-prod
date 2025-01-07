@@ -48,6 +48,7 @@ function BasicInfoTab() {
 				)}
 			/>
 
+
 			<Controller
 				name="categories"
 				control={control}

@@ -47,6 +47,7 @@ useEffect(() =>{
 },[
   myshopData?.data?.shopplan?.plankey
 ])
+
   // console.log("navigationSliceUser", myshopData?.data?.shopplan?.plankey)
   return (
     <Root

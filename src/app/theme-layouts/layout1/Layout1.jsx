@@ -8,8 +8,8 @@ import Configurator from 'app/theme-layouts/shared-components/configurator/Confi
 import FuseSuspense from '@fuse/core/FuseSuspense';
 import { useAppSelector } from 'app/store/hooks';
 import FooterLayout1 from './components/FooterLayout1';
-import LeftSideLayout1 from './components/LeftSideLayout1';
-import NavbarWrapperLayout1 from './components/NavbarWrapperLayout1';
+// import LeftSideLayout1 from './components/LeftSideLayout1';
+// import NavbarWrapperLayout1 from './components/NavbarWrapperLayout1';
 import RightSideLayout1 from './components/RightSideLayout1';
 import ToolbarLayout1 from './components/ToolbarLayout1';
 
@@ -45,10 +45,10 @@ function Layout1(props) {
 			config={config}
 			className="flex w-full"
 		>
-			{config.leftSidePanel.display && <LeftSideLayout1 />}
+			{/* {config.leftSidePanel.display && <LeftSideLayout1 />} */}
 
 			<div className="flex min-w-0 flex-auto">
-				{config.navbar.display && config.navbar.position === 'left' && <NavbarWrapperLayout1 />}
+				{/* {config.navbar.display && config.navbar.position === 'left' && <NavbarWrapperLayout1 />} */}
 
 				<main
 					id="fuse-main"

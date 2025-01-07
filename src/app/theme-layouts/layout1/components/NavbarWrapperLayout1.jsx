@@ -27,6 +27,7 @@ function NavbarWrapperLayout1() {
 	}, [pathname, isMobile]);
 	const navbarTheme = useAppSelector(selectNavbarTheme);
 
+	
 	return (
 		<>
 			<ThemeProvider theme={navbarTheme}>

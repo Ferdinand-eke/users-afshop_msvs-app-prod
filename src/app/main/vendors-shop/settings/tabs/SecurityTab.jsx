@@ -46,8 +46,7 @@ const schema = z
 
 
 function SecurityTab() {
-  const resetShopPass = useShopSettingsResetPass();
-  // const { data: securitySettings } = useGetSecuritySettingsQuery();
+  const resetShopPass = useUserSettingsResetPass();
   const { control, setError, reset, handleSubmit, formState, getValues } =
     useForm({
       defaultValues,
@@ -55,17 +54,17 @@ function SecurityTab() {
       resolver: zodResolver(schema),
     });
   const { isValid, dirtyFields, errors } = formState;
-  useEffect(() => {
-    if (resetShopPass?.isSuccess) {
-      reset();
-    }
-  }, [resetShopPass?.isSuccess, reset]);
+  // useEffect(() => {
+  //   if (resetShopPass?.isSuccess) {
+  //     reset();
+  //   }
+  // }, [resetShopPass?.isSuccess, reset]);
 
   /**
    * Form Submit
    */
   function onSubmit() {
-    resetShopPass.mutate(getValues());
+    // resetShopPass.mutate(getValues());
   }
 
   return (
@@ -165,7 +164,8 @@ function SecurityTab() {
             variant="contained"
             color="secondary"
             disabled={
-              _.isEmpty(dirtyFields) || !isValid || resetShopPass?.isLoading
+              _.isEmpty(dirtyFields) || !isValid 
+              // || resetShopPass?.isLoading
             }
             type="submit"
           >

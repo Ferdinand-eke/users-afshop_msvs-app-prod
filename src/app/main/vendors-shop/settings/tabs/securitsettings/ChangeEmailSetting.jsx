@@ -12,7 +12,7 @@ import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import _ from '@lodash';
 import { useEffect } from 'react';
-import { useShopSettingsChangeEmail } from 'app/configs/data/server-calls/auth/useAuth';
+// import { useShopSettingsChangeEmail } from 'app/configs/data/server-calls/auth/useAuth';
 
 const defaultValues = {
 	currentEmail: '',
@@ -36,7 +36,7 @@ function ChangeEmailSetting() {
 		resolver: zodResolver(schema)
 	});
 	const { isValid, dirtyFields, errors } = formState;
-	const changeMail = useShopSettingsChangeEmail()
+	// const changeMail = useShopSettingsChangeEmail()
 
 	// useEffect(() => {
 	// 	reset(securitySettings);
@@ -57,7 +57,7 @@ function ChangeEmailSetting() {
 
 
 		console.log("Form Data", formData)
-		changeMail.mutate(formData)
+		// changeMail.mutate(formData)
 		// return
 	}
 

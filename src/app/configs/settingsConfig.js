@@ -41,7 +41,8 @@ const settingsConfig = {
 	 * To make the whole app accessible without authorization by default set defaultAuth: null
 	 * The individual route configs which have auth option won't be overridden.
 	 */
-	defaultAuth: ['admin', 'merchant'],
+
+	defaultAuth: ['admin', 'merchant', 'user'],
 	/**
 	 * The loginRedirectUrl property defines the default redirect URL for the logged-in user.
 	 */
@@ -49,3 +50,4 @@ const settingsConfig = {
 };
 
 export default settingsConfig;
+

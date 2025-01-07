@@ -10,7 +10,7 @@ import Avatar from "@mui/material/Avatar";
 import Box from "@mui/material/Box";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useStoreShopPreSignUpFromOtp } from "app/configs/data/server-calls/useShops/useShopsQuery";
+import { useStoreUserPreSignUpFromOtp } from "app/configs/data/server-calls/useUsers/useUsersQuery";
 import {
   getMerchantSignUpToken,
   removeMerchantSignUpToken,
@@ -33,7 +33,7 @@ const defaultValues = {
  */
 function MerchantModernReversedActivatePage({ resendOTP }) {
   const remoteResponseToken = getMerchantSignUpToken();
-  const avtivateMerchant = useStoreShopPreSignUpFromOtp();
+  const avtivateMerchant = useStoreUserPreSignUpFromOtp();
   const { control, formState, handleSubmit, reset, getValues, setValue } =
     useForm({
       mode: "onChange",

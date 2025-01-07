@@ -12,13 +12,14 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import _ from "@lodash";
 import { useEffect } from "react";
-import { useGetMinimizedJustMyShopDetailsQuery } from "app/configs/data/server-calls/shopdetails/useShopDetails";
+// import { useGetMinimizedJustMyShopDetailsQuery } from "app/configs/data/server-calls/shopdetails/useShopDetails";
 import { toast } from "react-toastify";
 import { useShopSettingsCloseShopAccount } from "app/configs/data/server-calls/auth/useAuth";
+import { useGetMinimizedAuthUserDetails } from "app/configs/data/server-calls/useUsers/useUsersQuery";
 // import { useGetSecuritySettingsQuery, useUpdateSecuritySettingsMutation } from '../SettingsApi';
 
 const defaultValues = {
-  shopemail: "",
+  email: "",
   checkEmail: "",
   closeAccount: false,
   // askPasswordChange: false,
@@ -33,7 +34,7 @@ const schema = z.object({
   // oldPassword: z.string(),
   // password: z.string().min(6, 'Password must be at least 6 characters').or(z.literal('')).optional(),
   // confirmPassword: '',
-  shopemail: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
+  email: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
 	checkEmail: z.string().email('You must enter a valid email').nonempty('You must enter an email'),
 
   closeAccount: z.boolean(),
@@ -44,8 +45,8 @@ function CloseAccountSetting() {
   // const { data: securitySettings } = useGetSecuritySettingsQuery();
   // const [updateSecuritySettings, { error: updateError, isSuccess }] = useUpdateSecuritySettingsMutation();
 
-  const { data: shopData } = useGetMinimizedJustMyShopDetailsQuery();
-  const closeThisAccount = useShopSettingsCloseShopAccount()
+  const { data: shopData } = useGetMinimizedAuthUserDetails();
+  // const closeThisAccount = useShopSettingsCloseShopAccount()
   const {
     control,
     setError,
@@ -101,11 +102,11 @@ function CloseAccountSetting() {
    
    
 
-    if(getValues().shopemail?.toString() === getValues()?.checkEmail?.toString()){
+    if(getValues().email?.toString() === getValues()?.checkEmail?.toString()){
      
       if (window.confirm("Are you sure abou this?. We would love to have you reconsider, how do we help avoid this, because this action is irreversible as all data concerning you will be totally erased from our services")) {
         console.log("Closng user account...", getValues());
-        closeThisAccount.mutate()
+        // closeThisAccount.mutate()
       }
     }else{
       toast.error('you have entered incorrect details')
@@ -174,15 +175,15 @@ function CloseAccountSetting() {
                 <div className="mt-32 grid w-full gap-6 sm:grid-cols-4 space-y-32">
                   <div className="sm:col-span-4">
                     <Controller
-                      name="shopemail"
+                      name="email"
                       control={control}
                       render={({ field }) => (
                         <TextField
                           {...field}
                           label="Current email "
                           type="email"
-                          error={!!errors.shopemail}
-                          helperText={errors?.shopemail?.message}
+                          error={!!errors.email}
+                          helperText={errors?.email?.message}
                           variant="outlined"
                           fullWidth
                           InputProps={{

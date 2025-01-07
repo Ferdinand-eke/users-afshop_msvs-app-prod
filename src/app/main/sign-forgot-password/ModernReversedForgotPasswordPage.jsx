@@ -11,14 +11,15 @@ import Box from '@mui/material/Box';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { useShopForgotPass } from 'app/configs/data/server-calls/merchant-auth';
+import { useShopForgotPassWithOtp } from 'app/configs/data/server-calls/useUsers/useUsersQuery';
 /**
  * Form Validation Schema
  */
 const schema = z.object({
-	shopemail: z.string().email('You must enter a valid email').nonempty('You must enter an email')
+	email: z.string().email('You must enter a valid email').nonempty('You must enter an email')
 });
 const defaultValues = {
-	shopemail: ''
+	email: ''
 };
 
 /**
@@ -26,7 +27,7 @@ const defaultValues = {
  */
 function ModernReversedForgotPasswordPage() {
 
-	const {mutate:shopForgotPass, isLoading} = useShopForgotPass()
+	const {mutate:userForgotPass, isLoading} = useShopForgotPassWithOtp()
 
 	const { control, formState, handleSubmit, reset, getValues } = useForm({
 		mode: 'onChange',
@@ -36,8 +37,10 @@ function ModernReversedForgotPasswordPage() {
 	const { isValid, dirtyFields, errors } = formState;
 
 	function onSubmit() {
-		shopForgotPass(getValues())
+		userForgotPass(getValues())
 	}
+
+	
 
 	return (
 		<div className="flex min-w-0 flex-auto flex-col items-center sm:justify-center md:p-32">
@@ -161,16 +164,16 @@ function ModernReversedForgotPasswordPage() {
 							onSubmit={handleSubmit(onSubmit)}
 						>
 							<Controller
-								name="shopemail"
+								name="email"
 								control={control}
 								render={({ field }) => (
 									<TextField
 										{...field}
 										className="mb-24"
-										label="Shop Email"
+										label="Email"
 										type="email"
-										error={!!errors.shopemail}
-										helperText={errors?.shopemail?.message}
+										error={!!errors.email}
+										helperText={errors?.email?.message}
 										variant="outlined"
 										required
 										fullWidth
@@ -183,7 +186,7 @@ function ModernReversedForgotPasswordPage() {
 								color="secondary"
 								className=" mt-4 w-full"
 								aria-label="Register"
-								disabled={_.isEmpty(dirtyFields) || !isValid || shopForgotPass.isLoading}
+								disabled={_.isEmpty(dirtyFields) || !isValid || userForgotPass.isLoading}
 								type="submit"
 								size="large"
 							>

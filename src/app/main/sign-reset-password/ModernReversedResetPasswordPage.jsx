@@ -11,7 +11,8 @@ import Box from '@mui/material/Box';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
 import { get_SHOP_FORGOTPASS_TOKEN } from 'app/configs/utils/authUtils';
-import { useResetShopPass } from 'app/configs/data/server-calls/merchant-auth';
+// import { useResetShopPass } from 'app/configs/data/server-calls/merchant-auth';
+import { useResetShopPassFromOtp } from 'app/configs/data/server-calls/useUsers/useUsersQuery';
 /**
  * Form Validation Schema
  */
@@ -39,8 +40,9 @@ const defaultValues = {
 /**
  * The modern reset password page.
  */
+
 function ModernReversedResetPasswordPage() {
-	const {mutate:shopResetPass, isLoading} = useResetShopPass()
+	const {mutate:shopResetPass, isLoading} = useResetShopPassFromOtp()
 	const { control, formState, handleSubmit, reset, getValues, setValue } = useForm({
 		mode: 'onChange',
 		defaultValues,
@@ -48,6 +50,8 @@ function ModernReversedResetPasswordPage() {
 	});
 	const { isValid, dirtyFields, errors } = formState;
 
+	const activationTokenToCheck = get_SHOP_FORGOTPASS_TOKEN()
+	// console.log("user=ACTIVATION-CODE", activationTokenToCheck)
 	function onSubmit() {
 		const activationTokenToCheck = get_SHOP_FORGOTPASS_TOKEN()
 

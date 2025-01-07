@@ -5,8 +5,6 @@ import LandingCenterHome from './home/LandingCenterHome';
 import RegisterMerchantPage from './registermerchant/RegisterMerchantPage';
 
 const AcademyApp = lazy(() => import('./AcademyApp'));
-const Course = lazy(() => import('./course/Course'));
-const Courses = lazy(() => import('./courses/Courses'));
 /**
  * The Academy app config.
  */
@@ -42,21 +40,12 @@ const HomeAppConfig = {
 					path: '',
 					element: <Navigate to="/homeregistry/register/:accountId" />
 				},
-				// {
-				// 	path: '/africanshops/:courseId/*',
-				// 	element: <Course />
-				// },
-				// {
-				// 	path: 'africanshops',
-				// 	// element: <Courses />
-				// 	// element: <LandingCenterHome />
-				// },
 				
 				{
 					path: 'register/:accountId',
-					// element: <Courses />
 					element: <RegisterMerchantPage />
-				}
+				},
+
 			]
 		}
 	]

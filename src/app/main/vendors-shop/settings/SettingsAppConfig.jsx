@@ -10,6 +10,7 @@ const TeamTab = lazy(() => import('./tabs/TeamTab'));
 /**
  * The Settings app config.
  */
+
 const SettingsAppConfig = {
 	settings: {
 		layout: {
@@ -25,6 +26,7 @@ const SettingsAppConfig = {
 					path: 'account',
 					element: <AccountTab />
 				},
+				
 				{
 					path: 'security',
 					element: <SecurityTab />

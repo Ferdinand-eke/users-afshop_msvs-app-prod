@@ -18,7 +18,7 @@ const schema = z.object({
 //     .string()
 //     .email("You must enter a valid email")
 //     .nonempty("You must enter an email"),
-shopemail: z
+email: z
     .string()
     .email("You must enter a valid email")
     .nonempty("You must enter an email"),
@@ -32,7 +32,7 @@ const defaultValues = {
   // password: '',
   // remember: true
 
-  shopemail: "",
+  email: "",
   password: "",
   remember: true,
 };
@@ -48,15 +48,15 @@ function JwtSignInForm() {
  
 
   function onSubmit(formData) {
-    console.log("Login-Values", formData);
+    // console.log("Login-Values", formData);
     const { 
 		// email,
-		shopemail,
+		email,
 		password } = formData;
     signIn({
       // email,
       // password
-      shopemail,
+      email,
       password,
     }).catch((error) => {
       console.log("FormJSXError", error);
@@ -97,7 +97,7 @@ function JwtSignInForm() {
 			/> */}
 
       <Controller
-        name="shopemail"
+        name="email"
         control={control}
         render={({ field }) => (
           <TextField
@@ -106,8 +106,8 @@ function JwtSignInForm() {
             label="Email"
             autoFocus
             type="email"
-            error={!!errors.shopemail}
-            helperText={errors?.shopemail?.message}
+            error={!!errors.email}
+            helperText={errors?.email?.message}
             variant="outlined"
             required
             fullWidth
@@ -166,7 +166,7 @@ function JwtSignInForm() {
         className=" mt-16 w-full"
         aria-label="Sign in"
         //|| isLoading
-        disabled={_.isEmpty(dirtyFields) || !isValid}
+        // disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
         type="submit"
         size="large"
       >

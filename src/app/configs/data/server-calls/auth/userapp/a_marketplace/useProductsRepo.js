@@ -1,0 +1,267 @@
+import { addToUserCommodityCartApi, getPlacedOrders, getUserInvoices, getUserShoppingCart, payAndPlaceOrderApi, removeCommodityFromCartApi, updateCommodityCartQtyApi } from 'app/configs/data/client/RepositoryAuthClient';
+import { getAllProducts, getProductByCategory, getProductById } from 'app/configs/data/client/RepositoryClient';
+import { useCookies } from 'react-cookie';
+import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useNavigate } from 'react-router';
+import { toast } from 'react-toastify';
+
+
+
+export default function useGetAllProducts() {
+    return useQuery(['__marketplace_products'], getAllProducts);
+  }
+
+  export function useGetProductByCategory(category) {
+    if(!category ){
+      return {};
+    }
+    return useQuery(
+      ['__marketplace_products_by_products', category],
+      () => getProductByCategory(category),
+      {
+        enabled: Boolean(category),
+      }
+    );
+  }
+
+  export function useGetSingleProduct(productId) {
+    // if(!productId || productId === 'new'){
+    //   return {};
+    // }
+    return useQuery(
+      ['__marketplace_products', productId],
+      () => getProductById(productId),
+      {
+        enabled: Boolean(productId),
+      }
+    );
+  }
+
+
+
+/***
+ * #################################################################
+ * COMMODITY CART MANAGEMENT STARTS HERE
+ * #################################################################
+ */
+export function useMyCart() {
+  return useQuery(['__cart'], getUserShoppingCart);
+}
+
+/****Manage COMOODITY CART starts */
+/****Create add to foodcart : => Done for Africanshops */
+export function useAddToCart() {
+  const queryClient = useQueryClient();
+  return useMutation(
+    (cartItem) => {
+      return addToUserCommodityCartApi(cartItem);
+    },
+
+    {
+      onSuccess: (data) => {
+
+        if (data?.data?.success && data?.data?.savedCart) {
+          toast.success("added to cart successfully!");
+          queryClient.invalidateQueries(["__cart"]);
+          queryClient.invalidateQueries(["__marketplace_products"]);
+          queryClient.refetchQueries("__cart", { force: true });
+          queryClient.refetchQueries("__marketplace_products", { force: true });
+        } else if (data?.data?.error) {
+          toast.error(data?.data?.error?.message);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+    },
+    {
+      onError: (error, rollback) => {
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        rollback();
+      },
+    }
+  );
+}
+
+/**Updated cart item quantity */
+export function useUpdateCartItemQty() {
+  // const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  return useMutation(
+    (cartItem) => {
+      console.log("Run Product : ", cartItem);
+
+      return updateCommodityCartQtyApi(cartItem);
+    },
+
+    {
+      onSuccess: (data) => {
+
+        if (data?.data?.success && data?.data?.updatedCartQty) {
+          toast.success(data?.data?.message);
+          queryClient.invalidateQueries(["__cart"]);
+          queryClient.refetchQueries("__cart", { force: true });
+          // navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
+        } else if (data?.data?.error) {
+          toast.error(data?.data?.error?.message);
+          return;
+         } else if (data?.data?.infomessage) {
+          toast.info(data?.data?.infomessage);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+    },
+    {
+      onError: (error, rollback) => {
+        // return;
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        console.log("MutationError", error.response.data);
+        console.log("MutationError", error.data);
+        rollback();
+      },
+    }
+  );
+}
+
+/**remove cart item  */
+export function useRemoveCartItem() {
+  // const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  return useMutation(
+    (cartItem) => {
+      return removeCommodityFromCartApi(cartItem);
+    },
+
+    {
+      onSuccess: (data) => {
+        if (data?.data?.success && data?.data?.updatedCartQty) {
+          toast.success(data?.data?.message);
+          queryClient.invalidateQueries(["__cart"]);
+          queryClient.refetchQueries("__cart", { force: true });
+          // navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
+        } else if (data?.data?.error) {
+          toast.error(data?.data?.error?.message);
+          return;
+         } else if (data?.data?.infomessage) {
+          toast.info(data?.data?.infomessage);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+    },
+    {
+      onError: (error, rollback) => {
+        // return;
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        rollback();
+      },
+    }
+  );
+}
+
+/***
+ * #################################################################
+ * COMMODITY CART MANAGEMENT ENDS HERE
+ * #################################################################
+ */
+/**-------------------------------------------------------------------------------------------------------- */
+
+/***
+ * #################################################################
+ * ORDER FOR COMMODITY MANAGEMENT STARTS HERE
+ * #################################################################
+ */
+
+/*****Pay and make payment for order */
+export function usePayAndPlaceOrder() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  // const [cookies, setCookie] = useCookies(['cart']);
+
+
+  return useMutation(
+    (orderData) => {
+      return payAndPlaceOrderApi(orderData);
+    },
+
+    {
+      onSuccess: (data) => {
+
+        if (data?.data?.success ) {
+          toast.success(data?.data?.message);
+          queryClient.invalidateQueries(["__cart"]);
+          queryClient.refetchQueries("__cart", { force: true });
+          navigate(`/marketplace/order/${data?.data?.order}/payment-success`);
+        } else if (data?.data?.error) {
+          toast.error(data?.data?.error?.message);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+    },
+    {
+      onError: (error, rollback) => {
+        // return;
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        console.log("MutationError", error.response.data);
+        console.log("MutationError", error.data);
+        rollback();
+      },
+    }
+  );
+}
+
+
+/***Get Authenticated user orders */
+export function useGetAuthUserOrders(userId) {
+  return useQuery(
+    ['__authuser_orders', userId],
+    () => getUserInvoices(userId),
+    {
+      enabled: Boolean(userId),
+    }
+  );
+}
+
+/***Get orders and order items  */
+export function useGetAuthUserOrderItems(orderId) {
+  // if(!orderId || orderId === 'new'){
+  //   return {};
+  // }
+  return useQuery(
+    ['__authuser_order_items', orderId],
+    () => getPlacedOrders(orderId),
+    {
+      enabled: Boolean(orderId),
+    }
+  );
+}
+/***
+ * #################################################################
+ * ORDER FOR COMMODITY MANAGEMENT ENDS HERE
+ * #################################################################
+ */

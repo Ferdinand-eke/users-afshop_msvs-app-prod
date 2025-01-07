@@ -135,7 +135,7 @@ function Course() {
 						))}
 					</SwipeableViews>
 
-					<Hidden lgDown>
+					{/* <Hidden lgDown>
 						<div className="flex justify-center w-full sticky bottom-0 p-16 pb-32 z-10">
 							<ButtonGroup
 								variant="contained"
@@ -165,7 +165,7 @@ function Course() {
 								</Button>
 							</ButtonGroup>
 						</div>
-					</Hidden>
+					</Hidden> */}
 
 					<Hidden lgUp>
 						<Box

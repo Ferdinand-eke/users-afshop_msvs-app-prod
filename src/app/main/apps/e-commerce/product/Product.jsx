@@ -47,6 +47,7 @@ function Product() {
 		defaultValues: {},
 		resolver: zodResolver(schema)
 	});
+	
 	const { reset, watch } = methods;
 	const form = watch();
 	useEffect(() => {

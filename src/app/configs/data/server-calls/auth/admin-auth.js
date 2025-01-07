@@ -5,39 +5,43 @@ import jwtDecode from "jwt-decode";
 import Cookie from "js-cookie";
 
 import { toast } from "react-toastify";
+
 import { adminSignIn } from "../../client/clientToApiRoutes";
+import { clientSigin } from "../../client/RepositoryClient";
+import { useNavigate } from "react-router";
 // import { adminSigin } from "../apiRoutes";
 
 export function useShopAdminLogin() {
   // const navigate = useNavigate();
-  return useMutation(adminSignIn, {
+  return useMutation(clientSigin, {
     onSuccess: (data) => {
-      console.log("userFromAuthentication", data?.data?.data);
-      console.log("tokenFromAuthentication", data?.data?._nnip_shop_ASHP_ALOG);
+      // console.log("ALL-DATA", data);
+      // console.log("userFromAuthentication", data?.data?.data);
+      // console.log("tokenFromAuthentication", data?.data?.token);
 
       //  return
-      if (data?.data?.data && data?.data?._nnip_shop_ASHP_ALOG) {
+      if (data?.data?.data && data?.data?.token) {
         /**============================================================================== */
 
         const transFormedUser = {
           id: data?.data?.data?._id,
-          name: data?.data?.data?.shopname,
-          email: data?.data?.data?.shopemail,
-          role: "merchant",
+          name: data?.data?.data?.name,
+          email: data?.data?.data?.email,
+          role: "user",
 
-          isAdmin: data?.data?.data?.isAdmin,
+          // isAdmin: data?.data?.data?.isAdmin,
           avatar: data?.data?.data?.avatar,
         };
 
-        // setSession(_nnip_shop_ASHP_ALOG);   
-        if (data?.data?._nnip_shop_ASHP_ALOG) {
-          localStorage.setItem(config.tokenStorageKey, data?.data?._nnip_shop_ASHP_ALOG);
-          // axios.defaults.headers.common.Authorization = `Bearer ${_nnip_shop_ASHP_ALOG}`;
-          axios.defaults.headers.common.accessToken = `${data?.data?._nnip_shop_ASHP_ALOG}`;
+        // setSession(token);   authClientUserToken
+        if (data?.data?.token) {
+          localStorage.setItem(config.tokenStorageKey, data?.data?.token);
+          // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
+          axios.defaults.headers.common.accessToken = `${data?.data?.token}`;
         }
 
-        // setIsAuthenticated(setIsAthenticatedStorage(_nnip_shop_ASHP_ALOG));
-        if (isTokenValid(data?.data?._nnip_shop_ASHP_ALOG)) {
+        // setIsAuthenticated(setIsAthenticatedStorage(token));
+        if (isTokenValid(data?.data?.token)) {
           localStorage.setItem(config.isAuthenticatedStatus, true);
         } else {
           localStorage.setItem(config.isAuthenticatedStatus, false);
@@ -45,7 +49,13 @@ export function useShopAdminLogin() {
 
         if(transFormedUser){
           setUserCredentialsStorage(transFormedUser);
-          window.location.reload();
+
+        //  if(isSet){
+        //   window.location.reload();
+        //  }
+        
+          // navigate()
+          // navigate('/')
         }
 
        
@@ -92,7 +102,11 @@ const isTokenValid = (accessToken) => {
 };
 
 const setUserCredentialsStorage = (userCredentials) => {
-  console.log("UserCredentials TO-SET", userCredentials);
+  // console.log("UserCredentials TO-SET", userCredentials);
   // localStorage.setItem(config.adminCredentials, JSON.stringify({ userCredentials }))
-  Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
+  const setUserCookie = Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
+
+    if(setUserCookie){
+          window.location.reload();
+         }
 };
