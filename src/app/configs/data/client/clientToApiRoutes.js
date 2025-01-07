@@ -9,10 +9,10 @@ import {
 import { getAdminAccessToken } from "../utils/opsUtils";
 import { toast } from "react-toastify";
 
-const API_BASE_URL = `http://localhost:8000`;
+// const API_BASE_URL = `http://localhost:8000`;
 // const API_BASE_URL = import.meta.env.VITE_API_BASE_URL
 
-// const API_BASE_URL = 'https://coral-app-n8ox9.ondigitalocean.app'
+const API_BASE_URL = 'https://coral-app-n8ox9.ondigitalocean.app'
 
 /***================================================================================================================= */
 export const customHeaders = {
