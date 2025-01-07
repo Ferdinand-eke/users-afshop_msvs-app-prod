@@ -1,7 +1,7 @@
 import DemoContent from '@fuse/core/DemoContent';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
-import { ListItemIcon } from '@mui/material';
+import { Button, ListItemIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
 
 const Root = styled('div')({
