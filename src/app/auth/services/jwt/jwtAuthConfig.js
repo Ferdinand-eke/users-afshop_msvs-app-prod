@@ -1,9 +1,9 @@
 // // const baseUrl = import.meta.env.VITE_API_BASE_URL;
 // const baseUrl = process.env.VITE_API_BASE_URL;
 
-const baseUrl = 'http://localhost:8000'
+// const baseUrl = 'http://localhost:8000'
 
-// const baseUrl = 'https://coral-app-n8ox9.ondigitalocean.app' //Africanshops
+const baseUrl = 'https://coral-app-n8ox9.ondigitalocean.app' //Africanshops
 
 const jwtAuthConfig = {
 	tokenStorageKey: 'jwt_access_token',

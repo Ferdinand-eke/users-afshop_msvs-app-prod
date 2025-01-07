@@ -6,11 +6,11 @@ import { API_ENDPOINTS } from "./serverEndpoints/endpoints";
 /**
  * ####MAIN ENDPOINTS STARTS
  */
-const baseDomain = "http://localhost:8000"; //Localhost API for africanshops
+// const baseDomain = "http://localhost:8000"; //Localhost API for africanshops
 //=================================================================================
 
 /******Digital Ocean : Current Main server*/
-// const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
+const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
 // const baseDomain = import.meta.env.API_BASE_URL;
 //=============================================================================
 

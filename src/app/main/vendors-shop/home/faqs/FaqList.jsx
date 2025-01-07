@@ -75,4 +75,5 @@ function FaqList(props) {
 	);
 }
 
+
 export default FaqList;
