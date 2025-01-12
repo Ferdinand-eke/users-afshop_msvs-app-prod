@@ -82,13 +82,12 @@ function ToolbarLayout1(props) {
               
               {user?.email && <LogoHome />}
 
-            <Hidden lgDown>
+            {/* <Hidden lgDown> */}
               {(!user?.role ||
                 (Array.isArray(user?.role) && user?.role?.length === 0)) && (
                 <LogoHome />
               )}
-              {/* <Logo /> */}
-            </Hidden>
+            {/* </Hidden> */}
           </div>
 
           <div className="flex h-full items-center overflow-x-auto px-8">
