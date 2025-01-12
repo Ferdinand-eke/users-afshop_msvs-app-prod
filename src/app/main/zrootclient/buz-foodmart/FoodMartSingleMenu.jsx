@@ -60,6 +60,8 @@ function FoodMartSingleMenu() {
   // console.log("MENU_ITEM", menu)
   // console.log("FOOD_CART", foodCart?.data?.foodcart)
   console.log("11. foodCart", foodCart?.data?.foodcart)
+  
+
 
 
   const onAddToFoodCart = useCallback(() => {
@@ -88,6 +90,7 @@ function FoodMartSingleMenu() {
         // shopMarketId: product?.data?.market?._id,
         foodMartId:menu?.data?.foodMartVendor
       }
+
       const setCartSessionPayload = storeFoodVendorSession(sessionPayload);
       if(setCartSessionPayload){
         addToFoodCart(formData);

@@ -24,6 +24,7 @@ import {
   formatCurrency,
 } from "src/app/main/vendors-shop/pos/PosUtils";
 import {
+  useGetMyMarketplaceCartByUserCred,
   useMyCart,
   useUpdateCartItemQty,
 } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
@@ -210,6 +211,7 @@ const CartSummary = ({ subtotal, intemsInCart }) => {
   );
 };
 
+
 /**
  * The FOODMART CART.
  */
@@ -392,8 +394,10 @@ function Cart() {
 
   const user = useAppSelector(selectUser);
 
+
   const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart();
   const { data: cart, isLoading: cartLoading } = useMyCart();
+  // const {data:userCartData} = useGetMyMarketplaceCartByUserCred(user?.id)
 
   return (
     <FusePageSimple

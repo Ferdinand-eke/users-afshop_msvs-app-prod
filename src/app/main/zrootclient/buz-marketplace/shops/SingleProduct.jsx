@@ -17,6 +17,7 @@ import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { useNavigate, useParams } from "react-router";
 import {
   useAddToCart,
+  useGetMyMarketplaceCartByUserCred,
   useGetSingleProduct,
   //  useMyCart
 } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
@@ -61,12 +62,12 @@ function SingleProduct() {
   const { productId } = routeParams;
   const { data: product, isLoading, isError } = useGetSingleProduct(productId);
   const { mutate: addToart, isLoading: cartLoading } = useAddToCart();
-  // const { data: cart,  } = useMyCart();
 
-  const [cartloading, setCartLoading] = useState(false);
+  // const [cartloading, setCartLoading] = useState(false);
   const [cart, setCart] = useState([]);
+  const {data:userCartData, isLoading:loadingCart} = useGetMyMarketplaceCartByUserCred(user?.id)
 
-  // console.log("cartDetails", cart);
+  console.log("cartDetailsForAuth&UnAuth", userCartData?.data?.cartItems);
 
   const onAddToUserCart = useCallback(() => {
     if (!user?.email) {
@@ -85,7 +86,7 @@ function SingleProduct() {
     // console.log("ADD-To-CART-FORMDATA", formData)
     // console.log("Item_SHOP_OWNER", product?.data?.shop?._id) businezLga
 
-    if (cart.length === 0) {
+    if (userCartData?.data?.cartItems?.length === 0) {
       const sessionPayload = {
         shopID: product?.data?.shop?._id,
         shopCountryOrigin: product?.data?.shop?.businessCountry,
@@ -119,47 +120,48 @@ function SingleProduct() {
 
     
   }, [
-    // totalPrice,
-    // dateRange,
     product?.data?._id,
     routeParams,
     user,
-    cart,
-    cart.length
+    userCartData?.data?.cartItems,
+    userCartData?.data?.cartItems?.length
   ]);
+
+
+
+
   /**use\
    * UseEffect actions
    */
-  useEffect(() => {
-    if (user?.email) {
-      getCartWhenAuth();
-    }
-  }, [user?.email, cart?.length]);
 
-  // const getCartWhenAuth = () =>{
 
+  // useEffect(() => {
+  //   if (user?.email) {
+  //     getCartWhenAuth();
+  //   }
+  // }, [user?.email, cart?.length]);
+
+ 
+
+  // async function getCartWhenAuth() {
+  //   setCartLoading(true);
+  //   const cartResponseData = await getUserShoppingCart();
+
+  //   if (cartResponseData) {
+  //     setCart(cartResponseData?.data?.cartItems);
+
+  //     setTimeout(
+  //       function () {
+  //         setCartLoading(false);
+  //       }.bind(this),
+  //       250
+  //     );
+  //   }
   // }
-
-  async function getCartWhenAuth() {
-    setCartLoading(true);
-    const cartResponseData = await getUserShoppingCart();
-    // console.log('cartFETCH', cartResponseData.data)
-
-    if (cartResponseData) {
-      setCart(cartResponseData?.data?.cartItems);
-
-      setTimeout(
-        function () {
-          setCartLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
 
   
 
-  console.log("CARTS_ITEMS", cart);
+  // console.log("CARTS_ITEMS", cart);
 
   if (isLoading) {
     return <FuseLoading />;
@@ -296,7 +298,7 @@ function SingleProduct() {
                       onSubmit={onAddToUserCart}
                       loading={cartLoading}
                       productId={productId}
-                      cartItems={cart}
+                      cartItems={userCartData?.data?.cartItems}
                     />
                     <div className="mt-4">
                       <h2 className="text-lg font-bold">PROMOTIONS</h2>

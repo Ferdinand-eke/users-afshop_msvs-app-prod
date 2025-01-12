@@ -1,5 +1,5 @@
-import { addToUserCommodityCartApi, getPlacedOrders, getUserInvoices, getUserShoppingCart, payAndPlaceOrderApi, removeCommodityFromCartApi, updateCommodityCartQtyApi } from 'app/configs/data/client/RepositoryAuthClient';
-import { getAllProducts, getProductByCategory, getProductById } from 'app/configs/data/client/RepositoryClient';
+import { addToUserCommodityCartApi, getPlacedOrders, getUserInvoices, getUserShoppingCart, getUserShoppingCartForAuthAndGuest, payAndPlaceOrderApi, removeCommodityFromCartApi, updateCommodityCartQtyApi } from 'app/configs/data/client/RepositoryAuthClient';
+import { getAllProducts, getMyMarketplaceCartApi, getProductByCategory, getProductById } from 'app/configs/data/client/RepositoryClient';
 import { useCookies } from 'react-cookie';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
@@ -48,6 +48,23 @@ export function useMyCart() {
   return useQuery(['__cart'], getUserShoppingCart);
 }
 
+/***get menu of user marketplace cart items for both AuthUser && UnAuth-User*/
+export function useGetMyMarketplaceCartByUserCred(userId) {
+  if(!userId || userId === 'new'){
+    return {};
+  }
+  return useQuery(
+    ['__cart', userId],
+    () => getUserShoppingCartForAuthAndGuest(userId),
+    {
+      enabled: Boolean(userId),
+
+    }
+  );
+}
+
+
+
 /****Manage COMOODITY CART starts */
 /****Create add to foodcart : => Done for Africanshops */
 export function useAddToCart() {
@@ -88,6 +105,7 @@ export function useAddToCart() {
   );
 }
 
+
 /**Updated cart item quantity */
 export function useUpdateCartItemQty() {
   // const navigate = useNavigate();
@@ -99,6 +117,7 @@ export function useUpdateCartItemQty() {
       return updateCommodityCartQtyApi(cartItem);
     },
 
+    
     {
       onSuccess: (data) => {
 
@@ -192,6 +211,7 @@ export function useRemoveCartItem() {
 
 /*****Pay and make payment for order */
 export function usePayAndPlaceOrder() {
+
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   // const [cookies, setCookie] = useCookies(['cart']);
@@ -205,11 +225,15 @@ export function usePayAndPlaceOrder() {
     {
       onSuccess: (data) => {
 
+        // console.log('payCartOrder', data)
+        console.log("orderPaymentData_PaymentRESULT", data?.data?.order?.paymentResult)
+
         if (data?.data?.success ) {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__cart"]);
           queryClient.refetchQueries("__cart", { force: true });
-          navigate(`/marketplace/order/${data?.data?.order}/payment-success`);
+          console.log("orderPaymentData_STATIS", data?.data?.order?.paymentResult?.status)
+          navigate(`/marketplace/order/${data?.data?.order?._id}/payment-success`);
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
           return;
@@ -236,6 +260,7 @@ export function usePayAndPlaceOrder() {
 }
 
 
+
 /***Get Authenticated user orders */
 export function useGetAuthUserOrders(userId) {
   return useQuery(
@@ -246,6 +271,7 @@ export function useGetAuthUserOrders(userId) {
     }
   );
 }
+
 
 /***Get orders and order items  */
 export function useGetAuthUserOrderItems(orderId) {

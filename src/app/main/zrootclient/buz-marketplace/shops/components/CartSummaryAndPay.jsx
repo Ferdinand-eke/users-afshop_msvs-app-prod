@@ -61,7 +61,7 @@ const CartSummaryAndPay = ({
   const vat = 800;
   const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
 
-  const {mutate:payAndOrder} = usePayAndPlaceOrder()
+  const {mutate:payAndOrder, isLoading:loadingWhilePaying} = usePayAndPlaceOrder()
 
   console.log("ITEMS", intemsInCart)
 
@@ -109,6 +109,7 @@ const CartSummaryAndPay = ({
 
     };
 
+
     console.log("ORDER-FORM_DATA", oderData)
 
       // return
@@ -125,6 +126,8 @@ const CartSummaryAndPay = ({
   const onClose = () => {
     alert("Wait! You need this order confirmed, don't go!!!!");
   };
+
+  // if(loadingWhilePaying){}
 
   return (
     <div>
@@ -206,6 +209,7 @@ const CartSummaryAndPay = ({
               || !orderStateProvinceDestination 
               || !orderLgaDestination 
               || !orderMarketPickupDestination
+              || loadingWhilePaying
             }
           />
         )}

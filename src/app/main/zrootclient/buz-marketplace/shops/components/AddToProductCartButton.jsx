@@ -13,7 +13,7 @@ const AddToProductCartButton = ({
     checkArray?.push(element?.productId?._id);
   });
 
-  // console.log('ArrayCheck', checkArray)
+  console.log('ArrayCheck', checkArray)
   return (
     <div
     //   className="

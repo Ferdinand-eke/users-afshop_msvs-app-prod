@@ -18,7 +18,7 @@ import {
   useGetUserSingleTrip,
   useReservationPaidUpdateMutation,
 } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
-import { useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import {
   formatCurrency,
   generateClientUID,
@@ -108,6 +108,7 @@ function CartReview() {
   const user = useAppSelector(selectUser);
   // const paymentMethods = ["Paystack", "Flutterwave"];
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
+  const navigate = useNavigate()
 
   // const routeParams = useParams();
   // const { reservationId } = routeParams;
@@ -120,10 +121,15 @@ function CartReview() {
   const { data: cart, isLoading: cartLoading } = useMyCart();
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
 
-  // console.log("PAYMENT_SELECT", selectedPaymentOption);
+  // console.log("PAYMENT_SELECT", selectedPaymentOption cart?.data?.cartItems);
+
+  if(cart?.data?.cartItems?.length < 1){
+    navigate('/marketplace/cart')
+  }
   const handleChange = (event) => {
     setSelectedPaymentOption(event.target.value);
   };
+
 
   const methods = useForm({
     mode: "onChange",
@@ -774,6 +780,7 @@ function CartReview() {
             </div>
           </div>
         </>
+
       }
       scroll={isMobile ? "normal" : "page"}
     />

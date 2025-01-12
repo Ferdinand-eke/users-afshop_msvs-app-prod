@@ -50,10 +50,11 @@ export const storeShoppingSession = async (payloadData) => {
   console.log("Adding to cartDetails 0", cartItems);
 
   if (cartItems.length < 1) {
-    console.log("Adding to cart when < 1");
+    console.log("Adding to cart when < 1", cartItems.length);
     Cookie.set("cartSession", JSON.stringify({ payloadData }));
   }
 };
+
 
 /****get user client shopping session */
 export function getShoppingSession() {
@@ -88,6 +89,7 @@ async function getCartItems() {
 export const storeFoodVendorSession = async (payloadData) => {
   const cartItems = await getFoodCartItems();
 
+  console.log("Adding to foodCartDetails 0", cartItems);
   if (cartItems.length < 1) {
     Cookie.set("foodCartSession", JSON.stringify({ payloadData }));
   }

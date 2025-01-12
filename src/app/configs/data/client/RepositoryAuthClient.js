@@ -295,6 +295,11 @@ export const getUserFoodInvoicesAndItemsByIdEnpoint = (foodOrderId) => {
 export const getUserShoppingCart = () => {
   return AuthApi().get(`${API_ENDPOINTS.GET_MY_CART}`);
 };
+export const getUserShoppingCartForAuthAndGuest = (userId) => {
+  return AuthApi().get(`${API_ENDPOINTS.GET_MY_CART}/${userId}`);
+};
+
+
 
 /***add a new marketplace Cart => Done for africanshops */
 export const addToUserCommodityCartApi = (formData) => {

@@ -3,7 +3,7 @@ import { Navigate } from 'react-router-dom';
 import { authRoles } from 'src/app/auth';
 import BlankSample from '../../user-interface/page-layouts/blank';
 const FoodCartReview = lazy(() => import('./FoodCartReview'));
-const PaymenSuccess = lazy(() => import('./PaymenSucces'));
+const FoodmartOrderPaymenSucces = lazy(() => import('./FoodmartOrderPaymenSucces'));
 const FoodmartOrders = lazy(() => import('./FoodmartOrders'));
 const FoodMartOrdersDetail = lazy(() => import('./FoodMartOrdersDetail'));
 
@@ -43,7 +43,7 @@ const userFoodMartPagesConfig = {
 
 		{
 			path: 'foodmarts/:orderId/payment-success',
-			element: <PaymenSuccess />
+			element: <FoodmartOrderPaymenSucces />
 		},
 
 		{

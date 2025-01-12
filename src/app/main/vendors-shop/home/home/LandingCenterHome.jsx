@@ -66,7 +66,7 @@ function LandingCenterHome() {
               animate={{ opacity: 1, transition: { delay: 0 } }}
             >
               <Typography color="inherit" className="text-18 font-semibold">
-                 BECOME A PART OF OUR COMMUNITY, AS WE DRIVE AFRICA'S TRADE HUB 
+                BECOME A PART OF OUR COMMUNITY, AS WE DRIVE AFRICA'S TRADE HUB
               </Typography>
             </motion.div>
             <motion.div
@@ -77,19 +77,6 @@ function LandingCenterHome() {
                 Millions Of Shoppers Can’t Wait To See What You Have In Store
               </Typography>
             </motion.div>
-            {/* <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0.3 } }}
-            >
-              <Typography
-                color="text.secondary"
-                className="text-16 sm:text-20 mt-16 sm:mt-24 opacity-75 tracking-tight max-w-md text-center"
-              >
-                Our merchant account packages got you covered for businesses in
-                real estate, sales, logistics and will step you through the
-                process of unboarding and managing your business.
-              </Typography>
-            </motion.div> */}
           </div>
 
           <svg
@@ -113,12 +100,11 @@ function LandingCenterHome() {
         </Box>
       </ThemeProvider>
 
-      <div className="flex flex-col items-center px-24 sm:px-40">
+      <div className="flex flex-col items-center px-24 sm:px-40 mb-24">
         <div className=" gap-y-32 md:gap-y-0 md:gap-x-24 w-full max-w-sm md:max-w-4xl -mt-64 sm:-mt-120 z-999">
-         
-          <div className="  shadow hover:shadow-lg container mx-auto p-4">
-            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-[340px]">
-              <div className="md:col-span-3 bg-white p-4 rounded-lg shadow overflow-scroll">
+          <div className=" flex flex-col shadow hover:shadow-lg container mx-auto p-4">
+            <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-[350px] mb-64 md:mb-8">
+              <div className="md:col-span-3 bg-white p-4 rounded-lg shadow overflow-scroll xs:h-[150px] mb-4">
                 <ul className="space-y-4">
                   <li className="flex items-center  px-4 rounded-4 hover:bg-orange-500 cursor-pointer">
                     <i className="fas fa-blender-phone mr-2"></i>
@@ -169,8 +155,7 @@ function LandingCenterHome() {
                     <span>Other categories</span>
                   </li>
 
-				  {/* after i add links */}
-				  <li className="flex items-center  px-4 rounded-4 hover:bg-orange-500 cursor-pointer">
+                  <li className="flex items-center  px-4 rounded-4 hover:bg-orange-500 cursor-pointer">
                     <i className="fas fa-tshirt mr-2"></i>
                     <span>Fashion</span>
                   </li>
@@ -198,7 +183,7 @@ function LandingCenterHome() {
                     <i className="fas fa-ellipsis-h mr-2"></i>
                     <span>Other categories</span>
                   </li>
-				  <li className="flex items-center  px-4 rounded-4 hover:bg-orange-500 cursor-pointer">
+                  <li className="flex items-center  px-4 rounded-4 hover:bg-orange-500 cursor-pointer">
                     <i className="fas fa-tshirt mr-2"></i>
                     <span>Fashion</span>
                   </li>
@@ -226,10 +211,9 @@ function LandingCenterHome() {
                     <i className="fas fa-ellipsis-h mr-2"></i>
                     <span>Other categories</span>
                   </li>
-				  
                 </ul>
               </div>
-              <div className="md:col-span-6 h-full">
+              <div className="md:col-span-6 h-[350px]">
                 <div className="bg-orange-500 text-white p-6 rounded-lg shadow  h-full">
                   <h1 className="text-4xl font-bold">Fresh Deals</h1>
                   <p className="text-xl mt-2">
@@ -244,8 +228,8 @@ function LandingCenterHome() {
                   />
                 </div>
               </div>
-              <div className="flex flex-col md:col-span-3 space-y-8">
-                <div className="bg-gray-200 rounded-4 p-4 gap-4 space-y-8">
+              <div className=" flex flex-col md:col-span-3 space-y-8  h-full">
+                <div className="h-full bg-gray-200 rounded-4 p-4 gap-4 space-y-8">
                   <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
                     <div className="flex items-center">
                       <i className="fas fa-phone-alt mr-2"></i>
@@ -275,78 +259,72 @@ function LandingCenterHome() {
                 </div>
               </div>
             </div>
+          </div>
 
 
 
-            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-4">
-              <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
-                <img
-                  src="https://plus.unsplash.com/premium_photo-1699855177060-7202c67834b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
-                  alt="TV & Audio Deals"
-                  className="rounded-lg h-[140px]"
-                />
-                <p className="text-center mt-2">TV & Audio Deals</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
-                <img
-                  src="https://placehold.co/200x200"
-                  alt="New Arrival"
-                 className="rounded-lg h-[140px]"
-                />
-                <p className="text-center mt-2">New Arrival</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1644161170685-2f5678222db8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
-                  alt="Clearance Sale"
-                 className="rounded-lg h-[140px]"
-                />
-                <p className="text-center mt-2">Clearance Sale</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
-                <img
-                  src="https://placehold.co/200x200"
-                  alt="Phones & Tablets Deals"
-                 className="rounded-lg h-[140px]"
-                />
-                <p className="text-center mt-2">Phones & Tablets Deals</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
-                <img
-                  src="https://images.unsplash.com/photo-1644161170685-2f5678222db8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
-                  alt="Appliances Deals"
-                 className="rounded-lg h-[140px]"
-                />
-                <p className="text-center mt-2">Appliances Deals</p>
-              </div>
-              <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
-                <img
-                  src="https://placehold.co/200x200"
-                  alt="Beverages"
-                 className="rounded-lg h-[140px]"
-                />
-                <p className="text-center mt-2">Beverages</p>
-              </div>
-            </div>
+          <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mt-80 md:mt-8">
+          <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
+            <img
+              src="https://plus.unsplash.com/premium_photo-1699855177060-7202c67834b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
+              alt="TV & Audio Deals"
+              className="rounded-lg h-[140px]"
+            />
+            <p className="text-center mt-2">TV & Audio Deals</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
+            <img
+              src="https://placehold.co/200x200"
+              alt="New Arrival"
+              className="rounded-lg h-[140px]"
+            />
+            <p className="text-center mt-2">New Arrival</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
+            <img
+              src="https://images.unsplash.com/photo-1644161170685-2f5678222db8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
+              alt="Clearance Sale"
+              className="rounded-lg h-[140px]"
+            />
+            <p className="text-center mt-2">Clearance Sale</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
+            <img
+              src="https://placehold.co/200x200"
+              alt="Phones & Tablets Deals"
+              className="rounded-lg h-[140px]"
+            />
+            <p className="text-center mt-2">Phones & Tablets Deals</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
+            <img
+              src="https://images.unsplash.com/photo-1644161170685-2f5678222db8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
+              alt="Appliances Deals"
+              className="rounded-lg h-[140px]"
+            />
+            <p className="text-center mt-2">Appliances Deals</p>
+          </div>
+          <div className="bg-white p-4 rounded-lg shadow transition ease-in-out delay-150  hover:scale-105 cursor-pointer">
+            <img
+              src="https://placehold.co/200x200"
+              alt="Beverages"
+              className="rounded-lg h-[140px]"
+            />
+            <p className="text-center mt-2">Beverages</p>
           </div>
         </div>
+        </div>
+
+        
       </div>
 
-      {/* <Typography className="mt-96 px-16 text-3xl sm:text-5xl font-extrabold leading-tight tracking-tight text-center">
-        HOW IT WORKS
-      </Typography>
-      <Typography
-        className="mt-8 px-16 text-xl text-center"
-        color="text.secondary"
-      >
-        Easy to start selling online on AfricanShops, just 4 simple steps
-      </Typography> */}
+      <div className=" flex flex-col shadow hover:shadow-lg container mx-auto p-4 mt-64">
+        {/* the categories lookup */}
+      </div>
 
       <div className="flex flex-col w-full px-16 items-center my-16">
         <FaqList className="w-full max-w-4xl" list={stepsToUnboard} />
       </div>
-
-      {/* <ModernPricingPage /> */}
     </div>
   );
 }

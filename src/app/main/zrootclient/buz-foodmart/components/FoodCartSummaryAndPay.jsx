@@ -29,6 +29,7 @@ const FoodCartSummaryAndPay = ({
   isValid,
 }) => {
 
+
   const user = useAppSelector(selectUser);
 
   let checkItemsArrayForTotal = [];
@@ -45,7 +46,7 @@ const FoodCartSummaryAndPay = ({
   const vat = 800;
   const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
 
-  const { mutate: payAndOrderFood } = usePayAndPlaceFoodOrder();
+  const { mutate: payAndOrderFood, isLoading:payFoodLoading } = usePayAndPlaceFoodOrder();
 
 
   const onSuccess = async (reference) => {
@@ -93,7 +94,7 @@ const FoodCartSummaryAndPay = ({
   return (
     <div>
       <div className="bg-white p-4 rounded-lg shadow-md">
-        <h2 className="text-lg font-semibold mb-2">Cart Summary</h2>
+        <h2 className="text-lg font-semibold mb-2">Food Cart Summary</h2>
 
         <div className="flex justify-between mb-2">
           <span>Subtotal</span>
@@ -172,6 +173,7 @@ const FoodCartSummaryAndPay = ({
               !orderMarketPickupDestination ||
               !district ||
               !totalAmount
+              || payFoodLoading
             }
           />}
         

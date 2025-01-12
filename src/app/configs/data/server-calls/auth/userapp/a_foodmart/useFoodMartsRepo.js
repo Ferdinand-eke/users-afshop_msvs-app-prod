@@ -66,10 +66,11 @@ export function useGetMyFoodCartByUserCred(userId) {
 /****Create add to foodcart : => Done for Africanshops */
 export function useAddToFoodCart() {
   // const navigate = useNavigate();
+
   const queryClient = useQueryClient();
   return useMutation(
-    (cartItem) => {
-      return addToUserFoodCartApi(cartItem);
+    (foodCartItem) => {
+      return addToUserFoodCartApi(foodCartItem);
     },
 
     {
@@ -110,8 +111,8 @@ export function useUpdateFoodCartItemQty() {
   // const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation(
-    (cartItem) => {
-      return updateUserFoodCartApi(cartItem);
+    (foodCartItem) => {
+      return updateUserFoodCartApi(foodCartItem);
     },
 
     {
@@ -174,11 +175,16 @@ export function usePayAndPlaceFoodOrder() {
 
     {
       onSuccess: (data) => {
+        console.log("foodPaymentSuccess DTA", data)
+        console.log("foodPaymentSuccess_PaymentRESULT", data?.data?.foodOrder?.paymentResult)
+
+        console.log("foodPaymentSuccess_STATUS", data?.data?.foodOrder?.paymentResult?.status)
         if (data?.data?.success ) {
+
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__foodcart"]);
           queryClient.refetchQueries("__foodcart", { force: true });
-          navigate(`/foodmarts/${data?.data?.foodOrder}/payment-success`);
+          navigate(`/foodmarts/${data?.data?.foodOrder?._id}/payment-success`);
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
           return;

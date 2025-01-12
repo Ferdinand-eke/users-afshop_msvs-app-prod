@@ -280,6 +280,14 @@ export const getOurTeam = () => Api().get(`/admin/our-leaders`);
 // export const userShopResetPassword = (formData) =>
 //   Api().post("/api/shop/reset-password", formData);
 
+
+/**===============================================================================================
+ * MARKET-PLACE ROUTES LISTED BELOW STARTS
+ ==================================================================================================*/
+export const getMyMarketplaceCartApi = (userId) =>
+Api().get(`/foodmarts/get-user-cart/${userId}`);
+
+
 /**===============================================================================================
  * FOOD MART ROUTES LISTED BELOW STARTS
  ==================================================================================================*/

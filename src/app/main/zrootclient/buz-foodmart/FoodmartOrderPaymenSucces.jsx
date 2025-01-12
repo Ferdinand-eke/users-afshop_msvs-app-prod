@@ -1,16 +1,20 @@
 import DemoContent from '@fuse/core/DemoContent';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
-import { ListItemIcon } from '@mui/material';
+import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import { Button, ListItemIcon } from '@mui/material';
 import { styled } from '@mui/material/styles';
+import { useAppSelector } from 'app/store/hooks';
+import { selectUser } from 'src/app/auth/user/store/userSlice';
 
 const Root = styled('div')({
 	padding: 24
 });
 
 /**
- * The PaymenSuccess page.
+ * The FoodmartOrderPaymenSucces page.
  */
-function PaymenSuccess() {
+function FoodmartOrderPaymenSucces() {
+    const user = useAppSelector(selectUser);
 	return (
 		<Root className="bg-gray-400 flex items-center justify-center min-h-screen">
 			{/* <DemoContent /> */}
@@ -26,16 +30,20 @@ function PaymenSuccess() {
                         </div>
                     </div>
                     <h1 className="text-white text-xl sm:text-2xl font-bold mb-2">Payment succeeded!</h1>
-                    <p className="text-gray-400 mb-6 text-xs sm:text-base">Hi Ferdi!. </p>
+                    <p className="text-gray-400 mb-6 text-xs sm:text-base">Hi {user?.name}!. </p>
                     <p className="text-gray-400 mb-6 text-sm sm:text-base">Your transaction was completed successfully. Thank you for your purchase!</p>
                     <br/>
-                    <p className='text-gray-400  text-[10px] justify-start'>An email has been sent to with an invoice to confirm this purchase.</p>
-                    <button className="bg-orange-500 text-white px-4 sm:px-6 py-2 rounded-full shadow-md hover:bg-orange-800">
-                        Go to Your Dashboard
-                    </button>
+                    <p className='text-gray-400  text-[10px] justify-start'>An email has been sent to {user?.email} with an invoice to confirm this purchase.</p>
+                    <Button 
+                       component={NavLinkAdapter}
+                       to='/foodmarts/listings'
+                    className="bg-orange-500 text-white px-4 sm:px-6 py-2 rounded-full shadow-md hover:bg-orange-800">
+                        View Restaurants and Spots around yo
+                    </Button>
                 </div>
 		</Root>
 	);
 }
 
-export default PaymenSuccess;
+export default FoodmartOrderPaymenSucces;
+
