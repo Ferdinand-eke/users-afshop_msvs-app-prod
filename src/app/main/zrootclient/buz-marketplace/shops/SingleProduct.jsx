@@ -104,13 +104,13 @@ function SingleProduct() {
       
     } else {
       const payloadData = getShoppingSession()
-      console.log("clientSESSION", payloadData)
+      console.log("clientSESSION_LGA", payloadData?.shopLgaProvinceOrigin)
 
       //get shopping _client_session
       // return;
       if (payloadData?.shopLgaProvinceOrigin === product?.data?.shop?.businezLga) {
          addToart(formData);
-        getCartWhenAuth()
+        // getCartWhenAuth()
         return
       } else {
         alert("You must shop in one L.G.A/County at a time");
