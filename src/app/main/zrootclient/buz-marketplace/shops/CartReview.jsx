@@ -104,24 +104,13 @@ const schema = z.object({
  * The Courses page.
  */
 function CartReview() {
-  // const config = useAppSelector(selectFuseCurrentLayoutConfig);
   const user = useAppSelector(selectUser);
-  // const paymentMethods = ["Paystack", "Flutterwave"];
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const navigate = useNavigate()
 
-  // const routeParams = useParams();
-  // const { reservationId } = routeParams;
-
-  // const {
-  //   data: singlereservation,
-  //   isLoading,
-  //   isError,
-  // } = useGetUserSingleTrip(reservationId);
   const { data: cart, isLoading: cartLoading } = useMyCart();
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
 
-  // console.log("PAYMENT_SELECT", selectedPaymentOption cart?.data?.cartItems);
 
   if(cart?.data?.cartItems?.length < 1){
     navigate('/marketplace/cart')
@@ -133,13 +122,7 @@ function CartReview() {
 
   const methods = useForm({
     mode: "onChange",
-    // defaultValues: {
-    //   name: "",
-    //   phone: "",
-    //   // location: '',
-    //   address: "",
-    //   // amount: '',
-    // },
+
     defaultValues: {},
     resolver: zodResolver(schema),
   });
@@ -155,68 +138,10 @@ function CartReview() {
     orderMarketPickupDestination,
   } = watch();
 
-  // useEffect(() => {}, [singlereservation?.data?.reservation?._id]);
-
-  // const handleUserDetailSubmit = useCallback(() => {
-  //   if (!name) {
-  //     toast.error("Name data is required");
-  //     return;
-  //   }
-  //   if (!phone) {
-  //     toast.error("Phone data is required");
-  //     return;
-  //   }
-
-  //   if (!address) {
-  //     toast.error("Address data is required");
-  //     return;
-  //   }
-  // }, [name, phone, address]);
-
-  // const {
-  //   data: updatedPaymentData,
-  //   mutate: updatePayment,
-  //   isLoading: paymentLoading,
-  // } = useReservationPaidUpdateMutation();
   const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
-  // const amount = 10000;
-  // const email ='ninoferazi@gmail.com'
-  // const amount = singlereservation?.data?.reservation?.totalPrice * 100;
   const email = user?.email;
 
-  // if (isLoading) {
-  //   return <FuseLoading />;
-  // }
-
-  // if (isError) {
-  //   return (
-  //     <motion.div
-  //       initial={{ opacity: 0 }}
-  //       animate={{ opacity: 1, transition: { delay: 0.1 } }}
-  //       className="flex flex-col flex-1 items-center justify-center h-full"
-  //     >
-  //       <ClienttErrorPage
-  //         message={
-  //           " Error occurred while retriving your reservation for onward processing"
-  //         }
-  //       />
-  //     </motion.div>
-  //   );
-  // }
-
-  // if (!singlereservation?.data?.reservation) {
-  //   return (
-  //     <motion.div
-  //       initial={{ opacity: 0 }}
-  //       animate={{ opacity: 1, transition: { delay: 0.1 } }}
-  //       className="flex flex-col flex-1 items-center justify-center h-full"
-  //     >
-  //       <Typography color="text.secondary" variant="h5">
-  //         No reservations for review found!
-  //       </Typography>
-  //     </motion.div>
-  //   );
-  // }
+  
 
   const payments = [
     {
@@ -236,7 +161,6 @@ function CartReview() {
     },
   ];
 
-  // console.log("generatedClientUUID", generateClientUID());
 
   const { data: countryData } = useSellerCountries();
   const [loading, setLoading] = useState(false);
@@ -284,11 +208,9 @@ function CartReview() {
   //**Get L.G.As from state_ID data */
   async function getLgasFromState(sid) {
     setLoading(true);
-    // const responseData = await ProductRepository.getProductsById(pid);
     const responseData = await getLgasByStateId(sid);
 
     if (responseData) {
-      // console.log('LGAs From State:', responseData);
       setBlgas(responseData?.data);
       setTimeout(
         function () {
@@ -300,7 +222,6 @@ function CartReview() {
   }
 
   //**Get Marketss from lga_ID data */ getShopById
-
   async function getMarketsFromLgaId(lid) {
     if (lid) {
       setLoading(true);
@@ -330,23 +251,7 @@ function CartReview() {
 
               <div className="flex-1 p-4 bg-white rounded-md">
                 <div className="max-w-5xl mx-auto p-4 overflow-scroll">
-                  {/* {singlereservation?.data?.reservation?.isPaid && (
-                    <>
-                      <span
-                        onClick={() => {}}
-                        className="cursor-pointer inline-flex  items-center gap-x-1.5 bg-green-500 dark:bg-white/10 text-success h-[45px] px-[14px] text-xs font-medium border border-normal dark:border-white/10 rounded-md sm:justify-center sm:px-0 "
-                      >
-                        {`Payment of ${formatCurrency(singlereservation?.data?.reservation?.totalPrice)} has been received for this reservation.`}
-                        <br />
-
-                        <Typography className="text-sm">
-                          Head on to see reservation detals {"==>"}
-                        </Typography>
-                      </span>
-                    </>
-                  )} */}
-
-                  {/* {!singlereservation?.data?.reservation?.isPaid && ( */}
+               
                   <>
                     <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                       <div className="flex justify-between items-center border-b pb-2 mb-2">
@@ -436,8 +341,6 @@ function CartReview() {
                                     minHeight: "0!important",
                                   },
                                 }}
-                                // value={member.role}
-                                // size="small"
                                 {...field}
                                 label="Country Location"
                                 placeholder="County of location"
@@ -473,8 +376,6 @@ function CartReview() {
                                     minHeight: "0!important",
                                   },
                                 }}
-                                // value={member.role}
-                                // size="small"
                                 {...field}
                                 label="State Location"
                                 placeholder="State of location"
@@ -507,8 +408,6 @@ function CartReview() {
                                     minHeight: "0!important",
                                   },
                                 }}
-                                // value={member.role}
-                                // size="small"
                                 {...field}
                                 label="L.G.A/County of Location"
                                 placeholder="L.G.A/County of location"
@@ -559,8 +458,7 @@ function CartReview() {
                       </div>
                     </div>
                   </>
-                  {/* )} */}
-
+                 
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                     <div className="flex justify-between items-center border-b pb-2 mb-2">
                       <h2 className="text-lg font-semibold">
@@ -590,12 +488,10 @@ function CartReview() {
                           className="flex items-center mb-2"
                           key={optionType?.keycode}
                         >
-                          {/* {JSON.stringify(optionType?.keycode)} */}
                           <input
                             type="radio"
                             name="payment"
                             className="mr-2"
-                            // checked
                             value={optionType?.keycode}
                             onChange={handleChange}
                           />
@@ -613,54 +509,6 @@ function CartReview() {
                       </div>
                     ))}
 
-                    {/* <div className="mb-4">
-                      <div className="flex items-center mb-2">
-                        <input
-                          type="radio"
-                          name="payment"
-                          className="mr-2"
-                          checked
-                        />
-                        <label className="flex items-center">
-                          <i className="fas fa-check-circle text-orange-500 mr-2"></i>
-                          Tap & Relax, Pay with Bank Transfer on Delivery
-                        </label>
-                      </div>
-                      <div className="bg-gray-100 p-2 rounded-lg">
-                        <p>
-                          You can pay with your card or bank transfer via
-                          JumiaPay at the time of delivery; simply inform our
-                          delivery agent when your order is being delivered.
-                        </p>
-                        <a href="#" className="text-blue-500">
-                          Details
-                        </a>
-                      </div>
-                    </div> */}
-                    {/* <div className="mb-4">
-                      <div className="flex items-center mb-2">
-                        <input
-                          type="radio"
-                          name="payment"
-                          className="mr-2"
-                          checked
-                        />
-                        <label className="flex items-center">
-                          <i className="fas fa-check-circle text-orange-500 mr-2"></i>
-                          Tap & Relax, Pay with Bank Transfer on Delivery
-                        </label>
-                      </div>
-                      <div className="bg-gray-100 p-2 rounded-lg">
-                        <p>
-                          You can pay with your card or bank transfer via
-                          JumiaPay at the time of delivery; simply inform our
-                          delivery agent when your order is being delivered.
-                        </p>
-                        <a href="#" className="text-blue-500">
-                          Details
-                        </a>
-                      </div>
-                    </div> */}
                   </div>
 
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
@@ -750,7 +598,6 @@ function CartReview() {
                         </p>
                       </div>
                     </div>
-                    {/* <h3 className="font-semibold mb-2">Pre-pay Now</h3> */}
                     <br />
                     <br />
                     <br />
@@ -759,7 +606,7 @@ function CartReview() {
                 </div>
 
                 {/* end of AI build  */}
-                {/* </div> */}
+             
               </div>
 
               <div className="w-full md:w-1/3 relative  mt-4 md:mt-0 md:sticky top-16 h-[450px]">

@@ -24,21 +24,9 @@ const CartSummaryAndPay = ({
 
   dirtyFields,
   isValid,
-  // methods
+ 
 }) => {
 
-  console.log('0.1. NAME', name)
-  console.log('0.2. PHONE', phone)
-  console.log('0.3. ADDRESS', address)
-    // orderCountryDestination: orderCountryDestination,
-    // orderStateProvinceDestination: orderStateProvinceDestination,
-    // orderLgaDestination: orderLgaDestination,
-    // orderMarketPickupDestination: orderMarketPickupDestination,
-    // console.log('1. NAME', name)
-    console.log('1. COUNTRY', orderCountryDestination)
-    console.log('2. STATE', orderStateProvinceDestination)
-    console.log('3. L.G.A', orderLgaDestination)
-    console.log('4. MARKET Dest', orderMarketPickupDestination)
 
 
   const user = useAppSelector(selectUser);
@@ -52,10 +40,6 @@ const CartSummaryAndPay = ({
     });
   });
 
-  //   const { reset, watch, control, formState } = methods;
-  //   const { errors, isValid, dirtyFields } = formState;
-  //   const { name, phone, address } = watch();
-
   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
   const delivery = 1000;
   const vat = 800;
@@ -63,28 +47,16 @@ const CartSummaryAndPay = ({
 
   const {mutate:payAndOrder, isLoading:loadingWhilePaying} = usePayAndPlaceOrder()
 
-  console.log("ITEMS", intemsInCart)
+
 
   const onSuccess = async (reference) => {
     const payloadData = getShoppingSession()
-    console.log("clientSESSION", payloadData)
-
-    console.log("paymentREFERENCE___", reference)
-    //1. update state of order setting isPaid=true
+   
     try {
-    //   const paymentMetaData = {
-    //     name: name,
-    //     phone: phone,
-    //     address: address,
-    //     amount: parseInt(totalAmount) + parseInt(delivery) + parseInt(vat),
-    //     tempOrderId: singlereservation?.data?.reservation?._id,
-    //   }; cartItems
 
       const oderData = {
         refOrderId: ('AFSH' + generateClientUID() + 'MKT'),
         cartItems: intemsInCart,
-        // orderTotalHere: (parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)) * 100,
-        // shippingAddress: address,
 
         itemsPrice: parseInt(totalAmount),
         shippingPrice: delivery,
@@ -98,7 +70,6 @@ const CartSummaryAndPay = ({
        
 
         paymentMethod:methodOfPay,
-        // shippingMethod: formik.values.shippingMethod,
         shoppingLgaSession: payloadData?.shopLgaProvinceOrigin,
         paymentResult:reference,
         shippingAddress:{
@@ -110,9 +81,7 @@ const CartSummaryAndPay = ({
     };
 
 
-    console.log("ORDER-FORM_DATA", oderData)
-
-      // return
+   
       if(reference?.status === 'success'){
         return payAndOrder(oderData)
       }else{
@@ -127,7 +96,6 @@ const CartSummaryAndPay = ({
     alert("Wait! You need this order confirmed, don't go!!!!");
   };
 
-  // if(loadingWhilePaying){}
 
   return (
     <div>
@@ -164,14 +132,7 @@ const CartSummaryAndPay = ({
           />
           <button className="bg-gray-200 p-2">APPLY</button>
         </div>
-        {/* {methodOfPay === "PAYSTACK" && (
-          <button className="bg-orange-500 hover:bg-orange-800 text-white w-full p-2 rounded-lg">
-            Pay WIth Paystack{' '} ₦
-            {formatCurrency(
-              parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-            )}
-          </button>
-        )} */}
+     
         {methodOfPay === "FLUTTERWAVE" && (
           <button className="bg-orange-500 hover:bg-orange-800 text-white w-full p-2 rounded-lg">
             Pay WIth Flutterwave ₦
@@ -213,43 +174,7 @@ const CartSummaryAndPay = ({
             }
           />
         )}
-        {/* {singlereservation?.data?.reservation?.isPaid && (
-                    <span
-                      onClick={() => {}}
-                      className="cursor-pointer inline-flex  items-center gap-x-1.5 bg-green-500 dark:bg-white/10 text-success h-[45px] px-[14px] text-xs font-medium border border-normal dark:border-white/10 rounded-md sm:justify-center sm:px-0 "
-                    >
-                      {`Payment of ${formatCurrency(singlereservation?.data?.reservation?.totalPrice)} done alread, proceed to track your trip`}
-                    </span>
-                  )} */}
-        {/* {paymentMethods?.map((method) => {
-                    method === "PAYSTACK";
-                    return (
-                      <div className="mb-4">
-                        <div className="flex items-center mb-2">
-                          <input
-                            type="radio"
-                            name="payment"
-                            className="mr-2"
-                            checked
-                          />
-                          <label className="flex items-center">
-                            <i className="fas fa-check-circle text-orange-500 mr-2"></i>
-                            PAYSTACK
-                          </label>
-                        </div>
-                        <div className="bg-gray-100 p-2 rounded-lg">
-                          <p>
-                            You can pay with your card or bank transfer via
-                            JumiaPay at the time of delivery; simply inform our
-                            delivery agent when your order is being delivered.
-                          </p>
-                          <a href="#" className="text-blue-500">
-                            Details
-                          </a>
-                        </div>
-                      </div>
-                    );
-                  })} */}
+       
 
         <p className="text-sm text-gray-500 mt-2">
           By proceeding, you are automatically accepting the{" "}
