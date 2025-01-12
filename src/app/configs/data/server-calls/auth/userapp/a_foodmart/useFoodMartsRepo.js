@@ -175,10 +175,7 @@ export function usePayAndPlaceFoodOrder() {
 
     {
       onSuccess: (data) => {
-        console.log("foodPaymentSuccess DTA", data)
-        console.log("foodPaymentSuccess_PaymentRESULT", data?.data?.foodOrder?.paymentResult)
 
-        console.log("foodPaymentSuccess_STATUS", data?.data?.foodOrder?.paymentResult?.status)
         if (data?.data?.success ) {
 
           toast.success(data?.data?.message);

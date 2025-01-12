@@ -225,14 +225,11 @@ export function usePayAndPlaceOrder() {
     {
       onSuccess: (data) => {
 
-        // console.log('payCartOrder', data)
-        console.log("orderPaymentData_PaymentRESULT", data?.data?.order?.paymentResult)
 
         if (data?.data?.success ) {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__cart"]);
           queryClient.refetchQueries("__cart", { force: true });
-          console.log("orderPaymentData_STATIS", data?.data?.order?.paymentResult?.status)
           navigate(`/marketplace/order/${data?.data?.order?._id}/payment-success`);
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
