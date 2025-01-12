@@ -1,3 +1,5 @@
+import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import { Typography } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { Link } from 'react-router-dom';
 
@@ -21,7 +23,7 @@ const Root = styled('div')(({ theme }) => ({
  */
 function LogoHome() {
 	return (
-		<Root className="flex items-center">
+		<Root className="flex items-center justify-center">
 			{/* h-40 w-40 */}
 			<Link to={`/home`}>
 			<img
@@ -35,7 +37,11 @@ function LogoHome() {
 			/>
 			
 			</Link>
-			<h2  className="react-text text-16 font-semibold">Africanshops</h2>
+			<Typography  className="react-text text-16 font-semibold cursor-pointer"
+			      component={NavLinkAdapter}
+				  to={`/`}
+			>Africanshops</Typography>
+			
 			
 			{/* <div className="flex space-x-6 px-8 items-center">
 				<div
