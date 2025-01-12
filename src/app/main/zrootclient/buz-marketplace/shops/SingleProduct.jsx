@@ -98,7 +98,7 @@ function SingleProduct() {
       // console.log('shoppinSESSION', setCartSessionPayload)
       if(setCartSessionPayload){
         addToart(formData);
-        getCartWhenAuth()
+        // getCartWhenAuth()
         return
       }
       

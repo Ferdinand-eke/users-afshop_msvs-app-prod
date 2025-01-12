@@ -8,7 +8,7 @@ import {
   selectFuseCurrentLayoutConfig,
   selectToolbarTheme,
 } from "@fuse/core/FuseSettings/fuseSettingsSlice";
-import NotificationPanelToggleButton from "src/app/main/apps/notifications/NotificationPanelToggleButton";
+// import NotificationPanelToggleButton from "src/app/main/apps/notifications/NotificationPanelToggleButton";
 import NavbarToggleButton from "app/theme-layouts/shared-components/navbar/NavbarToggleButton";
 import { selectFuseNavbar } from "app/theme-layouts/shared-components/navbar/navbarSlice";
 import { useAppSelector } from "app/store/hooks";
@@ -102,7 +102,7 @@ function ToolbarLayout1(props) {
             <NavigationSearch />
             <QuickPanelToggleButton />
             <CartToggleButton />
-            <NotificationPanelToggleButton />
+            {/* <NotificationPanelToggleButton /> */}
 
             <UserMenu user={user} />
           </div>
