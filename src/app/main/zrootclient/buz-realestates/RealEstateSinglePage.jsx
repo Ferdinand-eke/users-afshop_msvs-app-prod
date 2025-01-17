@@ -16,6 +16,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { useParams } from "react-router";
 import { useGetEstateProperty } from "app/configs/data/server-calls/auth/userapp/a_estates/useEstatePropertiesRepo";
 import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
+import ClienttErrorPage from "../components/ClienttErrorPage";
 
 const container = {
   show: {
@@ -49,11 +50,36 @@ function RealEstateSinglePage() {
     isError,
   } = useGetEstateProperty(propertyId);
 
-  console.log("single-estate", estate?.data?.data);
+ 
+  if (isLoading) {
+    return <FuseLoading />;
+  }
 
-  // if (isLoading) {
-  //   return <FuseLoading />;
-  // }
+  if (isError) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+        className="flex flex-col flex-1 items-center justify-center h-full"
+      >
+        <ClienttErrorPage message={" Error occurred while retriving property details"}/>
+      </motion.div>
+    );
+  }
+
+  if (!estate?.data?.data) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+        className="flex flex-col flex-1 items-center justify-center h-full"
+      >
+        <Typography color="text.secondary" variant="h5">
+          No listings found!
+        </Typography>
+      </motion.div>
+    );
+  }
 
   
   return (

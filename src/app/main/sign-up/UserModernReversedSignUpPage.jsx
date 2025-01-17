@@ -218,7 +218,7 @@ function UserModernReversedSignUpPage() {
   /****Resend OTP on expiration of OTP */
   const resendOTP = () => {
 
-    console.log('singUP_DATA', clientSignUpData)
+    // console.log('singUP_DATA', clientSignUpData)
     if (!clientSignUpData?.email) {
       if (
         window.confirm("Some hitch occured, restart the unboarding process?")
@@ -454,6 +454,7 @@ function UserModernReversedSignUpPage() {
     </div>
   );
 
+  
   if (step == STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">

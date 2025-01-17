@@ -51,22 +51,14 @@ function ModernReversedResetPasswordPage() {
 	const { isValid, dirtyFields, errors } = formState;
 
 	const activationTokenToCheck = get_SHOP_FORGOTPASS_TOKEN()
-	// console.log("user=ACTIVATION-CODE", activationTokenToCheck)
 	function onSubmit() {
 		const activationTokenToCheck = get_SHOP_FORGOTPASS_TOKEN()
 
 		setValue('activationToken', activationTokenToCheck)
-		// getValues({
-		// 	...defaultValues, activationToken:activationTokenToCheck
-		// })
-		console.log("Reset-PASS-DATA", getValues())
-
-
-		// return
-
-		// reset(defaultValues);
+	
 		shopResetPass(getValues())
 	}
+
 
 	return (
 		<div className="flex min-w-0 flex-auto flex-col items-center sm:justify-center md:p-32">

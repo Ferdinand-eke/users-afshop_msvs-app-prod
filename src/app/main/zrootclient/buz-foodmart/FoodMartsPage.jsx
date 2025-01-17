@@ -15,6 +15,17 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllFoodMarts from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
+import { Controller, useForm } from "react-hook-form";
+import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
+import {
+  getLgasByStateId,
+  getStateByCountryId,
+} from "app/configs/data/client/RepositoryClient";
+import ClienttErrorPage from "../components/ClienttErrorPage";
+import FoodMartMap from "./components/maps/FoodMartMap";
+import UserCountrySelect from "src/app/apselects/usercountryselect";
+import UserStateSelect from "src/app/apselects/userstateselect";
+import UserLgaSelect from "src/app/apselects/userlgaselect";
 
 const container = {
   show: {
@@ -40,16 +51,121 @@ const item = {
 function FoodMartsPage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
-  const { data: AllFoodMarts, isLoading } = useGetAllFoodMarts();
+  const { data: AllFoodMarts, isLoading, isError } = useGetAllFoodMarts();
+
+  const [loading, setLoading] = useState(false);
+  const [stateData, setStateData] = useState([]);
+  const [blgas, setBlgas] = useState([]);
+  // const [markets, setBMarkets] = useState([]);
+
+  const methods = useForm({
+    mode: "onChange",
+    defaultValues: {
+      selectCountry: "",
+      selectState: "",
+      selectLga: "",
+    },
+    // resolver: zodResolver(schema)
+  });
+  const { reset, watch, control, formState, getValues, setValue } = methods;
+  const { errors } = formState;
+  const { selectCountry, selectState, selectLga } = watch();
+
+  const { data: countries } = useSellerCountries();
+
+  const setCustomValue = (id, value) => {
+    setValue(id, value, {
+      shouldDirty: true,
+      shouldTouch: true,
+      shouldValidate: true,
+    });
+  };
+
+  
+
+  useEffect(() => {
+    if (selectCountry?._id?.length > 0) {
+      findStatesByCountry(selectCountry?._id);
+    }
+
+    if (getValues()?.selectState?._id?.length > 0) {
+      getLgasFromState(getValues()?.selectState?._id);
+    }
+  }, [selectCountry?._id, selectState?._id, selectLga?._id]);
+
+
+  async function findStatesByCountry(countryId) {
+    setLoading(true);
+    const stateResponseData = await getStateByCountryId(countryId);
+
+    if (stateResponseData) {
+      setStateData(stateResponseData?.data);
+
+      setTimeout(
+        function () {
+          setLoading(false);
+        }.bind(this),
+        250
+      );
+    }
+  }
+
+  //**Get L.G.As from state_ID data */
+  async function getLgasFromState(sid) {
+    setLoading(true);
+    const responseData = await getLgasByStateId(sid);
+
+    if (responseData) {
+      setBlgas(responseData?.data);
+      setTimeout(
+        function () {
+          setLoading(false);
+        }.bind(this),
+        250
+      );
+    }
+  }
+
+  if (isLoading) {
+    return <FuseLoading />;
+  }
+
+  if (isError) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+        className="flex flex-col flex-1 items-center justify-center h-full"
+      >
+        <ClienttErrorPage
+          message={" Error occurred while retriving listings"}
+        />
+      </motion.div>
+    );
+  }
+
+  if (!AllFoodMarts?.data?.data) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+        className="flex flex-col flex-1 items-center justify-center h-full"
+      >
+        <Typography color="text.secondary" variant="h5">
+          No listings found!
+        </Typography>
+      </motion.div>
+    );
+  }
 
   return (
     <FusePageSimple
       content={
         <>
-          <div className="h-screen flex flex-col md:mx-200 mt-20">
+          <div className="h-screen flex flex-col md:mx-[50px] mt-20">
             <div className="flex flex-1 flex-col md:flex-row">
-               {/* Map */}
-               <div className="w-full p-8 md:w-3/12 bg-white relative  mt-4 md:mt-0 md:sticky top-16 h-[500px] overflow-scroll">
+              {/* Map */}
+              <div className="w-full p-8 md:w-3/12 bg-white relative  mt-4 md:mt-0 md:sticky top-16 h-[500px] overflow-scroll">
                 <h2 className="font-bold mb-4 p-4">CATEGORY</h2>
                 <ul className="space-y-2 p-4">
                   <li>Computing</li>
@@ -125,16 +241,35 @@ function FoodMartsPage() {
               {/* Main Content */}
 
               <main className="mt-10 md:w-3/4 p-4 rounded-md">
+          
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
-                  <h1 className="text-[12px] font-bold">
-                    Shop Online in Nigeria (8908 products found)
-                  </h1>
-                  <div className="flex space-x-4 mt-4 md:mt-0">
-                    <select className="border rounded px-4 py-2">
-                      <option> Shipped from Nigeria</option>
-                    </select>
-                    <button className="border rounded px-4 py-2">Brand</button>
-                    <button className="border rounded px-4 py-2">Price</button>
+                  <h1 className="text-xl font-bold">Listings</h1>
+                  <div className="flex mx-4 space-x-4 mt-4 md:mt-0 text-[10px]">
+                    
+                    <UserCountrySelect
+                      value={selectCountry}
+                      onChange={(value) =>
+                        setCustomValue("selectCountry", value)
+                      }
+                    />
+                   
+                    {selectCountry?._id && (
+                      <UserStateSelect
+                        states={stateData}
+                        value={selectState}
+                        onChange={(value) =>
+                          setCustomValue("selectState", value)
+                        }
+                      />
+                    )}
+
+                    {selectState?._id && (
+                      <UserLgaSelect
+                        blgas={blgas}
+                        value={selectLga}
+                        onChange={(value) => setCustomValue("selectLga", value)}
+                      />
+                    )}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8">
@@ -155,8 +290,6 @@ function FoodMartsPage() {
                         </span>
                       </div>
                       <div className="mt-4 ">
-                     
-
                         <Typography
                           className="mt-2 text-sm font-bold cursor-pointer"
                           component={NavLinkAdapter}
@@ -164,26 +297,21 @@ function FoodMartsPage() {
                         >
                           {foodmart?.title}
                         </Typography>
-                     
-
-                        
                       </div>
 
                       <div className="flex justify-between items-center mt-4 bottom-0">
-                          <i className="far fa-heart text-xl"></i>
+                        <i className="far fa-heart text-xl"></i>
 
-                          <Button
-                            className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-0 "
-                            component={NavLinkAdapter}
-                            to={`/foodmarts/listings/visit-mart/${foodmart?._id}/${foodmart?.slug}`}
-                          >
-                            Visit Mart
-                          </Button>
-                        </div>
+                        <Button
+                          className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-0 "
+                          component={NavLinkAdapter}
+                          to={`/foodmarts/listings/visit-mart/${foodmart?._id}/${foodmart?.slug}`}
+                        >
+                          Visit Mart
+                        </Button>
+                      </div>
                     </div>
                   ))}
-
-                  
                 </div>
                 <br />
                 <br />
@@ -194,21 +322,15 @@ function FoodMartsPage() {
 
               {/* Map */}
               <div className="w-full md:w-1/3 bg-gray-200 relative  mt-4 md:mt-0 md:sticky top-16 h-screen">
-                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
-                  <div className="bg-white p-4 rounded-lg shadow-lg">
-                    <p className="text-gray-700 mb-4">
-                      This page can't load Google Maps correctly.
-                    </p>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                      OK
-                    </button>
-                  </div>
-                </div>
-                <img
-                  src="https://placehold.co/400x600"
-                  alt="Map placeholder"
-                  className="w-full h-full object-cover"
-                />
+               
+                 {selectCountry?._id && 
+                  <FoodMartMap
+                    center={selectCountry}
+                    items={AllFoodMarts?.data?.data}
+                  />}
+
+
+
               </div>
             </div>
           </div>

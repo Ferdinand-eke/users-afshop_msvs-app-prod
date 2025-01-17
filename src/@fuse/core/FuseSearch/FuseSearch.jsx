@@ -322,6 +322,7 @@ function FuseSearch(props) {
 					className={clsx('flex w-full items-center', className)}
 					ref={popperNode}
 				>
+
 					<Autosuggest
 						renderInputComponent={renderInputComponent}
 						highlightFirstSuggestion
@@ -443,6 +444,7 @@ function FuseSearch(props) {
 													open={Boolean(options.children) || state.noSuggestions}
 													className="z-9999"
 												>
+													{/* work on search results here */}
 													<div ref={suggestionsNode}>
 														<Paper
 															square
@@ -474,6 +476,7 @@ function FuseSearch(props) {
 									>
 										<FuseSvgIcon>heroicons-outline:x</FuseSvgIcon>
 									</IconButton>
+
 								</div>
 							</Paper>
 						</ClickAwayListener>

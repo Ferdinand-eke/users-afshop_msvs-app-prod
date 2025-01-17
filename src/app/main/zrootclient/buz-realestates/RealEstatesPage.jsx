@@ -16,6 +16,10 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllEstateProperties from "app/configs/data/server-calls/auth/userapp/a_estates/useEstatePropertiesRepo";
 import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
+import { Controller, useForm } from "react-hook-form";
+import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
+import ClienttErrorPage from "../components/ClienttErrorPage";
 
 const container = {
   show: {
@@ -43,12 +47,106 @@ function RealEstatesPage() {
 
   const { data: estates, isLoading, isError } = useGetAllEstateProperties();
 
-  // if (isLoading) {
-  //   return <FuseLoading />;
-  // }
 
-  console.log("ESTATES", estates?.data?.data);
-  // {"public_id":"amefqvn4mrdws413slnd","url":"https://res.cloudinary.com/dtxyw2bw3/image/upload/v1730192929/amefqvn4mrdws413slnd.jpg"},{"public_id":"bzlceqg3lkbxyphwj1i
+
+  const [loading, setLoading] = useState(false);
+  const [stateData, setStateData] = useState([]);
+  const [blgas, setBlgas] = useState([]);
+  // const [markets, setBMarkets] = useState([]);
+
+  const methods = useForm({
+    mode: "onChange",
+    defaultValues: {
+      selectCountry: "",
+      selectState: "",
+      selectLga: "",
+    },
+    // resolver: zodResolver(schema)
+  });
+  const { reset, watch, control, formState, getValues } = methods;
+  const { errors } = formState;
+  const { selectCountry, selectState, selectLga } = watch();
+
+  // const [products, setProducts] = useState([])
+  const { data: countries } = useSellerCountries();
+
+
+  /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
+  useEffect(() => {
+    if (selectCountry?.length > 0) {
+      findStatesByCountry(selectCountry);
+    }
+
+    if (selectCountry && selectState) {
+      getLgasFromState(selectState);
+    }
+
+    // if (selectCountry && selectState && selectLga) {
+    //   console.log("Getting products for this partivular LGA :", selectLga);
+    // }
+  }, [selectCountry, selectState, selectLga]);
+
+  async function findStatesByCountry(countryId) {
+    setLoading(true);
+    const stateResponseData = await getStateByCountryId(countryId);
+
+    if (stateResponseData) {
+      setStateData(stateResponseData?.data);
+
+      setTimeout(
+        function () {
+          setLoading(false);
+        }.bind(this),
+        250
+      );
+    }
+  }
+
+  //**Get L.G.As from state_ID data */
+  async function getLgasFromState(sid) {
+    setLoading(true);
+    const responseData = await getLgasByStateId(sid);
+
+    if (responseData) {
+      setBlgas(responseData?.data);
+      setTimeout(
+        function () {
+          setLoading(false);
+        }.bind(this),
+        250
+      );
+    }
+  }
+
+  if (isLoading) {
+    return <FuseLoading />;
+  }
+
+  if (isError) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+        className="flex flex-col flex-1 items-center justify-center h-full"
+      >
+        <ClienttErrorPage message={" Error occurred while retriving listings"}/>
+      </motion.div>
+    );
+  }
+
+  if (!estates?.data?.data) {
+    return (
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1, transition: { delay: 0.1 } }}
+        className="flex flex-col flex-1 items-center justify-center h-full"
+      >
+        <Typography color="text.secondary" variant="h5">
+          No listings found!
+        </Typography>
+      </motion.div>
+    );
+  }
 
   return (
     <FusePageSimple
@@ -132,17 +230,102 @@ function RealEstatesPage() {
               {/* </aside> */}
 
               {/* Main Content */}
-              <main className="mt-10 flex-1 p-4 bg-white rounded-md">
-                <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4">
-                  <h1 className="text-[14px] font-bold">
-                    Shop Online in Nigeria (8908 products found)
+              <main className="mt-10 flex-1 p-4 rounded-md">
+              
+                <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
+                  <h1 className="text-xl font-bold">
+                   Listings 
                   </h1>
-                  <div className="flex space-x-4 mt-4 md:mt-0">
-                    <select className="border rounded px-4 py-2">
-                      <option> Shipped from Nigeria</option>
-                    </select>
-                    <button className="border rounded px-4 py-2">Brand</button>
-                    <button className="border rounded px-4 py-2">Price</button>
+                  <div className="flex mx-4 space-x-4 mt-4 md:mt-0 text-[10px]">
+                   
+                    <Controller
+                      name="selectCountry"
+                      control={control}
+                      defaultValue={[]}
+                      render={({ field: { onChange, value } }) => (
+                        <Select
+                          className="border rounded px-4 py-2 h-[10px] text-[10px]"
+                          id="selectCountry"
+                          label="selectCountry"
+                          fullWidth
+                          defaultValue=""
+                          onChange={onChange}
+                          value={value === undefined || null ? "" : value}
+                          error={!!errors.selectCountry}
+                          helpertext={errors?.selectCountry?.message}
+                        >
+                          {countries?.data?.data &&
+                            countries?.data?.data?.map((option, id) => (
+                              <MenuItem
+                                className="border rounded px-4 py-2 h-[10px] text-[14px]"
+                                key={option._id}
+                                value={option._id}
+                              >
+                                {option.name}
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      )}
+                    />
+                    {stateData?.length > 0 && (
+                      <Controller
+                        name="selectState"
+                        control={control}
+                        defaultValue={[]}
+                        render={({ field: { onChange, value } }) => (
+                          <Select
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"  
+                            id="selectState"
+                            label="selectState"
+                            fullWidth
+                            defaultValue=""
+                            onChange={onChange}
+                            value={value === undefined || null ? "" : value}
+                            error={!!errors.selectState}
+                            helpertext={errors?.selectState?.message}
+                          >
+                            {stateData &&
+                              stateData?.map((option, id) => (
+                                <MenuItem 
+                                className="border rounded px-4 my-4 h-[12px] text-[14px]"
+                                key={option._id} value={option._id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        )}
+                      />
+                    )}
+
+                    {blgas?.length > 0 && (
+                      <Controller
+                        name="selectLga"
+                        control={control}
+                        defaultValue={[]}
+                        render={({ field: { onChange, value } }) => (
+                          <Select
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"                            
+                            id="selectLga"
+                            label="selectLga"
+                            fullWidth
+                            defaultValue=""
+                            onChange={onChange}
+                            value={value === undefined || null ? "" : value}
+                            error={!!errors.selectLga}
+                            helpertext={errors?.selectLga?.message}
+                          >
+                            {blgas &&
+                              blgas?.map((option, id) => (
+                                <MenuItem 
+                                className="border rounded px-4 my-4 h-[12px] text-[14px]"
+                                key={option._id} value={option._id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        )}
+                      />
+                    )}
                   </div>
                 </div>
 

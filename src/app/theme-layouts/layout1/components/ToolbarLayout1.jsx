@@ -25,6 +25,7 @@ import LogoHome from "app/theme-layouts/shared-components/LogoHome";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import CartToggleButton from "app/theme-layouts/shared-components/quickPanel/CartToggleButton";
 import LanHubSwitcher from "app/theme-layouts/shared-components/LanHubSwitcher";
+import { useRouteData } from "src/app/main/zrootclient/useRouteData";
 
 /**
  * The toolbar layout 1.
@@ -36,6 +37,9 @@ function ToolbarLayout1(props) {
   const navbar = useAppSelector(selectFuseNavbar);
   const toolbarTheme = useAppSelector(selectToolbarTheme);
   const user = useAppSelector(selectUser);
+
+  const {getUrlString} = useRouteData()
+  // console.log("URL_ARRAY_22",getUrlString);
  
 
   useEffect(() => {}, [
@@ -98,7 +102,13 @@ function ToolbarLayout1(props) {
 
             {/* <AdjustFontSize /> */}
             {/* <FullScreenToggle /> */}
-            <NavigationSearch />
+
+            {getUrlString && <>
+              {getUrlString === 'marketplace' && <NavigationSearch />}
+            </>}
+          
+            
+
             <QuickPanelToggleButton />
             <CartToggleButton />
             {/* <NotificationPanelToggleButton /> */}

@@ -6,7 +6,7 @@ import {
   storePreShopUserData,
   storePreShopUserDataWithOtp,
 } from "../../client/clientToApiRoutes";
-import { removeUserSignUpToken, removeResendMerchantSignUpOtp, setMerchantSignUpStorage, setShopForgotPasswordPAYLOAD } from "app/configs/utils/authUtils";
+import { removeUserSignUpToken, removeResendMerchantSignUpOtp, setMerchantSignUpStorage, setShopForgotPasswordPAYLOAD, remove_SHOP_FORGOTPASS_TOKEN } from "app/configs/utils/authUtils";
 import { useNavigate } from "react-router";
 import { clientForgotPasswordWithOtp, clientResetPasswordFromOtp, preSignUpWithOtp, preUserRegistrationWithOtp,  } from "../../client/RepositoryClient";
 import { clientLoggedInResetPassword, getApiAuthUser, getApiMinimizedAuthUser } from "../../client/RepositoryAuthClient";
@@ -20,8 +20,10 @@ import { clientLoggedInResetPassword, getApiAuthUser, getApiMinimizedAuthUser } 
  */
 
 
+
 export function useShopForgotPassWithOtp() {
   const navigate = useNavigate();
+
   return useMutation(clientForgotPasswordWithOtp, {
     onSuccess: (data) => {
       if (data?.data?.forgotpass_activation_token && data?.data?.success) {
@@ -58,20 +60,16 @@ export function useShopForgotPassWithOtp() {
 }
 
 
+
 export function useResetShopPassFromOtp() {
-  const history = useNavigate();
+  const navigate = useNavigate();
   return useMutation(clientResetPasswordFromOtp, {
     onSuccess: (data) => {
-      console.log('RESET', data);
-    //   console.log('LoginError22', data?.data?.infomessage);
-    //   console.log('LoginError33', data?.data?.data);
-      if (data?.data?.message & data?.data?.user) {
-        console.log('SuccessDATaA_____', data);
+      if (data?.data?.message && data?.data?.success) {
         remove_SHOP_FORGOTPASS_TOKEN()
         toast.success(data?.data?.message);
 
-        // history('/resetShopPassword');
-        // window.location.replace('/rese')infomessage
+        navigate('/sign-in');
 
         return;
       } 

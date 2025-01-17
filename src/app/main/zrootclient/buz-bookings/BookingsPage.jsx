@@ -1,3 +1,4 @@
+import { lazy, useMemo } from 'react';
 import _ from "@lodash";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
@@ -17,6 +18,11 @@ import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
 import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "../components/ClienttErrorPage";
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
+import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
+import { Controller, useForm } from "react-hook-form";
+// import { MapContainer, TileLayer } from 'react-leaflet'
+import BookingsMap from './components/maps/BookingsMap';
 
 const container = {
   show: {
@@ -36,14 +42,102 @@ const item = {
   },
 };
 
+
+// const BookingsMap = lazy(() => import('./components/maps/BookingsMap'));
+// const center = [51.505, -0.09]
+// const zoom = 13
+
 /**
  * The Courses page.
  */
 function BookingsPage() {
+
+  
+ 
+
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
 
+
+  const [loading, setLoading] = useState(false);
+  const [stateData, setStateData] = useState([]);
+  const [blgas, setBlgas] = useState([]);
+  // const [markets, setBMarkets] = useState([]);
+
+  const methods = useForm({
+    mode: "onChange",
+    defaultValues: {
+      selectCountry: "",
+      selectState: "",
+      selectLga: "",
+    },
+    // resolver: zodResolver(schema)
+  });
+  const { reset, watch, control, formState, getValues } = methods;
+  const { errors } = formState;
+  const { selectCountry, selectState, selectLga } = watch();
+
+  // const [products, setProducts] = useState([])
+  const { data: countries } = useSellerCountries();
+
+
+  /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
+  useEffect(() => {
+    if (selectCountry?.length > 0) {
+      console.log(`Getting stated in this country ${location?.name}`);
+      findStatesByCountry(selectCountry);
+    }
+
+    if (selectCountry && selectState) {
+      getLgasFromState(selectState);
+    }
+
+    if (selectCountry && selectState && selectLga) {
+      console.log("Getting products for this partivular LGA :", selectLga);
+    }
+  }, [selectCountry, selectState, selectLga]);
+
+  async function findStatesByCountry(countryId) {
+    setLoading(true);
+    const stateResponseData = await getStateByCountryId(countryId);
+
+    if (stateResponseData) {
+      setStateData(stateResponseData?.data);
+
+      setTimeout(
+        function () {
+          setLoading(false);
+        }.bind(this),
+        250
+      );
+    }
+  }
+
+  //**Get L.G.As from state_ID data */
+  async function getLgasFromState(sid) {
+    setLoading(true);
+    const responseData = await getLgasByStateId(sid);
+
+    if (responseData) {
+      setBlgas(responseData?.data);
+      setTimeout(
+        function () {
+          setLoading(false);
+        }.bind(this),
+        250
+      );
+    }
+  }
+
+  // const displayMap = useMemo(
+  //   () => (
+     
+  //     <BookingsMap items={bookingprops?.data?.data}/>
+  //   ),
+  //   [],
+  // )
+  
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -157,8 +251,8 @@ function BookingsPage() {
               </div>
 
               {/* Main Content */}
-              <main className="mt-10 flex-1 p-4 bg-white rounded-md">
-                <div className="flex flex-col md:flex-row items-center mb-8">
+              <main className="mt-10 flex-1 p-4  rounded-md">
+                {/* <div className="flex flex-col md:flex-row items-center mb-8">
                   <input
                     type="text"
                     placeholder="Start typing to search..."
@@ -171,8 +265,121 @@ function BookingsPage() {
                     <i className="fas fa-user text-gray-500"></i>
                     <i className="fas fa-moon text-gray-500"></i>
                   </div>
+                </div> */}
+                <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
+                  <h1 className="text-xl font-bold">
+                   Listings 
+                  </h1>
+                  <div className="flex space-x-4 mt-4 md:mt-0 text-[10px]">
+                    {/* <select className="border rounded px-4 py-2"
+                    value={selectCountry}
+                    onChange={(e) =>setSelectCountry(e.target.value)}
+                    >
+                      {countries?.data?.data?.map((country) =>  
+                      (<option key={country?._id} value={country?._id}> {country?.name} {country?._id}</option>) )}
+                    </select> */}
+                    <Controller
+                      name="selectCountry"
+                      control={control}
+                      defaultValue={[]}
+                      render={({ field: { onChange, value } }) => (
+                        <Select
+                          className="border rounded px-4 py-2 h-[10px] text-[10px]"
+                          id="selectCountry"
+                          label="selectCountry"
+                          fullWidth
+                          defaultValue=""
+                          onChange={onChange}
+                          value={value === undefined || null ? "" : value}
+                          error={!!errors.selectCountry}
+                          helpertext={errors?.selectCountry?.message}
+                          //  {...other}
+                          //  {...(error && {error: true, helperText: error})}
+                        >
+                          {/* <MenuItem value="">Select a product category</MenuItem> */}
+                          {countries?.data?.data &&
+                            countries?.data?.data?.map((option, id) => (
+                              <MenuItem
+                                className="border rounded px-4 py-2 h-[10px] text-[12px]"
+                                key={option._id}
+                                value={option._id}
+                              >
+                                {option.name}
+                              </MenuItem>
+                            ))}
+                        </Select>
+                      )}
+                    />
+                    {stateData?.length > 0 && (
+                      <Controller
+                        name="selectState"
+                        control={control}
+                        defaultValue={[]}
+                        render={({ field: { onChange, value } }) => (
+                          <Select
+                            // className="border rounded px-4 py-2 h-[10px]"
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"  
+                            id="selectState"
+                            label="selectState"
+                            fullWidth
+                            defaultValue=""
+                            onChange={onChange}
+                            value={value === undefined || null ? "" : value}
+                            error={!!errors.selectState}
+                            helpertext={errors?.selectState?.message}
+                            //  {...other}
+                            //  {...(error && {error: true, helperText: error})}
+                          >
+                            {/* <MenuItem value="">Select a product category</MenuItem> */}
+                            {stateData &&
+                              stateData?.map((option, id) => (
+                                <MenuItem 
+                                className="border rounded px-4 my-4 h-[12px] text-[14px]"
+                                key={option._id} value={option._id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        )}
+                      />
+                    )}
+
+                    {blgas?.length > 0 && (
+                      <Controller
+                        name="selectLga"
+                        control={control}
+                        defaultValue={[]}
+                        render={({ field: { onChange, value } }) => (
+                          <Select
+                            // className="border rounded px-4 py-2 h-[10px] text-[14px]"
+
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"                            id="selectLga"
+                            label="selectLga"
+                            fullWidth
+                            defaultValue=""
+                            onChange={onChange}
+                            value={value === undefined || null ? "" : value}
+                            error={!!errors.selectLga}
+                            helpertext={errors?.selectLga?.message}
+                            //  {...other}
+                            //  {...(error && {error: true, helperText: error})}
+                          >
+                            {/* <MenuItem value="">Select a product category</MenuItem> */}
+                            {blgas &&
+                              blgas?.map((option, id) => (
+                                <MenuItem 
+                                className="border rounded px-4 my-4 h-[12px] text-[14px]"
+                                key={option._id} value={option._id}>
+                                  {option.name}
+                                </MenuItem>
+                              ))}
+                          </Select>
+                        )}
+                      />
+                    )}
+                  </div>
                 </div>
-                <h1 className="text-2xl font-bold mb-4">Hotels And Suites</h1>
+                {/* <h1 className="text-2xl font-bold mb-4">Hotels And Suites</h1> */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-scroll">
                   
                   
@@ -243,7 +450,7 @@ function BookingsPage() {
 
               {/* Map */}
               <div className="w-full p-8 md:w-4/12 bg-white relative  mt-4 md:mt-0 md:sticky top-16 h-screen overflow-scroll">
-                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
+                {/* <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
                   <div className="bg-white p-4 rounded-lg shadow-lg">
                     <p className="text-gray-700 mb-4">
                       This page can't load Google Maps correctly.
@@ -252,12 +459,15 @@ function BookingsPage() {
                       OK
                     </button>
                   </div>
-                </div>
-                <img
+                </div> */}
+                {/* <img
                   src="https://placehold.co/400x600"
                   alt="Map placeholder"
                   className="w-full h-full object-cover"
-                />
+                /> */}
+                <BookingsMap items={bookingprops?.data?.data}/>
+
+                {/* {displayMap} */}
               </div>
             </div>
           </div>

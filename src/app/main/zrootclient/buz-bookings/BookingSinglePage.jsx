@@ -241,7 +241,7 @@ function BookingSinglePage(
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Amenities</h2>
-                  <ul className="list-disc list-inside mt-2 text-gray-600">
+                  <ul className="list-disc list-inside mt-2 text-gray-600 p-4">
                     <li>
                       Create immersive augmented reality scenes for any focal
                       project such as animated walk throughs and product
@@ -274,12 +274,7 @@ function BookingSinglePage(
                     </li>
                   </ul>
                 </div>
-                <div className="bg-white p-4 mt-4 shadow-md">
-                  <h2 className="text-xl font-bold">Description</h2>
-                  <p className="text-gray-600 mt-2">
-                    {booking?.data?.data?.description}
-                  </p>
-                </div>
+                
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Gallery</h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
@@ -299,6 +294,12 @@ function BookingSinglePage(
                                     <img src="https://placehold.co/200x200" alt="Gallery image 5" className="w-full h-auto"/>
                                     <img src="https://placehold.co/200x200" alt="Gallery image 6" className="w-full h-auto"/> */}
                   </div>
+                </div>
+                <div className="bg-white p-4 mt-4 shadow-md">
+                  <h2 className="text-xl font-bold">Description</h2>
+                  <p className="text-gray-600 mt-2">
+                    {booking?.data?.data?.description}
+                  </p>
                 </div>
               </div>
 

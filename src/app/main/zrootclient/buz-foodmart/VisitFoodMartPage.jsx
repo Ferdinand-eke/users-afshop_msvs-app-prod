@@ -18,6 +18,7 @@ import { Link, useParams } from "react-router-dom";
 import { useGetMartMenu } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "../components/ClienttErrorPage";
+import FoodMartMapSingle from "./components/maps/FoodMartMapSingle";
 
 const container = {
   show: {
@@ -47,6 +48,8 @@ function VisitFoodMartPage() {
   const { martId } = routeParams;
   const { data: martMenu, isLoading, isError } = useGetMartMenu(martId);
 
+  // console.log("singleFOOD_MART", martMenu?.data?.data?.foodVendor);
+
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -58,7 +61,6 @@ function VisitFoodMartPage() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-
         <ClienttErrorPage message={"Error occurred while retriving menu"} />
       </motion.div>
     );
@@ -144,14 +146,17 @@ function VisitFoodMartPage() {
               <main className="mt-10 flex-1 p-4 rounded-md">
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
                   <Typography className="text-[12px] font-bold">
-                    Shop Online in Nigeria (8908 products found)
+                    Menu at ({martMenu?.data?.data?.foodVendor?.title})
                   </Typography>
                   <div className="flex space-x-4 mt-4 md:mt-0">
                     <select className="border rounded px-4 py-2">
-                      <option> Shipped from Nigeria</option>
+                      <option> Categories</option>
+                      <option> Drinks</option>
+                      <option> Deserts</option>
+                      <option> Swallows</option>
                     </select>
-                    <button className="border rounded px-4 py-2">Brand</button>
-                    <button className="border rounded px-4 py-2">Price</button>
+                    {/* <button className="border rounded px-4 py-2">Brand</button>
+                    <button className="border rounded px-4 py-2">Price</button> */}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8">
@@ -221,7 +226,7 @@ function VisitFoodMartPage() {
 
               {/* Map */}
               <div className="w-full md:w-1/4 bg-gray-200 relative  mt-4 md:mt-0 md:sticky top-16 h-screen">
-                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
+                {/* <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
                   <div className="bg-white p-4 rounded-lg shadow-lg">
                     <p className="text-gray-700 mb-4">
                       This page can't load Google Maps correctly.
@@ -235,7 +240,11 @@ function VisitFoodMartPage() {
                   src="https://placehold.co/400x600"
                   alt="Map placeholder"
                   className="w-full h-full object-cover"
-                />
+                /> */}
+
+                <FoodMartMapSingle 
+                center={martMenu?.data?.data?.foodVendor?.foodMartState} 
+                items={martMenu?.data?.data?.foodVendor} />
               </div>
             </div>
           </div>

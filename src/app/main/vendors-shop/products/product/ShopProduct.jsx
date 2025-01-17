@@ -53,6 +53,7 @@ function ShopProduct() {
 
 	// console.log("SINGLE_SHOP-PRODUCT", products?.data)
 
+	
 	const [tabValue, setTabValue] = useState(0);
 	const methods = useForm({
 		mode: 'onChange',
@@ -161,6 +162,7 @@ function ShopProduct() {
 								// shopData={shopData}
 								/>
 							</div>
+
 
 							<div className={tabValue !== 1 ? 'hidden' : ''}>
 								<ProductImagesTab />

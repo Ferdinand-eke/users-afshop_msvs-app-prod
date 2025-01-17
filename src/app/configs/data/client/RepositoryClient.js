@@ -63,8 +63,8 @@ export const clientForgotPassword = (formData) =>
 export const clientResetPassword = (formData) =>
   Api().post("/authuser/reset-password ", formData);
 
-  export const clientForgotPasswordWithOtp = (formData) =>
-  Api().post("/authuser/forgot-password/with-otp", formData);
+  export const clientForgotPasswordWithOtp = (formData) => Api().post("/authuser/forgot-password/with-otp", formData);
+
 
 export const clientResetPasswordFromOtp = (formData) =>
   Api().post("/authuser/reset-password/from-otp ", formData);

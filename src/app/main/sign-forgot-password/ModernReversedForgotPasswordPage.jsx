@@ -40,6 +40,7 @@ function ModernReversedForgotPasswordPage() {
 		userForgotPass(getValues())
 	}
 
+
 	
 
 	return (
@@ -186,7 +187,7 @@ function ModernReversedForgotPasswordPage() {
 								color="secondary"
 								className=" mt-4 w-full"
 								aria-label="Register"
-								disabled={_.isEmpty(dirtyFields) || !isValid || userForgotPass.isLoading}
+								// disabled={_.isEmpty(dirtyFields) || !isValid || userForgotPass.isLoading}
 								type="submit"
 								size="large"
 							>
