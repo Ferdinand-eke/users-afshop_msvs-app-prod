@@ -57,6 +57,11 @@ import userFoodMartPagesConfig from "../main/zrootclient/buz-foodmart/userFoodMa
 import UserSettingsAppConfig from "../main/zrootclient/settings/UserSettingsAppConfig";
 import userProfileAppConfig from "../main/zrootclient/profile/userProfileAppConfig";
 import MarketplaceProductsByCat from "../main/zrootclient/buz-marketplace/shops/MarketplaceProductsByCat";
+import SimpleWithSidebarsContentScrollComponent from "../main/zrootclient/afsh-page-layouts/simple/with-sidebars/SimpleWithSidebarsContentScrollComponent";
+import MarketplaceWithSidebarsContentScrollComponent from "../main/zrootclient/buz-marketplace/shops/marketplace/MarketplaceWithSidebarsContentScrollComponent";
+import BookingsPageWithSidebarsContentScrollComponent from "../main/zrootclient/buz-bookings/bookingsPage/BookingsPageWithSidebarsContentScrollComponent";
+import FoodMartWithSidebarsContentScrollPage from "../main/zrootclient/buz-foodmart/foodMartPage/FoodMartWithSidebarsContentScrollPage";
+import VisitFoodMartWithContentScrollPage from "../main/zrootclient/buz-foodmart/visitFoodMartPage/VisitFoodMartWithContentScrollPage";
 // import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
 
 
@@ -231,6 +236,11 @@ const routes = [
     path: "*",
     element: <Navigate to="404" />,
   },
+
+  /***Check Pages starts */
+
+
+  /***Check Pages ends */
 //
   {
     path: "/home",
@@ -263,6 +273,32 @@ const routes = [
    * Marketplace activiies starts
    * ##############################################################
    */
+  // {
+  //   path: "/marketplace/shop",
+  //   settings: {
+  //     layout: {
+  //       config: {
+  //         navbar: {
+  //           display: false,
+  //         },
+  //         toolbar: {
+  //           display: true,
+  //         },
+  //         footer: {
+  //           display: false,
+  //         },
+  //         leftSidePanel: {
+  //           display: false,
+  //         },
+  //         rightSidePanel: {
+  //           display: false,
+  //         },
+  //       },
+  //     },
+  //   },
+  //   element: <MarketplaceShops />,
+  // },
+
   {
     path: "/marketplace/shop",
     settings: {
@@ -286,8 +322,9 @@ const routes = [
         },
       },
     },
-    element: <MarketplaceShops />,
+    element: <MarketplaceWithSidebarsContentScrollComponent />,
   },
+
   {
     path: "/marketplace/product/:productId/:productSlug",
     settings: {
@@ -427,8 +464,11 @@ const routes = [
         },
       },
     },
-    element: <BookingsPage />,
+    // element: <BookingsPage />,
+    element: <BookingsPageWithSidebarsContentScrollComponent />,
   },
+
+  
 
   {
     path: "/bookings/listings/:bookingId/:slug",
@@ -559,9 +599,9 @@ const routes = [
         },
       },
     },
-    element: <FoodMartsPage />,
-    // element: <FoodMartsPageSecond />,
-    // element: <FoodMartsPageSecondResponsive />,
+    // element: <FoodMartsPage />,
+    element: <FoodMartWithSidebarsContentScrollPage />,
+  
   },
 
   {
@@ -587,8 +627,11 @@ const routes = [
         },
       },
     },
-    element: <VisitFoodMartPage />,
+    // element: <VisitFoodMartPage />,
+    element: <VisitFoodMartWithContentScrollPage />,
+    
   },
+
 
   {
     path: "/foodmarts/menu/:menuId",

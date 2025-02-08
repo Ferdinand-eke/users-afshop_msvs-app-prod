@@ -252,32 +252,13 @@ function BookingsPage() {
 
               {/* Main Content */}
               <main className="mt-10 flex-1 p-4  rounded-md">
-                {/* <div className="flex flex-col md:flex-row items-center mb-8">
-                  <input
-                    type="text"
-                    placeholder="Start typing to search..."
-                    className="flex-1 p-2 border rounded-lg mb-4 md:mb-0"
-                  />
-                  <div className="flex items-center ml-0 md:ml-4 space-x-4">
-                    <i className="fas fa-home text-gray-500"></i>
-                    <i className="fas fa-bolt text-gray-500"></i>
-                    <i className="fas fa-bell text-gray-500"></i>
-                    <i className="fas fa-user text-gray-500"></i>
-                    <i className="fas fa-moon text-gray-500"></i>
-                  </div>
-                </div> */}
+              
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
                   <h1 className="text-xl font-bold">
                    Listings 
                   </h1>
                   <div className="flex space-x-4 mt-4 md:mt-0 text-[10px]">
-                    {/* <select className="border rounded px-4 py-2"
-                    value={selectCountry}
-                    onChange={(e) =>setSelectCountry(e.target.value)}
-                    >
-                      {countries?.data?.data?.map((country) =>  
-                      (<option key={country?._id} value={country?._id}> {country?.name} {country?._id}</option>) )}
-                    </select> */}
+                  
                     <Controller
                       name="selectCountry"
                       control={control}
@@ -293,10 +274,7 @@ function BookingsPage() {
                           value={value === undefined || null ? "" : value}
                           error={!!errors.selectCountry}
                           helpertext={errors?.selectCountry?.message}
-                          //  {...other}
-                          //  {...(error && {error: true, helperText: error})}
                         >
-                          {/* <MenuItem value="">Select a product category</MenuItem> */}
                           {countries?.data?.data &&
                             countries?.data?.data?.map((option, id) => (
                               <MenuItem
@@ -317,7 +295,6 @@ function BookingsPage() {
                         defaultValue={[]}
                         render={({ field: { onChange, value } }) => (
                           <Select
-                            // className="border rounded px-4 py-2 h-[10px]"
                             className="border rounded px-4 py-2 h-[10px] text-[10px]"  
                             id="selectState"
                             label="selectState"
@@ -327,10 +304,7 @@ function BookingsPage() {
                             value={value === undefined || null ? "" : value}
                             error={!!errors.selectState}
                             helpertext={errors?.selectState?.message}
-                            //  {...other}
-                            //  {...(error && {error: true, helperText: error})}
                           >
-                            {/* <MenuItem value="">Select a product category</MenuItem> */}
                             {stateData &&
                               stateData?.map((option, id) => (
                                 <MenuItem 
@@ -351,9 +325,9 @@ function BookingsPage() {
                         defaultValue={[]}
                         render={({ field: { onChange, value } }) => (
                           <Select
-                            // className="border rounded px-4 py-2 h-[10px] text-[14px]"
 
-                            className="border rounded px-4 py-2 h-[10px] text-[10px]"                            id="selectLga"
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"                            
+                            id="selectLga"
                             label="selectLga"
                             fullWidth
                             defaultValue=""
@@ -361,10 +335,7 @@ function BookingsPage() {
                             value={value === undefined || null ? "" : value}
                             error={!!errors.selectLga}
                             helpertext={errors?.selectLga?.message}
-                            //  {...other}
-                            //  {...(error && {error: true, helperText: error})}
                           >
-                            {/* <MenuItem value="">Select a product category</MenuItem> */}
                             {blgas &&
                               blgas?.map((option, id) => (
                                 <MenuItem 
@@ -379,7 +350,6 @@ function BookingsPage() {
                     )}
                   </div>
                 </div>
-                {/* <h1 className="text-2xl font-bold mb-4">Hotels And Suites</h1> */}
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-scroll">
                   
                   
@@ -450,32 +420,20 @@ function BookingsPage() {
 
               {/* Map */}
               <div className="w-full p-8 md:w-4/12 bg-white relative  mt-4 md:mt-0 md:sticky top-16 h-screen overflow-scroll">
-                {/* <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
-                  <div className="bg-white p-4 rounded-lg shadow-lg">
-                    <p className="text-gray-700 mb-4">
-                      This page can't load Google Maps correctly.
-                    </p>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                      OK
-                    </button>
-                  </div>
-                </div> */}
-                {/* <img
-                  src="https://placehold.co/400x600"
-                  alt="Map placeholder"
-                  className="w-full h-full object-cover"
-                /> */}
+             
                 <BookingsMap items={bookingprops?.data?.data}/>
 
-                {/* {displayMap} */}
+        
               </div>
             </div>
           </div>
+          
         </>
       }
       scroll={isMobile ? "normal" : "page"}
     />
   );
 }
+
 
 export default BookingsPage;

@@ -7,6 +7,7 @@ import FusePageSimpleSidebarContent from './FusePageSimpleSidebarContent';
 /**
  * The FusePageSimpleSidebar component.
  */
+
 const FusePageSimpleSidebar = forwardRef((props, ref) => {
 	const { open = true, position, variant, onClose = () => {} } = props;
 	const [isOpen, setIsOpen] = useState(open);

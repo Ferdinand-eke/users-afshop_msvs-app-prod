@@ -48,8 +48,6 @@ function VisitFoodMartPage() {
   const { martId } = routeParams;
   const { data: martMenu, isLoading, isError } = useGetMartMenu(martId);
 
-  // console.log("singleFOOD_MART", martMenu?.data?.data?.foodVendor);
-
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -242,7 +240,7 @@ function VisitFoodMartPage() {
                   className="w-full h-full object-cover"
                 /> */}
 
-                <FoodMartMapSingle 
+              <FoodMartMapSingle 
                 center={martMenu?.data?.data?.foodVendor?.foodMartState} 
                 items={martMenu?.data?.data?.foodVendor} />
               </div>

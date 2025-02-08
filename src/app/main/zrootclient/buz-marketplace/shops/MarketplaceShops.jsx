@@ -265,19 +265,14 @@ function MarketplaceShops() {
               </div>
 
               {/* Main Content */}
+              
               <main className="mt-10 md:w-3/4 p-4 rounded-md">
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
                   <h1 className="text-xl font-bold">
                     Shop Online in Nigeria (8908 products found)
                   </h1>
                   <div className="flex space-x-4 mt-4 md:mt-0 text-[10px]">
-                    {/* <select className="border rounded px-4 py-2"
-                    value={selectCountry}
-                    onChange={(e) =>setSelectCountry(e.target.value)}
-                    >
-                      {countries?.data?.data?.map((country) =>  
-                      (<option key={country?._id} value={country?._id}> {country?.name} {country?._id}</option>) )}
-                    </select> */}
+                    
                     <Controller
                       name="selectCountry"
                       control={control}
@@ -351,8 +346,6 @@ function MarketplaceShops() {
                         defaultValue={[]}
                         render={({ field: { onChange, value } }) => (
                           <Select
-                            // className="border rounded px-4 py-2 h-[10px] text-[14px]"
-
                             className="border rounded px-4 py-2 h-[10px] text-[10px]"                            id="selectLga"
                             label="selectLga"
                             fullWidth
@@ -377,19 +370,6 @@ function MarketplaceShops() {
                         )}
                       />
                     )}
-
-                    {/* <select className="border rounded px-4 py-2">
-                      {countries?.data?.data?.map((country) =>  <option key={country?._id}> {country?.name}</option> )}
-
-                     
-                    </select> */}
-                    {/* <select className="border rounded px-4 py-2">
-                      {countries?.data?.data?.map((country) =>  <option key={country?._id}> {country?.name}</option> )}
-
-                     
-                    </select> */}
-                    {/* <button className="border rounded px-4 py-2">Brand</button>
-                    <button className="border rounded px-4 py-2">Price</button> */}
                   </div>
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8">

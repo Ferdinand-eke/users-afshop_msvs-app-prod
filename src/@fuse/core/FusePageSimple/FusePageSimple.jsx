@@ -11,6 +11,7 @@ const toolbarHeight = 64;
 /**
  * The Root styled component is the top-level container for the FusePageSimple component.
  */
+
 const Root = styled('div')(({ theme, ...props }) => ({
 	display: 'flex',
 	flexDirection: 'column',
@@ -20,6 +21,7 @@ const Root = styled('div')(({ theme, ...props }) => ({
 	flex: '1 1 auto',
 	width: '100%',
 	height: 'auto',
+
 	backgroundColor: theme.palette.background.default,
 	'&.FusePageSimple-scroll-content': {
 		height: '100%'
@@ -28,6 +30,8 @@ const Root = styled('div')(({ theme, ...props }) => ({
 		display: 'flex',
 		flexDirection: 'row',
 		flex: '1 1 auto',
+		// marginLeft:'150px',
+		// marginRight:'150px',
 		zIndex: 2,
 		minWidth: 0,
 		height: '100%',
@@ -125,10 +129,12 @@ const Root = styled('div')(({ theme, ...props }) => ({
 	},
 	'& .FusePageSimple-rightSidebar': {
 		width: props.rightSidebarWidth,
+		
 		[theme.breakpoints.up('lg')]: {
 			borderLeft: `1px solid ${theme.palette.divider}`,
 			borderRight: 0
 		}
+
 	},
 	'& .FusePageSimple-sidebarHeader': {
 		height: headerHeight,
