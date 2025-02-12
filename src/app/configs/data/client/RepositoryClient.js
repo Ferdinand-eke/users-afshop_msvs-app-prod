@@ -17,8 +17,8 @@ import { API_ENDPOINTS } from "./serverEndpoints/endpoints";
 /******Digital Ocean : Curent Production Main server*/
 // const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
 
-const baseDomain = import.meta.env.VITE_API_BASE_URL_DEV;   //development
-// const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  //production
+// const baseDomain = import.meta.env.VITE_API_BASE_URL_DEV;   //development
+const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  //production
 
 
 /**##############################

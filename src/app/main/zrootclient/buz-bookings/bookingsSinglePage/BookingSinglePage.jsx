@@ -15,8 +15,8 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { useNavigate, useParams } from "react-router";
 import { useGetBookingProperty } from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
-import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
-import DetailsRight from "./bookings-components/DetailsRight";
+import { formatCurrency } from "../../../vendors-shop/pos/PosUtils";
+import DetailsRight from "../bookings-components/DetailsRight";
 import {
   useCreateReservation,
   useGetReservations,
@@ -90,12 +90,6 @@ function BookingSinglePage(
     isError,
   } = useGetBookingProperty(bookingId);
 
-  // if (isLoading) {
-  //   return <FuseLoading />;
-  // }
-  // console.log("single-BOOKING", booking?.data?.data);
-
-  // const { user: currentUser} = useAppSelector(selectUser)
 
   const config = useAppSelector(selectFuseCurrentLayoutConfig);
   const currentUser = useAppSelector(selectUser)
@@ -103,18 +97,13 @@ function BookingSinglePage(
   const { getByValue } = useCountries();
   const { data: reservatons, isLoading: getReservationLoading } =
     useGetReservations(bookingId);
-  // reservatons = useGetReservations(details)?.data?.data
-
-  // console.log("PROP-reservations", reservatons?.data?.reservations);
-  // console.log("AuthenticatedUser", currentUser)
-
-  //   const Map = useMemo(
-  //     () => lazy(() => import('./bookings-components/map')),
-  //     [booking?.data?.data?.locationValue]
-  // )
 
   const coordinates = getByValue(booking?.data?.data?.locationValue)?.latlng;
+  // const coordinates = [booking?.data?.data?.latitude, booking?.data?.data?.longitude];
 
+  // console.log("CORDINATES", coordinates)
+//latitude
+//longitude
   const disabledDates = useMemo(() => {
     let dates = [];
 
@@ -144,8 +133,6 @@ function BookingSinglePage(
       totalPrice,
       startDate: parseDateString(dateRange?.startDate),
       endDate: parseDateString(dateRange?.endDate),
-      // startDate: dateRange?.startDate,
-      // endDate: dateRange?.endDate,
       listingId: booking?.data?.data?._id,
     };
 
@@ -159,6 +146,7 @@ function BookingSinglePage(
     routeParams,
     // currentUser
   ]);
+
 
   useEffect(() => {
     if (dateRange?.startDate && dateRange?.endDate) {
@@ -306,7 +294,7 @@ function BookingSinglePage(
 
               <div>
                 <div className="bg-white p-4 shadow-md">
-                  {/* <div className="flex items-center">
+                  <div className="flex items-center">
                     <span className="text-4xl font-bold">4.3</span>
                     <div className="ml-2">
                       <div className="flex items-center">
@@ -318,19 +306,13 @@ function BookingSinglePage(
                       </div>
                       <span className="text-gray-600">Based on 45 ratings</span>
                     </div>
-                  </div> */}
+                  </div>
                   <div className="mt-4">
                     {isLoading ? (
                       <>
-                        {/* <div className="spin flex items-center justify-center mx-auto h-[calc(100vh-132px)]">
-                                    <Spin />
-                                    <>
-                                        <Skeleton active />
-                                    </>
-                                </div> */}
+                     
 
                         <Box xs={24} lg={14}>
-                          {/* <Spin /> */}
                           <p>loading...</p>
                         </Box>
                       </>

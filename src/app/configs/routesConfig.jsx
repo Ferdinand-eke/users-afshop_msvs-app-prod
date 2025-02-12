@@ -41,13 +41,13 @@ import ManagedFoodMartsAppConfig from "../main/vendor-foodmarts/managed-foood-ma
 import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
 import SingleProduct from "../main/zrootclient/buz-marketplace/shops/SingleProduct";
 import Cart from "../main/zrootclient/buz-marketplace/shops/Cart";
-import BookingsPage from "../main/zrootclient/buz-bookings/BookingsPage";
+import BookingsPage from "../main/zrootclient/buz-bookings/bookingsPage/BookingsPage";
 import RealEstatesPage from "../main/zrootclient/buz-realestates/RealEstatesPage";
-import BookingSinglePage from "../main/zrootclient/buz-bookings/BookingSinglePage";
-import MerchantShopPage from "../main/zrootclient/buz-marketplace/shops/MerchantShopPage";
+import BookingSinglePage from "../main/zrootclient/buz-bookings/bookingsSinglePage/BookingSinglePage";
+import MerchantShopPage from "../main/zrootclient/buz-marketplace/shops/merchanyShopPage/MerchantShopPage";
 import RealEstateSinglePage from "../main/zrootclient/buz-realestates/RealEstateSinglePage";
-import FoodMartsPage from "../main/zrootclient/buz-foodmart/FoodMartsPage";
-import VisitFoodMartPage from "../main/zrootclient/buz-foodmart/VisitFoodMartPage";
+import FoodMartsPage from "../main/zrootclient/buz-foodmart/foodMartPage/FoodMartsPage";
+import VisitFoodMartPage from "../main/zrootclient/buz-foodmart/visitFoodMartPage/VisitFoodMartPage";
 import FoodMartsPageSecond from "../main/zrootclient/buz-foodmart/FoodMartsPageSecond";
 import FoodMartsPageSecondResponsive from "../main/zrootclient/buz-foodmart/FoodMartsPageSecondResponsive";
 import userReservationPagesConfig from "../main/zrootclient/buz-bookings/user-reservations/userReservationPagesConfig";
@@ -56,12 +56,17 @@ import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/user
 import userFoodMartPagesConfig from "../main/zrootclient/buz-foodmart/userFoodMartPagesConfig";
 import UserSettingsAppConfig from "../main/zrootclient/settings/UserSettingsAppConfig";
 import userProfileAppConfig from "../main/zrootclient/profile/userProfileAppConfig";
-import MarketplaceProductsByCat from "../main/zrootclient/buz-marketplace/shops/MarketplaceProductsByCat";
+import MarketplaceProductsByCat from "../main/zrootclient/buz-marketplace/shops/marketplaceProductsByCat/MarketplaceProductsByCat";
 import SimpleWithSidebarsContentScrollComponent from "../main/zrootclient/afsh-page-layouts/simple/with-sidebars/SimpleWithSidebarsContentScrollComponent";
 import MarketplaceWithSidebarsContentScrollComponent from "../main/zrootclient/buz-marketplace/shops/marketplace/MarketplaceWithSidebarsContentScrollComponent";
 import BookingsPageWithSidebarsContentScrollComponent from "../main/zrootclient/buz-bookings/bookingsPage/BookingsPageWithSidebarsContentScrollComponent";
 import FoodMartWithSidebarsContentScrollPage from "../main/zrootclient/buz-foodmart/foodMartPage/FoodMartWithSidebarsContentScrollPage";
 import VisitFoodMartWithContentScrollPage from "../main/zrootclient/buz-foodmart/visitFoodMartPage/VisitFoodMartWithContentScrollPage";
+import BookingsSinglePageWithSidebarsContentScroll from "../main/zrootclient/buz-bookings/bookingsSinglePage/BookingsSinglePageWithSidebarsContentScroll";
+import FoodMartSingleMenuWithContentScrollPage from "../main/zrootclient/buz-foodmart/foodMartSingleMenuPage/FoodMartSingleMenuWithContentScrollPage";
+import SingleProductWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/singleProductPage/SingleProductWithContentScrollPage";
+import MarketplaceProductsByCatWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/marketplaceProductsByCat/MarketplaceProductsByCatWithContentScrollPage";
+import MerchantShopPafeWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/merchanyShopPage/MerchantShopPafeWithContentScrollPage";
 // import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
 
 
@@ -348,8 +353,11 @@ const routes = [
         },
       },
     },
-    element: <SingleProduct />,
+    // element: <SingleProduct />,
+    element: <SingleProductWithContentScrollPage />,
+    
   },
+
 
   {
     path: "/marketplace/products/:id/by-category",
@@ -374,7 +382,11 @@ const routes = [
         },
       },
     },
-    element: <MarketplaceProductsByCat />,
+    // element: <MarketplaceProductsByCat />,
+
+    element: <MarketplaceProductsByCatWithContentScrollPage />,
+
+    
   },
 
   // {
@@ -426,7 +438,9 @@ const routes = [
         },
       },
     },
-    element: <MerchantShopPage />,
+    // element: <MerchantShopPage />,
+    element: <MerchantShopPafeWithContentScrollPage />,
+    
   },
 
   //
@@ -493,7 +507,8 @@ const routes = [
         },
       },
     },
-    element: <BookingSinglePage />,
+    // element: <BookingSinglePage />,
+    element: <BookingsSinglePageWithSidebarsContentScroll />,
   },
 
   
@@ -656,8 +671,11 @@ const routes = [
         },
       },
     },
-    element: <FoodMartSingleMenu />,
+    // element: <FoodMartSingleMenu />,
+    element: <FoodMartSingleMenuWithContentScrollPage />,
+    
   },
+
 
   /****
    * ##############################################################

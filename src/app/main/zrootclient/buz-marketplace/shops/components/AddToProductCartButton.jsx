@@ -1,5 +1,4 @@
 import { Button, Typography } from "@mui/material";
-// import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 
 const AddToProductCartButton = ({
   onSubmit,
@@ -13,30 +12,17 @@ const AddToProductCartButton = ({
     checkArray?.push(element?.productId?._id);
   });
 
-  console.log('ArrayCheck', checkArray)
   return (
     <div
-    //   className="
-    //     bg-white
-    //     rounded-xl
-    //     border-[1px]
-    //     border-neutral-200
-    //     overflow-hidden
-    //     "
+      className="
+        bg-white
+        rounded-xl
+        border-[1px]
+        border-neutral-200
+        overflow-hidden
+        "
     >
-      {/* {cartItems?.map((item) => 
-         item === productId ? <> <Typography>Incr-Dcr Cart</Typography></> : <>
-         <Button
-        size="xs"
-        type="primary"
-        className="bg-orange-500 hover:bg-orange-800  h-[44px] w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
-        onClick={onSubmit}
-        disabled={loading}
-      >
-        ADD TO CART
-      </Button>
-         
-      )} */}
+     
       {checkArray.includes(productId) ? (
         <div className="flex items-center justify-center gap-4 mt-4 md:mt-0 md:ml-4 text-lg">
           <Button
@@ -59,7 +45,7 @@ const AddToProductCartButton = ({
         <Button
           size="xs"
           type="primary"
-          className="bg-orange-500 hover:bg-orange-800  h-[44px] w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
+          className="bg-orange-500 hover:bg-orange-800 w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
           onClick={onSubmit}
           disabled={loading}
         >

@@ -13,12 +13,10 @@ import { resetSessionForShopUsers } from "app/configs/utils/authUtils";
 
 /******Digital Ocean : Curent Test Main server  import.meta.env.VITE_FIREBASE_DATABASE_URL*/
 // const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
-// const baseDomain = import.meta.env.VITE_API_BASE_URL;
 //=============================================================================
 
-const baseDomain = import.meta.env.VITE_API_BASE_URL_DEV;   //development
-// const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  //production
-
+// const baseDomain = import.meta.env.VITE_API_BASE_URL_DEV;   //development
+const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  //production
 
 /******Digital Ocean : Curent Production Main server*/
 // const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';

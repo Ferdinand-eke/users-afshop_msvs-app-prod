@@ -41,6 +41,7 @@ const item = {
 /**
  * The Courses page.
  */
+
 function UserReservations() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 

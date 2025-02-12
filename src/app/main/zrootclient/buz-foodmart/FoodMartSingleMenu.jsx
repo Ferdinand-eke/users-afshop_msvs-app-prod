@@ -53,17 +53,10 @@ function FoodMartSingleMenu() {
   const { data:menu, isLoading, isError } = useGetSingleMenuItem(menuId);
 
   const {mutate: addToFoodCart, isLoading:addFoodCartLoading} = useAddToFoodCart()
-  // const { data: foodCart  } = useGetMyFoodCart(); useGetMyFoodCartByUserCred
 
   const { data: foodCart  } = useGetMyFoodCartByUserCred(user?.id); 
 
-  // console.log("MENU_ITEM", menu)
-  // console.log("FOOD_CART", foodCart?.data?.foodcart)
-  console.log("11. foodCart", foodCart?.data?.foodcart)
   
-
-
-
   const onAddToFoodCart = useCallback(() => {
     if(!user?.email){
         navigate('/sign-in')
@@ -378,65 +371,14 @@ function FoodMartSingleMenu() {
                   </div>
                 </div>
 
-                {/* <div className="bg-white p-4 rounded mt-4">
-                  <h2 className="text-lg font-bold">SELLER INFORMATION</h2>
-                  <p className="text-gray-700">Apple Authorized Reseller</p>
-                  <p className="text-gray-500">94% Seller Score</p>
-                  <p className="text-gray-500">2456 Followers</p>
-                  <button className="bg-[#ADF802] text-white text-lg font-bold py-2 px-4 rounded mt-4 w-full">
-                    FOLLOW
-                  </button>
-                  <div className="mt-4">
-                    <h3 className="font-bold">Seller Performance</h3>
-                    <div className="flex items-center mt-2">
-                      <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">Shipping speed: Good</p>
-                    </div>
-                    <div className="flex items-center mt-2">
-                      <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">
-                        Quality score: Excellent
-                      </p>
-                    </div>
-                    <div className="flex items-center mt-2">
-                      <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">
-                        Customer rating: Good
-                      </p>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="bg-white p-4 rounded mt-4">
-                  <h2 className="text-lg font-bold">SELLER INFORMATION</h2>
-                  <p className="text-gray-700">Apple Authorized Reseller</p>
-                  <p className="text-gray-500">94% Seller Score</p>
-                  <p className="text-gray-500">2456 Followers</p>
-                  <button className="bg-[#ADF802] text-white text-lg font-bold py-2 px-4 rounded mt-4 w-full">
-                    FOLLOW
-                  </button>
-                  <div className="mt-4">
-                    <h3 className="font-bold">Seller Performance</h3>
-                    <div className="flex items-center mt-2">
-                      <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">Shipping speed: Good</p>
-                    </div>
-                    <div className="flex items-center mt-2">
-                      <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">
-                        Quality score: Excellent
-                      </p>
-                    </div>
-                    <div className="flex items-center mt-2">
-                      <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">
-                        Customer rating: Good
-                      </p>
-                    </div>
-                  </div>
-                </div> */}
+               
               </div>
             </div>
+
+
+
+
+
 
             {/* details part of single product */}
             <div className="mt-5 flex flex-col md:flex-row p-4">
@@ -446,30 +388,7 @@ function FoodMartSingleMenu() {
                   {/* <h2 className="text-lg font-bold">{menu?.data?.name}</h2>
                   <p>{menu?.data?.description}</p> */}
                 </div>
-                {/* <div>
-                  <h2 className="text-lg font-bold">Outstanding Graphics</h2>
-                  <p>
-                    Presenting an entirely new class of GPU architecture. And
-                    the biggest breakthrough in graphics yet for Apple silicon.
-                    Dynamic Caching optimises fast on-chip memory to
-                    dramatically increase average GPU utilisation - driving a
-                    huge performance boost for the most demanding pro apps and
-                    games.
-                  </p>
-                  <p>
-                    Games will look more detailed than ever thanks to
-                    hardware-accelerated mesh shading. This brings greater
-                    capability and efficiency to geometry processing, enabling
-                    games to render more visually complex scenes.
-                  </p>
-                  <p>
-                    The 14-inch MacBook Pro with M3 takes power and speed to the
-                    next level, whether it’s on battery or plugged in. With a
-                    stunning Liquid Retina XDR display, all the ports you need,
-                    and all-day battery life —this pro laptop goes anywhere you
-                    need.
-                  </p>
-                </div> */}
+               
               </div>
               <div className="w-full md:w-3/12 md:ml-4">
                 <div className="bg-gray-100 p-4 border rounded mb-4">

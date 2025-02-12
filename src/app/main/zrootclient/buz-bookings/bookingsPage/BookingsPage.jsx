@@ -16,13 +16,13 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
-import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
-import ClienttErrorPage from "../components/ClienttErrorPage";
+import { formatCurrency } from "../../../vendors-shop/pos/PosUtils";
+import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
 import { Controller, useForm } from "react-hook-form";
 // import { MapContainer, TileLayer } from 'react-leaflet'
-import BookingsMap from './components/maps/BookingsMap';
+import BookingsMap from '../components/maps/BookingsMap';
 
 const container = {
   show: {

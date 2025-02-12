@@ -21,8 +21,8 @@ import {
   getLgasByStateId,
   getStateByCountryId,
 } from "app/configs/data/client/RepositoryClient";
-import ClienttErrorPage from "../components/ClienttErrorPage";
-import FoodMartMap from "./components/maps/FoodMartMap";
+import ClienttErrorPage from "../../components/ClienttErrorPage";
+import FoodMartMap from "../components/maps/FoodMartMap";
 import UserCountrySelect from "src/app/apselects/usercountryselect";
 import UserStateSelect from "src/app/apselects/userstateselect";
 import UserLgaSelect from "src/app/apselects/userlgaselect";

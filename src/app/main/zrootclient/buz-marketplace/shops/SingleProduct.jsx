@@ -50,6 +50,7 @@ const item = {
   },
 };
 
+
 /**
  * The Courses page.
  */
@@ -67,7 +68,6 @@ function SingleProduct() {
   const [cart, setCart] = useState([]);
   const {data:userCartData, isLoading:loadingCart} = useGetMyMarketplaceCartByUserCred(user?.id)
 
-  console.log("cartDetailsForAuth&UnAuth", userCartData?.data?.cartItems);
 
   const onAddToUserCart = useCallback(() => {
     if (!user?.email) {
@@ -83,8 +83,7 @@ function SingleProduct() {
       shoppingSession:''
     };
 
-    // console.log("ADD-To-CART-FORMDATA", formData)
-    // console.log("Item_SHOP_OWNER", product?.data?.shop?._id) businezLga
+   
 
     if (userCartData?.data?.cartItems?.length === 0) {
       const sessionPayload = {
@@ -260,9 +259,7 @@ function SingleProduct() {
                             per {product?.data?.quantityunitweight?.unitname}
                           </p>
                         </span>{" "}
-                        {/* <p className="text-2">
-                          per {product?.data?.quantityunitweight?.unitname}
-                        </p> */}
+                    
                       </div>
                       {product?.data?.listprice && (
                         <span className="text-gray-500 line-through ml-2">

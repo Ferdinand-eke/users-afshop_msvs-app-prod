@@ -16,9 +16,9 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { Link, useParams } from "react-router-dom";
 import { useGetMartMenu } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
-import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
-import ClienttErrorPage from "../components/ClienttErrorPage";
-import FoodMartMapSingle from "./components/maps/FoodMartMapSingle";
+import { formatCurrency } from "../../../vendors-shop/pos/PosUtils";
+import ClienttErrorPage from "../../components/ClienttErrorPage";
+import FoodMartMapSingle from "../components/maps/FoodMartMapSingle";
 
 const container = {
   show: {
@@ -242,7 +242,7 @@ function VisitFoodMartPage() {
 
               <FoodMartMapSingle 
                 center={martMenu?.data?.data?.foodVendor?.foodMartState} 
-                items={martMenu?.data?.data?.foodVendor} />
+                items={martMenu?.data?.data?.menu} />
               </div>
             </div>
           </div>

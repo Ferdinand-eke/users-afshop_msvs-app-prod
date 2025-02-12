@@ -1,0 +1,178 @@
+import { styled } from '@mui/material/styles';
+import FusePageSimple from '@fuse/core/FusePageSimple';
+import { useCallback, useEffect, useState } from 'react';
+import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
+import DemoHeader from './shared-components/DemoHeader';
+import DemoContent from './shared-components/DemoContent';
+import DemoSidebar from './shared-components/DemoSidebar';
+import DemoSidebarRight from './shared-components/DemoSidebarRight';
+import FusePageSimpleWithMargin from '@fuse/core/FusePageSimple/FusePageSimpleWithMargin';
+import useGetAllProducts, { useAddToCart, useGetMyMarketplaceCartByUserCred, useGetSingleProduct } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
+import { useForm } from 'react-hook-form';
+import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries';
+import {
+	getLgasByStateId,
+	getStateByCountryId,
+  } from "app/configs/data/client/RepositoryClient";
+import useGetAllBookingProperties from 'app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo';
+import useGetAllFoodMarts, { useAddToFoodCart, useGetMyFoodCartByUserCred, useGetSingleMenuItem } from 'app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo';
+import { useNavigate, useParams } from 'react-router';
+import { useAppSelector } from 'app/store/hooks';
+import { selectUser } from 'src/app/auth/user/store/userSlice';
+import { getFoodVendorSession, getShoppingSession, storeFoodVendorSession, storeShoppingSession } from 'src/app/main/vendors-shop/pos/PosUtils';
+
+const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
+	
+	'& .FusePageSimple-header': {
+		backgroundColor: theme.palette.background.paper,
+		borderBottomWidth: 1,
+		borderStyle: 'solid',
+		borderColor: theme.palette.divider
+	},
+	'& .FusePageSimple-toolbar': {
+
+	},
+	'& .FusePageSimple-content': {
+	},
+	'& .FusePageSimple-sidebarHeader': {
+		
+	},
+	'& .FusePageSimple-sidebarContent': {
+		
+	},
+	
+}));
+
+
+/**
+ * The SimpleWithSidebarsContentScroll page.
+ */
+function SingleProductWithContentScrollPage() {
+	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
+	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
+	const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
+	useEffect(() => {
+		setLeftSidebarOpen(!isMobile);
+		setRightSidebarOpen(!isMobile);
+	}, [isMobile]);
+
+
+  const routeParams = useParams();
+  const navigate = useNavigate();
+  const user = useAppSelector(selectUser);
+  const { productId } = routeParams;
+  const { data: product, isLoading, isError } = useGetSingleProduct(productId);
+  const { mutate: addToart, isLoading: cartLoading } = useAddToCart();
+
+  // const [cartloading, setCartLoading] = useState(false);
+  const [cart, setCart] = useState([]);
+  const {data:userCartData, isLoading:loadingCart} = useGetMyMarketplaceCartByUserCred(user?.id)
+
+
+  const onAddToUserCart = useCallback(() => {
+    if (!user?.email) {
+      navigate("/sign-in");
+      return;
+    }
+
+    const formData = {
+      user: user?.id,
+      quantity: 1,
+      product: product?.data?._id,
+      seller: product?.data?.shop?._id,
+      shoppingSession:''
+    };
+
+   
+
+    if (userCartData?.data?.cartItems?.length === 0) {
+      const sessionPayload = {
+        shopID: product?.data?.shop?._id,
+        shopCountryOrigin: product?.data?.shop?.businessCountry,
+        shopStateProvinceOrigin: product?.data?.shop?.businezState,
+        shopLgaProvinceOrigin: product?.data?.shop?.businezLga,
+        shopMarketId: product?.data?.market?._id,
+      }
+      const setCartSessionPayload = storeShoppingSession(sessionPayload);
+      // console.log('shoppinSESSION', setCartSessionPayload)
+      if(setCartSessionPayload){
+        addToart(formData);
+        // getCartWhenAuth()
+        return
+      }
+      
+    } else {
+      const payloadData = getShoppingSession()
+      // console.log("clientSESSION_LGA", payloadData?.shopLgaProvinceOrigin)
+
+   
+      if (payloadData?.shopLgaProvinceOrigin === product?.data?.shop?.businezLga) {
+         addToart(formData);
+        // getCartWhenAuth()
+        return
+      } else {
+        alert("You must shop in one L.G.A/County at a time");
+        return
+      }
+    }
+
+    
+  }, [
+    product?.data?._id,
+    routeParams,
+    user,
+    userCartData?.data?.cartItems,
+    userCartData?.data?.cartItems?.length
+  ]);
+
+
+	return (
+		<Root
+	
+			header={
+				<DemoHeader
+				// countries={countries?.data?.data}
+				// stateData={stateData}
+				// blgas={blgas}
+				// methods={methods}
+
+					leftSidebarToggle={() => {
+						setLeftSidebarOpen(!leftSidebarOpen);
+					}}
+					rightSidebarToggle={() => {
+						setRightSidebarOpen(!rightSidebarOpen);
+					}}
+				/>
+			}
+			content={<DemoContent
+				productData={product?.data}
+				isLoading={isLoading}
+				isError={isError}
+        // onAddToFoodCart={onAddToUserCart}
+        // addFoodCartLoading={loadingCart}
+        // foodCart={ userCartData?.data?.cartItems}
+
+        onSubmit={onAddToUserCart}
+        loading={cartLoading}
+        productId={productId}
+        cartItems={userCartData?.data?.cartItems}
+				/>}
+			leftSidebarOpen={leftSidebarOpen}
+			leftSidebarOnClose={() => {
+				setLeftSidebarOpen(false);
+			}}
+			leftSidebarContent={<DemoSidebar />}
+			rightSidebarOpen={rightSidebarOpen}
+			rightSidebarOnClose={() => {
+				setRightSidebarOpen(false);
+			}}
+			rightSidebarContent={<DemoSidebarRight 
+        // methods={methods}
+      	productInfo={product?.data}
+      />}
+			scroll="content"
+		/>
+	);
+}
+
+export default SingleProductWithContentScrollPage;

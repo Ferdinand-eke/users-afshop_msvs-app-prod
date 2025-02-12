@@ -5,8 +5,8 @@
 
 // const baseUrl = 'https://coral-app-n8ox9.ondigitalocean.app' //Africanshops
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL_DEV;   //development
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_PROD;  //production
+// const baseUrl = import.meta.env.VITE_API_BASE_URL_DEV;   //development
+const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD;  //production
 
 const jwtAuthConfig = {
 	tokenStorageKey: 'jwt_access_token',

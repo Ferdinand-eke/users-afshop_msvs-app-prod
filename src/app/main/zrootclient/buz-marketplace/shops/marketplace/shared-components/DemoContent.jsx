@@ -50,7 +50,7 @@ function DemoContent(props) {
   return (
     <div className="flex-auto p-24 sm:p-40 ">
       <div className="h-7xl min-h-7xl max-h-7xl border-2 border-dashed rounded-2xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
           {products.map((product, index) => (
             <div
               key={index}

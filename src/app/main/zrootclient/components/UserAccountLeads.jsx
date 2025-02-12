@@ -12,8 +12,6 @@ const UserAccountLeads = () => {
 
     const user = useAppSelector(selectUser);
 
-
-    
   return (
     <aside className="w-full bg-white p-4 rounded-8 mb-8">
         <Button

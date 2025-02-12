@@ -142,6 +142,7 @@ function VisitFoodMartWithContentScrollPage() {
   }
 
 
+  // console.log("MART_MENU", martMenu?.data)
   // console.log("stateCORDINATEs", martMenu?.data?.foodVendor?.foodMartState)
 
   // console.log("foodVENDOR_CORDINATES", martMenu?.data?.data?.foodVendor)
@@ -184,7 +185,7 @@ function VisitFoodMartWithContentScrollPage() {
 			rightSidebarContent={<DemoSidebarRight 
      
         center={martMenu?.data?.foodVendor?.foodMartState} 
-        items={martMenu?.data?.data?.foodVendor} 
+        items={martMenu?.data?.foodVendor} 
       />}
 			scroll="content"
 		/>

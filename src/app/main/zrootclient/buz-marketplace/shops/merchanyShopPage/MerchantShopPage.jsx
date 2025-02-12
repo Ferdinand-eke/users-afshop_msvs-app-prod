@@ -20,7 +20,7 @@ import {
   getShopAndProductById,
 } from "app/configs/data/client/RepositoryClient";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
-import ClienttErrorPage from "../../components/ClienttErrorPage";
+import ClienttErrorPage from "../../../components/ClienttErrorPage";
 
 const container = {
   show: {
@@ -43,6 +43,7 @@ const item = {
 /**
  * The Courses page.
  */
+
 function MerchantShopPage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 

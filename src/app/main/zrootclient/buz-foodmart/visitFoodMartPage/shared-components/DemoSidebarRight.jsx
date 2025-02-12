@@ -155,7 +155,8 @@ const navigationData = [
  */
 function DemoSidebarRight(props) {
   const { center, items } = props;
-//   console.log("CENTER", center)
+  // console.log("CENTER", center);
+  // console.log("FOOD_MART", items);
   return (
     <div className="px-12 py-24 h-screen">
       {/* min-h-6xl  */}
@@ -163,7 +164,7 @@ function DemoSidebarRight(props) {
         Map Location Site Views
       </div>
 
-      <FoodMartMapSingle center={center} items={items} />
+      {center && items && <FoodMartMapSingle center={center} items={items} />}
     </div>
   );
 }

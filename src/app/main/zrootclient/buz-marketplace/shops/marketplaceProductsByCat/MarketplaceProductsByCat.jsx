@@ -18,8 +18,8 @@ import useGetProducts from "app/configs/data/server-calls/auth/userapp/allProduc
 import { useNavigate, useNavigation, useParams } from "react-router";
 import { useGetProductByCategory } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
-import ClienttErrorPage from "../../components/ClienttErrorPage";
-import CategoryAndTradehub from "./components/CategoryAndTradehub";
+import ClienttErrorPage from "../../../components/ClienttErrorPage";
+import CategoryAndTradehub from "../components/CategoryAndTradehub";
 
 
 const container = {
@@ -66,7 +66,6 @@ function MarketplaceProductsByCat() {
     );
   }
 
- 
 
   let productItemsView;
 

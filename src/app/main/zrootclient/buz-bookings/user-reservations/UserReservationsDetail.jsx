@@ -74,6 +74,7 @@ function UserReservationsDetail() {
     );
   }
 
+
   if (!reservation?.data?.reservation) {
     return (
       <motion.div
@@ -144,36 +145,12 @@ function UserReservationsDetail() {
 
               {/* Main Content */}
               <div
-                className="flex-1 w-full md:w-6/12  p-4 bg-white rounded-md overflow-scroll"
-                // className="min-h-[715px] lg:min-h-[580px] px-8 xl:px-[15px] pb-[30px] bg-transparent  rounded-md overflow-scroll"
-              >
+                className="flex-1 w-full md:w-6/12  p-4 bg-white rounded-md overflow-scroll">
                 <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-8 ">
                   <>
                     <main className="w-4/4 p-4 overflow-y-scroll">
-                      {/* <h1 className="text-xl font-bold mb-4">Reservations</h1>
-                      <div className="flex space-x-4 mb-4">
-                        <button className="border-b-2 border-orange-500 pb-2">
-                          ONGOING/FULLFILED RESERVATIONS {myreservations?.data?.myreservations?.length}
-                        </button>
-                        <button className="pb-2">
-                          CANCELED/RESERVATIONS (11)
-                        </button>
-                      </div>
-                      <div className="space-y-4">
-                        {myreservations?.data?.myreservations?.map((trip) => (
-                          <div
-                            className="bg-white p-4 rounded shadow mb-8"
-                            key={trip?._id}
-                          >
+                   
 
-                           <ReservationCard placedReservation={trip}/>
-                          </div>
-                        ))}
-
-                        
-                      </div> */}
-
-                      {/* <div className="w-full md:w-4/4 bg-white p-4 shadow-md ml-0 md:ml-4"> */}
                         <div className="border-b pb-4 mb-4">
                         <div className="flex">
                           <Typography
@@ -190,8 +167,7 @@ function UserReservationsDetail() {
                           <div className="border p-4">
                             <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
                               <img
-                                // src="https://res.cloudinary.com/dtxyw2bw3/image/upload/v1730297412/a5aisezovghikkptbnyu.jpg"
-                                // src={placedReservation?.bookingPropertyId?.imageSrcs[0]?.url}
+                            
                                 src={reservation?.data?.reservation?.bookingPropertyId?.imageSrcs[0]?.url}
                                 alt="6-ways Adjustable Ergonomic Baby Carrier"
                                 className="w-80 h-[120px] object-cover px-4"
@@ -221,99 +197,30 @@ function UserReservationsDetail() {
                               
                               </div>
                               </div>
-                              {/* <div className="flex space-x-2 mt-2 md:mt-0">
-                                <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                                  TRACK MY ITEM
-                                </button>
-                                <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">
-                                  CANCEL ITEM
-                                </button>
-                              </div> */}
+                          
                             </div>
                           </div>
-                          {/* <div className="border p-4">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                            <img
-                                src="https://res.cloudinary.com/dtxyw2bw3/image/upload/v1730297412/a5aisezovghikkptbnyu.jpg"
-                  
-                                alt="6-ways Adjustable Ergonomic Baby Carrier"
-                                className="w-80 h-[120px] object-cover px-4"
-                              />
-                              <div>
-                                <p className="text-sm text-gray-600">
-                                  On Tuesday, 03-12
-                                </p>
-                                <p className="font-bold">
-                                  NICE BABY CAR SEATER
-                                </p>
-                                <p className="text-sm">Qty: 1</p>
-                                <p className="text-sm font-bold">N 7,500</p>
-                              </div>
-                              <div className="flex space-x-2 mt-2 md:mt-0">
-                                <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                                  BUY AGAIN
-                                </button>
-                                <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">
-                                  SEE STATUS HISTORY
-                                </button>
-                              </div>
-                            </div>
-                          </div> */}
-                          {/* <div className="border p-4">
-                            <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                            <img
-                                src="https://res.cloudinary.com/dtxyw2bw3/image/upload/v1730297412/a5aisezovghikkptbnyu.jpg"
-                            
-                                alt="6-ways Adjustable Ergonomic Baby Carrier"
-                                className="w-80 h-[120px] object-cover px-4"
-                              />
-                              <div>
-                                <p className="text-sm text-gray-600">
-                                  On Tuesday, 03-12
-                                </p>
-                                <p className="font-bold">
-                                  Trendy Deep Fryer Non-Sticky For Homes
-                                </p>
-                                <p className="text-sm">Qty: 1</p>
-                                <p className="text-sm font-bold">N 3,800</p>
-                              </div>
-                              <div className="flex space-x-2 mt-2 md:mt-0">
-                                <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                                  BUY AGAIN
-                                </button>
-                                <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">
-                                  SEE STATUS HISTORY
-                                </button>
-                              </div>
-                            </div>
-                          </div> */}
+                          
                         </div>
                         <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                           <div className="border p-4">
                             <h2 className="font-bold">PAYMENT INFORMATION</h2>
-                            {/* <p>Payment Method</p> */}
-                            {/* <p>Payment Details</p> */}
+                    
                             <p className="text-sm font-bold">
                             Payment Method: {reservation?.data?.reservation?.paymentdatas?.paymentMethod}
                             </p>
                            
                             
                             <p className="text-sm font-bold">Total Amount: N {formatCurrency(reservation?.data?.reservation?.totalPrice)}</p>
-                            {/* <p>Delivery Fees: N 420</p> */}
+                    
                           </div>
                           <div className="border p-4">
                             <h2 className="font-bold">STAY PROGRESS</h2>
-                            {/* <p>Delivery Method</p>
-                            <p>Door Delivery</p>
-                            <p>Shipping Address</p>
-                            <p>123, Random Street</p>
-                            <p>City, State</p>
-                            <p>Country</p>
-                            <p>Delivery Details</p> */}
+                     
                            
                             <p className="text-sm font-bold">CHECK IN : {reservation?.data?.reservation?.isCheckIn ? <span className="text-green-500">Checked-In</span>: <span className="text-red-500">Check-In Pending...</span>}</p>
                             <p className="text-sm font-bold">CHECK OUT: {reservation?.data?.reservation?.isCheckOut ? <span className="text-green-500">Checked-Out</span> : <span className="text-red-500">Check-Out Pending...</span>}</p>
-                            {/* <p>Delivery 3: Fulfilled by vendor</p> */}
+                          
 
                             <br/>
                             <p>
@@ -322,9 +229,9 @@ function UserReservationsDetail() {
                             </p>
                           </div>
                         </div>
-                      {/* </div> */}
+                
                     </main>
-                    {/* </div> */}
+      
                     <button className="fixed bottom-4 right-4 bg-orange-500 text-white px-4 py-2 rounded-full flex items-center space-x-2">
                       <i className="fas fa-comment-dots"></i>
                       <span>Chat with us</span>
