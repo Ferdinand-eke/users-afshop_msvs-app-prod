@@ -15,8 +15,6 @@ import ReservationCard from "../../../bookings-components/ReservationCard";
 function DemoContent(props) {
   const { isLoading, isError, products } = props;
 
-  console.log("USER__RESERVATIONS", products);
-
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -61,6 +59,7 @@ function DemoContent(props) {
               CANCELED/RESERVATIONS (11)
             </button>
           </div>
+          
           <div className="space-y-4">
             {products?.map((trip) => (
               <div className="bg-white p-4 rounded shadow mb-8" key={trip?._id}>

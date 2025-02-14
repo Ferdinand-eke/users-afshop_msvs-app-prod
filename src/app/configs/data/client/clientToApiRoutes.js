@@ -10,8 +10,7 @@ import { getAdminAccessToken } from "../utils/opsUtils";
 import { toast } from "react-toastify";
 
 
-// const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_DEV;   //development
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_PROD;  //production
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL_PROD;   /**production & dev */
 
 /***================================================================================================================= */
 export const customHeaders = {

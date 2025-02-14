@@ -85,13 +85,8 @@ function JwtAuthProvider(props) {
    * HANDLE USER DAT STORAGE
    */
   const setUserCredentialsStorage = useCallback((userCredentials) => {
-    console.log("UserCredentials TO-SET", userCredentials);
-    // const stringifiedUser = JSON.stringify({ userCredentials })
 
     Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
-
-    // localStorage.setItem(config.adminCredentials, JSON.stringify({ userCredentials }));
-    // localStorage.setItem(config.adminCredentials, stringifiedUser);
   }, []);
 
   /**Get User credentials */
@@ -104,14 +99,6 @@ function JwtAuthProvider(props) {
       return userCredentials;
     }
 
-    /**Get Item in localstorage-based-SETTERS */
-    //  const { userCredentials } = localStorage.getItem("jwt_auth_credentials")
-    //     ? JSON.parse(localStorage.getItem("jwt_auth_credentials"))
-    //     : "";
-    //   // if (userCredentials) {
-    //   //   return userCredentials;
-    //   // }
-    // return userCredentials;
   }, []);
 
   /***Remove user credentials */
@@ -133,25 +120,24 @@ function JwtAuthProvider(props) {
   /**
    * Handle sign-in success
    */
-  //   const navigate = useNavigate()
+ 
   const handleSignInSuccess = useCallback((userData, accessToken) => {
     setSession(accessToken);
-    // setIsAuthenticated(true);
     setIsAuthenticated(setIsAthenticatedStorage(accessToken));
 
-    // setUser(userData);
+ 
     setUserCredentialsStorage(userData);
     window.location.reload();
-    // navigate('/shop-dashboard')
-  }, []); //here is where token is stored
+ 
+  }, []); /**here is where token is stored */
   /**
    * Handle sign-up success
    */
   const handleSignUpSuccess = useCallback((userData, accessToken) => {
     setSession(accessToken);
-    // setIsAuthenticated(true);
+    
     setIsAuthenticated(setIsAthenticatedStorage(accessToken));
-    // setUser(userData);
+    
     setUserCredentialsStorage(userData);
   }, []);
   /**
@@ -180,31 +166,31 @@ function JwtAuthProvider(props) {
     setIsAuthenticated(false);
     setUser(null);
   }, []);
-  // Set session
+ 
   const setSession = useCallback((accessToken) => {
     if (accessToken) {
       localStorage.setItem(config.tokenStorageKey, accessToken);
-      // axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
+   
       axios.defaults.headers.common.accessToken = `${accessToken}`;
     }
   }, []);
-  // Reset session
+ 
   const resetSession = useCallback(() => {
     localStorage.removeItem(config.tokenStorageKey);
-    // delete axios.defaults.headers.common.Authorization;
+    
     delete axios.defaults.headers.common.accessToken;
   }, []);
-  // Get access token from local storage
+  
   const getAccessToken = useCallback(() => {
     return localStorage.getItem(config.tokenStorageKey);
   }, []);
 
-  // Check if the access token is valid
+  /**Check if the access token is valid */
   const isTokenValid = useCallback((accessToken) => {
     if (accessToken) {
       try {
         const decoded = jwtDecode(accessToken);
-        // console.log("DECODED Token-DATA", decoded)
+     
         const currentTime = Date.now() / 1000;
         return decoded.exp > currentTime;
       } catch (error) {
@@ -214,7 +200,7 @@ function JwtAuthProvider(props) {
 
     return false;
   }, []);
-  // Check if the access token exist and is valid on mount
+  /** Check if the access token exist and is valid on mount */
   useEffect(() => {
     const attemptAutoLogin = async () => {
       const accessToken = getAccessToken();
@@ -228,19 +214,16 @@ function JwtAuthProvider(props) {
               headers: { shoparccreed: `${accessToken}` },
             }
           );
-          console.log("User-FROM-IsTokeValid", response);
+      
           const transFormedUser = {
             id: response?.data?.user?.id,
             name: response?.data?.user?.name,
             email: response?.data?.user?.email,
-            // role:response?.data?.user?.role.toLowerCase(),
             role: "merchant",
             shopplan: response?.data?.user?.shopplan,
-            // name:response?.data?.user?.name,
-            // name:response?.data?.user?.name,
+          
           };
-          // const userData = transFormedUser;
-          // console.log("GETING-AUTHENTICATED-USER", userData)
+     
           handleSignInSuccess(transFormedUser, accessToken);
           setIsLoading(false);
           return true;
@@ -265,9 +248,9 @@ function JwtAuthProvider(props) {
     };
 
     if (!isAuthenticated || isAuthenticated === null) {
-      console.log("isAUTHENTICATED?", isAuthenticated);
+  
       attemptAutoLogin().then((signedIn) => {
-        console.log("signedInSTATUS", signedIn);
+      
         setIsLoading(false);
         setAuthStatus(signedIn ? "authenticated" : "unauthenticated");
       });
@@ -291,31 +274,27 @@ function JwtAuthProvider(props) {
     //  handleFailure,
     handleSignInFailure
   ) => {
-    // const { enqueueSnackbar, closeSnackbar } = useSnackbar();
+  
     try {
       setIsLoading(true);
       adminLogIn.mutate(data);
       setIsLoading(false);
     } catch (error) {
       const axiosError = error;
-      console.log("Request-Error", error);
+    
       toast.error(
         error?.response && error?.response?.data?.message
           ? error?.response?.data?.message
           : error?.message
       );
 
-      // return
-      //handleSignInFailure
-      // handleFailure(axiosError);
       handleSignInFailure(axiosError);
       setIsLoading(false);
       return axiosError;
     }
   };
-  // Refactor signIn function
+  /***Refactor signIn function */
   const signIn = (credentials) => {
-    // console.log("IN-JWT-Provider", credentials)
     return handleRequest(
       config.signInBravortAdminUrl,
       credentials,
@@ -323,7 +302,7 @@ function JwtAuthProvider(props) {
       handleSignInFailure
     );
   };
-  // Refactor signUp function
+  /**Refactor signUp function */
   const signUp = useCallback((data) => {
     return handleRequest(
       config.signUpUrl,
@@ -339,8 +318,7 @@ function JwtAuthProvider(props) {
     resetAuthStatusStorage();
     resetSession();
     removeIsAthenticatedStorage();
-    // setIsAuthenticated(false);
-    // setUser(null);
+   
     removeUserCredentialsStorage();
 
     window.location.reload();
@@ -404,7 +382,7 @@ function JwtAuthProvider(props) {
           if (axiosError?.response?.status === 401) {
             signOut();
             // eslint-disable-next-line no-console
-            console.warn("Unauthorized request. User was signed out.");
+           
           }
 
           return Promise.reject(axiosError);
@@ -414,17 +392,8 @@ function JwtAuthProvider(props) {
   }, [isAuthenticated]);
   const storedAccessToken = getAccessToken();
   useEffect(() => {
-    // if (user ) {
-    // 	setAuthStatus('authenticated');
-    // } else {
-    // 	setAuthStatus('unauthenticated');
-    // }
-
-    //user &&
+  
     if (storedAccessToken) {
-      // 	setAuthStatus('authenticated');
-      // } else {
-      // 	setAuthStatus('unauthenticated');
       setAuthStatusStorage(storedAccessToken);
     }
   }, [user, storedAccessToken]);

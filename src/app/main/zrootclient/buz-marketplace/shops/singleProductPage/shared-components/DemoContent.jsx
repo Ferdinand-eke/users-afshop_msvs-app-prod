@@ -24,6 +24,8 @@ function DemoContent(props) {
     loading,
     productId,
     cartItems,
+    select,
+    setSelect,
   } = props;
 
   if (isLoading) {
@@ -63,19 +65,23 @@ function DemoContent(props) {
           <div className="flex flex-col lg:flex-row">
             <div className="w-full lg:w-1/2">
               <img
-                src={productData?.images[0]?.url}
+                src={productData?.images[select]?.url}
                 alt="Apple MacBook Pro 14.2-inch Liquid Retina XDR display"
                 className="w-full h-[400px] object-cover rounded-8"
               />
 
               <div className="flex mt-2 space-x-4  overflow-x-auto">
-                {productData?.images?.map((img) => (
+                {productData?.images?.map((img, index) => (
+              
                   <img
                     key={img?.public_id}
                     src={img?.url}
                     alt="Thumbnail 1"
-                    className="w-1/5 h-[80px] rounded-4 object-cover"
+                    className="w-1/5 h-[80px] rounded-4 object-cover cursor-pointer"
+                    onClick={() => setSelect(index)}
                   />
+               
+                  
                 ))}
               </div>
             </div>
@@ -93,6 +99,7 @@ function DemoContent(props) {
                 </span>
               </div>
               <h1 className="text-2xl font-bold mt-2">{productData?.name}</h1>
+              
               <p className="text-gray-800 text-[12px]">
                 Brand: Apple |{" "}
                 <Typography className="text-orange-500 text-[12px] inline">

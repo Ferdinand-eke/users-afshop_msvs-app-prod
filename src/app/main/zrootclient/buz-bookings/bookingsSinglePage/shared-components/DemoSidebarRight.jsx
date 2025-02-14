@@ -146,7 +146,7 @@ function DemoSidebarRight(props) {
                   </div>
                 </div>
 
-                <div className="bg-white p-4 mt-4 shadow-md">
+                {/* <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Reviews</h2>
                   <div className="mt-4">
                     <div className="flex items-start">
@@ -222,8 +222,8 @@ function DemoSidebarRight(props) {
                       </div>
                     </div>
                   </div>
-                </div>
-                <div className="bg-white p-4 mt-4 shadow-md">
+                </div> */}
+                {/* <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Ask a Question</h2>
                   <form className="mt-4">
                     <input
@@ -244,7 +244,7 @@ function DemoSidebarRight(props) {
                       Submit
                     </button>
                   </form>
-                </div>
+                </div> */}
               </div>
 
 		</div>

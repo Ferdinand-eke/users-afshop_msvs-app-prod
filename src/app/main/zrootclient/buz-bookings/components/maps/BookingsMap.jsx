@@ -4,7 +4,6 @@ import Pin from '../pin/Pin';
 import { MapContainer, TileLayer } from "react-leaflet";
 
 function BookingsMap({items}){
-    console.log("items_in_MAP", items)
   return (
     <MapContainer center={[52.4797, -1.90269]} zoom={7} scrollWheelZoom={false} className='w-[100%] h-[100%] rounded-md'>
     <TileLayer

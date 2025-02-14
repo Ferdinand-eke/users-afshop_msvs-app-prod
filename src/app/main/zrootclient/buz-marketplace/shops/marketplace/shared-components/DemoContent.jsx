@@ -54,7 +54,7 @@ function DemoContent(props) {
           {products.map((product, index) => (
             <div
               key={index}
-              className="bg-white p-4 rounded shadow flex flex-col"
+              className="bg-white p-4 rounded shadow flex flex-col relative"
             >
               <div className="relative">
                 <img
@@ -83,6 +83,7 @@ function DemoContent(props) {
                   to={`/marketplace/product/${product?._id}/${product?.slug}`}
                 >
                   {product?.name}
+                  {/* .slice(0,20) */}
                 </Typography>
                 <p className="text-orange-500 font-bold mt-2">
                   {formatCurrency(product?.price)}{" "}
@@ -103,7 +104,7 @@ function DemoContent(props) {
               <div className="flex justify-between items-center mt-4 bottom-0">
                 <i className="far fa-heart text-xl"></i>
 
-                <button className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-0 ">
+                <button className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-2 absolute bottom-0 right-0 left-0">
                   ADD TO CART
                 </button>
               </div>

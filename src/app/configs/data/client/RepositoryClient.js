@@ -6,19 +6,9 @@ import { API_ENDPOINTS } from "./serverEndpoints/endpoints";
 /**
  * ####MAIN ENDPOINTS STARTS
  */
-// const baseDomain = "http://localhost:8000"; //Localhost API for africanshops
-//=================================================================================
-
-/******Digital Ocean : Current Main server*/
-// const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
-// const baseDomain = import.meta.env.API_BASE_URL;
-//=============================================================================
-
 /******Digital Ocean : Curent Production Main server*/
-// const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
 
-// const baseDomain = import.meta.env.VITE_API_BASE_URL_DEV;   //development
-const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  //production
+const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;   /**production & dev */
 
 
 /**##############################
@@ -323,7 +313,7 @@ export const getBookingPropertyApi = (bookingPropId) =>
   Api().get(`/client-booking-props/${bookingPropId}`);
 
   export const getUserReservationsByListingId = (listingId) => {
-    console.log("resevation-PARA", listingId)
+   
     return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}`)
 }
 /**====================================================================================================

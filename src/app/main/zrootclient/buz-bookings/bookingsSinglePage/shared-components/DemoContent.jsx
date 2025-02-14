@@ -8,6 +8,8 @@ import { Button, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
+import siteStyle from "@fuse/sitestaticdata/siteStyle";
+import { Link } from "react-router-dom";
 
 /**
  * Demo Content
@@ -156,18 +158,19 @@ function DemoContent(props) {
                       </div>
                     ))}
 
-                    {/* <img src="https://placehold.co/200x200" alt="Gallery image 2" className="w-full h-auto"/>
-                                    <img src="https://placehold.co/200x200" alt="Gallery image 3" className="w-full h-auto"/>
-                                    <img src="https://placehold.co/200x200" alt="Gallery image 4" className="w-full h-auto"/>
-                                    <img src="https://placehold.co/200x200" alt="Gallery image 5" className="w-full h-auto"/>
-                                    <img src="https://placehold.co/200x200" alt="Gallery image 6" className="w-full h-auto"/> */}
                   </div>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
-                  <h2 className="text-xl font-bold">Description</h2>
-                  <p className="text-gray-600 mt-2">
+                  {/* <h2 className="text-xl font-bold">Description</h2> */}
+                  {/* <p className="text-gray-600 mt-2">
                     {bookingData?.description}
-                  </p>
+                  </p> */}
+                    
+                    <ProductDetailsInfo 
+                    data={bookingData}
+                    products={[]}
+                    />
+
                 </div>
               </div>
 
@@ -179,3 +182,248 @@ function DemoContent(props) {
 }
 
 export default DemoContent;
+
+
+const ProductDetailsInfo = ({
+  data,
+  products,
+  // totalReviewsLength,
+  // averageRating,
+}) => {
+  const [active, setActive] = useState(1);
+
+  return (
+    <div className="px-3 800px:px-10 py-2 rounded">
+      <div className="w-full flex justify-between border-b pt-10 pb-2 space-x-4">
+        <div className="relative ">
+          <h5
+            className={
+              "text-[#000] text-[14px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+            }
+            onClick={() => setActive(1)}
+          >
+            Description
+          </h5>
+          {active === 1 ? (
+            <div className={`${siteStyle.active_indicator}`} />
+          ) : null}
+        </div>
+        <div className="relative">
+          <h5
+            className={
+              "text-[#000] text-[14px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+            }
+            onClick={() => setActive(2)}
+          >
+           Apartment Reviews 
+          </h5>
+          {active === 2 ? (
+            <div className={`${siteStyle.active_indicator}`} />
+          ) : null}
+        </div>
+        <div className="relative">
+          <h5
+            className={
+              "text-[#000] text-[14px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
+            }
+            onClick={() => setActive(3)}
+          >
+            Image Gallery
+          </h5>
+          {active === 3 ? (
+            <div className={`${siteStyle.active_indicator}`} />
+          ) : null}
+        </div>
+      </div>
+      {active === 1 ? (
+        <>
+          <p className="py-2 text-[12px] leading-8 pb-10 whitespace-pre-line">
+            {data?.description}
+          </p>
+        </>
+      ) : null}
+
+      {active === 2 ? (
+        <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
+          {/* {data &&
+            data?.reviews.map((item, index) => (
+              <div className="w-full flex my-2">
+                <img
+                  src={`${item?.user?.avatar}`}
+                  alt=""
+                  className="w-[50px] h-[50px] rounded-full"
+                />
+                <div className="pl-2 ">
+                  <div className="w-full flex items-center">
+                    <h1 className="font-[500] mr-3">{item?.user?.name}</h1>
+                    <Ratings rating={data?.ratings} />
+                  </div>
+                  <p>{item?.comment}</p>
+                </div>
+              </div>
+            ))} */}
+            <div className="bg-white p-4 mt-4 shadow-md">
+                  <h2 className="text-xl font-bold">Reviews</h2>
+                  <div className="mt-4">
+                    <div className="flex items-start">
+                      <img
+                        src="https://placehold.co/50x50"
+                        alt="Reviewer 1"
+                        className="w-12 h-12 rounded-full"
+                      />
+                      <div className="ml-4">
+                        <div className="flex items-center">
+                          <span className="font-bold">Gold Coast</span>
+                          <div className="flex items-center ml-2">
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star-half-alt text-yellow-500"></i>
+                          </div>
+                        </div>
+                        <p className="text-gray-600 mt-1">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Aliquam egestas libero ac turpis pharetra, in
+                          vehicula lacus elementum.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start mt-4">
+                      <img
+                        src="https://placehold.co/50x50"
+                        alt="Reviewer 2"
+                        className="w-12 h-12 rounded-full"
+                      />
+                      <div className="ml-4">
+                        <div className="flex items-center">
+                          <span className="font-bold">Gold Coast</span>
+                          <div className="flex items-center ml-2">
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star-half-alt text-yellow-500"></i>
+                          </div>
+                        </div>
+                        <p className="text-gray-600 mt-1">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Aliquam egestas libero ac turpis pharetra, in
+                          vehicula lacus elementum.
+                        </p>
+                      </div>
+                    </div>
+                    <div className="flex items-start mt-4">
+                      <img
+                        src="https://placehold.co/50x50"
+                        alt="Reviewer 3"
+                        className="w-12 h-12 rounded-full"
+                      />
+                      <div className="ml-4">
+                        <div className="flex items-center">
+                          <span className="font-bold">Gold Coast</span>
+                          <div className="flex items-center ml-2">
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star text-yellow-500"></i>
+                            <i className="fas fa-star-half-alt text-yellow-500"></i>
+                          </div>
+                        </div>
+                        <p className="text-gray-600 mt-1">
+                          Lorem ipsum dolor sit amet, consectetur adipiscing
+                          elit. Aliquam egestas libero ac turpis pharetra, in
+                          vehicula lacus elementum.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="bg-white p-4 mt-4 shadow-md">
+                  <h2 className="text-xl font-bold">Ask a Question</h2>
+                  <form className="mt-4">
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      className="w-full p-2 border border-gray-300 rounded mt-2"
+                    />
+                    <input
+                      type="email"
+                      placeholder="Email"
+                      className="w-full p-2 border border-gray-300 rounded mt-2"
+                    />
+                    <textarea
+                      placeholder="Message"
+                      className="w-full p-2 border border-gray-300 rounded mt-2"
+                    ></textarea>
+                    <Button size="sm" className="bg-orange-500 hover:bg-orange-800 text-black px-4 py-2 rounded mt-4 w-full">
+                      Submit Review
+                    </Button>
+                  </form>
+                </div>
+
+          <div className="w-full flex justify-center">
+            {data && data?.reviews?.length === 0 && (
+              <h5>No Reviews have for this product!</h5>
+            )}
+          </div>
+        </div>
+      ) : null}
+
+      {active === 3 && (
+        <div className="w-full block 800px:flex p-5">
+          <h3 className="text-sm">Images</h3>
+          {/* <div className="w-full 800px:w-[50%]">
+            <Link to={`/shop/preview/${data?.shop?._id}`}>
+              <div className="flex items-center">
+                <img
+                  src={`${data?.shop?.shop_avatar?.url}`}
+                  className="w-[50px] h-[50px] rounded-full"
+                  alt=""
+                />
+                <div className="pl-3">
+                  <h3 className={`${siteStyle.shop_name}`}>{data?.shop?.name}</h3>
+                  <h5 className="pb-2 text-[15px]">
+                    4.3
+                    Ratings
+                  </h5>
+                </div>
+              </div>
+            </Link>
+            <p className="pt-2">{data?.shop?.description}</p>
+          </div>
+          <div className="w-full 800px:w-[50%] mt-5 800px:mt-0 800px:flex flex-col items-end">
+            <div className="text-left">
+              <h5 className="font-[600]">
+                Joined on:{" "}
+                <span className="font-[500]">
+                  {data?.shop?.createdAt?.slice(0, 10)}
+                </span>
+              </h5>
+              <h5 className="font-[600] pt-3">
+                Total Products:{" "}
+                <span className="font-[500]">
+                  {products && products?.length}
+                </span>
+              </h5>
+              <h5 className="font-[600] pt-3">
+                Total Reviews:{" "}
+                <span className="font-[500]">
+                  3
+                  </span>
+              </h5>
+              <Link to="/">
+                <div
+                  className={`${siteStyle.button} !rounded-[4px] !h-[39.5px] mt-3`}
+                >
+                  <h4 className="text-white">Visit Shop</h4>
+                </div>
+              </Link>
+            </div>
+          </div> */}
+        </div>
+      )}
+    </div>
+  );
+};

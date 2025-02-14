@@ -7,7 +7,6 @@ import DemoContent from './shared-components/DemoContent';
 import DemoSidebar from './shared-components/DemoSidebar';
 import DemoSidebarRight from './shared-components/DemoSidebarRight';
 import FusePageSimpleWithMargin from '@fuse/core/FusePageSimple/FusePageSimpleWithMargin';
-import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import { useForm } from 'react-hook-form';
 import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries';
 import {
@@ -17,10 +16,6 @@ import {
 import useGetAllBookingProperties from 'app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo';
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
-
-	// marginLeft:'100px',
-	// marginRight:'100px',
-	
 	
 	'& .FusePageSimple-header': {
 		backgroundColor: theme.palette.background.paper,
@@ -32,8 +27,6 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 
 	},
 	'& .FusePageSimple-content': {
-		// marginLeft:'100px',
-		// marginRight:'100px',
 	},
 	'& .FusePageSimple-sidebarHeader': {
 		
@@ -57,8 +50,6 @@ function BookingsPageWithSidebarsContentScrollComponent() {
 		setRightSidebarOpen(!isMobile);
 	}, [isMobile]);
 
-	// const [products, setProducts] = useState([]);
-  // const { data: allProducts, isLoading, isError } = useGetAllProducts();
 
   const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
 
@@ -112,7 +103,6 @@ function BookingsPageWithSidebarsContentScrollComponent() {
   /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
   useEffect(() => {
     if (selectCountry?.length > 0) {
-      console.log(`Getting stated in this country ${location?.name}`);
       findStatesByCountry(selectCountry);
     }
 

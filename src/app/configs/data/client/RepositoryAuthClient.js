@@ -8,18 +8,12 @@ import { resetSessionForShopUsers } from "app/configs/utils/authUtils";
 /**
  * ####MAIN ENDPOINTS STARTS
  */
-// const baseDomain = "http://localhost:8000"; //Localhost API for africanshops
-//========================================================================================
 
-/******Digital Ocean : Curent Test Main server  import.meta.env.VITE_FIREBASE_DATABASE_URL*/
-// const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
-//=============================================================================
+/******Digital Ocean : Curent Production Main server starts */
 
-// const baseDomain = import.meta.env.VITE_API_BASE_URL_DEV;   //development
-const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  //production
+const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;  /**production & dev */
 
-/******Digital Ocean : Curent Production Main server*/
-// const baseDomain = 'https://coral-app-n8ox9.ondigitalocean.app';
+/******Digital Ocean : Curent Production Main server ends*/
 /**
  * ####MAIN ENDPOINTS ENDS
  */

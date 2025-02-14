@@ -208,7 +208,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 				setRightSidebarOpen(false);
 			}}
 			rightSidebarContent={<DemoSidebarRight 
-      	// bookingData={booking?.data?.data}
         isLoading={isLoading}
         listing={booking?.data?.data}
         locationValue={booking?.data?.data?.locationValue}
@@ -225,5 +224,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 		/>
 	);
 }
+
 
 export default BookingsSinglePageWithSidebarsContentScroll;

@@ -63,6 +63,7 @@ function SingleProductWithContentScrollPage() {
   const { productId } = routeParams;
   const { data: product, isLoading, isError } = useGetSingleProduct(productId);
   const { mutate: addToart, isLoading: cartLoading } = useAddToCart();
+  const [select, setSelect] = useState(0);
 
   // const [cartloading, setCartLoading] = useState(false);
   const [cart, setCart] = useState([]);
@@ -148,6 +149,8 @@ function SingleProductWithContentScrollPage() {
 				productData={product?.data}
 				isLoading={isLoading}
 				isError={isError}
+        select={select}
+        setSelect={setSelect}
         // onAddToFoodCart={onAddToUserCart}
         // addFoodCartLoading={loadingCart}
         // foodCart={ userCartData?.data?.cartItems}
