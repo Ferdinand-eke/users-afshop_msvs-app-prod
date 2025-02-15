@@ -174,6 +174,9 @@ function DemoContent(props) {
                     <br/>
                     <br/>
                     <br/>
+                    <br/>
+                    <br/>
+                    <br/>
 
                 </div>
               </div>
@@ -197,7 +200,7 @@ const ProductDetailsInfo = ({
   const [active, setActive] = useState(1);
 
   return (
-    <div className="px-3 800px:px-10 py-2 rounded">
+    <div className="px-3 800px:px-10 py-2 rounded mb-10">
       <div className="w-full flex justify-between border-b pt-10 pb-2 space-x-4">
         <div className="relative ">
           <h5
