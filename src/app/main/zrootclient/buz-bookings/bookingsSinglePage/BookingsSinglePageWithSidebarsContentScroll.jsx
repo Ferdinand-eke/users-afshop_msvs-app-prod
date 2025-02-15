@@ -89,7 +89,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 		setRightSidebarOpen(!isMobile);
 	}, [isMobile]);
 
-	
   /***
    * 
    * BOOKING SINGLE PAGE STARTS
