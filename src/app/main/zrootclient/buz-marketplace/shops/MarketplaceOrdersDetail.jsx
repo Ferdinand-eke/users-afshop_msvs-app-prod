@@ -102,6 +102,7 @@ function MarketplaceOrdersDetail() {
                 <UserAccountLeads />
               </Box>
 
+
               {/* Main Content */}
               <div
                 className="flex-1 w-full md:w-6/12  p-4 bg-white rounded-md overflow-scroll"
@@ -253,6 +254,7 @@ function MarketplaceOrdersDetail() {
                   </>
                 </div>
               </div>
+
 
               {/* Map */}
               <Box className="w-full md:w-3/12  bg-gray-100 relative  mt-4 md:mt-0 md:sticky top-16 md:h-screen gap-8">

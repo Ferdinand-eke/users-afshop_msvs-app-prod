@@ -15,7 +15,6 @@ import ReservationCard from "../../../bookings-components/ReservationCard";
 function DemoContent(props) {
   const { isLoading, isError, reservation } = props;
 
-  console.log("USER__RESERVATIONS", reservation);
 
   if (isLoading) {
     return <FuseLoading />;

@@ -7,16 +7,9 @@ import DemoContent from './shared-components/DemoContent';
 import DemoSidebar from './shared-components/DemoSidebar';
 import DemoSidebarRight from './shared-components/DemoSidebarRight';
 import FusePageSimpleWithMargin from '@fuse/core/FusePageSimple/FusePageSimpleWithMargin';
-import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
-import { useForm } from 'react-hook-form';
-// import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries';
-// import {
-// 	getLgasByStateId,
-// 	getStateByCountryId,
-//   } from "app/configs/data/client/RepositoryClient";
-// import useGetAllBookingProperties from 'app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo';
-// import useGetAllFoodMarts from 'app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo';
-import { useGetUserSingleTrip, useUserTrips } from 'app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations';
+
+
+import { useGetUserSingleTrip } from 'app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations';
 import { useParams } from 'react-router';
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
@@ -41,6 +34,7 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	
 }));
 
+
 /**
  * The SimpleWithSidebarsContentScroll page.
  */
@@ -64,9 +58,6 @@ function UserReservationDetailWithSidebarsContentScrollPage() {
 	} = useGetUserSingleTrip(reservationId);
   
   
-//   const { data: myreservations, isLoading, isError } = useUserTrips();
-
-
 	return (
 		<Root
 	

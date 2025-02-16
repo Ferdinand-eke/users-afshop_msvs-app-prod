@@ -111,6 +111,7 @@ function JwtAuthProvider(props) {
 
   const [user, setUser] = useState(getUserCredentialsStorage());
   const [isLoading, setIsLoading] = useState(true);
+  const [isLoginLoading, setLoginIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(
     getIsAuthenticatedStatus()
   );
@@ -276,9 +277,9 @@ function JwtAuthProvider(props) {
   ) => {
   
     try {
-      setIsLoading(true);
+      setLoginIsLoading(true);
       adminLogIn.mutate(data);
-      setIsLoading(false);
+      setLoginIsLoading(false);
     } catch (error) {
       const axiosError = error;
     
@@ -289,7 +290,7 @@ function JwtAuthProvider(props) {
       );
 
       handleSignInFailure(axiosError);
-      setIsLoading(false);
+      setLoginIsLoading(false);
       return axiosError;
     }
   };
@@ -302,7 +303,7 @@ function JwtAuthProvider(props) {
       handleSignInFailure
     );
   };
-  /**Refactor signUp function */
+  /***Refactor signUp function */
   const signUp = useCallback((data) => {
     return handleRequest(
       config.signUpUrl,
@@ -318,7 +319,8 @@ function JwtAuthProvider(props) {
     resetAuthStatusStorage();
     resetSession();
     removeIsAthenticatedStorage();
-   
+    // setIsAuthenticated(false);
+    // setUser(null);
     removeUserCredentialsStorage();
 
     window.location.reload();
@@ -382,7 +384,7 @@ function JwtAuthProvider(props) {
           if (axiosError?.response?.status === 401) {
             signOut();
             // eslint-disable-next-line no-console
-           
+            console.warn("Unauthorized request. User was signed out.");
           }
 
           return Promise.reject(axiosError);
@@ -392,7 +394,7 @@ function JwtAuthProvider(props) {
   }, [isAuthenticated]);
   const storedAccessToken = getAccessToken();
   useEffect(() => {
-  
+   
     if (storedAccessToken) {
       setAuthStatusStorage(storedAccessToken);
     }
@@ -403,6 +405,7 @@ function JwtAuthProvider(props) {
       isAuthenticated,
       authStatus,
       isLoading,
+      isLoginLoading,
       signIn,
       signUp,
       signOut,
@@ -414,6 +417,7 @@ function JwtAuthProvider(props) {
       user,
       isAuthenticated,
       isLoading,
+      isLoginLoading,
       signIn,
       signUp,
       signOut,

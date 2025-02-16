@@ -68,6 +68,7 @@ const userReservationPagesConfig = {
       // element: <UserReservations />
       element: <UserReservationsWithSidebarsContentScrollPage />,
     },
+    
 
     {
       path: "bookings/:reservationId/reservation-detail",

@@ -42,6 +42,7 @@ const item = {
 /**
  * The Courses page.
  */
+
 function FoodmartOrders() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
@@ -103,11 +104,11 @@ function FoodmartOrders() {
                       </h1>
                       <div className="flex space-x-4 mb-4">
                         <button className="border-b-2 border-orange-500 pb-2">
-                          ONGOING/FULLFILED RESERVATIONS{" "}
+                          ONGOING/FULLFILED ORDERS{" "}
                           {userFoodOrders?.data?.length}
                         </button>
                         <button className="pb-2">
-                          CANCELED/RESERVATIONS (11)
+                          CANCELED ORDERS (0)
                         </button>
                       </div>
                       <div className="space-y-4">
