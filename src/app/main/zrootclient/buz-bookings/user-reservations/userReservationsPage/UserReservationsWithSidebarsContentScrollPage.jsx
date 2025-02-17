@@ -16,7 +16,7 @@ import { useForm } from 'react-hook-form';
 //   } from "app/configs/data/client/RepositoryClient";
 // import useGetAllBookingProperties from 'app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo';
 // import useGetAllFoodMarts from 'app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo';
-import { useUserTrips } from 'app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations';
+import { useUserCancelledTrips, useUserTrips } from 'app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations';
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	
@@ -116,17 +116,13 @@ function UserReservationsWithSidebarsContentScrollPage() {
   // }
 
   const { data: myreservations, isLoading, isError } = useUserTrips();
-
+  const {data:cancelledReservations, isLoading:isLoadingCanclled, isError:isCancelledError} = useUserCancelledTrips()
 
 	return (
 		<Root
 	
 			header={
 				<DemoHeader
-				// countries={countries?.data?.data}
-				// stateData={stateData}
-				// blgas={blgas}
-				// methods={methods}
 
 					leftSidebarToggle={() => {
 						setLeftSidebarOpen(!leftSidebarOpen);
@@ -140,6 +136,9 @@ function UserReservationsWithSidebarsContentScrollPage() {
 				products={myreservations?.data?.myreservations}
 				isLoading={isLoading}
 				isError={isError}
+
+        // cancelled reservations
+        cancelledReservations={cancelledReservations?.data?.myreservations}
 				/>}
 			leftSidebarOpen={leftSidebarOpen}
 			leftSidebarOnClose={() => {
@@ -150,10 +149,7 @@ function UserReservationsWithSidebarsContentScrollPage() {
 			rightSidebarOnClose={() => {
 				setRightSidebarOpen(false);
 			}}
-			rightSidebarContent={<DemoSidebarRight 
-        // methods={methods}
-      	// listingsData={AllFoodMarts?.data?.data}
-      />}
+			rightSidebarContent={<DemoSidebarRight/>}
 			scroll="content"
 		/>
 	);

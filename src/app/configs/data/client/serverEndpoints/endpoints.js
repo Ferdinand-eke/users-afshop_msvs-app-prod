@@ -42,10 +42,12 @@ export const API_ENDPOINTS = {
   GET_MY_TRIPS_BY: "/listing/get-mytrips",
 
   GET_USER_TRIPS: "/bookings/get-my-reservations",
+  GET_USER_CANCELLED_TRIPS: "/bookings/get-my-cancelled-reservations",
   GET_USER_SINGLE_TRIP: "/bookings/get-reservation",
   GET_INVIEW_USER_TRIP: "/inview/user-trip",
 
   UPDATE_RESERVATIONS_ON_PAYMENT: "/bookings/update-reservation-on-payment",
+  CANCEL_USER_RESERVATION: "/bookings/cancel-reservation-by-user",
 
   /******
    * ############FOOD MART APP SERVER_URLs Start Here##############

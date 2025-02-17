@@ -155,7 +155,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
     // currentUser
   ]);
 
-
   useEffect(() => {
     if (dateRange?.startDate && dateRange?.endDate) {
       const dayCount = differenceInCalendarDays(
@@ -169,9 +168,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
       }
     }
   }, [dateRange, booking?.data?.data?.price]);
-
-
-
 
 
 	return (

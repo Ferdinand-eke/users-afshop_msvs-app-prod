@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 
 // import ClienttErrorPage from "../../components/ClienttErrorPage";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
@@ -86,7 +86,7 @@ function DemoContent(props) {
                   {/* .slice(0,20) */}
                 </Typography>
                 <p className="text-orange-500 font-bold mt-2">
-                  {formatCurrency(product?.price)}{" "}
+                ₦ {formatCurrency(product?.price)}{" "}
                   <span className="text-[10px]">
                     {" "}
                     per {product?.quantityunitweight?.unitname}
@@ -94,19 +94,25 @@ function DemoContent(props) {
                 </p>
 
                 {product?.listprice && (
+                <>
                   <p className="text-gray-500 line-through">
-                    {formatCurrency(product?.listprice)}
+                    ₦ {formatCurrency(product?.listprice)}
                   </p>
+                </>
                 )}
 
                 {/* <p className="text-green-500">-70%</p> */}
               </div>
               <div className="flex justify-between items-center mt-4 bottom-0">
-                <i className="far fa-heart text-xl"></i>
+                
 
-                <button className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-2 absolute bottom-0 right-0 left-0">
+                <Button 
+                size="small"
+                className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-2 absolute bottom-0 right-0 left-0">
                   ADD TO CART
-                </button>
+                </Button>
+
+                <i className="far fa-heart text-xl"></i>
               </div>
             </div>
           ))}

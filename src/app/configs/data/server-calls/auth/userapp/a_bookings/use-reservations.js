@@ -1,11 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "react-query";
 import {
+  cancelReservationApi,
   createUserReservations,
   getInViewUseTripByListingId,
   getUseTripByReservationId,
-  // getUserReservationsByListingId,
+  getUserCancelledTrips,
   getUserTrips,
-  // listingReservationUpdateOnPayment,
   updateReservationOnMakingPayment,
 } from "app/configs/data/client/RepositoryAuthClient";
 import { toast } from "react-toastify";
@@ -18,39 +18,7 @@ import { getUserReservationsByListingId } from "app/configs/data/client/Reposito
  * ==========================================================================
  */
 
-// export function useCreateReservation() {
-//     const router = useNavigate()
-//     return useMutation(createUserReservations, {
-//         onSuccess: (data) => {
-//             console.log("successResData =>", data)
-
-//             return
-//             if (data?.data?.listingAndReservation) {
-//                 toast.success('reservation added successfully')
-//                 // router(
-//                 //     `/review/reservation/${data?.data?.listingAndReservation?.id}`
-//                 // )
-//                 return
-//             } else if (data?.data?.error) {
-//                 toast.error(data?.data?.error?.message)
-//                 return
-//             } else {
-//                 toast.info('something unexpected happened')
-//                 return
-//             }
-//         },
-//         onError: (error) => {
-//             const {
-//                 response: { data },
-//             } = error ?? {}
-//             Array.isArray(data?.message)
-//                 ? data?.message?.map((m) => toast.error(m))
-//                 : toast.error(data?.message)
-//         },
-//     })
-// }
-
-/****Create reservation : => Done for Africanshops */
+/**** 1) Create reservation : => Done for Africanshops */
 export function useCreateReservation() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
@@ -100,14 +68,12 @@ export function useCreateReservation() {
   );
 }
 
-// GET_ All USER _TRIPS useGetUserSingleTrip
-/****Get user : => Done for Africanshops */
+/**** 2)GET_ All USER _TRIPS Get user : => Done for Africanshops */
 export function useUserTrips() {
   return useQuery(["__trips"], () => getUserTrips());
 }
 
-/***GET_USER_SINGLE_TRIP by servaevation_ID =>  Done for Africanshops*/ 
-/****Get : => Done for Africanshops */
+/*** 3) GET_USER_SINGLE_TRIP by servaevation_ID =>  Done for Africanshops*/ 
 export function useGetUserSingleTrip(params) {
   return useQuery(
     ["__tripById", params],
@@ -119,7 +85,7 @@ export function useGetUserSingleTrip(params) {
   );
 }
 
-// GET_USER_ TRIP IN VIEW
+/***** 4) GET_USER_ TRIP IN VIEW */
 export function useGetUserTripsInView() {
   return useQuery(
     ["__reservationsById"],
@@ -128,7 +94,7 @@ export function useGetUserTripsInView() {
   );
 }
 
-//update new reservation on payment
+/**** 5) Update new reservation on payment */
 export function useReservationPaidUpdateMutation() {
   const queryClient = useQueryClient();
   const navigate = useNavigate()
@@ -139,11 +105,8 @@ export function useReservationPaidUpdateMutation() {
     },
     {
       onSuccess: (data) => {
-        console.log("paymentResponse", data)
-        if (data?.data?.payload && data?.data?.message) {
-          toast.success(
-            `reservation added successfully,  ${data?.data?.message}`
-          );
+        if (data?.data?.success && data?.data?.payload) {
+          toast.success(`${data?.data?.message ? data?.data?.message : "reservation added successfully!"}`);
           navigate(`/bookings/${data?.data?.payload?._id}/payment-success`)
           return;
         } else if (data?.data?.error) {
@@ -173,14 +136,56 @@ export function useReservationPaidUpdateMutation() {
  * ==============================================================
  */
 
-//get single listing
+//**** 6) get single listing */
 export function useGetReservations(params) {
   return useQuery(
     ["__reservationsById", params],
     () => getUserReservationsByListingId(params),
     {
       enabled: Boolean(params),
-      // staleTime: 2000,
     }
   );
+}
+
+/**** 7) cancel reservation within 48hrswindow before check-in */
+export function useCancelUserReservation() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+
+  return useMutation(
+    (formData) => {
+      return cancelReservationApi(formData);
+    },
+    {
+      onSuccess: (data) => {
+        console.log("cancellation___Response", data)
+        if (data?.data?.success ) {
+          toast.success(
+            `${data?.data?.message ? data?.data?.message : "reservation canceled successfully!"}`
+          );
+          navigate(`/bookings/my-reservations`)
+          return;
+        } else if (data?.data?.success ) {
+          toast.error(`${data?.data?.message ? data?.data?.message : data?.data?.error?.message}`);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+      onError: (error) => {
+        const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
+      },
+    }
+  );
+}
+
+/**** 8)GET_ All USER CANCELLED_RESERVATIONS/TRIPS */
+export function useUserCancelledTrips() {
+  return useQuery(["__cancelledtrips"], () => getUserCancelledTrips());
 }

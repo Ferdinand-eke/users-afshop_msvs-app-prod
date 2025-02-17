@@ -34,7 +34,6 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	
 }));
 
-
 /**
  * The SimpleWithSidebarsContentScroll page.
  */
@@ -46,7 +45,6 @@ function UserReservationDetailWithSidebarsContentScrollPage() {
 		setLeftSidebarOpen(!isMobile);
 		setRightSidebarOpen(!isMobile);
 	}, [isMobile]);
-
 
 	const routeParams = useParams();
 	const { reservationId } = routeParams;

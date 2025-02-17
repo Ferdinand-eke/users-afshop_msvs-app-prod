@@ -105,7 +105,7 @@ function DemoContent(props) {
                     fullWidth
                     className="bg-orange-500 hover:bg-orange-800 text-black px-4 py-2 rounded mt-4"
                   >
-                    {formatCurrency(bookingData?.price)} per night ||
+                    ₦ {formatCurrency(bookingData?.price)} per night ||
                     BOOK NOW
                   </Button>
                 </div>
@@ -190,6 +190,7 @@ function DemoContent(props) {
 }
 
 export default DemoContent;
+
 
 
 const ProductDetailsInfo = ({

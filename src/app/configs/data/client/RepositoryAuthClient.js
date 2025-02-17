@@ -238,15 +238,28 @@ export const listingReservationUpdateOnPayment = (reservationId, formData) => {
   );
 };
 
-/***GET USERS-TRIPS */
+/***GET USERS-TRIPS  */
 export const getUserTrips = () => {
   return AuthApi().get(`${API_ENDPOINTS.GET_USER_TRIPS}`);
 };
+
+
 
 export const getUseTripByReservationId = (reservationId) => {
   return AuthApi().get(
     `${API_ENDPOINTS.GET_USER_SINGLE_TRIP}/${reservationId}`
   );
+};
+
+export const cancelReservationApi = (reservationId, formData) => {
+  return AuthApi().put(
+    `${API_ENDPOINTS.CANCEL_USER_RESERVATION}/${reservationId}`,
+    formData
+  );
+};
+
+export const getUserCancelledTrips = () => {
+  return AuthApi().get(`${API_ENDPOINTS.GET_USER_CANCELLED_TRIPS}`);
 };
 
 /***inview/user-trip/:listingid */
@@ -256,7 +269,7 @@ export const getInViewUseTripByListingId = () => {
 
 /*******
  * #######################################################################################
- * AUTHENTICATED ACTIVITIES FOR USERS UTULIZING BOOKINGS_APP ends here
+ * AUTHENTICATED ACTIVITIES FOR USERS UTILIZING BOOKINGS_APP ends here
  * #######################################################################################
  * --------------------------------------------------------------------------------------------------------------------
  */

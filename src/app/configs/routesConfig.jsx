@@ -389,32 +389,6 @@ const routes = [
     
   },
 
-  // {
-  //   path: "/marketplace/cart",
-  //   settings: {
-  //     layout: {
-  //       config: {
-  //         navbar: {
-  //           display: false,
-  //         },
-  //         toolbar: {
-  //           display: true,
-  //         },
-  //         footer: {
-  //           display: false,
-  //         },
-  //         leftSidePanel: {
-  //           display: false,
-  //         },
-  //         rightSidePanel: {
-  //           display: false,
-  //         },
-  //       },
-  //     },
-  //   },
-  //   element: <Cart />,
-  // },
-
   {
     path: "/marketplace/merchant/:shopId/portal",
     settings: {

@@ -1,22 +1,28 @@
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { Typography } from "@mui/material";
+import { Button, Typography } from "@mui/material";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 
-const ReservationCard = ({ placedReservation }) => {
- 
+const CancelledReservationCard = ({ placedReservation }) => {
+
+  const requestRefund = (cancelledResercationId) => {
+    if (window.confirm("Requesting a refund?")) {
+      // cancelMyReservation.mutate(reservationIdPayload);
+      console.log("Requesting Refund...", cancelledResercationId);
+    }
+  };
 
   return (
     <>
       <div className="flex space-x-4">
-        <img
+        {/* <img
           src={placedReservation?.bookingPropertyId?.imageSrcs[0]?.url}
           alt="6-ways Adjustable Ergonomic Baby Carrier"
           className="w-80 h-140 object-cover"
-        />
+        /> */}
 
         <div className="flex-1">
           <h3 className="font-bold">
-            {placedReservation?.bookingPropertyId?.title}
+            {placedReservation?.paymentResult?.transaction}
           </h3>
           <p className="text-[12px]">
             Booking Fee: ₦ {formatCurrency(placedReservation?.totalPrice)}
@@ -39,30 +45,19 @@ const ReservationCard = ({ placedReservation }) => {
             Your Check Out:{" "}
             {new Date(placedReservation?.endDate)?.toDateString()}
           </p>
-        
         </div>
-        {placedReservation?.isPaid && (
-          <Typography
-            component={NavLinkAdapter}
-            to={`/bookings/${placedReservation?._id}/reservation-detail`}
+        {placedReservation?.isPaid && !placedReservation?.isRefundRequested && (
+          <Button
             className=" text-black boreder-none"
+            onClick={() => requestRefund(placedReservation?._id)}
           >
-            <span className="bg-orange-300 hover:bg-orange-600 p-4 rounded-4">SEE DETAILS</span>
-          </Typography>
-        )}
-
-        {!placedReservation?.isPaid && (
-          <Typography
-            component={NavLinkAdapter}
-            to={`/bookings/reservation/review/${placedReservation?._id}`}
-            size="small"
-            className=" text-orange-500 cursor-pointer"
-          >
-            PAY
-          </Typography>
+            <span className="bg-orange-300 hover:bg-orange-600 text-sm p-4 rounded-4">
+              Request Refund
+            </span>
+          </Button>
         )}
       </div>
     </>
   );
 };
-export default ReservationCard;
+export default CancelledReservationCard;
