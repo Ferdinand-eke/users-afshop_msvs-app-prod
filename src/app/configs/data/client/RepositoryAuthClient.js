@@ -252,14 +252,15 @@ export const getUseTripByReservationId = (reservationId) => {
 };
 
 export const cancelReservationApi = (reservationId, formData) => {
-  return AuthApi().put(
-    `${API_ENDPOINTS.CANCEL_USER_RESERVATION}/${reservationId}`,
-    formData
-  );
+  return AuthApi().put(`${API_ENDPOINTS.CANCEL_USER_RESERVATION}/${reservationId}`);
 };
 
 export const getUserCancelledTrips = () => {
   return AuthApi().get(`${API_ENDPOINTS.GET_USER_CANCELLED_TRIPS}`);
+};
+
+export const requestRefundForReservationApi = (cancelledReservationId) => {
+  return AuthApi().put(`/bookings/${cancelledReservationId}/request-refund`);
 };
 
 /***inview/user-trip/:listingid */

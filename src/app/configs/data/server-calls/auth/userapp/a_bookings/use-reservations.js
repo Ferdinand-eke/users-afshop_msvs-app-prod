@@ -6,6 +6,7 @@ import {
   getUseTripByReservationId,
   getUserCancelledTrips,
   getUserTrips,
+  requestRefundForReservationApi,
   updateReservationOnMakingPayment,
 } from "app/configs/data/client/RepositoryAuthClient";
 import { toast } from "react-toastify";
@@ -165,7 +166,7 @@ export function useCancelUserReservation() {
           );
           navigate(`/bookings/my-reservations`)
           return;
-        } else if (data?.data?.success ) {
+        } else if (!data?.data?.success ) {
           toast.error(`${data?.data?.message ? data?.data?.message : data?.data?.error?.message}`);
           return;
         } else {
@@ -188,4 +189,43 @@ export function useCancelUserReservation() {
 /**** 8)GET_ All USER CANCELLED_RESERVATIONS/TRIPS */
 export function useUserCancelledTrips() {
   return useQuery(["__cancelledtrips"], () => getUserCancelledTrips());
+}
+
+/**** 9)Request Refund For cancelled reservation */
+export function useRequestRefundForUserCancelledReservation() {
+  const queryClient = useQueryClient();
+  const navigate = useNavigate()
+
+  return useMutation(
+    (formData) => {
+      return requestRefundForReservationApi(formData);
+    },
+    {
+      onSuccess: (data) => {
+        console.log("Refund___Response", data)
+        if (data?.data?.success ) {
+          toast.success(
+            `${data?.data?.message ? data?.data?.message : "refund request placed successfully!"}`
+          );
+          // navigate(`/bookings/my-reservations`)
+          queryClient.invalidateQueries(["__cancelledtrips"]);
+          return;
+        } else if (!data?.data?.success ) {
+          toast.error(`${data?.data?.message ? data?.data?.message : data?.data?.error?.message}`);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+      onError: (error) => {
+        const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
+      },
+    }
+  );
 }

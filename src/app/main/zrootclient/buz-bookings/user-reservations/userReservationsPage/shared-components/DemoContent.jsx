@@ -95,7 +95,7 @@ function DemoContent(props) {
                     className="bg-white p-4 rounded shadow mb-8"
                     key={trip?._id}
                   >
-                    <CancelledReservationCard placedReservation={trip?.cancelledBookedReservation} />
+                    <CancelledReservationCard placedReservation={trip} />
                   </div>
                 ))}
                 
