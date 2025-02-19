@@ -52,6 +52,7 @@ function LanHubSwitcher() {
         </Typography>
       </Button>
 
+
       <Popover
         open={Boolean(menu)}
         anchorEl={menu}
@@ -86,13 +87,13 @@ function LanHubSwitcher() {
           <ListItemText primary={`Hotesl & Suites`} />
         </MenuItem>
 
-        <MenuItem component={NavLinkAdapter} to="/realestate/listings">
+        {/* <MenuItem component={NavLinkAdapter} to="/realestate/listings">
           <ListItemIcon className="min-w-40">
            
             <FuseSvgIcon>heroicons-outline:briefcase</FuseSvgIcon>
           </ListItemIcon>
           <ListItemText primary={`Real Estate`} />
-        </MenuItem>
+        </MenuItem> */}
 
 		<MenuItem component={NavLinkAdapter} to="/foodmarts/listings">
           <ListItemIcon className="min-w-40">
@@ -102,14 +103,7 @@ function LanHubSwitcher() {
           <ListItemText primary={`Restaurants And Vendors`} />
         </MenuItem>
 
-        <MenuItem
-          component={Link}
-          to="/documentation/configuration/multi-language"
-          onClick={langMenuClose}
-          role="button"
-        >
-          <ListItemText primary="Learn More" />
-        </MenuItem>
+    
       </Popover>
     </>
   );

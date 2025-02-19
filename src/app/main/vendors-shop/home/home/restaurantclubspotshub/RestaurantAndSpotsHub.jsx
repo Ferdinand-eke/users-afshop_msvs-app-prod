@@ -1,54 +1,26 @@
-import FuseLoading from "@fuse/core/FuseLoading";
+import React, { useEffect, useState } from "react";
+import { Button, Skeleton, Typography } from "@mui/material";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-import { Button, Typography } from "@mui/material";
+import RecommendedHead from "./rcshubcomponents/RecommendedHead";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
-import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import useGetAllFoodMarts from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 
-/**
- * Demo Content
- */
-function DemoContent(props) {
-  const { isLoading, isError, products } = props;
-
-  if (isLoading) {
-    return <FuseLoading />;
-  }
-
-  if (isError) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <ClienttErrorPage message={"Error occurred while retriving listings"} />
-      </motion.div>
-    );
-  }
-
-  if (!products) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <Typography color="text.secondary" variant="h5">
-          No listings found!
-        </Typography>
-      </motion.div>
-    );
-  }
+function RestaurantAndSpotsHub() {
+  const { data: AllFoodMarts, isLoading, isError } = useGetAllFoodMarts();
 
   return (
-    <div className="flex-auto p-24 sm:p-40 ">
-      <div className="h-7xl min-h-7xl max-h-7xl border-2 border-dashed rounded-2xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
-          {products?.map((foodmart, index) => (
+    <div className="pt-5 w-full max-w-4xl">
+      <RecommendedHead
+        title="Restaurants, Clubs and Spots"
+        color="bg-orange-800"
+      />
+
+      {/* <div className="carousel carousel-center bg-white w-full shadow-lg"> */}
+      <div className="flex-auto p-24 sm:p-40 ">
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
+          {AllFoodMarts?.data?.data?.map((foodmart, index) => (
             <div
               key={index}
               className="bg-white p-4 rounded shadow flex flex-col "
@@ -93,4 +65,4 @@ function DemoContent(props) {
   );
 }
 
-export default DemoContent;
+export default RestaurantAndSpotsHub;

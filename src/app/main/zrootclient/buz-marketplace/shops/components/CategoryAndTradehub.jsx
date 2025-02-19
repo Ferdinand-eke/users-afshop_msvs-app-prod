@@ -18,7 +18,7 @@ const CategoryAndTradehub = () => {
         if (categories?.data?.data && categories?.data?.data.length > 0) {
             const items = categories?.data?.data.map((item) => (
                 <li key={item._id} className={item._id === id ? 'relative bg-orange-100 rounded-md hover:bg-orange-300 py-1 px-4 cursor-pointer'
-                 : 'relative bg-white rounded-md hover:bg-orange-300 py-1 px-4 cursor-pointer'}>
+                 : 'relative bg-white rounded-md hover:bg-orange-500 py-1 px-4 cursor-pointer'}>
                     <Typography
                     //  href={`/afshopcategory/${item._id}`}
                     component={NavLinkAdapter}

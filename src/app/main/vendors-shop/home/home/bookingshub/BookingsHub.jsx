@@ -1,57 +1,24 @@
-import FuseLoading from "@fuse/core/FuseLoading";
+import React, { useEffect, useState } from "react";
+import { Button, Skeleton, Typography } from "@mui/material";
 
-import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-// import ClienttErrorPage from "../../components/ClienttErrorPage";
-import { Button, Typography } from "@mui/material";
+import RecommendedHead from "./bookingshubcomponents/RecommendedHead";
+import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
-import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
+import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 
-/**
- * Demo Content
- */
-function DemoContent(props) {
-  const { isLoading, isError, products } = props;
-
-  if (isLoading) {
-    return <FuseLoading />;
-  }
-
-  if (isError) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <ClienttErrorPage message={"Error occurred while retriving products"} />
-      </motion.div>
-    );
-  }
-
-  if (!products) {
-    return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <Typography color="text.secondary" variant="h5">
-          No products products
-        </Typography>
-      </motion.div>
-    );
-  }
-
+function BookingsHub() {
+    const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
 
   return (
-    <div className="flex-auto p-24 sm:p-40 ">
-      <div className="h-7xl min-h-7xl max-h-7xl border-2 border-dashed rounded-2xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
-          {products?.map((property) => (
+    <div className="pt-5 w-full max-w-4xl">
+      <RecommendedHead title="Hotels And Apartments" color="bg-orange-800" />
+
+      {/* <div className="carousel carousel-center bg-white w-full shadow-lg"> */}
+      <div className="flex-auto p-24 sm:p-40 ">
+      <div className="grid grid-cols-1 sm:grid-cols-3 lg:grid-cols-4 gap-4 p-8">
+          {bookingprops?.data?.data?.map((property) => (
             <div
               className="relative flex flex-col bg-white rounded-lg shadow p-4"
               key={property?._id}
@@ -124,4 +91,4 @@ function DemoContent(props) {
   );
 }
 
-export default DemoContent;
+export default BookingsHub;
