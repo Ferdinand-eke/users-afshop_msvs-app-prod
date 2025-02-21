@@ -40,6 +40,7 @@ import Timeline from "@mui/lab/Timeline";
 import { format } from "date-fns/format";
 import { Controller, useForm, useFormContext } from "react-hook-form";
 import FundsWithdrawalPage from "./fundsmovementcards/FundsWithdrawalPage";
+import { useGenerateUserWalletAccountMutation } from "app/configs/data/server-calls/userwalletaccountdetails/useUserWalletAccountDetails";
 
 /**
  * The FinanceDashboardAppHeader component.
@@ -52,9 +53,10 @@ function FinanceDashboardAppHeader(props) {
   });
   // const methods = useFormContext();
   
-  const { control, formState, watch, getValues } = methods;
+  // const { control, formState, watch, getValues } = methods;
+  const generateUserWalletAcount = useGenerateUserWalletAccountMutation()
 
-  const { shopData, isLoading } = props;
+  const { shopAccount } = props;
   const [open, setOpen] = React.useState(false);
   const [withdarwopen, setWithdrawOpen] = React.useState(false);
 
@@ -93,15 +95,16 @@ function FinanceDashboardAppHeader(props) {
     show: { opacity: 1, y: 0 },
   };
 
-  const DrawerMoveFunds = (
-    <Box
-      sx={{ width: 350 }}
-      sm={{ width: 250 }}
-      role="presentation"
-    >
-      <FundsMovementPage />
-    </Box>
-  );
+  // const DrawerMoveFunds = (
+  //   <Box
+  //     sx={{ width: 350 }}
+  //     sm={{ width: 250 }}
+  //     role="presentation"
+  //   >
+  //     <FundsMovementPage />
+  //   </Box>
+  // );
+
 
   const DrawerWithdraw = (
     <Box
@@ -114,6 +117,15 @@ function FinanceDashboardAppHeader(props) {
       <FundsWithdrawalPage />
     </Box>
   );
+ 
+  const handleAccountGeneration = () =>{
+    if (window.confirm('Generate a wallet account?')) {
+      console.log("User Account Wallet Generating...")
+      generateUserWalletAcount.mutate()
+    }
+
+ 
+  }
 
   return (
     <div className="flex w-full container">
@@ -140,41 +152,44 @@ function FinanceDashboardAppHeader(props) {
           >
             Reports
           </Button>
-          <Button
-            className="whitespace-nowrap"
+
+
+          {!shopAccount?.data?._id  &&  <Button
+            className="bg-orange-500 hover:bg-orange-800 whitespace-nowrap"
+            startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
+            onClick={handleAccountGeneration}
+          >
+            Generate Acoount
+          </Button>}
+
+            {shopAccount?.data?._id  && <Button
+            className="bg-orange-500 hover:bg-orange-800 whitespace-nowrap"
             startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
             onClick={toggleWithdrawDrawer(true)}
           >
             Withdraw
-          </Button>
+          </Button>}
 
-          <Button
+          
+
+         
+
+          {/* <Button
             className="bg-orange-500 whitespace-nowrap"
             variant="contained"
             color="secondary"
-            // startIcon={
-            //   <FuseSvgIcon size={20}>heroicons-solid:save</FuseSvgIcon>
-            // }
-            // onClick={() => dispatch(toggleAccountsPanel())}
             onClick={toggleDrawer(true)}
           >
             <motion.div animate={controls}>{children}</motion.div>
             Cashout To Wallet
-          </Button>
+          </Button> */}
 
-          {/* <div className="-mt-8">
-            <Typography
-              className="bg-orange-500 text-white rounded-full font-semibold py-4 px-4  text-11 font-medium capitalize cursor-pointer"
-              color="text.secondary"
-            >
-              Move Funds To Wallet
-            </Typography>
-          </div> */}
+       
         </div>
 
-        <Drawer open={open} onClose={toggleDrawer(false)}>
+        {/* <Drawer open={open} onClose={toggleDrawer(false)}>
           {DrawerMoveFunds}
-        </Drawer>
+        </Drawer> */}
 
         <Drawer open={withdarwopen} onClose={toggleWithdrawDrawer(false)}>
           {DrawerWithdraw}

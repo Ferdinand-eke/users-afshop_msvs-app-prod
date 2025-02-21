@@ -15,11 +15,6 @@ export function useShopAdminLogin() {
   // const navigate = useNavigate();
   return useMutation(clientSigin, {
     onSuccess: (data) => {
-      // console.log("ALL-DATA", data);
-      // console.log("userFromAuthentication", data?.data?.data);
-      // console.log("tokenFromAuthentication", data?.data?.token);
-
-      //  return
       if (data?.data?.data && data?.data?.token) {
         /**============================================================================== */
 
@@ -28,39 +23,23 @@ export function useShopAdminLogin() {
           name: data?.data?.data?.name,
           email: data?.data?.data?.email,
           role: "user",
-
-          // isAdmin: data?.data?.data?.isAdmin,
           avatar: data?.data?.data?.avatar,
         };
 
-        // setSession(token);   authClientUserToken
         if (data?.data?.token) {
           localStorage.setItem(config.tokenStorageKey, data?.data?.token);
-          // axios.defaults.headers.common.Authorization = `Bearer ${token}`;
           axios.defaults.headers.common.accessToken = `${data?.data?.token}`;
         }
 
-        // setIsAuthenticated(setIsAthenticatedStorage(token));
         if (isTokenValid(data?.data?.token)) {
           localStorage.setItem(config.isAuthenticatedStatus, true);
         } else {
           localStorage.setItem(config.isAuthenticatedStatus, false);
         }
 
-        if(transFormedUser){
+        if (transFormedUser) {
           setUserCredentialsStorage(transFormedUser);
-
-        //  if(isSet){
-        //   window.location.reload();
-        //  }
-        
-          // navigate()
-          // navigate('/')
         }
-
-       
-
-        // return;
       } else if (data) {
         console.log("LoginError22_", data.data);
 
@@ -102,11 +81,12 @@ const isTokenValid = (accessToken) => {
 };
 
 const setUserCredentialsStorage = (userCredentials) => {
-  // console.log("UserCredentials TO-SET", userCredentials);
-  // localStorage.setItem(config.adminCredentials, JSON.stringify({ userCredentials }))
-  const setUserCookie = Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
+  const setUserCookie = Cookie.set(
+    config.adminCredentials,
+    JSON.stringify({ userCredentials })
+  );
 
-    if(setUserCookie){
-          window.location.reload();
-         }
+  if (setUserCookie) {
+    window.location.reload();
+  }
 };

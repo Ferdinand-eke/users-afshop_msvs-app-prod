@@ -95,6 +95,7 @@ export function useUpdateMyShopAccountMutation() {
   });
 }
 
+
 //trandfer funds from shop to shop_Wallet
 export function useTransferToShopWalletMutation() {
   const queryClient = useQueryClient();
@@ -126,34 +127,7 @@ export function useTransferToShopWalletMutation() {
   });
 }
 
-//withdraw funds from shop to shop_Wallet
-// export function useWithdrawWalletFundsMutation() {
-//   const queryClient = useQueryClient();
-
-//   return useMutation(withdrawFromMyShopNow, {
-//     onSuccess: (data) => {
-//       console.log('Withdrwal Placed', data);
-
-//       if (data) {
-//         toast.success('withdrawal placed successfully!!');
-//         toast.success(`${data?.message}`);
-//         queryClient.invalidateQueries('__myshop_details');
-//         queryClient.invalidateQueries('__myshop_walletdetails');
-//       }
-//     },
-//     onError: (error) => {
-//       console.log('MuTationError', error);
-//       // console.log('MuTationErrorMessage', error.message);
-//       toast.error(
-//         error.response && error.response.data.message
-//           ? error.response.data.message
-//           : error.message
-//       );
-//     },
-//   });
-// }
-
-//place shop account withdrawal
+/****place shop account withdrawal */
 export function usePlaceWithdrawalMutation() {
   const queryClient = useQueryClient();
 

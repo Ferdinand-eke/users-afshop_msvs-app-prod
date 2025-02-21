@@ -324,6 +324,27 @@ export const payAndPlaceOrderApi = (formData) => {
   return AuthApi().post(`${API_ENDPOINTS.PAY_AND_PLACE_ORDER}`, formData);
 };
 
+
+/**
+ * MANAGE USER WALLET
+ * LOGIS
+ */
+
+export const getUserWalletAccountApiDetails = () =>
+  AuthApi().get("/users/accounts/get-account-details");
+
+
+  export const updateUserAccountBankDetails = (userAccountFormData) =>
+  AuthApi().put(`/users/accounts/update-user-account`, userAccountFormData);
+
+  export const GenerateUserAccountBankDetails = () =>
+  AuthApi().post(`/users/accounts/generate-user-account`);
+
+  export const userWithdrawRequestApi = (withdrawFormData) =>
+  AuthApi().post("/users/accounts/place-withdrawal", withdrawFormData);
+
+  // export const updateUserAccountBankDetails = (userAccountFormData) =>
+  // AuthApi().post(`/users/account/update-user-account`, userAccountFormData);
 /*******
  *                      FOOD MART APP
  * #######################################################################################

@@ -29,13 +29,14 @@ import {
 } from "app/configs/data/server-calls/shopwithdrawals/useShopWithdrawals";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
+import { useUpdateUserWalletAccountDetailsMutation } from "app/configs/data/server-calls/userwalletaccountdetails/useUserWalletAccountDetails";
 /**
  * The activities page.
  */
 
 
 function UpdateAccounWithdrawalDetails(props) {
-    const updateMyShopAccount = useUpdateMyShopAccountMutation();
+    const updateUserAccountLocalBank = useUpdateUserWalletAccountDetailsMutation();
   const tranferFunds = useTransferToShopWalletMutation();
 
   const placeWithdrawal = usePlaceWithdrawalMutation();
@@ -58,31 +59,23 @@ function UpdateAccounWithdrawalDetails(props) {
   // const methods = useFormContext();
   const { control, formState, watch, getValues, reset } = methods;
   const { isValid, dirtyFields, errors } = formState;
-  // const methods = useFormContext();
-
-//   const { data: shopData, isLoading, isError } = useGetMyShopDetails();
-//   const {
-//     data: shopAccount,
-//     isLoading: accountLoading,
-//     isError: accountError,
-//   } = useGetShopAccountBalance();
-
   function handleAccountAndPinUpdate() {
 
     if (getValues()?.afshopAccountPin && getValues()?.bankName && getValues()?.bankAccountName && getValues()?.bankAccountNumber) { 
-      updateMyShopAccount.mutate(getValues());
+      updateUserAccountLocalBank.mutate(getValues());
     }
   }
 
+
   useEffect(() => {
    
-    if (updateMyShopAccount?.isSuccess) {
+    if (updateUserAccountLocalBank?.isSuccess) {
       setDrawerError("");
       reset();
     //   toast.success("Update successful");
     toggleWithdrawalFormState()
     }
-  }, [ updateMyShopAccount.isSuccess]);
+  }, [ updateUserAccountLocalBank.isSuccess]);
 
 
   const toggleWithdrawalFormState = () => {
@@ -225,7 +218,7 @@ function UpdateAccounWithdrawalDetails(props) {
                             disabled={
                               _.isEmpty(dirtyFields) ||
                               !isValid ||
-                              updateMyShopAccount?.isLoading
+                              updateUserAccountLocalBank?.isLoading
                             }
                             onClick={handleAccountAndPinUpdate}
                           >

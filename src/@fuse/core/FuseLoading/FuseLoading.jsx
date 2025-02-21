@@ -21,23 +21,31 @@ function FuseLoading(props) {
 				!showLoading ? 'hidden' : ''
 			)}
 		>
-			<Typography
+			{/* <Typography
 				className="-mb-16 text-13 font-medium sm:text-20"
 				color="text.secondary"
 			>
 				Loading
-			</Typography>
+			</Typography> */}
+			<img
+				className="mt-14 logo-icon opacity-70"
+				src="assets/images/afslogo/afslogo.png"
+				width={45}
+				height={45}
+				alt="logo"
+			/>
 			<Box
 				id="spinner"
 				sx={{
 					'& > div': {
-						backgroundColor: 'palette.secondary.main'
+						// backgroundColor: 'palette.secondary.main'
+						backgroundColor: '#EF6C00'
 					}
 				}}
 			>
-				<div className="bounce1" />
-				<div className="bounce2" />
-				<div className="bounce3" />
+				<div className="bounce1 bg-orange-500" />
+				<div className="bounce2 bg-orange-500" />
+				<div className="bounce3 bg-orange-500" />
 			</Box>
 		</div>
 	);

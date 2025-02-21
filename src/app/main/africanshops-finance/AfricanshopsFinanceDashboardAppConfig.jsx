@@ -12,6 +12,7 @@ const AfricanshopsFinanceDashboardAppConfig = {
 			config: {}
 		}
 	},
+	
 	routes: [
 		{
 			path: 'africanshops/finance',
@@ -24,32 +25,6 @@ const AfricanshopsFinanceDashboardAppConfig = {
 			// element: <FinanceDashboardApp />
 		}
 	],
-	
-	// routes: [
-	// 	{
-	// 		path: 'shopproducts-list',
-	// 		element: <ShopProductsApp />,
-	// 		children: [
-	// 			{
-	// 				path: '',
-	// 				element: <Navigate to="products" />
-	// 			},
-	// 			{
-	// 				path: 'products',
-	// 				element: <ShopProducts />
-	// 			},
-	// 			{
-	// 				path: 'products/:productId/*',
-	// 				element: <ShopProduct />
-	// 			},
-	// 			{
-	// 				path: 'inventory',
-	// 				element: <ShopProducts />
-	// 			},
-			
-	// 		]
-	// 	}
-	// ]
 
 	
 };

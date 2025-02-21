@@ -14,11 +14,11 @@ import useJwtAuth from "../useJwtAuth";
  * Form Validation Schema
  */
 const schema = z.object({
-//   email: z
-//     .string()
-//     .email("You must enter a valid email")
-//     .nonempty("You must enter an email"),
-email: z
+  //   email: z
+  //     .string()
+  //     .email("You must enter a valid email")
+  //     .nonempty("You must enter an email"),
+  email: z
     .string()
     .email("You must enter a valid email")
     .nonempty("You must enter an email"),
@@ -45,14 +45,9 @@ function JwtSignInForm() {
     resolver: zodResolver(schema),
   });
   const { isValid, dirtyFields, errors } = formState;
- 
 
   function onSubmit(formData) {
-    // console.log("Login-Values", formData);
-    const { 
-		// email,
-		email,
-		password } = formData;
+    const { email, password } = formData;
     signIn({
       // email,
       // password
@@ -60,14 +55,6 @@ function JwtSignInForm() {
       password,
     }).catch((error) => {
       console.log("FormJSXError", error);
-
-      // const errorData = error.response.data;
-      // errorData.forEach((err) => {
-      // 	setError(err.type, {
-      // 		type: 'manual',
-      // 		message: err.message
-      // 	});
-      // });
     });
   }
   return (
@@ -77,25 +64,6 @@ function JwtSignInForm() {
       className="mt-32 flex w-full flex-col justify-center"
       onSubmit={handleSubmit(onSubmit)}
     >
-      {/* <Controller
-				// name="email"
-				control={control}
-				render={({ field }) => (
-					<TextField
-						{...field}
-						className="mb-24"
-						label="Email"
-						autoFocus
-						type="email"
-						error={!!errors.email}
-						helperText={errors?.email?.message}
-						variant="outlined"
-						required
-						fullWidth
-					/>
-				)}
-			/> */}
-
       <Controller
         name="email"
         control={control}
@@ -134,38 +102,29 @@ function JwtSignInForm() {
       />
 
       <div className="flex flex-col items-center justify-center sm:flex-row sm:justify-between">
-				<Controller
-					name="remember"
-					control={control}
-					render={({ field }) => (
-						<FormControl>
-							<FormControlLabel
-								label="Remember me"
-								control={
-									<Checkbox
-										size="small"
-										{...field}
-									/>
-								}
-							/>
-						</FormControl>
-					)}
-				/>
+        <Controller
+          name="remember"
+          control={control}
+          render={({ field }) => (
+            <FormControl>
+              <FormControlLabel
+                label="Remember me"
+                control={<Checkbox size="small" {...field} />}
+              />
+            </FormControl>
+          )}
+        />
 
-				<Link
-					className="text-md font-medium"
-					to="/forgot-password"
-				>
-					Forgot password?
-				</Link>
-			</div>
+        <Link className="text-md font-medium" to="/forgot-password">
+          Forgot password?
+        </Link>
+      </div>
 
       <Button
         variant="contained"
         color="secondary"
         className=" mt-16 w-full"
         aria-label="Sign in"
-        //|| isLoading
         disabled={_.isEmpty(dirtyFields) || !isValid || isLoginLoading}
         type="submit"
         size="large"

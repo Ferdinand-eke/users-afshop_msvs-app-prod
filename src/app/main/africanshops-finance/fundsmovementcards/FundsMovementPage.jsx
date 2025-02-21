@@ -58,8 +58,6 @@ function FundsMovementPage(props) {
     isLoading: accountLoading,
     isError: accountError,
   } = useGetShopAccountBalance();
-  // const fistFiveOrders = shopData?.data?.orderItems?.slice(0, 4);
-  // console.log("ShopData", shopData?.data)
 
   function handleMoveFunds() {
     // saveProduct(getValues());
@@ -144,12 +142,12 @@ function FundsMovementPage(props) {
                   </Typography>
                 </div>
 
-                <motion.div variants={item}>
+                {/* <motion.div variants={item}>
                   <AccountSummaryWidget
                     shopData={shopData?.data?.data}
                     isLoading={isLoading}
                   />
-                </motion.div>
+                </motion.div> */}
               </TimelineContent>
 
               {/* Here is for the next timeline activity which is to move funds */}

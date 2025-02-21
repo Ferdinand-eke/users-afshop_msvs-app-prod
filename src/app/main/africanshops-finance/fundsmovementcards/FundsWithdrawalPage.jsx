@@ -29,6 +29,7 @@ import {
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import UpdateAccounWithdrawalDetails from "./sumarycard/UpdateAccounWithdrawalDetails";
+import useGetUsersAccountBalance, { useUserWithdrawalRequestMutation } from "app/configs/data/server-calls/userwalletaccountdetails/useUserWalletAccountDetails";
 /**
  * The activities page.
  */
@@ -43,7 +44,7 @@ const item = {
 function FundsWithdrawalPage(props) {
   const tranferFunds = useTransferToShopWalletMutation();
 
-  const placeWithdrawal = usePlaceWithdrawalMutation();
+  const placeWithdrawal = useUserWithdrawalRequestMutation();
   const [enterAmmount, setEnterAmount] = useState(true);
   const [enterPin, setEnterPin] = useState(false);
 
@@ -62,12 +63,13 @@ function FundsWithdrawalPage(props) {
   const { isValid, dirtyFields } = formState;
   // const methods = useFormContext();
 
-  const { data: shopData, isLoading, isError } = useGetMyShopDetails();
+  // const { data: shopData, isLoading, isError } = useGetMyShopDetails();
   const {
     data: shopAccount,
     isLoading: accountLoading,
     isError: accountError,
-  } = useGetShopAccountBalance();
+  } = useGetUsersAccountBalance();
+
 
   function handleWithdrawFunds() {
     if (parseInt(getValues()?.amount) < 1) {
@@ -85,10 +87,9 @@ function FundsWithdrawalPage(props) {
       return toast.error("insufficient balance to withdraw");
     }
 
-    // return;
     console.log("FormValues 1", getValues());
     if (getValues()?.accountpin && getValues()?.amount) {
-      console.log("FormValues 2", getValues());
+      // console.log("FormValues 2", getValues());
       placeWithdrawal.mutate(getValues());
       // placeWithdrawal.isSuccess && toast.success("withdrawal placed");
 
@@ -132,11 +133,6 @@ function FundsWithdrawalPage(props) {
   const reverseWithdrawalFormState = () => {
     setEnterAmount((current) => !current);
     setEnterPin((current) => !current);
-    // setEnterAmount((current) => console.log("EnterAmount", current));
-    // setEnterPin((current) => console.log("EnterPin", current));
-
-    // setEnterAmount(false)
-    // setEnterPin(true)
   };
 
   const onEnterAmount = (amountData) => {
@@ -155,7 +151,7 @@ function FundsWithdrawalPage(props) {
     <FusePageSimple
       content={
         <>
-          <div className="flex flex-auto flex-col px-12 py-40 sm:px-6 sm:pb-80 sm:pt-72">
+          <div className="h-screen flex flex-auto flex-col px-12 py-40 sm:px-6 sm:pb-80 sm:pt-72">
             {!shopAccount?.data?.bankName ||
             !shopAccount?.data?.bankAccountName ||
             !shopAccount?.data?.bankAccountNumber ||
@@ -166,7 +162,7 @@ function FundsWithdrawalPage(props) {
                   Update your account details.
                 </Typography>
                 <Typography className="mt-6 text-lg" color="text.secondary">
-                  You are required to provide details fo your local banc and a 4 digit pin
+                  You are required to provide details fo your local bank and a 4 digit pin
                   that should be kept personal for authorization .
                 </Typography>
                 <Timeline
@@ -195,7 +191,7 @@ function FundsWithdrawalPage(props) {
                       {
                         <div
                           dangerouslySetInnerHTML={{
-                            __html: "Whole saller wallet",
+                            __html: "User Wallet",
                           }}
                         />
                       }
@@ -231,17 +227,14 @@ function FundsWithdrawalPage(props) {
                       {<TimelineConnector />}
                     </TimelineSeparator>
                     <TimelineContent className="flex flex-col items-start pb-48 pt-0">
+
                       <UpdateAccounWithdrawalDetails />
+
                     </TimelineContent>
                   </TimelineItem>
                 </Timeline>
 
-                <motion.div variants={item}>
-                  <AccountSummaryWidget
-                    shopData={shopData?.data?.data}
-                    isLoading={isLoading}
-                  />
-                </motion.div>
+              
               </>
               </>
             ) : (
@@ -250,8 +243,8 @@ function FundsWithdrawalPage(props) {
                   Withdraw from your wallet here.
                 </Typography>
                 <Typography className="mt-6 text-lg" color="text.secondary">
-                  You can withraw your funds from merchant wallet to your locan
-                  band accounts.
+                  You can withraw your funds from wallet to 
+                  your local bank accounts.
                 </Typography>
                 <Timeline
                   className="py-32"
@@ -345,8 +338,9 @@ function FundsWithdrawalPage(props) {
                             className="whitespace-nowrap mx-4"
                             variant="contained"
                             color="secondary"
-                            disabled={!getValues()?.amount}
+                            disabled={!getValues()?.amount || shopAccount?.data?.accountBalance === 0}
                             onClick={() => onEnterAmount(getValues()?.amount)}
+                            
                           >
                             Enter amount
                           </Button>
@@ -405,12 +399,7 @@ function FundsWithdrawalPage(props) {
                   </TimelineItem>
                 </Timeline>
 
-                <motion.div variants={item}>
-                  <AccountSummaryWidget
-                    shopData={shopData?.data?.data}
-                    isLoading={isLoading}
-                  />
-                </motion.div>
+             
               </>
             )}
           </div>

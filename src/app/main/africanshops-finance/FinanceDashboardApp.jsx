@@ -22,6 +22,7 @@ import {
   Typography,
 } from "@mui/material";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import useGetUsersAccountBalance from "app/configs/data/server-calls/userwalletaccountdetails/useUserWalletAccountDetails";
 
 const container = {
   show: {
@@ -39,22 +40,19 @@ const item = {
  * The finance dashboard app.
  */
 function FinanceDashboardApp() {
-//   const { data: myshopWithdrawals, isLoading: withdrawalsLoading } =
-//     useGetMyShopWthdrawals();
   const { data: widgets, isLoading } = useGetFinanceDashboardWidgetsQuery();
 
-  const {
-    data: shopData,
-    isLoading: shopDataLoading,
-    isError,
-  } = useGetMyShopDetails();
+  // const {
+  //   data: shopData,
+  //   isLoading: shopDataLoading,
+  //   isError,
+  // } = useGetMyShopDetails();
   const {
     data: shopAccount,
     isLoading: accountLoading,
     isError: accountError,
-  } = useGetShopAccountBalance();
+  } = useGetUsersAccountBalance();
 
-  // console.log("Shop---DATA", shopData?.data?.data)
 
   if (isLoading) {
     return <FuseLoading />;
@@ -64,70 +62,17 @@ function FinanceDashboardApp() {
     return null;
   }
 
-//   const columns = useMemo(
-//     () => [
-//       {
-//         accessorKey: "createdAt",
-//         header: "Created On",
-//         Cell: ({ row }) => (
-//           <Typography className="underline" color="secondary" role="button">
-//             {row?.original?.createdAt}
-//           </Typography>
-//         ),
-//       },
-
-//       {
-//         accessorKey: "name",
-//         header: "Name",
-//         Cell: ({ row }) => (
-//           <Typography
-//             component={Link}
-//             to={`/shopproducts-list/products/${row?.original?.slug}/${row?.original?.slug}`}
-//             className="underline"
-//             color="secondary"
-//             role="button"
-//           >
-//             {row?.original?.name}
-//           </Typography>
-//         ),
-//       },
-
-//       {
-//         accessorKey: "amount",
-//         header: "Withdrawal Amount",
-//         accessorFn: (row) => {
-//           return `NGN ${row?.amount}`;
-//         },
-//       },
-//       {
-//         accessorKey: "status",
-//         header: "Approval status",
-//         accessorFn: (row) => (
-//           <div className="flex items-center">
-//             {!row?.isBlocked || !row?.isSuspended ? (
-//               <FuseSvgIcon className="text-green" size={20}>
-//                 heroicons-outline:check-circle
-//               </FuseSvgIcon>
-//             ) : (
-//               <FuseSvgIcon className="text-red" size={20}>
-//                 heroicons-outline:minus-circle
-//               </FuseSvgIcon>
-//             )}
-//           </div>
-//         ),
-//       },
-//     ],
-//     []
-//   );
-
   return (
     <FusePageSimple
       header={
         <FinanceDashboardAppHeader
-          shopData={shopData}
-          isLoading={shopDataLoading}
+        shopAccount={shopAccount}
+          // shopData={shopData}
+          // isLoading={shopDataLoading}
         />
       }
+
+      
       content={
         <div className="w-full px-24 md:px-32 pb-24">
           <motion.div
@@ -146,19 +91,20 @@ function FinanceDashboardApp() {
                   />
                 </motion.div>
 
-                <motion.div variants={item} className="flex flex-col flex-auto">
+                {/* <motion.div variants={item} className="flex flex-col flex-auto">
                   <CurrentStatementWidget
                     shopData={shopData?.data?.data}
                     shopDataLoading={shopDataLoading}
                     isError={isError}
                   />
-                </motion.div>
+                </motion.div> */}
               </div>
+             
               <motion.div variants={item} className="flex flex-col flex-auto">
                 <AccountBalanceWidget
-                   shopData={shopData?.data?.data}
-                   shopDataLoading={shopDataLoading}
-                   isError={isError}
+                  //  shopData={shopData?.data?.data}
+                  //  shopDataLoading={shopDataLoading}
+                  //  isError={isError}
 
                    account={shopAccount?.data}
                    accountLoading={accountLoading}
@@ -172,7 +118,7 @@ function FinanceDashboardApp() {
                 variants={item}
                 className="xl:col-span-2 flex flex-col flex-auto"
               >
-                {/* <RecentTransactionsWidget /> */}
+     
                 
 
                 
