@@ -10,11 +10,11 @@ const MarketplacePaymenSuccess = lazy(() => import('./shops/MarketplacePaymenSuc
 
 
 /***Marketplace Orders Listed */
-const MarketplaceOrders = lazy(() => import('./shops/MarketplaceOrders'));
+// const MarketplaceOrders = lazy(() => import('./shops/MarketplaceOrders'));
 const MarketplaceOrdersWithSidebarsContentScrollPage = lazy(() => import('./shops/marketplaceOrdersPage/MarketplaceOrdersWithSidebarsContentScrollPage'));
 
 /***Marketplace Single Order Listed starts */
-const MarketplaceOrdersDetail = lazy(() => import('./shops/MarketplaceOrdersDetail'));
+// const MarketplaceOrdersDetail = lazy(() => import('./shops/MarketplaceOrdersDetail'));
 const MarketplaceOrderDetailWithSidebarsContentScrollPage = lazy(() => import('./shops/marketplaceOrderDetailPage/MarketplaceOrderDetailWithSidebarsContentScrollPage'));
 
 /***Marketplace Single Order Listed ends */
@@ -69,6 +69,7 @@ const userMarketPlacePagesConfig = {
 			element: <MarketplaceOrdersWithSidebarsContentScrollPage />
 			
 		},
+
 
 		{
 			path: 'marketplace/user/orders/:orderId/view-order',

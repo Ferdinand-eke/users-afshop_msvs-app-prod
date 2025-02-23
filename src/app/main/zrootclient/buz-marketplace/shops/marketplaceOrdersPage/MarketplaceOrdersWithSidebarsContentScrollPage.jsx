@@ -76,14 +76,13 @@ function MarketplaceOrdersWithSidebarsContentScrollPage() {
 			leftSidebarOnClose={() => {
 				setLeftSidebarOpen(false);
 			}}
+
 			leftSidebarContent={<DemoSidebar />}
 			rightSidebarOpen={rightSidebarOpen}
 			rightSidebarOnClose={() => {
 				setRightSidebarOpen(false);
 			}}
 			rightSidebarContent={<DemoSidebarRight 
-        // methods={methods}
-      	// listingsData={AllFoodMarts?.data?.data}
       />}
 			scroll="content"
 		/>

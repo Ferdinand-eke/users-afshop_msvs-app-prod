@@ -7,12 +7,47 @@ import { Button, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
+import { useCancleOrderItem, useRequestRefundOnOrderItem } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 
 /**
  * Demo Content
  */
 function DemoContent(props) {
   const { isLoading, isError, userOrder } = props;
+  // const [initiateCancel, setInitiateCancel] = useState(false);
+  const coancelOrderItem = useCancleOrderItem();
+  const requesRefund = useRequestRefundOnOrderItem();
+
+  
+
+  // const initateCancelOrderItem = () => {
+  //   setInitiateCancel((prevOpen) => !prevOpen);
+  // };
+
+  const initiateOrderItemCancellation = (orderItem_Id) => {
+    if (
+      window.confirm(
+        "Are yor certain about this, cos once cancelled ends the processing of this item?"
+      )
+    ) {
+      coancelOrderItem.mutate(orderItem_Id);
+    }
+  };
+
+  const initiateRefundRequest = (orderItem_Id) => {
+    // console.log("item_ID", orderItem_Id)
+    // return
+    if (
+      window.confirm(
+        "You are looking to request a refund on this item, please do confirm this! As the funds on refund, will be repatrated to you wallet on approval"
+      )
+    ) {
+      // console.log("Order item cancellation ongoing...");
+      requesRefund.mutate(orderItem_Id);
+    }
+  };
+
+
 
   if (isLoading) {
     return <FuseLoading />;
@@ -46,13 +81,12 @@ function DemoContent(props) {
     );
   }
 
-
   return (
     <div className="flex-auto p-24 sm:p-40 ">
       <div className="h-screen border-2 border-dashed rounded-2xl bg-white">
-      {/* h-7xl min-h-7xl max-h-7xl */}
+        {/* h-7xl min-h-7xl max-h-7xl */}
 
-      {/* Scrollable content */}
+        {/* Scrollable content */}
         <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-8 ">
           <>
             <main className="w-4/4 p-4 overflow-y-scroll">
@@ -116,19 +150,68 @@ function DemoContent(props) {
                         </div>
                       </div>
                     </div>
-                   
 
-                    {!order?.orderId?.isDelivered && (
+                    {!order?.isCanceled && (
                       <>
-                        <p>{JSON.stringify(order?.orderId?.JSONisDelivered)}</p>
-                        <Button
-                          size="small"
-                          className="mt-4 bg-orange-300 hover:bg-orange-500 text-black text-sm px-2 py-1 rounded w-full"
-                        >
-                          Cancel This Order
-                        </Button>
+                        {!order?.orderId?.isDelivered && (
+                          <>
+                            <p>{JSON.stringify(order?.orderId?.isDelivered)}</p>
+                            <p>{JSON.stringify(order?.isCanceled)}</p>
+                            <Button
+                              size="small"
+                              className="mt-4 bg-orange-300 hover:bg-orange-500 text-black text-sm px-2 py-1 rounded w-full"
+                              // onClick={() => initateCancelOrderItem()}
+                              onClick={() =>
+                                initiateOrderItemCancellation(order?._id)
+                              }
+                            >
+                              Cancel This Order
+                            </Button>
+                          </>
+                        )}
                       </>
                     )}
+
+                    {order?.isCanceled && (
+                      <>
+                        <div className=" flex justify-start items-center gap-8">
+                          <Typography
+                            size="small"
+                            className="mt-4 bg-red-300 hover:bg-red-500 text-black text-sm text-center px-2 py-1 rounded w-full"
+                          >
+                            Canceled
+                          </Typography>
+
+                         <>
+
+                         {/* <p>Refund Requested: { JSON.stringify(order?.isRefundRequested)}</p> */}
+
+
+                         {!order?.isRefundRequested && <Button
+                            size="small"
+                            className="mt-4 bg-gray-300 hover:bg-gray-500 text-black text-sm px-2 py-1 rounded w-full"
+                            
+                            onClick={() => initiateRefundRequest(order?._id)
+                            }
+                          >
+                            Request refund
+                          </Button>}
+
+                          {order?.isRefundRequested && <Typography
+                            size="small"
+                            className="mt-4 bg-orange-300 hover:bg-orange-500 text-black text-sm text-start px-2 py-1 rounded w-full"
+                          >
+                            Refund approval pending...
+                          </Typography>}
+                         
+                          
+                          </>
+                        </div>
+                        {/* )} */}
+                      </>
+                    )}
+
+                    
                   </div>
                 ))}
               </div>

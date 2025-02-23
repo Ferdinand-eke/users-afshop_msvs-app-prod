@@ -168,7 +168,12 @@ export const createApiShopPlan = (planFormData) =>
  * SHops Routes starts
  */
 
-//Users Orders Routes
+/**
+ * ############################################################
+ * @param {Market place Users Orders Routesstarts} FormData 
+ * @returns 
+ * ############################################################
+ */
 export const createApiOrder = (FormData) =>
   AuthApi().post("/userorders", FormData);
 // export const logOut = async () => {
@@ -188,6 +193,22 @@ export const onSuccessENairaPlacedOrdersPay = (id, shopFormData) =>
 
 export const getUserInvoices = (id) =>
   AuthApi().get(`/userorders/invoices/${id}`);
+
+
+  export const cancelUserItemInInvoiceApi = (id) => {
+    
+    return  AuthApi().put(`/userorders/${id}/cancel-orderitem`);
+  }
+
+  export const requestRefundOnUserItemInInvoiceApi = (id) =>  AuthApi().put(`/userorders/${id}/request-refund`);
+ 
+
+  /**
+ * ############################################################
+ * @param {Market place Users Orders Ends} FormData 
+ * @returns 
+ * ############################################################
+ */
 
 /*******
  *                      BOOKINGS APP

@@ -1,4 +1,4 @@
-import { addToUserCommodityCartApi, getPlacedOrders, getUserInvoices, getUserShoppingCart, getUserShoppingCartForAuthAndGuest, payAndPlaceOrderApi, removeCommodityFromCartApi, updateCommodityCartQtyApi } from 'app/configs/data/client/RepositoryAuthClient';
+import { addToUserCommodityCartApi, cancelUserItemInInvoiceApi, getPlacedOrders, getUserInvoices, getUserShoppingCart, getUserShoppingCartForAuthAndGuest, payAndPlaceOrderApi, removeCommodityFromCartApi, requestRefundOnUserItemInInvoiceApi, updateCommodityCartQtyApi } from 'app/configs/data/client/RepositoryAuthClient';
 import { getAllProducts, getMyMarketplaceCartApi, getProductByCategory, getProductById } from 'app/configs/data/client/RepositoryClient';
 import { useCookies } from 'react-cookie';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
@@ -280,6 +280,97 @@ export function useGetAuthUserOrderItems(orderId) {
     () => getPlacedOrders(orderId),
     {
       enabled: Boolean(orderId),
+    }
+  );
+}
+
+/***Cancel Order Items */
+export function useCancleOrderItem() {
+
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+
+  return useMutation(
+    (orderItemData) => {
+      
+  
+      return cancelUserItemInInvoiceApi(orderItemData);
+    },
+
+    {
+      onSuccess: (data) => {
+
+        if (data?.data?.success ) {
+          toast.success(data?.data?.message);
+          queryClient.invalidateQueries(["__authuser_order_items"]);
+          // queryClient.refetchQueries("__cart", { force: true });
+          // navigate(`/marketplace/order/${data?.data?.order?._id}/payment-success`);
+        } else if (data?.data?.error) {
+          toast.error(data?.data?.error?.message);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+    },
+    {
+      onError: (error, rollback) => {
+        // return;
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        console.log("MutationError", error.response.data);
+        console.log("MutationError", error.data);
+        rollback();
+      },
+    }
+  );
+}
+
+/*****Request refund on cancelled order item */
+export function useRequestRefundOnOrderItem() {
+
+  // const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+
+  return useMutation(
+    (orderItemData) => {
+      
+  
+      return requestRefundOnUserItemInInvoiceApi(orderItemData);
+    },
+    {
+      onSuccess: (data) => {
+
+        if (data?.data?.success ) {
+          toast.success(data?.data?.message);
+          queryClient.invalidateQueries(["__authuser_order_items"]);
+        } else if (data?.data?.error) {
+          toast.error(data?.data?.error?.message);
+          return;
+        } else {
+          toast.info("something unexpected happened");
+          return;
+        }
+      },
+    },
+    {
+      onError: (error, rollback) => {
+        // return;
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+        console.log("MutationError", error.response.data);
+        console.log("MutationError", error.data);
+        rollback();
+      },
     }
   );
 }

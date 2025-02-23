@@ -81,6 +81,7 @@ function MarketplaceOrderDetailWithSidebarsContentScrollPage() {
 			leftSidebarOnClose={() => {
 				setLeftSidebarOpen(false);
 			}}
+			
 			leftSidebarContent={<DemoSidebar />}
 			rightSidebarOpen={rightSidebarOpen}
 			rightSidebarOnClose={() => {
