@@ -10,6 +10,7 @@ import Checkbox from "@mui/material/Checkbox";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import useJwtAuth from "../useJwtAuth";
+import { toast } from "react-toastify";
 /**
  * Form Validation Schema
  */
@@ -46,6 +47,7 @@ function JwtSignInForm() {
   });
   const { isValid, dirtyFields, errors } = formState;
 
+
   function onSubmit(formData) {
     const { email, password } = formData;
     signIn({
@@ -55,6 +57,7 @@ function JwtSignInForm() {
       password,
     }).catch((error) => {
       console.log("FormJSXError", error);
+      toast.error(error?.message)
     });
   }
   return (
