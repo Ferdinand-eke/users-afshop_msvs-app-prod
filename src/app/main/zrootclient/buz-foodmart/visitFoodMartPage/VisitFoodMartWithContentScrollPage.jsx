@@ -62,6 +62,7 @@ function VisitFoodMartWithContentScrollPage() {
   const routeParams = useParams();
   const { martId } = routeParams;
   const { data: martMenu, isLoading, isError } = useGetMartMenu(martId);
+  // console.log("SINGLE__FOOD__MART", martMenu?.data?.foodMart)
 
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState([]);
@@ -82,39 +83,25 @@ function VisitFoodMartWithContentScrollPage() {
 
   const { data: countries } = useSellerCountries();
 
+  // console.log("FOOD_MART_COUNTIIRES", countries?.data)
+
     
-
-  /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
-  // useEffect(() => {
-  //   if (selectCountry?.length > 0) {
-  //     console.log(`Getting stated in this country ${location?.name}`);
-  //     findStatesByCountry(selectCountry);
-  //   }
-
-  //   if (selectCountry && selectState) {
-  //     getLgasFromState(selectState);
-  //   }
-
-  //   if (selectCountry && selectState && selectLga) {
-  //     console.log("Getting products for this partivular LGA :", selectLga);
-  //   }
-  // }, [selectCountry, selectState, selectLga]);
   useEffect(() => {
-    if (selectCountry?._id?.length > 0) {
-      findStatesByCountry(selectCountry?._id);
+    if (selectCountry?.id?.length > 0) {
+      findStatesByCountry(selectCountry?.id);
     }
 
-    if (getValues()?.selectState?._id?.length > 0) {
-      getLgasFromState(getValues()?.selectState?._id);
+    if (getValues()?.selectState?.id?.length > 0) {
+      getLgasFromState(getValues()?.selectState?.id);
     }
-  }, [selectCountry?._id, selectState?._id, selectLga?._id]);
+  }, [selectCountry?.id, selectState?.id, selectLga?.id]);
 
   async function findStatesByCountry(countryId) {
     setLoading(true);
     const stateResponseData = await getStateByCountryId(countryId);
 
     if (stateResponseData) {
-      setStateData(stateResponseData?.data);
+      setStateData(stateResponseData?.data?.states);
 
       setTimeout(
         function () {
@@ -131,7 +118,7 @@ function VisitFoodMartWithContentScrollPage() {
     const responseData = await getLgasByStateId(sid);
 
     if (responseData) {
-      setBlgas(responseData?.data);
+      setBlgas(responseData?.data?.lgas);
       setTimeout(
         function () {
           setLoading(false);
@@ -153,7 +140,7 @@ function VisitFoodMartWithContentScrollPage() {
 	
 			header={
 				<DemoHeader
-				countries={countries?.data?.data}
+				countries={countries?.data?.countries}
 				stateData={stateData}
 				blgas={blgas}
 				methods={methods}
@@ -166,8 +153,10 @@ function VisitFoodMartWithContentScrollPage() {
 					}}
 				/>
 			}
+
 			content={<DemoContent
-				products={martMenu?.data?.data}
+				rcsFoodMart={martMenu?.data?.foodMart}
+        rcsId={martMenu?.data?.foodMart?.id}
 				isLoading={isLoading}
 				isError={isError}
 				/>}
@@ -176,7 +165,7 @@ function VisitFoodMartWithContentScrollPage() {
 				setLeftSidebarOpen(false);
 			}}
 			leftSidebarContent={<DemoSidebar 
-      martMenu={martMenu?.data?.data}
+      martMenu={martMenu?.data?.foodMart}
       />}
 			rightSidebarOpen={rightSidebarOpen}
 			rightSidebarOnClose={() => {
@@ -184,8 +173,8 @@ function VisitFoodMartWithContentScrollPage() {
 			}}
 			rightSidebarContent={<DemoSidebarRight 
      
-        center={martMenu?.data?.foodVendor?.foodMartState} 
-        items={martMenu?.data?.foodVendor} 
+        center={martMenu?.data?.foodMart} 
+        items={martMenu?.data?.foodMart} 
       />}
 			scroll="content"
 		/>

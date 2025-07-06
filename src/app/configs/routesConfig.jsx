@@ -590,12 +590,12 @@ const routes = [
       },
     },
     // element: <FoodMartsPage />,
-    element: <FoodMartWithSidebarsContentScrollPage />,
+    element: <FoodMartWithSidebarsContentScrollPage />, //(Msvs => Done)
   
   },
 
   {
-    path: "/foodmarts/listings/visit-mart/:martId/:id",
+    path: "/foodmarts/:martId/visit-mart/:id",
     settings: {
       layout: {
         config: {
@@ -620,11 +620,11 @@ const routes = [
     // element: <VisitFoodMartPage />,
     element: <VisitFoodMartWithContentScrollPage />,
     
-  },
+  }, //(Mcsvs => Done)
 
 
   {
-    path: "/foodmarts/menu/:menuId",
+    path: "/foodmarts/:rcsId/menu/:menuSlug/view",
     settings: {
       layout: {
         config: {
@@ -647,9 +647,9 @@ const routes = [
       },
     },
     // element: <FoodMartSingleMenu />,
-    element: <FoodMartSingleMenuWithContentScrollPage />,
+    element: <FoodMartSingleMenuWithContentScrollPage />, 
     
-  },
+  },//(Mcsvs => Done)
 
 
   /****

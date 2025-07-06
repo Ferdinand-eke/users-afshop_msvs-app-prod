@@ -23,6 +23,8 @@ const FoodmartOrdersWithSidebarsContentScrollPage = lazy(() => import('./foodmar
 const FoodMartOrdersDetail = lazy(() => import('./FoodMartOrdersDetail'));
 const FoodmartOrderDetailWithSidebarsContentScrollPage = lazy(() => import('./foodmartOrderDetailPage/FoodmartOrderDetailWithSidebarsContentScrollPage'));
 
+
+
 /**
  * The reset password pages config.
  */

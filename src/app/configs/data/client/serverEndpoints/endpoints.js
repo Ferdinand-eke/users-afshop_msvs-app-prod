@@ -54,9 +54,9 @@ export const API_ENDPOINTS = {
    * ############FOOD MART APP SERVER_URLs Start Here##############
    */
   /**Add to food mart */
-  GET_FOODCART: "/foodmarts/get-foodcart-items",
-  ADD_TO_FOODCART: "/foodmarts/addto-foodcart-items",
-  UPDATE_FOODCART_QTY: "/foodmarts/increase-decrease-foodcart-item",
+  GET_FOODCART: "/rcs-cart-session",
+  ADD_TO_FOODCART: "/rcs-cart-session/add-to-cart",
+  UPDATE_FOODCART_QTY: "/rcs-cart-session/update-cart-item",
 
   CREATE_FOOD_ORDER: "/foodmarts/pay-and/create-food-order",
 

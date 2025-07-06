@@ -61,7 +61,7 @@ function DemoHeader(props) {
                       }
                     />
                    
-                    {selectCountry?._id && (
+                    {selectCountry?.id && (
                       <UserStateSelect
                         states={stateData}
                         value={selectState}
@@ -71,7 +71,7 @@ function DemoHeader(props) {
                       />
                     )}
 
-                    {selectState?._id && (
+                    {selectState?.id && (
                       <UserLgaSelect
                         blgas={blgas}
                         value={selectLga}

@@ -144,8 +144,8 @@ function DemoContent(props) {
               <AddToFoodCartButton
                 onSubmit={onAddToFoodCart}
                 loading={addFoodCartLoading}
-                productId={menuData?._id}
-                cartItems={foodCart?.data?.foodcart}
+                productId={menuData?.id}
+                cartItems={foodCart?.cartProducts}
               />
 
               <div className="mt-4">

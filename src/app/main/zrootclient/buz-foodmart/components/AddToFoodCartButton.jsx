@@ -6,11 +6,12 @@ const AddToFoodCartButton = ({ onSubmit, loading, productId,
 }) => {
   let checkArray = [];
   cartItems?.forEach((element) => {
-    checkArray?.push(element?.menu?._id);
+    checkArray?.push(element?.martMenu?.id);
   });
 
 
   return (
+
     <div
     //   className="
     //     bg-white

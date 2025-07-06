@@ -1,15 +1,17 @@
 import { addToUserFoodCartApi, getUserFoodCartApi, getUserFoodInvoicesAndItemsByIdEnpoint, getUserFoodInvoicesEnpoint, payAndPlaceFoodOrderApi, updateCommodityCartQtyApi, updateUserFoodCartApi } from 'app/configs/data/client/RepositoryAuthClient';
-import { getAllFoodMarts, getFoodMartMenuApi, getFoodMartSingleMenuItemApi, getMyFoodCartpi } from 'app/configs/data/client/RepositoryClient';
+import { getAllFoodMarts, getFoodMartMenuApi, getFoodMartSingleMenuItemApi, getMyFoodCartpi, getRcsFoodMartMenuItemsApi } from 'app/configs/data/client/RepositoryClient';
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
+
+/***1) Get All FoordMrt/RCS  */
 export default function useGetAllFoodMarts() {
     return useQuery(['__foodmarts'], getAllFoodMarts);
-}
+} //(Mcsvs => Done)
 
 
-/***get menu of single food-mart-SHOP */
+/***2) Get single food-mart-SHOP/RCS */
 export function useGetMartMenu(martId) {
   // if(!martId || martId === 'new'){
   //   return {};
@@ -22,14 +24,29 @@ export function useGetMartMenu(martId) {
     
     }
   );
-}
+} //(Mcsvs => Done)
 
-export function useGetSingleMenuItem(menuId) {
+/***get menu of single food-mart-SHOP/RCS-Listing */
+export function useGetRCSMenuItems(martId) {
+  // if(!martId || martId === 'new'){
+  //   return {};
+  // }
   return useQuery(
-    ['__meniitem', menuId],
-    () => getFoodMartSingleMenuItemApi(menuId),
+    ['__foodmartRcsMenu', martId],
+    () => getRcsFoodMartMenuItemsApi(martId),
     {
-      enabled: Boolean(menuId),
+      enabled: Boolean(martId),
+    
+    }
+  );
+} //(Mcsvs => Done)
+
+export function useGetSingleMenuItem(rcsId, menuId) {
+  return useQuery(
+    ['__menuitem', rcsId, menuId],
+    () => getFoodMartSingleMenuItemApi(rcsId, menuId),
+    {
+      enabled: Boolean(rcsId, menuId),
     
     }
   );
@@ -41,26 +58,30 @@ export function useGetSingleMenuItem(menuId) {
  * FOOD CART MANAGEMENT STARTS HERE
  * ###########################################################################################
  */
-export function useGetMyFoodCart() {
+export function useGetMyFoodCart(userId) {
+    if(!userId || userId === 'new'){
+    return {};
+  }
   return useQuery(['__foodcart'], getUserFoodCartApi);
-}
+} //(Mcsvs => Done)
 
 /***get menu of single food-mart-SHOP */
 export function useGetMyFoodCartByUserCred(userId) {
   if(!userId || userId === 'new'){
     return {};
   }
-  return useQuery(
-    ['__foodcart', userId],
-    () => getMyFoodCartpi(userId),
-    {
-      enabled: Boolean(userId),
 
-    }
-  );
-}
+  return useQuery(["__foodcart"], getMyFoodCartpi);
 
+  // return useQuery(
+  //   ['__foodcart', userId],
+  //   () => getMyFoodCartpi(userId),
+  //   {
+  //     enabled: Boolean(userId),
 
+  //   }
+  // );
+} //(Mcsvs => Done)
 
 /****Manage FOOD-CART starts */
 /****Create add to foodcart : => Done for Africanshops */
@@ -76,39 +97,38 @@ export function useAddToFoodCart() {
     {
       onSuccess: (data) => {
 
-        if (data?.data?.success && data?.data?.savedCart) {
-          toast.success("added to cart successfully!");
+        if (data?.data?.success) {
+          toast.success(`${data?.data?.message ? data?.data?.message : "added to cart successfully!"}`);
           queryClient.invalidateQueries(["__foodcart"]);
           queryClient.refetchQueries("__foodcart", { force: true });
           // navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
-        } else if (data?.data?.error) {
-          toast.error(data?.data?.error?.message);
-          return;
-        } else {
-          toast.info("something unexpected happened");
-          return;
-        }
+        } 
+        
+        // else if (data?.data?.error) {
+        //   toast.error(data?.data?.error?.message);
+        //   return;
+        // } else {
+        //   toast.info("something unexpected happened");
+        //   return;
+        // }
       },
     },
     {
       onError: (error, rollback) => {
-        // return;
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error.data);
+       const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
         rollback();
       },
     }
   );
-}
+} //(Mcsvs => Done)
 
 /**Updated Food cart item quantity */
 export function useUpdateFoodCartItemQty() {
-  // const navigate = useNavigate();
   const queryClient = useQueryClient();
   return useMutation(
     (foodCartItem) => {
@@ -118,38 +138,38 @@ export function useUpdateFoodCartItemQty() {
     {
       onSuccess: (data) => {
 
-        if (data?.data?.success && data?.data?.updatedCartQty) {
-          toast.success(data?.data?.message);
+        if (data?.data?.success ) {
+          toast.success(`${data?.data?.message ? data?.data?.message : "data?.data?.message"}`);
           queryClient.invalidateQueries(["__foodcart"]);
           queryClient.refetchQueries("__foodcart", { force: true });
           // navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
-        } else if (data?.data?.error) {
-          toast.error(data?.data?.error?.message);
-          return;
-         } else if (data?.data?.infomessage) {
-          toast.info(data?.data?.infomessage);
-          return;
-        } else {
-          toast.info("something unexpected happened");
-          return;
-        }
+        } 
+        
+        // else if (data?.data?.error) {
+        //   toast.error(data?.data?.error?.message);
+        //   return;
+        //  } else if (data?.data?.infomessage) {
+        //   toast.info(data?.data?.infomessage);
+        //   return;
+        // } else {
+        //   toast.info("something unexpected happened");
+        //   return;
+        // }
       },
     },
     {
       onError: (error, rollback) => {
-        // return;
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error.data);
+       const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
         rollback();
       },
     }
   );
-}
+} //(Mcsvs => Done)
 /***
  * #######################################################################################
  * FOOD CART MANAGEMENT ENDS HERE

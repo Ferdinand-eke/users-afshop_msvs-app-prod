@@ -14,14 +14,13 @@ const UserCountrySelect = ({ value, onChange }) => {
       <Select
         placeholder="Choose a country?"
         isClearable
-        options={countries?.data?.data}
+        options={countries?.data?.countries}
         value={value}
         onChange={(value) => onChange(value)}
         formatOptionLabel={(option) => (
           <div className="flex flex-row items-center gap-3">
-            {/* <div> */}
             <image src={option?.flag} className="height-[10px] width-[14px]" />
-            {/* </div> */}
+
             <div>
               {option?.name}
               {/* <span className='text-neutral-800 ml-1'>

@@ -55,32 +55,58 @@ export function AuthApi() {
     headers: { accesstoken_x_user: `${TOKEN}` },
   });
 
+  // Api.interceptors.response.use(
+  //   (response) => response,
+  //   (error) => {
+    
+
+
+  //     if (error?.response?.status === 403) {
+  //       let errors = Object.values(error?.response?.data?.errors || {});
+  //       // userLogOutCall();
+
+  //       return Promise.reject({
+  //         status: 403,
+  //         errorsRaw: errors,
+  //         errors: errors.reduce((error) => error),
+  //       });
+  //     }
+
+   
+
+  //     return Promise.reject({
+  //       status: error.response?.status,
+  //       errors: ["Oops!"],
+  //     });
+  //   }
+  // );
+
+  // return Api;
+
   Api.interceptors.response.use(
     (response) => response,
     (error) => {
-    
-
+      console.error("Interceptor---ERROR", error);
       if (error?.response?.status === 403) {
-        let errors = Object.values(error?.response?.data?.errors || {});
-        // userLogOutCall();
+        console.log("responseSTATS", error?.response?.status);
+        // merchantLogOutCall();
+        // toast.error(
+        //   error.response && error.response.data.message
+        //     ? error.response.data.message
+        //     : error.message
+        // );
 
-        return Promise.reject({
-          status: 403,
-          errorsRaw: errors,
-          errors: errors.reduce((error) => error),
-        });
+        return Promise.reject({ status: 401, errors: ["Unauthorized"] });
       }
 
-      toast.error(
-        error?.response && error?.response?.data?.message
-          ? error?.response?.data?.message
-          : error?.message
-      );
+      if (error.response?.status === 422) {
+        let errors = Object.values(error?.response?.data?.errors || {});
 
-      return Promise.reject({
-        status: error.response?.status,
-        errors: ["Oops!"],
-      });
+       
+      }
+
+       return Promise.reject(error);
+   
     }
   );
 

@@ -3,22 +3,32 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-import { Button, Typography } from "@mui/material";
+import { Button, Icon, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
+import { useGetRCSMenuItems } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
+import { BsArrowBarRight } from "react-icons/bs";
 
 /**
  * Demo Content
  */
 function DemoContent(props) {
-  const { isLoading, isError, products } = props;
+  const { isLoading, isError, rcsFoodMart, rcsId } = props;
 
-  if (isLoading) {
+  const {
+    data: RcsMenu,
+    isLoading: menuLoading,
+    isError: menuError,
+  } = useGetRCSMenuItems(rcsId);
+
+  console.log("R-C-S DATA", RcsMenu?.data?.menus);
+
+  if (menuLoading) {
     return <FuseLoading />;
   }
 
-  if (isError) {
+  if (menuError) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -30,7 +40,7 @@ function DemoContent(props) {
     );
   }
 
-  if (!products) {
+  if (!RcsMenu?.data?.menus) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -48,7 +58,7 @@ function DemoContent(props) {
     <div className="flex-auto p-24 sm:p-40 ">
       <div className="h-7xl min-h-7xl max-h-7xl border-2 border-dashed rounded-2xl">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
-          {products?.menu?.map((item, index) => (
+          {RcsMenu?.data?.menus?.map((item, index) => (
             <div
               key={index}
               className="bg-white p-4 rounded shadow flex flex-col justify-between"
@@ -72,7 +82,7 @@ function DemoContent(props) {
                   <Typography
                     className="mt-2 text-sm font-bold cursor-pointer"
                     component={NavLinkAdapter}
-                    to={`/foodmarts/menu/${item?.slug}`}
+                    to={`/foodmarts/${item?.foodMartVendor}/menu/${item?.slug}/view`}
                   >
                     {item?.title}
                   </Typography>
@@ -92,11 +102,13 @@ function DemoContent(props) {
               <div className="flex justify-between items-center mt-4">
                 <i className="far fa-heart text-xl"></i>
                 <Button
-                  // size="xs"
                   size="small"
                   className="bg-orange-400 hover:bg-orange-800 text-black px-4 py-2 rounded w-full h-[20px]"
+                  component={NavLinkAdapter}
+                  to={`/foodmarts/${item?.foodMartVendor}/menu/${item?.slug}/view`}
                 >
-                  ADD TO CART
+                  View more{" "}
+                  <BsArrowBarRight />
                 </Button>
               </div>
             </div>

@@ -119,7 +119,7 @@ export const getLgasByStateId = (id) => Api().get(`/buz-lgas/state/${id}`);
 export const getBStates = () => Api().get("/buzstates");
 export const getStateById = (id) => Api().get(`/buzstates/${id}`);
 export const getStateByCountryId = (cid) =>
-  Api().get(`/buzstates/operational/country/${cid}`);
+ Api().get(`/buzstates/in-country/${cid}/operational`); 
 //=========================================States Toutes end===========================================================//
 
 //========================================Countries Routes
@@ -252,20 +252,8 @@ export const getApiFeaturedPartners = () => Api().get(`/partners`);
 //==========================Get Our Leaders Routes=====================================
 export const getOurTeam = () => Api().get(`/admin/our-leaders`);
 
-/**==============================================================|
- *   Shop registration start  not being verified starts   
-================================================================*/
-//========================================Shop/Vendors Authentication Logics==============================================
-// export const newShopSignup = (formData) =>
-//   Api().post("/api/pre-shop-signup", formData);
-// export const storePreShopUserData = (formData) =>
-//   Api().post("/api/register-preshop-user", formData);
 
-// export const userShopForgotPassword = (formData) =>
-//   Api().post("/api/shop/forgot-password", formData);
 
-// export const userShopResetPassword = (formData) =>
-//   Api().post("/api/shop/reset-password", formData);
 
 
 /**===============================================================================================
@@ -279,16 +267,22 @@ Api().get(`/foodmarts/get-user-cart/${userId}`);
  * FOOD MART ROUTES LISTED BELOW STARTS
  ==================================================================================================*/
 
-export const getAllFoodMarts = () => Api().get("/foodmarts");
-export const getFoodMartMenuApi = (hub) =>
-  Api().get(`/foodmarts/get-mart-menu/${hub}`);
-  export const getFoodMartSingleMenuItemApi = (slug) =>
-  Api().get(`/foodmarts/get-menu/${slug}`);
+export const getAllFoodMarts = () => Api().get("/food-marts"); //(Mcsvs => Done)
+export const getFoodMartMenuApi = (rcsId) =>
+  Api().get(`/food-marts/${rcsId}/view`);  //(Mcsvs => Done)
+
+export const getRcsFoodMartMenuItemsApi = (rcsId) =>
+  Api().get(`/rcs-menu`);  //(Mcsvs => Done)
+
+  export const getFoodMartSingleMenuItemApi = (rcsId, menuSlug) =>
+  Api().get(`/rcs-menu/foodmart/${rcsId}/menu/${menuSlug}/view`); //(Mcsvs => Done)
 
 
 
-  export const getMyFoodCartpi = (userId) =>
-  Api().get(`/foodmarts/get-user-cart/${userId}`);
+  export const getMyFoodCartpi = () => {
+       ///get-user-cart/${userId}  userId
+    return Api().get(`/rcs-cart-session`);  
+  } //(Mcsvs => Done)
 /**======================================================================================================
  * FOOD MART ROUTES LISTED ENDS HERE 
  =========================================================================================================*/

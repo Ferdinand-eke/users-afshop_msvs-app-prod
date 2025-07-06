@@ -5,6 +5,7 @@ export default function useGetAllEstateProperties() {
     return useQuery(['__estates'], getAllEstatessPropertyApi);
 }
 
+
 /***get menu of single Estate property */
 export function useGetEstateProperty(propertyId) {
   // if(!propertyId || propertyId === 'new'){

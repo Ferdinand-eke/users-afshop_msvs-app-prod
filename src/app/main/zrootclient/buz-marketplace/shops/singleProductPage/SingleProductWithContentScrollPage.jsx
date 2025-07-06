@@ -105,14 +105,13 @@ function SingleProductWithContentScrollPage() {
     //if same add to cart else show error message
 
     if (userCartData?.data?.cartSession?.cartProducts?.length === 0) {
-      const sessionPayload = {
-        shopID: product?.data?.product?.shop?._id,
-        shopCountryOrigin: product?.data?.product?.shop?.businessCountry,
-        shopStateProvinceOrigin: product?.data?.product?.shop?.businezState,
-        shopLgaProvinceOrigin: product?.data?.product?.shop?.businezLga,
-        shopMarketId: product?.data?.product?.market,
-      };
-      // const setCartSessionPayload = storeShoppingSession(sessionPayload);
+      // const sessionPayload = {
+      //   shopID: product?.data?.product?.shop?._id,
+      //   shopCountryOrigin: product?.data?.product?.shop?.businessCountry,
+      //   shopStateProvinceOrigin: product?.data?.product?.shop?.businezState,
+      //   shopLgaProvinceOrigin: product?.data?.product?.shop?.businezLga,
+      //   shopMarketId: product?.data?.product?.market,
+      // };
  
       if (userCartData?.data?.cartSession?.lgaId) {
         addToart(formData);

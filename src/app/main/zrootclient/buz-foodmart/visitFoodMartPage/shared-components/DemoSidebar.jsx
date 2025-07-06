@@ -162,16 +162,16 @@ function DemoSidebar(props) {
       <div className="w-full md:w-full bg-white p-4">
         <div className="flex flex-col items-center">
           <img
-            src={martMenu?.foodVendor?.imageSrc}
+            src={martMenu?.imageSrc}
             alt="Store logo"
             className="rounded-full mb-4 h-[100px]"
           />
           <div className="text-center">
             <p className="text-gray-500">Since 2023</p>
-            <h2 className="text-xl font-bold">{martMenu?.foodVendor?.title}</h2>
-            <p className="text-gray-500">
+            <h2 className="text-xl font-bold">{martMenu?.title}</h2>
+            {/* <p className="text-gray-500">
               {martMenu?.menu?.length} items in menu
-            </p>
+            </p> */}
           </div>
         </div>
         <div className="mt-6 grid grid-cols-2 gap-4">
@@ -199,13 +199,12 @@ function DemoSidebar(props) {
         <div className="mt-6">
           <h3 className="font-bold">Address</h3>
           <p className="text-gray-500">
-            East Avenue 1743, West Tower, New York, Manhattan, 12332, United
-            States
+            {martMenu?.address}
           </p>
         </div>
         <div className="mt-4">
-          <h3 className="font-bold">Phone</h3>
-          {/* <p className="text-gray-500">8139982265</p> */}
+          {martMenu?.phone && <h3 className="font-bold">{martMenu?.phone}</h3>}
+          
         </div>
       </div>
     </div>

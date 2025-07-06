@@ -5,8 +5,8 @@ import useCountries from "../../hooks/useCountries";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
 
 const UserStateSelect = ({ value, onChange, states }) => {
-  const { getAll } = useCountries();
-  const { data: countries } = useSellerCountries();
+  // const { getAll } = useCountries();
+  // const { data: countries } = useSellerCountries();
 
   return (
     <div>

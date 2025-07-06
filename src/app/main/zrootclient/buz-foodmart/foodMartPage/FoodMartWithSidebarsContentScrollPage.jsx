@@ -53,9 +53,12 @@ function FoodMartWithSidebarsContentScrollPage() {
 
   const { data: AllFoodMarts, isLoading, isError } = useGetAllFoodMarts();
 
+  // console.log("GUEST___FOODMART", AllFoodMarts?.data)
+
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [blgas, setBlgas] = useState([]);
+
 
   const methods = useForm({
     mode: "onChange",
@@ -117,21 +120,21 @@ function FoodMartWithSidebarsContentScrollPage() {
   //   }
   // }, [selectCountry, selectState, selectLga]);
   useEffect(() => {
-    if (selectCountry?._id?.length > 0) {
-      findStatesByCountry(selectCountry?._id);
+    if (selectCountry?.id?.length > 0) {
+      findStatesByCountry(selectCountry?.id);
     }
 
-    if (getValues()?.selectState?._id?.length > 0) {
-      getLgasFromState(getValues()?.selectState?._id);
+    if (getValues()?.selectState?.id?.length > 0) {
+      getLgasFromState(getValues()?.selectState?.id);
     }
-  }, [selectCountry?._id, selectState?._id, selectLga?._id]);
+  }, [selectCountry?.id, selectState?._id, selectLga?.id]);
 
   async function findStatesByCountry(countryId) {
     setLoading(true);
     const stateResponseData = await getStateByCountryId(countryId);
 
     if (stateResponseData) {
-      setStateData(stateResponseData?.data);
+      setStateData(stateResponseData?.data.states);
 
       setTimeout(
         function () {
@@ -148,7 +151,7 @@ function FoodMartWithSidebarsContentScrollPage() {
     const responseData = await getLgasByStateId(sid);
 
     if (responseData) {
-      setBlgas(responseData?.data);
+      setBlgas(responseData?.data.lgas);
       setTimeout(
         function () {
           setLoading(false);
@@ -164,7 +167,7 @@ function FoodMartWithSidebarsContentScrollPage() {
 	
 			header={
 				<DemoHeader
-				countries={countries?.data?.data}
+				countries={countries?.data?.countries}
 				stateData={stateData}
 				blgas={blgas}
 				methods={methods}
@@ -178,7 +181,7 @@ function FoodMartWithSidebarsContentScrollPage() {
 				/>
 			}
 			content={<DemoContent
-				products={AllFoodMarts?.data?.data}
+				products={AllFoodMarts?.data?.foodmarts}
 				isLoading={isLoading}
 				isError={isError}
 				/>}
@@ -193,7 +196,7 @@ function FoodMartWithSidebarsContentScrollPage() {
 			}}
 			rightSidebarContent={<DemoSidebarRight 
         methods={methods}
-      	listingsData={AllFoodMarts?.data?.data}
+      	listingsData={AllFoodMarts?.data?.foodmarts}
       />}
 			scroll="content"
 		/>

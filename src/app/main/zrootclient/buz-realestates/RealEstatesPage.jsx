@@ -81,9 +81,6 @@ function RealEstatesPage() {
       getLgasFromState(selectState);
     }
 
-    // if (selectCountry && selectState && selectLga) {
-    //   console.log("Getting products for this partivular LGA :", selectLga);
-    // }
   }, [selectCountry, selectState, selectLga]);
 
   async function findStatesByCountry(countryId) {

@@ -80,7 +80,7 @@ function DemoContent(props) {
                 <Button
                   className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-0 "
                   component={NavLinkAdapter}
-                  to={`/foodmarts/listings/visit-mart/${foodmart?._id}/${foodmart?.slug}`}
+                  to={`/foodmarts/${foodmart?.slug}/visit-mart/${foodmart?.slug}`}
                 >
                   Visit Mart
                 </Button>
