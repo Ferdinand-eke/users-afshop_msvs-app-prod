@@ -36,20 +36,25 @@ const FoodCartSummaryAndPay = ({
   intemsInCart?.forEach((element) => {
     checkItemsArrayForTotal?.push({
       quantity: element?.quantity,
-      price: element?.menu?.price,
+      price: element?.martMenu?.price,
     });
   });
 
 
+  // console.log("foodMart__Review", intemsInCart)
+
   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
   const delivery = 1000;
   const vat = 800;
-  const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
+  // const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
 
-  const { mutate: payAndOrderFood, isLoading:payFoodLoading } = usePayAndPlaceFoodOrder();
+  const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY; 
+
+  const { mutate: verifyPaymentAndCreateOrder, isLoading:payFoodLoading } = usePayAndPlaceFoodOrder();
 
 
-  const onSuccess = async (reference) => {
+
+  const onSuccess = async (paystackResponse) => {
     const payloadData = getFoodVendorSession();
 
     try {
@@ -71,20 +76,24 @@ const FoodCartSummaryAndPay = ({
 
         paymentMethod: methodOfPay,
         shoppingLgaSession: payloadData?.shopLgaProvinceOrigin,
-        paymentResult: reference,
+        paymentResult: paystackResponse,
         shippingAddress: {
           fullName: name,
           phone: phone,
           address: address,
         },
         foodMart:  payloadData?.foodMartId,
+        reference:paystackResponse?.reference
       };
 
-      if (reference?.status === "success") {
-        return payAndOrderFood(oderData);
-      } else {
-        toast.error("Error ocured on this payment");
-      }
+       verifyPaymentAndCreateOrder(oderData);
+
+
+      // if (reference?.status === "success") {
+      //   return payAndOrderFood(oderData);
+      // } else {
+      //   toast.error("Error ocured on this payment");
+      // }
     } catch (error) {}
   };
   const onClose = () => {
@@ -149,7 +158,7 @@ const FoodCartSummaryAndPay = ({
         <>
 
         {(totalAmount && (totalAmount > 0)) && <PaystackButton
-            text={`Make Payment of ${formatCurrency(
+            text={payFoodLoading ? 'payment processing...' : ` Make Payment of ${formatCurrency(
               parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
             )}`}
               className="bg-orange-500 text-black w-full p-2 rounded-lg"

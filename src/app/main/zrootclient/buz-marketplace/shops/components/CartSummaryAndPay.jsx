@@ -27,7 +27,6 @@ const CartSummaryAndPay = ({
 }) => {
   const user = useAppSelector(selectUser);
 
-  // console.log("CART__ITEMS__IN__CART__REVIEW", cartSessionPayload);
 
   let checkItemsArrayForTotal = [];
   cartSessionPayload?.cartProducts?.forEach((element) => {
@@ -40,14 +39,14 @@ const CartSummaryAndPay = ({
   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
   const delivery = 1000;
   const vat = 800;
-  const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
+  // const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
+  const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY; 
+
 
   const { mutate: verifyPaymentAndCreateOrder, isLoading: loadingWhilePaying } =
     usePayAndPlaceOrder();
 
   const onSuccess = async (paystackResponse) => {
-    // const payloadData = getShoppingSession();
-
     try {
       const oderData = {
         refOrderId: "AFSH" + generateClientUID() + "MKT",
@@ -83,11 +82,7 @@ const CartSummaryAndPay = ({
 
       verifyPaymentAndCreateOrder(oderData);
 
-      // if(reference?.status === 'success'){
-      //
-      // }else{
-      //   toast.error('Error ocured on this payment')
-      // }
+    
     } catch (error) {}
   };
   const onClose = () => {

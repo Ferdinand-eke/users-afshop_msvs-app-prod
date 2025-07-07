@@ -235,7 +235,7 @@ const FoodCartItem = ({
       foodCartItemId: itemId,
     };
 
-    console.log("IMCREASE__FOODMART__CART", formData)
+    // console.log("IMCREASE__FOODMART__CART", formData);
     return updateFoodCart(formData);
   };
 
@@ -299,7 +299,9 @@ const FoodCartItem = ({
           +
         </button>
       </div>
-      <button className="text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]">
+      <button className="text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]"
+      onClick={() => removeItemInFoodCart(id)}
+      >
         <i className="fas fa-trash-alt"></i> REMOVE
       </button>
     </div>
@@ -311,7 +313,7 @@ const FoodCartSummary = ({ subtotal, intemsInFoodCart }) => {
   intemsInFoodCart?.forEach((element) => {
     checkFoodItemsArrayForTotal?.push({
       quantity: element?.quantity,
-      price: element?.menu?.price,
+      price: element?.martMenu?.price,
     });
   });
 
@@ -379,17 +381,18 @@ const FoodCartSummary = ({ subtotal, intemsInFoodCart }) => {
 function Cart() {
   const user = useAppSelector(selectUser);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
-  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
+  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(
+    user?.id
+  );
   // const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
-
 
   /***
    * LOG Datas below
-   * 
+   *
    */
 
-  console.log("MY-CART___SESSION", foodCart?.data?.userFoodCartSession);
-  console.log("MY-CART", foodCart?.data?.userFoodCartSession?.cartProducts);
+  // console.log("MY-CART___SESSION", foodCart?.data?.userFoodCartSession);
+  // console.log("MY-CART", foodCart?.data?.userFoodCartSession?.cartProducts);
 
   // const {data:userCartData} = useGetMyMarketplaceCartByUserCred(user?.id)
 
@@ -453,45 +456,62 @@ function Cart() {
 
                   <>
                     <div className="mt-10">
-                    <Divider />
-                    <h1 className="text-2xl font-semibold mb-4 mt-10">
-                      FOOD-MART Cart ({foodCart?.data?.userFoodCartSession?.cartProducts?.length})
-                    </h1>
+                      <Divider />
+                      <h1 className="text-2xl font-semibold mb-4 mt-10">
+                        FOOD-MART Cart (
+                        {
+                          foodCart?.data?.userFoodCartSession?.cartProducts
+                            ?.length
+                        }
+                        )
+                      </h1>
 
-                    <>
-                      <div className="flex flex-col md:flex-row">
-                        <div className="flex-1">
-                          {foodCart?.data?.userFoodCartSession?.cartProducts?.length > 0 ? (
-                            foodCart?.data?.userFoodCartSession?.cartProducts.map((cartItem) => (
-                              <FoodCartItem
-                                id={cartItem?.id}
-                                key={cartItem?.id}
-                                image={cartItem?.martMenu?.imageSrcs[0]?.url}
-                                title={cartItem?.martMenu?.title}
-                                // seller="Apple Authorized Reseller"
-                                unitsLeft={cartItem?.martMenu?.quantity}
-                                foodCartQuantity={cartItem?.quantity}
-                                price={cartItem?.martMenu?.price}
-                                oldPrice={cartItem?.martMenu?.listprice}
-                                discount="-70%"
-                              />
-                            ))
-                          ) : (
-                            <Typography className="text-md">
-                              No food in cart
-                            </Typography>
-                          )}
-                        </div>
+                      <>
+                        <div className="flex flex-col md:flex-row">
+                          <div className="flex-1">
+                            {foodCartLoading ? (
+                              <div className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 rounded shadow">
+                                <p>loadin...</p>
+                              </div>
+                            ) : foodCart?.data?.userFoodCartSession
+                                ?.cartProducts?.length > 0 ? (
+                              foodCart?.data?.userFoodCartSession?.cartProducts.map(
+                                (cartItem) => (
+                                  <FoodCartItem
+                                    id={cartItem?.id}
+                                    key={cartItem?.id}
+                                    image={
+                                      cartItem?.martMenu?.imageSrcs[0]?.url
+                                    }
+                                    title={cartItem?.martMenu?.title}
+                                    // seller="Apple Authorized Reseller"
+                                    unitsLeft={cartItem?.martMenu?.quantity}
+                                    foodCartQuantity={cartItem?.quantity}
+                                    price={cartItem?.martMenu?.price}
+                                    oldPrice={cartItem?.martMenu?.listprice}
+                                    discount="-70%"
+                                  />
+                                )
+                              )
+                            ) : (
+                              <Typography className="text-md">
+                                No food in cart
+                              </Typography>
+                            )}
+                          </div>
 
-                        <div className="w-full md:w-1/3 md:ml-4">
-                          <FoodCartSummary
-                            subtotal="₦ 9,500,997"
-                            intemsInFoodCart={foodCart?.data?.userFoodCartSession?.cartProducts}
-                          />
+                          <div className="w-full md:w-1/3 md:ml-4">
+                            <FoodCartSummary
+                              subtotal="₦ 9,500,997"
+                              intemsInFoodCart={
+                                foodCart?.data?.userFoodCartSession
+                                  ?.cartProducts
+                              }
+                            />
+                          </div>
                         </div>
-                      </div>
-                    </>
-                  </div>
+                      </>
+                    </div>
                   </>
                 </>
               )}

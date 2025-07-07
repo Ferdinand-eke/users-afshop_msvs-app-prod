@@ -102,6 +102,7 @@ const schema = z.object({
 });
 
 
+
 /**
  * The Courses page.
  */
@@ -110,7 +111,7 @@ function FoodCartReview() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
 
-  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart();
+  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
 
   const handleChange = (event) => {
@@ -167,15 +168,15 @@ function FoodCartReview() {
   const [stateData, setStateData] = useState([]);
 
   useEffect(() => {
-    if (getValues()?.orderCountryDestination) {
+    if (getValues()?.orderCountryDestination?.length > 0) {
       findStatesByCountry(getValues()?.orderCountryDestination);
     }
 
-    if (getValues()?.orderStateProvinceDestination) {
+    if (getValues()?.orderStateProvinceDestination?.length > 0) {
       getLgasFromState(getValues()?.orderStateProvinceDestination);
     }
 
-    if (getValues()?.orderLgaDestination) {
+    if (getValues()?.orderLgaDestination?.length > 0) {
       getMarketsFromLgaId(getValues()?.orderLgaDestination);
     }
   }, [
@@ -185,6 +186,8 @@ function FoodCartReview() {
     getValues()?.orderLgaDestination,
   ]);
 
+  console.log("STATE__ID", getValues()?.orderStateProvinceDestination)
+
   async function findStatesByCountry() {
     setLoading(true);
     const stateResponseData = await getStateByCountryId(
@@ -192,7 +195,7 @@ function FoodCartReview() {
     );
 
     if (stateResponseData) {
-      setStateData(stateResponseData?.data);
+      setStateData(stateResponseData?.data?.states);
 
       setTimeout(
         function () {
@@ -202,6 +205,8 @@ function FoodCartReview() {
       );
     }
   }
+
+
   
 
   //**Get L.G.As from state_ID data */
@@ -209,8 +214,10 @@ function FoodCartReview() {
     setLoading(true);
     const responseData = await getLgasByStateId(sid);
 
+    console.log("LGAS___data", responseData)
+
     if (responseData) {
-      setBlgas(responseData?.data);
+      setBlgas(responseData?.data?.lgas);
       setTimeout(
         function () {
           setLoading(false);
@@ -227,7 +234,7 @@ function FoodCartReview() {
       const responseData = await getMarketsByLgaId(lid);
       console.log("marketsByLGA", responseData)
       if (responseData) {
-        setBMarkets(responseData?.data);
+        setBMarkets(responseData?.data?.markets);
         setTimeout(
           function () {
             setLoading(false);
@@ -349,11 +356,11 @@ function FoodCartReview() {
                                 error={!!errors.orderCountryDestination}
                                 helperText={errors?.orderCountryDestination?.message}
                               >
-                                {countryData?.data?.data?.map(
+                                {countryData?.data?.countries?.map(
                                   (buzcountry, index) => (
                                     <MenuItem
                                       key={index}
-                                      value={buzcountry?._id}
+                                      value={buzcountry?.id}
                                     >
                                       {buzcountry?.name}
                                     </MenuItem>
@@ -385,7 +392,7 @@ function FoodCartReview() {
                                 helperText={errors?.orderStateProvinceDestination?.message}
                               >
                                 {stateData?.map((buzstate, index) => (
-                                  <MenuItem key={index} value={buzstate?._id}>
+                                  <MenuItem key={index} value={buzstate?.id}>
                                     {buzstate?.name}
                                   </MenuItem>
                                 ))}
@@ -417,7 +424,7 @@ function FoodCartReview() {
                                 helperText={errors?.orderLgaDestination?.message}
                               >
                                 {blgas?.map((lga, index) => (
-                                  <MenuItem key={index} value={lga?._id}>
+                                  <MenuItem key={index} value={lga?.id}>
                                     {lga?.name}
                                   </MenuItem>
                                 ))}
@@ -447,7 +454,7 @@ function FoodCartReview() {
                                 helperText={errors?.orderMarketPickupDestination?.message}
                               >
                                 {markets?.map((market, index) => (
-                                  <MenuItem key={index} value={market?._id}>
+                                  <MenuItem key={index} value={market?.id}>
                                     {market?.name}
                                   </MenuItem>
                                 ))}
@@ -629,7 +636,7 @@ function FoodCartReview() {
 
               <div className="w-full md:w-1/3 relative  mt-4 md:mt-0 md:sticky top-16 h-[450px]">
                 <FoodCartSummaryAndPay
-                  intemsInCart={foodCart?.data?.foodcart}
+                  intemsInCart={foodCart?.data?.userFoodCartSession?.cartProducts}
                   methodOfPay={selectedPaymentOption}
                   name={name}
                   phone={phone}

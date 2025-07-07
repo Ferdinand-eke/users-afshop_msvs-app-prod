@@ -58,7 +58,7 @@ export const API_ENDPOINTS = {
   ADD_TO_FOODCART: "/rcs-cart-session/add-to-cart",
   UPDATE_FOODCART_QTY: "/rcs-cart-session/update-cart-item",
 
-  CREATE_FOOD_ORDER: "/foodmarts/pay-and/create-food-order",
+  CREATE_FOOD_ORDER: "/paystack-payment/verify-and-create-rcs-order",
 
   GET_USER_FOOD_ORDER_LIST: "/foodmarts/food-orders/list",
   /******

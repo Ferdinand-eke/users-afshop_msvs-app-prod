@@ -105,6 +105,7 @@ export function AuthApi() {
        
       }
 
+      console.log("INTECEPTOR___ERROR", Promise.reject(error))
        return Promise.reject(error);
    
     }

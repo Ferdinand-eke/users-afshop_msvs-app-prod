@@ -170,7 +170,7 @@ export const getLgaByStateId = (sid) => Api().get(`/buz-lgas/in-state/${sid}/ope
 export const getAfMarkets = () => Api().get("/markets");
 export const getMarketById = (id) => Api().get(`/markets/${id}`);
 export const getMarketsByStateId = (id) => Api().get(`/markets/states/${id}`);
-export const getMarketsByLgaId = (id) => Api().get(`/markets/in-state/${id}/operational`);
+export const getMarketsByLgaId = (id) => Api().get(`/markets/in-state/${id}/operational`);//  (Mcsvs => Done)
 
 //========================================Market Routes ends
 

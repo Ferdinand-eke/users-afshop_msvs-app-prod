@@ -232,6 +232,7 @@ function CartReview() {
       }
     }
   }
+  
 
   return (
     <FusePageSimple

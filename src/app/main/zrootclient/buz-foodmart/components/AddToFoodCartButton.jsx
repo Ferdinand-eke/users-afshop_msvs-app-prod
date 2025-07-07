@@ -1,13 +1,44 @@
 import { Button, Typography } from "@mui/material";
+import { useUpdateFoodCartItemQty } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
+import { useEffect } from "react";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 
 const AddToFoodCartButton = ({ onSubmit, loading, productId, 
-    cartItems 
+    cartItems, quantityLeft
 }) => {
   let checkArray = [];
   cartItems?.forEach((element) => {
     checkArray?.push(element?.martMenu?.id);
   });
+
+  
+    const { mutate: updateCartQty } = useUpdateFoodCartItemQty();
+  
+    const increaseCart = (itemId) => {
+      const formData = {
+        flag: "increase",
+        foodCartItemId: itemId,
+      };
+      return updateCartQty(formData);
+    };
+  
+    const decreaseCart = (itemId) => {
+      const formData = {
+        flag: "decrease",
+        foodCartItemId: itemId,
+      };
+      return updateCartQty(formData);
+    };
+
+     useEffect(() => {}, [cartItems, productId, checkArray]);
+    
+      // console.log("CART__SESION__&&&___ITEMS__IN__BUTTON", cartItems);
+    
+      const matchingCartItem = cartItems?.filter(
+        (element) => element.martMenu?.id === productId
+      )[0];
+    
+  
 
 
   return (
@@ -26,18 +57,30 @@ const AddToFoodCartButton = ({ onSubmit, loading, productId,
           <Button
             size="xs"
             className="text-white font-bold border border-orange-500 bg-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-            // onClick={() => decreaseCart(id)}
+           onClick={() => decreaseCart(matchingCartItem?.id)}
           >
             -
           </Button>
           {/* <span className="mx-4">{cartQuantity}</span> */}
-          <Button
+
+           <p>{matchingCartItem?.quantity}</p>
+
+          {parseInt(matchingCartItem?.quantity) < parseInt(quantityLeft) && (
+            <Button
+              size="xs"
+              className="text-white border border-orange-500 bg-orange-500 hover:bg-orange-800 rounded px-4 py-1"
+              onClick={() => increaseCart(matchingCartItem?.id)}
+            >
+              +
+            </Button>
+          )}
+          {/* <Button
             size="xs"
             className="text-white border border-orange-500 bg-orange-500 hover:bg-orange-800 rounded px-4 py-1"
-            // onClick={() => increaseCart(id)}
+         
           >
             +
-          </Button>
+          </Button> */}
         </div>
       ) : (
         <Button

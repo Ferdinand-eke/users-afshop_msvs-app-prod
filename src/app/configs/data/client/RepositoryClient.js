@@ -102,7 +102,7 @@ export const getAfPostsByCategory = (category) =>
 export const getAfMarkets = () => Api().get("/markets");
 export const getMarketById = (id) => Api().get(`/markets/${id}`);
 export const getMarketsByStateId = (id) => Api().get(`/markets/states/${id}`);
-export const getMarketsByLgaId = (id) => Api().get(`/markets/lga/${id}`);
+export const getMarketsByLgaId = (id) => Api().get(`/markets/in-state/${id}/operational`); //(Mcsvs => Done)
 
 // export const updateMarketById = (id, marketFormData) =>
 //   authApi().put(`/markets/${id}`, marketFormData);
@@ -112,14 +112,14 @@ export const getMarketsByLgaId = (id) => Api().get(`/markets/lga/${id}`);
 //==========================================Market Routes end==========================================================//
 //###############################################################################
 //========================================L.G.As  Routes starts
-export const getLgasByStateId = (id) => Api().get(`/buz-lgas/state/${id}`);
+export const getLgasByStateId = (sid) => Api().get(`/buz-lgas/in-state/${sid}/operational`); //(Mcsvs => Done)
 
 //###############################################################################
 //========================================States Toutes
 export const getBStates = () => Api().get("/buzstates");
 export const getStateById = (id) => Api().get(`/buzstates/${id}`);
 export const getStateByCountryId = (cid) =>
- Api().get(`/buzstates/in-country/${cid}/operational`); 
+ Api().get(`/buzstates/in-country/${cid}/operational`);  //(Mcsvs => Done)
 //=========================================States Toutes end===========================================================//
 
 //========================================Countries Routes

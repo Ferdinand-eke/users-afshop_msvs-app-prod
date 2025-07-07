@@ -139,26 +139,23 @@ export function useUpdateFoodCartItemQty() {
       onSuccess: (data) => {
 
         if (data?.data?.success ) {
-          toast.success(`${data?.data?.message ? data?.data?.message : "data?.data?.message"}`);
+          toast.success(`${data?.data?.message ? data?.data?.message : "cart updated successfully!"}`);
           queryClient.invalidateQueries(["__foodcart"]);
           queryClient.refetchQueries("__foodcart", { force: true });
           // navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
         } 
-        
-        // else if (data?.data?.error) {
-        //   toast.error(data?.data?.error?.message);
-        //   return;
-        //  } else if (data?.data?.infomessage) {
-        //   toast.info(data?.data?.infomessage);
-        //   return;
-        // } else {
-        //   toast.info("something unexpected happened");
-        //   return;
-        // }
       },
     },
     {
       onError: (error, rollback) => {
+
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
+
+
        const {
           response: { data },
         } = error ?? {};
@@ -201,25 +198,35 @@ export function usePayAndPlaceFoodOrder() {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__foodcart"]);
           queryClient.refetchQueries("__foodcart", { force: true });
-          navigate(`/foodmarts/${data?.data?.foodOrder?._id}/payment-success`);
-        } else if (data?.data?.error) {
-          toast.error(data?.data?.error?.message);
-          return;
-        } else {
-          toast.info("something unexpected happened");
-          return;
-        }
+          navigate(`/foodmarts/${data?.data?.foodOrder?.id}/payment-success`);
+        } 
+        
+        // else if (data?.data?.error) {
+        //   toast.error(data?.data?.error?.message);
+        //   return;
+        // } else {
+        //   toast.info("something unexpected happened");
+        //   return;
+        // }
       },
     },
     {
       onError: (error, rollback) => {
+         const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
+        rollback();
+        
         toast.error(
           error.response && error.response.data.message
             ? error.response.data.message
             : error.message
         );
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error.data);
+        // console.log("MutationError", error.response.data);
+        // console.log("MutationError", error.data);
         rollback();
       },
     }

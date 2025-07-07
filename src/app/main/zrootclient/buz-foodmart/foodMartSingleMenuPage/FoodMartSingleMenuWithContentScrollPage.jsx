@@ -163,7 +163,7 @@ function FoodMartSingleMenuWithContentScrollPage() {
   
         if (
           foodCart?.data?.userFoodCartSession?.lgaId ===
-          menu?.data?.menu?.productLga  || !foodCart?.data?.userFoodCartSession?.lgaId
+          menu?.data?.menu?.foodMartMenuLga  || !foodCart?.data?.userFoodCartSession?.lgaId
         ) {
           addToFoodMenuToCart(formData);
           // getCartWhenAuth()
@@ -180,6 +180,9 @@ function FoodMartSingleMenuWithContentScrollPage() {
       foodCart?.data?.userFoodCartSession?.cartProducts,
       foodCart?.data?.userFoodCartSession?.cartProducts?.length,
     ]);
+
+    // console.log("MENU_LGA_LOCATION-1",  menu?.data?.menu)
+    // console.log("foodItem__LGA__LOCATION-2", foodCart?.data?.userFoodCartSession)
 
 
 	return (

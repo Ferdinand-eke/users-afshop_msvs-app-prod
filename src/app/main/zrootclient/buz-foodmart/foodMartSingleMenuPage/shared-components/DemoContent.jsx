@@ -146,6 +146,8 @@ function DemoContent(props) {
                 loading={addFoodCartLoading}
                 productId={menuData?.id}
                 cartItems={foodCart?.cartProducts}
+                 quantityLeft={menuData?.quantity}
+
               />
 
               <div className="mt-4">
