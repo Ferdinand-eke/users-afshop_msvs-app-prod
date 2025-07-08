@@ -11,9 +11,10 @@ const FoodOrderCard = ({ orderData }) => {
     <>
       <div className="flex space-x-4">
         <img
-          src="assets/images/afslogo/foodorder/foodordertwo.png"
-          alt="6-ways Adjustable Ergonomic Baby Carrier"
-          className="w-80 h-140 object-contain "
+          // src="assets/images/afslogo/foodorder/foodordertwo.png"
+           src={orderData?.foodOrderItems[0]?.image}
+          alt="assets/images/afslogo/foodorder/foodordertwo.png"
+          className="w-80 h-140 object-contain rounded-lg"
         />
 
         <div className="flex-1">
@@ -42,7 +43,7 @@ const FoodOrderCard = ({ orderData }) => {
         {orderData?.isPaid && (
           <Typography
             component={NavLinkAdapter}
-            to={`/foodmarts/user/food-orders/${orderData?._id}/view `}
+            to={`/foodmarts/user/food-orders/${orderData?.id}/view `}
             className=" text-black"
           >
             SEE DETAILS

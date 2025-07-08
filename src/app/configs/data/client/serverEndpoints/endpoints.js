@@ -54,13 +54,13 @@ export const API_ENDPOINTS = {
    * ############FOOD MART APP SERVER_URLs Start Here##############
    */
   /**Add to food mart */
-  GET_FOODCART: "/rcs-cart-session",
-  ADD_TO_FOODCART: "/rcs-cart-session/add-to-cart",
-  UPDATE_FOODCART_QTY: "/rcs-cart-session/update-cart-item",
+  GET_FOODCART: "/rcs-cart-session",   // (Done => Msvs)
+  ADD_TO_FOODCART: "/rcs-cart-session/add-to-cart",  // (Done => Msvs)
+  UPDATE_FOODCART_QTY: "/rcs-cart-session/update-cart-item",  // (Done => Msvs)
 
-  CREATE_FOOD_ORDER: "/paystack-payment/verify-and-create-rcs-order",
+  CREATE_FOOD_ORDER: "/paystack-payment/verify-and-create-rcs-order",  // (Done => Msvs)
 
-  GET_USER_FOOD_ORDER_LIST: "/foodmarts/food-orders/list",
+  GET_USER_FOOD_ORDER_LIST: "/rcs-food-orders",  // (Done => Msvs)
   /******
    * ########################FOOD MART APP SERVER_URLs EDNs Here===========
    * ----------------------------------------------------------------------------------------------

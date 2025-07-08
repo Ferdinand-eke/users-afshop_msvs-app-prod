@@ -87,13 +87,6 @@ const FoodCartSummaryAndPay = ({
       };
 
        verifyPaymentAndCreateOrder(oderData);
-
-
-      // if (reference?.status === "success") {
-      //   return payAndOrderFood(oderData);
-      // } else {
-      //   toast.error("Error ocured on this payment");
-      // }
     } catch (error) {}
   };
   const onClose = () => {

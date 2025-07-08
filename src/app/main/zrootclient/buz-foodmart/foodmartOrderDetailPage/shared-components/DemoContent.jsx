@@ -11,6 +11,7 @@ import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPa
 /**
  * Demo Content
  */
+
 function DemoContent(props) {
   const { isLoading, isError, orderData } = props;
 
@@ -67,18 +68,18 @@ function DemoContent(props) {
                 </div>
                 <p>
                   Reservation ID:{" "}
-                  {orderData?.MFoodOrder?.paymentResult?.reference}
+                  {orderData?.paymentResult?.reference}
                 </p>
                 <p>
                   Placed on:{" "}
-                  {new Date(orderData?.MFoodOrder?.createdAt)?.toDateString()}
+                  {new Date(orderData?.createdAt)?.toDateString()}
                 </p>
                 <p>
-                  Total: N {formatCurrency(orderData?.MFoodOrder?.totalPrice)}
+                  Total: N {formatCurrency(orderData?.totalPrice)}
                 </p>
               </div>
               <div className="space-y-4">
-                {orderData?.paidFoodOrderItems?.map((order) => (
+                {orderData?.foodOrderItems?.map((order) => (
                   <div className="border p-4" key={order?._id}>
                     <div className="flex flex-row md:flex-row justify-between items-start md:items-center">
                       <img
@@ -138,16 +139,16 @@ function DemoContent(props) {
               <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="border p-4">
                   <h3 className="font-bold">PAYMENT INFORMATION</h3>
-                  {orderData?.MFoodOrder?.paymentResult?.paymentMethod && (
+                  {orderData?.paymentResult?.paymentMethod && (
                     <p className="text-sm font-bold">
                       Payment Method:{" "}
-                      {orderData?.MFoodOrder?.paymentResult?.paymentMethod}
+                      {orderData?.paymentResult?.paymentMethod}
                     </p>
                   )}
 
                   <p className="text-sm font-bold">
                     Total Amount: N{" "}
-                    {formatCurrency(orderData?.MFoodOrder?.totalPrice)}
+                    {formatCurrency(orderData?.totalPrice)}
                   </p>
                 </div>
                 <div className="border p-4">
@@ -155,7 +156,7 @@ function DemoContent(props) {
 
                   <p className="text-sm font-bold">
                     Packaged :{" "}
-                    {orderData?.MFoodOrder?.isPacked ? (
+                    {orderData?.isPacked ? (
                       <span className="text-green-500">Packaged</span>
                     ) : (
                       <span className="text-red-500">Packaging Pending...</span>
@@ -163,7 +164,7 @@ function DemoContent(props) {
                   </p>
                   <p className="text-sm font-bold">
                     Shipment:{" "}
-                    {orderData?.MFoodOrder?.isShipped ? (
+                    {orderData?.isShipped ? (
                       <span className="text-green-500">Shipped</span>
                     ) : (
                       <span className="text-red-500">Shipment Pending...</span>
@@ -172,7 +173,7 @@ function DemoContent(props) {
 
                   <p className="text-sm font-bold">
                     Delivery:{" "}
-                    {orderData?.MFoodOrder?.isDelivered ? (
+                    {orderData?.isDelivered ? (
                       <span className="text-green-500">Delivered</span>
                     ) : (
                       <span className="text-red-500">Delivery Pending...</span>

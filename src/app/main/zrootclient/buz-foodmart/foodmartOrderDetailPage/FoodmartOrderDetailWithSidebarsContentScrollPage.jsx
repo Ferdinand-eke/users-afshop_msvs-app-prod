@@ -49,14 +49,6 @@ function FoodmartOrderDetailWithSidebarsContentScrollPage() {
 	}, [isMobile]);
 
 
-	// const routeParams = useParams();
-	// const { orderId } = routeParams;
-  
-	// const {
-	// 	data: orderData,
-	// 	isLoading: isLoading,
-	// 	isError: isError,
-	//   } = useGetAuthUserOrderItems(orderId);
 	const routeParams = useParams();
 	const { foodOrderId } = routeParams;
   
@@ -82,7 +74,7 @@ function FoodmartOrderDetailWithSidebarsContentScrollPage() {
 				/>
 			}
 			content={<DemoContent
-				orderData={orderData?.data}
+				orderData={orderData?.data?.rcs_order}
 				isLoading={isLoading}
 				isError={isError}
 				/>}

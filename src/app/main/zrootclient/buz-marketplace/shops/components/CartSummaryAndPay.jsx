@@ -76,7 +76,6 @@ const CartSummaryAndPay = ({
         reference: paystackResponse?.reference,
       };
 
-      console.log("ORDER__DATA__BEFORE__PAYMENT___VERIFY", oderData);
       // return;
       /**1) Verify his payment, and then go on to create order */
 

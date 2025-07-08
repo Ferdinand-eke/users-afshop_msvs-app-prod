@@ -315,14 +315,14 @@ export const updateUserFoodCartApi = (formData) => {
 export const payAndPlaceFoodOrderApi = (formData) => {
   // console.log("food cart", formData);
   return AuthApi().post(`${API_ENDPOINTS.CREATE_FOOD_ORDER}`, formData);
-};
+}; //(Mcsvs => Done)
 
 export const getUserFoodInvoicesEnpoint = () =>
-  AuthApi().get(`${API_ENDPOINTS.GET_USER_FOOD_ORDER_LIST}`);
+  AuthApi().get(`${API_ENDPOINTS.GET_USER_FOOD_ORDER_LIST}`); //(Mcsvs => Done)
 
 export const getUserFoodInvoicesAndItemsByIdEnpoint = (foodOrderId) => {
   return AuthApi().get(
-    `/foodmarts/food-orders/${foodOrderId}/get-foodorderdata`
+    `/rcs-food-orders/${foodOrderId}/view`
   );
 };
 

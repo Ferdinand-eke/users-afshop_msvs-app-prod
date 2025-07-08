@@ -50,7 +50,7 @@ export function useGetSingleMenuItem(rcsId, menuId) {
     
     }
   );
-}
+} // (Mcsvs => Done)
 
 
 /***
@@ -196,18 +196,12 @@ export function usePayAndPlaceFoodOrder() {
         if (data?.data?.success ) {
 
           toast.success(data?.data?.message);
+
+          
           queryClient.invalidateQueries(["__foodcart"]);
           queryClient.refetchQueries("__foodcart", { force: true });
           navigate(`/foodmarts/${data?.data?.foodOrder?.id}/payment-success`);
         } 
-        
-        // else if (data?.data?.error) {
-        //   toast.error(data?.data?.error?.message);
-        //   return;
-        // } else {
-        //   toast.info("something unexpected happened");
-        //   return;
-        // }
       },
     },
     {
@@ -219,7 +213,7 @@ export function usePayAndPlaceFoodOrder() {
           ? data?.message?.map((m) => toast.error(m))
           : toast.error(data?.message);
         rollback();
-        
+
         toast.error(
           error.response && error.response.data.message
             ? error.response.data.message
@@ -231,7 +225,7 @@ export function usePayAndPlaceFoodOrder() {
       },
     }
   );
-}
+} // (Mcsvs => Done)
 
 
 /***Get Authenticated user food-orders useGetAuthUserFoodOrders */
@@ -244,14 +238,14 @@ export function useGetAuthUserFoodOrders() {
     () => getUserFoodInvoicesEnpoint(),
 
   );
-}
+} // (Mcsvs => Done)
 
 
 /***Get Authenticated user food-orders and ITEMS */
 export function useGetAuthUserFoodOrdersAndItems(foodOrderId) {
-  // if(!foodOrderId || foodOrderId === 'new'){
-  //   return {};
-  // }
+  if(!foodOrderId || foodOrderId === 'new'){
+    return {};
+  }
   return useQuery(
     ['__authuser_orders_details', foodOrderId],
     () => getUserFoodInvoicesAndItemsByIdEnpoint(foodOrderId),
@@ -259,7 +253,7 @@ export function useGetAuthUserFoodOrdersAndItems(foodOrderId) {
       enabled: Boolean(foodOrderId),
     }
   );
-}
+} // (Mcsvs => Done)
 
 
 

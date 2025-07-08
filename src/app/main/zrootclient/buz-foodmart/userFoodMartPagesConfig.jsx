@@ -57,26 +57,26 @@ const userFoodMartPagesConfig = {
 		{
 			path: 'foodmarts/review-food-cart',
 			element: <FoodCartReview />
-		},
+		},  //(Mcsvs => Done)
 
 		{
 			path: 'foodmarts/:orderId/payment-success',
 			element: <FoodmartOrderPaymenSucces />
-		},
+		},//(Mcsvs => Done)
 
 		{
 			path: 'foodmarts/user/food-orders',
 			// element: <FoodmartOrders />
 			element: <FoodmartOrdersWithSidebarsContentScrollPage />
 			
-		},
+		}, //(Mcsvs => Done)
 
 		{
 			path: 'foodmarts/user/food-orders/:foodOrderId/view',
 			// element: <FoodMartOrdersDetail />
 			element: <FoodmartOrderDetailWithSidebarsContentScrollPage />
 			
-		},
+		}, //(Mcsvs => Done)
 
 		
 		
