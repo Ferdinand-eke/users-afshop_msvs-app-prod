@@ -9,7 +9,7 @@ import { getProdCatById, getProdCats } from '../../client/RepositoryClient';
 
 export default function useProductCats() {
   return useQuery(['__productcats'], getProdCats);
-}
+} //(Msvs => Done)
 
 //get single product category
 export function useSingleProductCat(proCatId) {

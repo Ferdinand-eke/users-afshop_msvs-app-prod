@@ -58,15 +58,10 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 	const [products, setProducts] = useState([]);
   const { data: allProducts, isLoading, isError } = useGetAllProducts();
 
-//   useEffect(() => {
-//     if (allProducts?.data?.products) {
-//       setProducts(allProducts?.data?.products);
-//     }
-//   }, [allProducts?.data?.products]);
+
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [blgas, setBlgas] = useState([]);
-  // const [markets, setBMarkets] = useState([]);
 
   const methods = useForm({
     mode: "onChange",
@@ -203,7 +198,7 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 				setRightSidebarOpen(false);
 			}}
 			rightSidebarContent={<DemoSidebarRight />}
-			// rightSidebarContent={<DemoSidebar />}
+		
 			scroll="content"
 		/>
 	);

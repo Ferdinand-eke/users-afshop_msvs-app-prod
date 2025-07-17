@@ -1,42 +1,67 @@
-import { addToUserCommodityCartApi, cancelUserItemInInvoiceApi, getPlacedOrders, getUserInvoices, getUserShoppingCart, getUserShoppingCartForAuthAndGuest, payAndPlaceOrderApi, removeCommodityFromCartApi, requestRefundOnUserItemInInvoiceApi, updateCommodityCartQtyApi } from 'app/configs/data/client/RepositoryAuthClient';
-import { getAllProducts, getMyMarketplaceCartApi, getProductByCategory, getProductById } from 'app/configs/data/client/RepositoryClient';
-import { useCookies } from 'react-cookie';
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { useNavigate } from 'react-router';
-import { toast } from 'react-toastify';
+import {
+  addToUserCommodityCartApi,
+  cancelUserItemInInvoiceApi,
+  getPlacedOrders,
+  getUserInvoices,
+  getUserShoppingCart,
+  getUserShoppingCartForAuthAndGuest,
+  payAndPlaceOrderApi,
+  removeCommodityFromCartApi,
+  requestRefundOnUserItemInInvoiceApi,
+  updateCommodityCartQtyApi,
+} from "app/configs/data/client/RepositoryAuthClient";
+import {
+  getAllProducts,
+  getMyMarketplaceCartApi,
+  getProductByCategory,
+  getProductById,
+} from "app/configs/data/client/RepositoryClient";
+import { useCookies } from "react-cookie";
+import { useMutation, useQuery, useQueryClient } from "react-query";
+import { useNavigate } from "react-router";
+import { toast } from "react-toastify";
 
 
-
+/***
+ * #################################################################
+ * GUEST PRODUCT HANDLING STARTS HERE
+ * #################################################################
+ */
 export default function useGetAllProducts() {
-    return useQuery(['__marketplace_products'], getAllProducts);
-  }
+  return useQuery(["__marketplace_products"], getAllProducts);
+} //(Msvs => Done)
 
-  export function useGetProductByCategory(category) {
-    if(!category ){
-      return {};
+export function useGetProductByCategory(category) {
+  if (!category) {
+    return {};
+  }
+  return useQuery(
+    ["__marketplace_products_by_products", category],
+    () => getProductByCategory(category),
+    {
+      enabled: Boolean(category),
     }
-    return useQuery(
-      ['__marketplace_products_by_products', category],
-      () => getProductByCategory(category),
-      {
-        enabled: Boolean(category),
-      }
-    );
-  }
+  );
+}
 
-  export function useGetSingleProduct(productId) {
-    // if(!productId || productId === 'new'){
-    //   return {};
-    // }
-    return useQuery(
-      ['__marketplace_products', productId],
-      () => getProductById(productId),
-      {
-        enabled: Boolean(productId),
-      }
-    );
-  }
+export function useGetSingleProduct(productSlug) {
+  // if(!productSlug || productSlug === 'new'){
+  //   return {};
+  // }
+  return useQuery(
+    ["__marketplace_products", productSlug],
+    () => getProductById(productSlug),
+    {
+      enabled: Boolean(productSlug),
+    }
+  );
+} //(Msvs => Done)
 
+/***
+ * #################################################################
+ * GUEST PRODUCT HANDLING ENDS HERE
+ * #################################################################
+ */
 
 
 /***
@@ -45,25 +70,22 @@ export default function useGetAllProducts() {
  * #################################################################
  */
 export function useMyCart() {
-  return useQuery(['__cart'], getUserShoppingCart);
+  return useQuery(["__cart"], getUserShoppingCart);
 }
 
 /***get menu of user marketplace cart items for both AuthUser && UnAuth-User*/
 export function useGetMyMarketplaceCartByUserCred(userId) {
-  if(!userId || userId === 'new'){
+  if (!userId || userId === "new") {
     return {};
   }
   return useQuery(
-    ['__cart', userId],
+    ["__cart", userId],
     () => getUserShoppingCartForAuthAndGuest(userId),
     {
       enabled: Boolean(userId),
-
     }
   );
 }
-
-
 
 /****Manage COMOODITY CART starts */
 /****Create add to foodcart : => Done for Africanshops */
@@ -76,7 +98,6 @@ export function useAddToCart() {
 
     {
       onSuccess: (data) => {
-
         if (data?.data?.success && data?.data?.savedCart) {
           toast.success("added to cart successfully!");
           queryClient.invalidateQueries(["__cart"]);
@@ -105,7 +126,6 @@ export function useAddToCart() {
   );
 }
 
-
 /**Updated cart item quantity */
 export function useUpdateCartItemQty() {
   // const navigate = useNavigate();
@@ -117,10 +137,8 @@ export function useUpdateCartItemQty() {
       return updateCommodityCartQtyApi(cartItem);
     },
 
-    
     {
       onSuccess: (data) => {
-
         if (data?.data?.success && data?.data?.updatedCartQty) {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__cart"]);
@@ -129,7 +147,7 @@ export function useUpdateCartItemQty() {
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
           return;
-         } else if (data?.data?.infomessage) {
+        } else if (data?.data?.infomessage) {
           toast.info(data?.data?.infomessage);
           return;
         } else {
@@ -173,7 +191,7 @@ export function useRemoveCartItem() {
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
           return;
-         } else if (data?.data?.infomessage) {
+        } else if (data?.data?.infomessage) {
           toast.info(data?.data?.infomessage);
           return;
         } else {
@@ -211,11 +229,9 @@ export function useRemoveCartItem() {
 
 /*****Pay and make payment for order */
 export function usePayAndPlaceOrder() {
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
   // const [cookies, setCookie] = useCookies(['cart']);
-
 
   return useMutation(
     (orderData) => {
@@ -224,13 +240,13 @@ export function usePayAndPlaceOrder() {
 
     {
       onSuccess: (data) => {
-
-
-        if (data?.data?.success ) {
+        if (data?.data?.success) {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__cart"]);
           queryClient.refetchQueries("__cart", { force: true });
-          navigate(`/marketplace/order/${data?.data?.order?._id}/payment-success`);
+          navigate(
+            `/marketplace/order/${data?.data?.order?._id}/payment-success`
+          );
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
           return;
@@ -256,12 +272,10 @@ export function usePayAndPlaceOrder() {
   );
 }
 
-
-
 /***Get Authenticated user orders */
 export function useGetAuthUserOrders(userId) {
   return useQuery(
-    ['__authuser_orders', userId],
+    ["__authuser_orders", userId],
     () => getUserInvoices(userId),
     {
       enabled: Boolean(userId),
@@ -269,14 +283,13 @@ export function useGetAuthUserOrders(userId) {
   );
 }
 
-
 /***Get orders and order items  */
 export function useGetAuthUserOrderItems(orderId) {
   // if(!orderId || orderId === 'new'){
   //   return {};
   // }
   return useQuery(
-    ['__authuser_order_items', orderId],
+    ["__authuser_order_items", orderId],
     () => getPlacedOrders(orderId),
     {
       enabled: Boolean(orderId),
@@ -286,22 +299,17 @@ export function useGetAuthUserOrderItems(orderId) {
 
 /***Cancel Order Items */
 export function useCancleOrderItem() {
-
   const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-
   return useMutation(
     (orderItemData) => {
-      
-  
       return cancelUserItemInInvoiceApi(orderItemData);
     },
 
     {
       onSuccess: (data) => {
-
-        if (data?.data?.success ) {
+        if (data?.data?.success) {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__authuser_order_items"]);
           // queryClient.refetchQueries("__cart", { force: true });
@@ -333,21 +341,16 @@ export function useCancleOrderItem() {
 
 /*****Request refund on cancelled order item */
 export function useRequestRefundOnOrderItem() {
-
   // const navigate = useNavigate();
   const queryClient = useQueryClient();
 
-
   return useMutation(
     (orderItemData) => {
-      
-  
       return requestRefundOnUserItemInInvoiceApi(orderItemData);
     },
     {
       onSuccess: (data) => {
-
-        if (data?.data?.success ) {
+        if (data?.data?.success) {
           toast.success(data?.data?.message);
           queryClient.invalidateQueries(["__authuser_order_items"]);
         } else if (data?.data?.error) {

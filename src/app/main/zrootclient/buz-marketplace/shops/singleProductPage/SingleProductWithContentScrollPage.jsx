@@ -60,8 +60,9 @@ function SingleProductWithContentScrollPage() {
   const routeParams = useParams();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
-  const { productId } = routeParams;
-  const { data: product, isLoading, isError } = useGetSingleProduct(productId);
+  const { productId, productSlug } = routeParams;
+
+  const { data: product, isLoading, isError } = useGetSingleProduct(productSlug);
   const { mutate: addToart, isLoading: cartLoading } = useAddToCart();
   const [select, setSelect] = useState(0);
 
@@ -69,6 +70,7 @@ function SingleProductWithContentScrollPage() {
   const [cart, setCart] = useState([]);
   const {data:userCartData, isLoading:loadingCart} = useGetMyMarketplaceCartByUserCred(user?.id)
 
+  // console.log("SINGLE__PRODUCT", product?.data?.product?.product)
 
   const onAddToUserCart = useCallback(() => {
     if (!user?.email) {
@@ -79,8 +81,8 @@ function SingleProductWithContentScrollPage() {
     const formData = {
       user: user?.id,
       quantity: 1,
-      product: product?.data?._id,
-      seller: product?.data?.shop?._id,
+      product: product?.data?.product?.id,
+      seller: product?.data?.product?.shop,
       shoppingSession:''
     };
 
@@ -88,11 +90,11 @@ function SingleProductWithContentScrollPage() {
 
     if (userCartData?.data?.cartItems?.length === 0) {
       const sessionPayload = {
-        shopID: product?.data?.shop?._id,
-        shopCountryOrigin: product?.data?.shop?.businessCountry,
-        shopStateProvinceOrigin: product?.data?.shop?.businezState,
-        shopLgaProvinceOrigin: product?.data?.shop?.businezLga,
-        shopMarketId: product?.data?.market?._id,
+        shopID: product?.data?.product?.shop?._id,
+        shopCountryOrigin: product?.data?.product?.shop?.businessCountry,
+        shopStateProvinceOrigin: product?.data?.product?.shop?.businezState,
+        shopLgaProvinceOrigin: product?.data?.product?.shop?.businezLga,
+        shopMarketId: product?.data?.product?.market,
       }
       const setCartSessionPayload = storeShoppingSession(sessionPayload);
       // console.log('shoppinSESSION', setCartSessionPayload)
@@ -104,10 +106,9 @@ function SingleProductWithContentScrollPage() {
       
     } else {
       const payloadData = getShoppingSession()
-      // console.log("clientSESSION_LGA", payloadData?.shopLgaProvinceOrigin)
 
    
-      if (payloadData?.shopLgaProvinceOrigin === product?.data?.shop?.businezLga) {
+      if (payloadData?.shopLgaProvinceOrigin === product?.data?.product?.shop?.businezLga) {
          addToart(formData);
         // getCartWhenAuth()
         return
@@ -119,7 +120,7 @@ function SingleProductWithContentScrollPage() {
 
     
   }, [
-    product?.data?._id,
+    product?.data?.product?.id,
     routeParams,
     user,
     userCartData?.data?.cartItems,
@@ -146,7 +147,7 @@ function SingleProductWithContentScrollPage() {
 				/>
 			}
 			content={<DemoContent
-				productData={product?.data}
+				productData={product?.data?.product}
 				isLoading={isLoading}
 				isError={isError}
         select={select}
@@ -157,7 +158,7 @@ function SingleProductWithContentScrollPage() {
 
         onSubmit={onAddToUserCart}
         loading={cartLoading}
-        productId={productId}
+        productId={product?.data?.product.id}
         cartItems={userCartData?.data?.cartItems}
 				/>}
 			leftSidebarOpen={leftSidebarOpen}
@@ -171,7 +172,7 @@ function SingleProductWithContentScrollPage() {
 			}}
 			rightSidebarContent={<DemoSidebarRight 
         // methods={methods}
-      	productInfo={product?.data}
+      	productInfo={product?.data?.product}
       />}
 			scroll="content"
 		/>

@@ -8,16 +8,17 @@ const CategoryAndTradehub = () => {
   const routeParams = useParams();
   const { id } = routeParams;
 
-  const { data: categories, isLoading } = useProductCats();
+  const { data: categoriesData, isLoading } = useProductCats();
+
 
   let categoriesView;
   if (!isLoading) {
-    if (categories?.data?.data && categories?.data?.data.length > 0) {
-      const items = categories?.data?.data.map((item) => (
+    if (categoriesData?.data?.categories && categoriesData?.data?.categories.length > 0) {
+      const items = categoriesData?.data?.categories.map((item) => (
         <li
-          key={item._id}
+          key={item.id}
           className={
-            item._id === id
+            item.id === id
               ? "relative bg-orange-100 rounded-md hover:bg-orange-300 py-1 px-4 cursor-pointer"
               : "relative bg-white rounded-md hover:bg-orange-500 py-1 px-4 cursor-pointer"
           }
@@ -25,7 +26,7 @@ const CategoryAndTradehub = () => {
           <Typography
             //  href={`/afshopcategory/${item._id}`}
             component={NavLinkAdapter}
-            to={`/marketplace/products/${item?._id}/by-category`}
+            to={`/marketplace/products/${item?.id}/by-category`}
           >
             {item.name}
           </Typography>

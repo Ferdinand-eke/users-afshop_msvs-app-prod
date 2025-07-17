@@ -68,19 +68,19 @@ function DemoContent(props) {
                 </span>
               </div>
               <div className="mt-4 ">
-                <Typography
+                {/* <Typography
                   className="bg-blue-500 text-white text-xs px-2 py-1 rounded w-fit"
                   component={NavLinkAdapter}
                   to={`/marketplace/merchant/${product?.shop?._id}/portal`}
                 >
                   {product?.shop?.shopname}
                 </Typography>
-                <br />
+                <br /> */}
 
                 <Typography
                   className="mt-2 text-sm font-bold cursor-pointer"
                   component={NavLinkAdapter}
-                  to={`/marketplace/product/${product?._id}/${product?.slug}`}
+                  to={`/marketplace/product/${product?.slug}/view`}
                 >
                   {product?.name}
                   {/* .slice(0,20) */}

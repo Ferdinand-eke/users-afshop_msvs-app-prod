@@ -90,7 +90,7 @@ function DemoContent(props) {
                 <Typography
                   className="bg-green-500 text-white text-xs px-2 py-1 rounded"
                   component={NavLinkAdapter}
-                  to={`/marketplace/merchant/${productData?.shop?._id}/portal`}
+                  to={`/marketplace/merchant/${productData?.shop}/portal`}
                 >
                   Official Store
                 </Typography>

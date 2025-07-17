@@ -330,8 +330,9 @@ const routes = [
     element: <MarketplaceWithSidebarsContentScrollComponent />,
   },
 
+
   {
-    path: "/marketplace/product/:productId/:productSlug",
+    path: "/marketplace/product/:productSlug/view",
     settings: {
       layout: {
         config: {
