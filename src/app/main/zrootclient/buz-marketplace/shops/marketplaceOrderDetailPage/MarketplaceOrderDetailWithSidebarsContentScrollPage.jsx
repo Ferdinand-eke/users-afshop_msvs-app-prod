@@ -56,6 +56,7 @@ function MarketplaceOrderDetailWithSidebarsContentScrollPage() {
 		isLoading: isLoading,
 		isError: isError,
 	  } = useGetAuthUserOrderItems(orderId);
+
   
 
 	return (
@@ -73,7 +74,7 @@ function MarketplaceOrderDetailWithSidebarsContentScrollPage() {
 				/>
 			}
 			content={<DemoContent
-				userOrder={orderData?.data}
+				userOrder={orderData?.data?.order}
 				isLoading={isLoading}
 				isError={isError}
 				/>}

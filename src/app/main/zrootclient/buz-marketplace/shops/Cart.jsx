@@ -125,12 +125,14 @@ const CartItem = ({
           -
         </button>
         <span className="mx-4">{cartQuantity}</span>
-        <button
-          className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-          onClick={() => increaseCart(id)}
-        >
-          +
-        </button>
+        {parseInt(cartQuantity) < parseInt(unitsLeft) && (
+          <button
+            className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
+            onClick={() => increaseCart(id)}
+          >
+            +
+          </button>
+        )}
       </div>
       <button
         className="px-4 text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]"
@@ -142,12 +144,12 @@ const CartItem = ({
   );
 };
 
-const CartSummary = ({ subtotal, intemsInCart }) => {
+const CartSummary = ({ intemsInCart }) => {
   let checkItemsArrayForTotal = [];
   intemsInCart?.forEach((element) => {
     checkItemsArrayForTotal?.push({
       quantity: element?.quantity,
-      price: element?.productId?.price,
+      price: element?.product?.price,
     });
   });
 
@@ -211,192 +213,175 @@ const CartSummary = ({ subtotal, intemsInCart }) => {
   );
 };
 
-
 /**
  * The FOODMART CART.
  */
-const FoodCartItem = ({
-  id,
-  image,
-  title,
-  seller,
-  unitsLeft,
-  foodCartQuantity,
-  price,
-  oldPrice,
-  discount,
-}) => {
-  const { mutate: updateFoodCart } = useUpdateFoodCartItemQty();
+// const FoodCartItem = ({
+//   id,
+//   image,
+//   title,
+//   seller,
+//   unitsLeft,
+//   foodCartQuantity,
+//   price,
+//   oldPrice,
+//   discount,
+// }) => {
+//   const { mutate: updateFoodCart } = useUpdateFoodCartItemQty();
 
-  const increaseFoodCart = (itemId) => {
-    const formData = {
-      flag: "increase",
-      foodCartItemId: itemId,
-    };
-    return updateFoodCart(formData);
-  };
+//   const increaseFoodCart = (itemId) => {
+//     const formData = {
+//       flag: "increase",
+//       foodCartItemId: itemId,
+//     };
+//     return updateFoodCart(formData);
+//   };
 
-  const decreaseFoodCart = (itemId) => {
-    const formData = {
-      flag: "decrease",
-      foodCartItemId: itemId,
-    };
-    return updateFoodCart(formData);
-  };
+//   const decreaseFoodCart = (itemId) => {
+//     const formData = {
+//       flag: "decrease",
+//       foodCartItemId: itemId,
+//     };
+//     return updateFoodCart(formData);
+//   };
 
-  const removeItemInFoodCart = (itemId) => {
-    // console.log("remove item in cart....+");
-    // const formData = {
-    //   cartItemId: itemId,
-    // };
-    // // return updateCartQty(formData);
-    const formData = {
-      flag: "delete",
-      foodCartItemId: itemId,
-    };
-    return updateFoodCart(formData);
-  };
+//   const removeItemInFoodCart = (itemId) => {
+//     const formData = {
+//       flag: "delete",
+//       foodCartItemId: itemId,
+//     };
+//     return updateFoodCart(formData);
+//   };
 
-  return (
-    <div className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 rounded shadow">
-      <img
-        src={image}
-        alt={title}
-        className="w-80 h-80 object-cover mb-4 md:mb-0 rounded-md"
-      />
-      <div className="flex-1 md:ml-4 text-center md:text-left">
-        <h2 className="text-lg font-semibold">{title}</h2>
-        <p className="text-sm text-gray-500">Seller: {seller}</p>
-        <p className="text-sm text-red-500">{unitsLeft} units left</p>
-      </div>
-      <div className="text-right md:text-left md:ml-4">
-        <p className="text-xl font-semibold text-gray-800">
-          {formatCurrency(price)}
-        </p>
-        {oldPrice && !(oldPrice === undefined) && (
-          <>
-            <p className="text-sm text-gray-500 line-through">
-              {formatCurrency(oldPrice)}
-            </p>
-            <p className="text-sm text-orange-500">{discount}</p>
-          </>
-        )}
+//   return (
+//     <div className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 rounded shadow">
+//       <img
+//         src={image}
+//         alt={title}
+//         className="w-80 h-80 object-cover mb-4 md:mb-0 rounded-md"
+//       />
+//       <div className="flex-1 md:ml-4 text-center md:text-left">
+//         <h2 className="text-lg font-semibold">{title}</h2>
+//         <p className="text-sm text-gray-500">Seller: {seller}</p>
+//         <p className="text-sm text-red-500">{unitsLeft} units left</p>
+//       </div>
+//       <div className="text-right md:text-left md:ml-4">
+//         <p className="text-xl font-semibold text-gray-800">
+//           {formatCurrency(price)}
+//         </p>
+//         {oldPrice && !(oldPrice === undefined) && (
+//           <>
+//             <p className="text-sm text-gray-500 line-through">
+//               {formatCurrency(oldPrice)}
+//             </p>
+//             <p className="text-sm text-orange-500">{discount}</p>
+//           </>
+//         )}
 
-        <p className="text-sm text-orange-500 font-bold">
-          Total: {formatCurrency(parseInt(price) * parseInt(foodCartQuantity))}
-        </p>
-      </div>
-      <div className="flex items-center mt-4 md:mt-0 md:ml-4 text-lg">
-        <button
-          className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-          onClick={() => decreaseFoodCart(id)}
-        >
-          -
-        </button>
-        <span className="mx-4">{foodCartQuantity}</span>
-        <button
-          className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-          onClick={() => increaseFoodCart(id)}
-        >
-          +
-        </button>
-      </div>
-      <button className="text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]">
-        <i className="fas fa-trash-alt"></i> REMOVE
-      </button>
-    </div>
-  );
-};
+//         <p className="text-sm text-orange-500 font-bold">
+//           Total: {formatCurrency(parseInt(price) * parseInt(foodCartQuantity))}
+//         </p>
+//       </div>
+//       <div className="flex items-center mt-4 md:mt-0 md:ml-4 text-lg">
+//         <button
+//           className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
+//           onClick={() => decreaseFoodCart(id)}
+//         >
+//           -
+//         </button>
+//         <span className="mx-4">{foodCartQuantity}</span>
+//         <button
+//           className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
+//           onClick={() => increaseFoodCart(id)}
+//         >
+//           +
+//         </button>
+//       </div>
+//       <button className="text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]">
+//         <i className="fas fa-trash-alt"></i> REMOVE
+//       </button>
+//     </div>
+//   );
+// };
 
-const FoodCartSummary = ({ subtotal, intemsInFoodCart }) => {
-  let checkFoodItemsArrayForTotal = [];
-  intemsInFoodCart?.forEach((element) => {
-    checkFoodItemsArrayForTotal?.push({
-      quantity: element?.quantity,
-      price: element?.menu?.price,
-    });
-  });
+// const FoodCartSummary = ({ subtotal, intemsInFoodCart }) => {
+//   let checkFoodItemsArrayForTotal = [];
+//   intemsInFoodCart?.forEach((element) => {
+//     checkFoodItemsArrayForTotal?.push({
+//       quantity: element?.quantity,
+//       price: element?.menu?.price,
+//     });
+//   });
 
-  const totalAmount = calculateCartTotalAmount(checkFoodItemsArrayForTotal);
-  const delivery = 0;
-  const vat = 0;
+//   const totalAmount = calculateCartTotalAmount(checkFoodItemsArrayForTotal);
+//   const delivery = 0;
+//   const vat = 0;
 
-  return (
-    <div className="bg-white p-4 rounded shadow mt-4 md:mt-0">
-      <h2 className="text-lg font-semibold mb-4">FOOD CART SUMMARY</h2>
-      {/* <div className="flex justify-between mb-2">
-        <span>Subtotal</span>
-        <span className="font-semibold">{subtotal}</span>
-      </div>
-      <p className="text-sm text-gray-500 mb-4">
-        Delivery fees not included yet.
-      </p>
-      <button className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded">
-        CHECKOUT ({subtotal})
-      </button> */}
+//   return (
+//     <div className="bg-white p-4 rounded shadow mt-4 md:mt-0">
+//       <h2 className="text-lg font-semibold mb-4">FOOD CART SUMMARY</h2>
 
-<div className="flex justify-between mb-2">
-        <span>Subtotal</span>
-        <span className="font-semibold">₦{formatCurrency(totalAmount)}</span>
-      </div>
-      <div className="flex justify-between mb-2">
-        <p className="text-sm text-gray-500 mb-4">
-          Delivery fees not included yet.
-        </p>
-        <span className="font-semibold">₦{formatCurrency(delivery)}</span>
-      </div>
-      <div className="flex justify-between mb-2">
-        <p className="text-sm text-gray-500 mb-4">V.A.T.</p>
-        <span className="font-semibold">₦{formatCurrency(vat)}</span>
-      </div>
+//       <div className="flex justify-between mb-2">
+//         <span>Subtotal</span>
+//         <span className="font-semibold">₦{formatCurrency(totalAmount)}</span>
+//       </div>
+//       <div className="flex justify-between mb-2">
+//         <p className="text-sm text-gray-500 mb-4">
+//           Delivery fees not included yet.
+//         </p>
+//         <span className="font-semibold">₦{formatCurrency(delivery)}</span>
+//       </div>
+//       <div className="flex justify-between mb-2">
+//         <p className="text-sm text-gray-500 mb-4">V.A.T.</p>
+//         <span className="font-semibold">₦{formatCurrency(vat)}</span>
+//       </div>
 
-      {intemsInFoodCart?.length > 0 && (
-        <Button
-          component={NavLinkAdapter}
-          to={`/foodmarts/review-food-cart`}
-          size="sm"
-          className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
-        >
-          CHECKOUT ₦
-          {formatCurrency(
-            parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-          )}
-        </Button>
-      )}
+//       {intemsInFoodCart?.length > 0 && (
+//         <Button
+//           component={NavLinkAdapter}
+//           to={`/foodmarts/review-food-cart`}
+//           size="sm"
+//           className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
+//         >
+//           CHECKOUT ₦
+//           {formatCurrency(
+//             parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
+//           )}
+//         </Button>
+//       )}
 
-      {!(intemsInFoodCart?.length > 0) && (
-        <Button
-          component={NavLinkAdapter}
-          to={`/foodmarts/listings`}
-          size="sm"
-          className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
-        >
-          FOOD-CART EMPTY, COTINUE SHOPPING
-        </Button>
-      )}
+//       {!(intemsInFoodCart?.length > 0) && (
+//         <Button
+//           component={NavLinkAdapter}
+//           to={`/foodmarts/listings`}
+//           size="sm"
+//           className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
+//         >
+//           FOOD-CART EMPTY, COTINUE SHOPPING
+//         </Button>
+//       )}
 
-
-      <div className="mt-4">
-        <h3 className="text-sm font-semibold">Returns are easy</h3>
-        <p className="text-sm text-gray-500">
-          Free return within 7 days for ALL eligible items{" "}
-          <a href="#" className="text-blue-500">
-            Details
-          </a>
-        </p>
-      </div>
-    </div>
-  );
-};
+//       <div className="mt-4">
+//         <h3 className="text-sm font-semibold">Returns are easy</h3>
+//         <p className="text-sm text-gray-500">
+//           Free return within 7 days for ALL eligible items{" "}
+//           <a href="#" className="text-blue-500">
+//             Details
+//           </a>
+//         </p>
+//       </div>
+//     </div>
+//   );
+// };
 
 function Cart() {
-  const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
-
   const user = useAppSelector(selectUser);
+  const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
+  // const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart();
+  const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
 
+  // console.log("MY-CART", cart?.data);
 
-  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart();
-  const { data: cart, isLoading: cartLoading } = useMyCart();
   // const {data:userCartData} = useGetMyMarketplaceCartByUserCred(user?.id)
 
   return (
@@ -411,28 +396,34 @@ function Cart() {
                 <>
                   <>
                     <h1 className="text-2xl font-semibold mb-4">
-                      Marketplace Cart ({cart?.data?.cartItems?.length})
+                      Marketplace Cart (
+                      {cart?.data?.cartSession?.cartProducts?.length})
                     </h1>
-
 
                     <>
                       <div className="flex flex-col md:flex-row">
                         <div className="flex-1">
-                          {cart?.data?.cartItems?.length > 0 ? (
-                            cart?.data?.cartItems.map((cartItem) => (
-                              <CartItem
-                                key={cartItem?._id}
-                                id={cartItem?._id}
-                                image={cartItem?.productId?.images[0]?.url}
-                                title={cartItem?.productId?.name}
-                                seller="Apple Authorized Reseller"
-                                unitsLeft={cartItem?.productId?.quantityInStock}
-                                cartQuantity={cartItem?.quantity}
-                                price={cartItem?.productId?.price}
-                                oldPrice={cartItem?.productId?.listprice}
-                                discount="-70%"
-                              />
-                            ))
+                          {cart?.data?.cartSession?.cartProducts?.length > 0 ? (
+                            cart?.data?.cartSession?.cartProducts?.map(
+                              (cartItem) => (
+                                <span key={cartItem?.id}>
+                                  <CartItem
+                                    key={cartItem?.id}
+                                    id={cartItem?.id}
+                                    title={cartItem?.product?.name}
+                                    image={cartItem?.product?.images[0]?.url}
+                                    seller="Apple Authorized Reseller"
+                                    unitsLeft={
+                                      cartItem?.product?.quantityInStock
+                                    }
+                                    cartQuantity={cartItem?.quantity}
+                                    price={cartItem?.product?.price}
+                                    oldPrice={cartItem?.product?.listprice}
+                                    discount="-70%"
+                                  />
+                                </span>
+                              )
+                            )
                           ) : (
                             <Typography className="text-md">
                               No product in cart
@@ -442,8 +433,8 @@ function Cart() {
 
                         <div className="w-full md:w-1/3 md:ml-4">
                           <CartSummary
-                            subtotal="₦ 9,500,997"
-                            intemsInCart={cart?.data?.cartItems}
+                            // subtotal="₦ 9,500,997"
+                            intemsInCart={cart?.data?.cartSession?.cartProducts}
                           />
                         </div>
                       </div>
@@ -478,7 +469,7 @@ function Cart() {
                     </div> */}
                   </>
 
-                  <div className="mt-10">
+                  {/* <div className="mt-10">
                     <Divider />
                     <h1 className="text-2xl font-semibold mb-4 mt-10">
                       FOOD-MART Cart ({foodCart?.data?.foodcart?.length})
@@ -517,7 +508,7 @@ function Cart() {
                         </div>
                       </div>
                     </>
-                  </div>
+                  </div> */}
                 </>
               )}
 

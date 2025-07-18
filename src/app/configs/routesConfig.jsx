@@ -328,7 +328,7 @@ const routes = [
       },
     },
     element: <MarketplaceWithSidebarsContentScrollComponent />,
-  },
+  }, //(Msvs => Done)
 
 
   {
@@ -357,7 +357,7 @@ const routes = [
     // element: <SingleProduct />,
     element: <SingleProductWithContentScrollPage />,
     
-  },
+  }, //(Msvs => Done)
 
 
   {
@@ -455,7 +455,7 @@ const routes = [
     },
     // element: <BookingsPage />,
     element: <BookingsPageWithSidebarsContentScrollComponent />,
-  },
+  },//(Msvs => Done)
 
   
 
@@ -484,7 +484,7 @@ const routes = [
     },
     // element: <BookingSinglePage />,
     element: <BookingsSinglePageWithSidebarsContentScroll />,
-  },
+  },//(Msvs => Done)
 
   
   /****

@@ -139,7 +139,7 @@ export const createApiOrder = (FormData) =>
 //     Cookies.remove('authClientUserInfo');
 // };
 
-export const getPlacedOrders = (id) => AuthApi().get(`/userorders/${id}`);
+export const getPlacedOrders = (id) => AuthApi().get(`/user-orders/order-item/${id}/view`); //(Done => Msvs)
 
 export const onSuccessPlacedOrders = (id) => AuthApi().put(`/userorders/${id}`);
 
@@ -149,8 +149,9 @@ export const onENairaPlacedOrders = (id, shopFormData) =>
 export const onSuccessENairaPlacedOrdersPay = (id, shopFormData) =>
   AuthApi().put(`/userorders/successenairapay/${id}`, shopFormData);
 
-export const getUserInvoices = (id) =>
-  AuthApi().get(`/userorders/invoices/${id}`);
+export const getUserInvoices = () =>
+  AuthApi().get(`/user-orders/my-orders`); // (Msvs => Done)
+
 
 
   export const cancelUserItemInInvoiceApi = (id) => {
@@ -181,10 +182,10 @@ export const getUserInvoices = (id) =>
  * --------------------------------------------------------------------------------------------------------------------
  */
 
-/***Verify Paystack Payment => (Done => Msvs) */
+/***Verify Paystack Payment => For Bookings */
 export const verifyPaystackPaymentFromFintechService = (formData) => {
   return AuthApi().post(`paystack-payment/verify`, formData);
-};
+}; // (Done => Msvs)
 
 
 
@@ -313,9 +314,11 @@ export const getUserFoodInvoicesAndItemsByIdEnpoint = (foodOrderId) => {
 export const getUserShoppingCart = () => {
   return AuthApi().get(`${API_ENDPOINTS.GET_MY_CART}`);
 };
-export const getUserShoppingCartForAuthAndGuest = (userId) => {
-  return AuthApi().get(`${API_ENDPOINTS.GET_MY_CART}/${userId}`);
-};
+export const getUserShoppingCartForAuthAndGuest = () => {
+  // console.log("USER_ID_CART___SESSION", userId)userId
+  return AuthApi().get(`${API_ENDPOINTS.GET_MY_CART}`);
+  ///${userId}view-cart-session
+}; //(Msvs => Done)
 
 
 
@@ -323,7 +326,7 @@ export const getUserShoppingCartForAuthAndGuest = (userId) => {
 export const addToUserCommodityCartApi = (formData) => {
   // console.log("food cart", formData);
   return AuthApi().post(`${API_ENDPOINTS.ADD_TO_CART}`, formData);
-};
+}; //(Msvs => Done)
 
 /**Update-decrease commodity cart quantity */
 export const updateCommodityCartQtyApi = (formData) => {

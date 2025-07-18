@@ -28,6 +28,7 @@ function DemoContent(props) {
     setSelect,
   } = props;
 
+
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -112,7 +113,7 @@ function DemoContent(props) {
                   <span className="flex text-[14px] font-bold text-black-500">
                     ₦ {formatCurrency(productData?.price)}{" "}
                     <p className="mx-4 text-[10px] text-black ">
-                      per {productData?.quantityunitweight?.unitname}
+                      per {productData?.unitweight?.unitname}
                     </p>
                   </span>{" "}
                 </div>
@@ -161,6 +162,8 @@ function DemoContent(props) {
                 loading={loading}
                 productId={productId}
                 cartItems={cartItems}
+                quantityLeft={productData?.quantityInStock}
+
               />
 
               <div className="mt-4">

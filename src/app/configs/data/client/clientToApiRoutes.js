@@ -154,7 +154,6 @@ export const getTradehubById = (id) => Api().get(`/tradehubs/${id}`);
 export const getCountries = () => Api().get("/buzcountries/operational"); // (Msvs => done)
 export const getCountryDataById = (id) => Api().get(`/buzcountries/${id}`);
 
-
 //State Routes
 export const getBStates = () => Api().get("/buzstates");
 export const getStateById = (id) => Api().get(`/buzstates/${id}`);

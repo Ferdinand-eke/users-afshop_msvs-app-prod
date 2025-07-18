@@ -89,7 +89,7 @@ function DemoContent(props) {
                 ₦ {formatCurrency(product?.price)}{" "}
                   <span className="text-[10px]">
                     {" "}
-                    per {product?.quantityunitweight?.unitname}
+                    per {product?.unitweight?.unitname}
                   </span>
                 </p>
 

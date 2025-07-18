@@ -118,30 +118,17 @@ export const getLgasByStateId = (id) => Api().get(`/buz-lgas/state/${id}`);
 //========================================States Toutes
 export const getBStates = () => Api().get("/buzstates");
 export const getStateById = (id) => Api().get(`/buzstates/${id}`);
-
-// export const updateStateById = (id, stateFormData) =>
-//   authApi().put(`/buzstates/${id}`, stateFormData);
-
-// export const createBState = (stateFormData) =>
-//   authApi().post('/buzstates', stateFormData);
 export const getStateByCountryId = (cid) =>
   Api().get(`/buzstates/operational/country/${cid}`);
 //=========================================States Toutes end===========================================================//
 
 //========================================Countries Routes
 export const getBCountries = () => Api().get("/buzcountries");
-
 export const getBOperationalCountries = () => {
   return Api().get("/buzcountries/operational");
 };
-
 export const getCountryById = (id) => Api().get(`/buzcountries/${id}`);
 
-// export const updateCountryById = (id, countryFormData) =>
-//   authApi().put(`/buzcountries/${id}`, countryFormData);
-
-// export const createCountry = (countryFormData) =>
-//   authApi().post('/buzcountries', countryFormData);
 //=========================================Countries Routes===========================================================//
 
 //Tradehubs Routes

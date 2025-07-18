@@ -21,7 +21,6 @@ import { useMutation, useQuery, useQueryClient } from "react-query";
 import { useNavigate } from "react-router";
 import { toast } from "react-toastify";
 
-
 /***
  * #################################################################
  * GUEST PRODUCT HANDLING STARTS HERE
@@ -63,29 +62,38 @@ export function useGetSingleProduct(productSlug) {
  * #################################################################
  */
 
-
 /***
  * #################################################################
  * COMMODITY CART MANAGEMENT STARTS HERE
  * #################################################################
  */
-export function useMyCart() {
+export function useMyCart(userId) {
+   if (!userId || userId === "new") {
+    return {};
+  }
   return useQuery(["__cart"], getUserShoppingCart);
-}
+} //(Msvs => Done)
 
 /***get menu of user marketplace cart items for both AuthUser && UnAuth-User*/
 export function useGetMyMarketplaceCartByUserCred(userId) {
   if (!userId || userId === "new") {
     return {};
   }
-  return useQuery(
-    ["__cart", userId],
-    () => getUserShoppingCartForAuthAndGuest(userId),
-    {
-      enabled: Boolean(userId),
-    }
+  return useQuery(["__cart"], //, userId
+   
+    () => getUserShoppingCartForAuthAndGuest(),
+   
   );
-}
+} //(Msvs => Done)
+// export function useGetMyMarketplaceCartByUserCred(userId) {
+//   if (!userId || userId === "new") {
+//     return {};
+//   }
+//   //() => 
+//   return useQuery(["__cart"], getUserShoppingCartForAuthAndGuest(),
+   
+//   );
+// } //(Msvs => Done)
 
 /****Manage COMOODITY CART starts */
 /****Create add to foodcart : => Done for Africanshops */
@@ -98,28 +106,33 @@ export function useAddToCart() {
 
     {
       onSuccess: (data) => {
-        if (data?.data?.success && data?.data?.savedCart) {
-          toast.success("added to cart successfully!");
-          queryClient.invalidateQueries(["__cart"]);
-          queryClient.invalidateQueries(["__marketplace_products"]);
+
+        console.log("AddToCartData", data);
+        if (data?.data?.success) {
+          toast.success(`${data?.data?.message ? data?.data?.message : "Item added to cart successfully!"}`);
+          queryClient.invalidateQueries(["__cart"], { force: true });
+          queryClient.invalidateQueries(["__marketplace_products"], { force: true });
           queryClient.refetchQueries("__cart", { force: true });
           queryClient.refetchQueries("__marketplace_products", { force: true });
-        } else if (data?.data?.error) {
-          toast.error(data?.data?.error?.message);
-          return;
-        } else {
-          toast.info("something unexpected happened");
-          return;
-        }
+        } 
+        
+        // else if (data?.data?.error) {
+        //   toast.error(data?.data?.error?.message);
+        //   return;
+        // } else {
+        //   toast.info("something unexpected happened");
+        //   return;
+        // }
       },
     },
     {
       onError: (error, rollback) => {
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
+        const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
         rollback();
       },
     }
@@ -139,11 +152,10 @@ export function useUpdateCartItemQty() {
 
     {
       onSuccess: (data) => {
-        if (data?.data?.success && data?.data?.updatedCartQty) {
-          toast.success(data?.data?.message);
+        if (data?.data?.success) {
+          toast.success(`${data?.data?.message ? data?.data?.message : "Cart item quantity updated successfully!"}`);
           queryClient.invalidateQueries(["__cart"]);
           queryClient.refetchQueries("__cart", { force: true });
-          // navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
           return;
@@ -158,14 +170,12 @@ export function useUpdateCartItemQty() {
     },
     {
       onError: (error, rollback) => {
-        // return;
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error.data);
+       const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
         rollback();
       },
     }
@@ -202,12 +212,12 @@ export function useRemoveCartItem() {
     },
     {
       onError: (error, rollback) => {
-        // return;
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
+      const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
         rollback();
       },
     }
@@ -231,7 +241,6 @@ export function useRemoveCartItem() {
 export function usePayAndPlaceOrder() {
   const navigate = useNavigate();
   const queryClient = useQueryClient();
-  // const [cookies, setCookie] = useCookies(['cart']);
 
   return useMutation(
     (orderData) => {
@@ -245,7 +254,7 @@ export function usePayAndPlaceOrder() {
           queryClient.invalidateQueries(["__cart"]);
           queryClient.refetchQueries("__cart", { force: true });
           navigate(
-            `/marketplace/order/${data?.data?.order?._id}/payment-success`
+            `/marketplace/order/${data?.data?.order?.id}/payment-success`
           );
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);
@@ -258,14 +267,12 @@ export function usePayAndPlaceOrder() {
     },
     {
       onError: (error, rollback) => {
-        // return;
-        toast.error(
-          error.response && error.response.data.message
-            ? error.response.data.message
-            : error.message
-        );
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error.data);
+       const {
+          response: { data },
+        } = error ?? {};
+        Array.isArray(data?.message)
+          ? data?.message?.map((m) => toast.error(m))
+          : toast.error(data?.message);
         rollback();
       },
     }
@@ -273,14 +280,15 @@ export function usePayAndPlaceOrder() {
 }
 
 /***Get Authenticated user orders */
-export function useGetAuthUserOrders(userId) {
+export function useGetAuthUserOrders() {
   return useQuery(
-    ["__authuser_orders", userId],
-    () => getUserInvoices(userId),
+    ["__authuser_orders"],
+    () => getUserInvoices(),
     {
-      enabled: Boolean(userId),
+      // enabled: Boolean(userId),
     }
   );
+
 }
 
 /***Get orders and order items  */

@@ -4,6 +4,7 @@ import { authRoles } from 'src/app/auth';
 // import MarketplaceOrderDetailWithSidebarsContentScrollPage from './shops/marketplaceOrderDetailPage/MarketplaceOrderDetailWithSidebarsContentScrollPage';
 
 const Cart = lazy(() => import('./shops/Cart'));
+
 const CartReview = lazy(() => import('./shops/CartReview'));
 const MarketplacePaymenSuccess = lazy(() => import('./shops/MarketplacePaymenSuccess'));
 
@@ -52,23 +53,24 @@ const userMarketPlacePagesConfig = {
 		{
 			path: 'marketplace/cart',
 			element: <Cart />
-		},
+		}, //(Msvs => Done)
+
 		{
 			path: 'marketplace/review-cart',
 			element: <CartReview />
-		},
+		}, //(Msvs => Done)
 
 		{
 			path: 'marketplace/order/:marketplaceOrderId/payment-success',
 			element: <MarketplacePaymenSuccess />
-		},
+		}, //(Msvs => Done)
 
 		{
 			path: 'marketplace/user/orders',
 			// element: <MarketplaceOrders />
 			element: <MarketplaceOrdersWithSidebarsContentScrollPage />
 			
-		},
+		}, //(Msvs => Done)
 
 
 		{
@@ -76,7 +78,7 @@ const userMarketPlacePagesConfig = {
 			// element: <MarketplaceOrdersDetail />
 			element: <MarketplaceOrderDetailWithSidebarsContentScrollPage />
 			
-		},
+		},//(Msvs => Done)
 
 	
 

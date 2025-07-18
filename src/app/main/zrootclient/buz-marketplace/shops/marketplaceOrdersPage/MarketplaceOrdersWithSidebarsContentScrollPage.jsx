@@ -49,8 +49,9 @@ function MarketplaceOrdersWithSidebarsContentScrollPage() {
 
     const user = useAppSelector(selectUser);
 
-  const {data:userOrders, isLoading, isError } = useGetAuthUserOrders(user?.id);
+  const {data:userOrders, isLoading, isError } = useGetAuthUserOrders();
 
+// console.log("USER__ORDERS__DATA", userOrders?.data?.orders);
 
 
 	return (
@@ -68,7 +69,7 @@ function MarketplaceOrdersWithSidebarsContentScrollPage() {
 				/>
 			}
 			content={<DemoContent
-				userCreatedOrders={userOrders?.data}
+				userCreatedOrders={userOrders?.data?.orders}
 				isLoading={isLoading}
 				isError={isError}
 				/>}

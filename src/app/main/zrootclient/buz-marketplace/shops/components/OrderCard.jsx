@@ -7,14 +7,17 @@ import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 const OrderCard = ({ orderData }) => {
   const navigate = useNavigate();
 
+  // console.log("SINGLE_ORDER__DATA", orderData);
+
 
   return (
     <>
       <div className="flex space-x-4">
         <img
-          src="assets/images/afslogo/orders/mktorder1.png"
+          // src="assets/images/afslogo/orders/mktorder1.png"
+          src={orderData?.orderItems[0]?.image}
           alt="6-ways Adjustable Ergonomic Baby Carrier"
-          className="w-80 h-140 object-contain "
+          className="w-80 h-140 object-contain rounded-lg"
         />
 
         <div className="flex-1">
@@ -43,7 +46,7 @@ const OrderCard = ({ orderData }) => {
         {orderData?.isPaid && (
           <Typography
             component={NavLinkAdapter}
-            to={`/marketplace/user/orders/${orderData?._id}/view-order`}
+            to={`/marketplace/user/orders/${orderData?.id}/view-order`}
             className=" text-black"
           >
             SEE DETAILS

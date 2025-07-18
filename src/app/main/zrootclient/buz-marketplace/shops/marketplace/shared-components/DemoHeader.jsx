@@ -13,20 +13,20 @@ function DemoHeader(props) {
   const {
     leftSidebarToggle,
     rightSidebarToggle,
-    countries,
-    stateData,
-    blgas,
-    methods,
+    // countries,
+    // stateData,
+    // blgas,
+    // methods,
   } = props;
-  const { reset, watch, control, formState, getValues } = methods;
-  const { errors } = formState;
+  // const { reset, watch, control, formState, getValues } = methods;
+  // const { errors } = formState;
   // const { selectCountry, selectState, selectLga } = watch();
 
   function handleClick() {}
 
   return (
     <div className="flex flex-col w-full sm:py-16 sm:px-20 ">
-		{/* p-24 */}
+		
      
       <div className="flex justify-between items-center w-full mt-8">
         {leftSidebarToggle && (
@@ -37,7 +37,7 @@ function DemoHeader(props) {
           </div>
         )}
      
-        <div className="flex space-x-4 mt-4 md:mt-0 text-[10px] items-start">
+        {/* <div className="flex space-x-4 mt-4 md:mt-0 text-[10px] items-start">
           <Controller
             name="selectCountry"
             control={control}
@@ -130,7 +130,7 @@ function DemoHeader(props) {
               )}
             />
           )}
-        </div>
+        </div> */}
         {rightSidebarToggle && (
           <div className="flex shrink-0 items-center">
             <IconButton

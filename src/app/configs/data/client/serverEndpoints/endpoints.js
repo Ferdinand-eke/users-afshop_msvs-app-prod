@@ -70,12 +70,12 @@ export const API_ENDPOINTS = {
    * ############FOOD MART APP SERVER_URLs Start Here##############
    */
   /**Add to commodity mart */
-  GET_MY_CART: "/cart/get-cart-items",
-  ADD_TO_CART: "/cart/addto-cart-items",
-  UPDATE_CART_QTY: "/cart/increase-decrease-cart-item",
+  GET_MY_CART: "/cart-session",   //(Msvs => Done)
+  ADD_TO_CART: "/cart-session/add-to-cart", //(Msvs => Done)
+  UPDATE_CART_QTY: "/cart-session/update-cart-item",
   REMOVE_CART_ITEM: "/cart/remove-item",
 
-  PAY_AND_PLACE_ORDER: "/userorders/pay-and-create-order"
+  PAY_AND_PLACE_ORDER: "/paystack-payment/verify-and-create-marketplace-order"  //(Msvs => Done)
   /******
    * ########################FOOD MART APP SERVER_URLs EDNs Here===========
    * ----------------------------------------------------------------------------------------------

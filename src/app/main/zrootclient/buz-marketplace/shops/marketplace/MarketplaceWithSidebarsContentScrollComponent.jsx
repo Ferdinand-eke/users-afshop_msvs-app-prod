@@ -58,6 +58,8 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 	const [products, setProducts] = useState([]);
   const { data: allProducts, isLoading, isError } = useGetAllProducts();
 
+  // console.log("All PRODUCTS", allProducts)
+
 
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState([]);
@@ -78,87 +80,83 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 
 
   // const [products, setProducts] = useState([])
-  const { data: countries } = useSellerCountries();
+  // const { data: countries } = useSellerCountries();
 
    /****Use-EFFECT to manage filtering of products by Country=>state=>LGA fetch */
-  useEffect(() => {
-    if (allProducts?.data?.products) {
-      setProducts(allProducts?.data?.products);
-    }else if (selectCountry) {
-      setProducts(allProducts?.data?.products);
+  // useEffect(() => {
+  //   if (allProducts?.data?.products) {
+  //     setProducts(allProducts?.data?.products);
+  //   }else if (selectCountry) {
+  //     setProducts(allProducts?.data?.products);
     
-    }  else if (selectCountry && selectState) {
-      setProducts(allProducts?.data?.products);
+  //   }  else if (selectCountry && selectState) {
+  //     setProducts(allProducts?.data?.products);
     
-    }else if (selectCountry && selectState && selectLga) {
-      setProducts(allProducts?.data?.products);
+  //   }else if (selectCountry && selectState && selectLga) {
+  //     setProducts(allProducts?.data?.products);
     
-    } else {
-      setProducts(allProducts?.data?.products);
-    }
+  //   } else {
+  //     setProducts(allProducts?.data?.products);
+  //   }
 
-    if (selectCountry && selectState) {
-      getLgasFromState(selectState);
-    }
-
-    // if (selectCountry && selectState && selectLga) {
-    //   console.log("Getting products for this partivular LGA :", selectLga);
-    // }
+  //   if (selectCountry && selectState) {
+  //     getLgasFromState(selectState);
+  //   }
 
     
-  }, [allProducts?.data?.products,
-    selectCountry, selectState, selectLga
-  ]);
+  // }, [allProducts?.data?.products,
+  //   selectCountry, selectState, selectLga
+  // ]);
 
   
 
   /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
-  useEffect(() => {
-    if (selectCountry?.length > 0) {
-      console.log(`Getting stated in this country ${location?.name}`);
-      findStatesByCountry(selectCountry);
-    }
+  // useEffect(() => {
+  //   if (selectCountry?.length > 0) {
+  //     console.log(`Getting stated in this country ${location?.name}`);
+  //     findStatesByCountry(selectCountry);
+  //   }
 
-    if (selectCountry && selectState) {
-      getLgasFromState(selectState);
-    }
+  //   if (selectCountry && selectState) {
+  //     getLgasFromState(selectState);
+  //   }
 
-    if (selectCountry && selectState && selectLga) {
-      console.log("Getting products for this partivular LGA :", selectLga);
-    }
-  }, [selectCountry, selectState, selectLga]);
+  //   if (selectCountry && selectState && selectLga) {
+  //     console.log("Getting products for this partivular LGA :", selectLga);
+  //   }
+  // }, [selectCountry, selectState, selectLga]);
 
-  async function findStatesByCountry(countryId) {
-    setLoading(true);
-    const stateResponseData = await getStateByCountryId(countryId);
+  // async function findStatesByCountry(countryId) {
+  //   setLoading(true);
+  //   const stateResponseData = await getStateByCountryId(countryId);
 
-    if (stateResponseData) {
-      setStateData(stateResponseData?.data);
+  //   if (stateResponseData) {
+  //     setStateData(stateResponseData?.data);
 
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
+  //     setTimeout(
+  //       function () {
+  //         setLoading(false);
+  //       }.bind(this),
+  //       250
+  //     );
+  //   }
+  // }
 
   //**Get L.G.As from state_ID data */
-  async function getLgasFromState(sid) {
-    setLoading(true);
-    const responseData = await getLgasByStateId(sid);
+  // async function getLgasFromState(sid) {
+  //   setLoading(true);
+  //   const responseData = await getLgasByStateId(sid);
 
-    if (responseData) {
-      setBlgas(responseData?.data);
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
+  //   if (responseData) {
+  //     setBlgas(responseData?.data);
+  //     setTimeout(
+  //       function () {
+  //         setLoading(false);
+  //       }.bind(this),
+  //       250
+  //     );
+  //   }
+  // }
 
 
 
@@ -170,9 +168,9 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 	
 			header={
 				<DemoHeader
-				countries={countries?.data?.data}
-				stateData={stateData}
-				blgas={blgas}
+				// countries={countries?.data?.data}
+				// stateData={stateData}
+				// blgas={blgas}
 				methods={methods}
 
 					leftSidebarToggle={() => {
@@ -184,7 +182,7 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 				/>
 			}
 			content={<DemoContent
-				products={products}
+				products={allProducts?.data?.products}
 				isLoading={isLoading}
 				isError={isError}
 				/>}

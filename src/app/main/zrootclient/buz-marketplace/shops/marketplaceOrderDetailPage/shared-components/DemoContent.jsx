@@ -81,6 +81,8 @@ function DemoContent(props) {
     );
   }
 
+  console.log("SINGLE__ORDER__DATA", userOrder);
+
   return (
     <div className="flex-auto p-24 sm:p-40 ">
       <div className="h-screen border-2 border-dashed rounded-2xl bg-white">
@@ -101,17 +103,17 @@ function DemoContent(props) {
                   <h1 className="text-xl font-bold">Order Details</h1>
                 </div>
                 <p>
-                  Reservation ID: {userOrder?.MOrder?.paymentResult?.reference}
+                  Reservation ID: {userOrder?.paymentResult?.reference}
                 </p>
                 <p>
                   Placed on:{" "}
-                  {new Date(userOrder?.MOrder?.createdAt)?.toDateString()}
+                  {new Date(userOrder?.createdAt)?.toDateString()}
                 </p>
-                <p>Total: N {formatCurrency(userOrder?.MOrder?.totalPrice)}</p>
+                <p>Total: N {formatCurrency(userOrder?.totalPrice)}</p>
               </div>
               <div className="space-y-4">
-                {userOrder?.paidOrderItems?.map((order) => (
-                  <div className="border p-4" key={order?._id}>
+                {userOrder?.orderItems?.map((order) => (
+                  <div className="border p-4" key={order?.id}>
                     <div className="flex flex-row md:flex-row justify-between items-start md:items-center">
                       <img
                         src={order?.image}
@@ -137,12 +139,12 @@ function DemoContent(props) {
                         </div>
 
                         <div className="flex space-x-2 mt-2 md:mt-0">
-                          {order?.orderId?.isDelivered && (
+                          {order?.isDelivered && (
                             <button className="bg-orange-500 text-white px-4 py-2 rounded">
                               ORDER FULLFILLED
                             </button>
                           )}
-                          {!order?.orderId?.isDelivered && (
+                          {!order?.isDelivered && (
                             <button className="bg-gray-200 text-gray-600 px-4 py-2 rounded">
                               ORDER NOT FULLFILLED
                             </button>
@@ -153,19 +155,19 @@ function DemoContent(props) {
 
                     {!order?.isCanceled && (
                       <>
-                        {!order?.orderId?.isDelivered && (
+                        {!order?.isDelivered && (
                           <>
-                            <p>{JSON.stringify(order?.orderId?.isDelivered)}</p>
-                            <p>{JSON.stringify(order?.isCanceled)}</p>
+                            {/* <p>{JSON.stringify(order)}</p> */}
+                            {/* <p>{JSON.stringify(order?.isCanceled)}</p> */}
                             <Button
                               size="small"
                               className="mt-4 bg-orange-300 hover:bg-orange-500 text-black text-sm px-2 py-1 rounded w-full"
                               // onClick={() => initateCancelOrderItem()}
                               onClick={() =>
-                                initiateOrderItemCancellation(order?._id)
+                                initiateOrderItemCancellation(order?.id)
                               }
                             >
-                              Cancel This Order
+                              Cancel this item
                             </Button>
                           </>
                         )}
@@ -218,16 +220,16 @@ function DemoContent(props) {
               <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div className="border p-4">
                   <h3 className="font-bold">PAYMENT INFORMATION</h3>
-                  {userOrder?.MOrder?.paymentResult?.paymentMethod && (
+                  {userOrder?.paymentResult?.paymentMethod && (
                     <p className="text-sm font-bold">
                       Payment Method:{" "}
-                      {userOrder?.MOrder?.paymentResult?.paymentMethod}
+                      {userOrder?.paymentResult?.paymentMethod}
                     </p>
                   )}
 
                   <p className="text-sm font-bold">
                     Total Amount: N{" "}
-                    {formatCurrency(userOrder?.MOrder?.totalPrice)}
+                    {formatCurrency(userOrder?.totalPrice)}
                   </p>
                 </div>
                 <div className="border p-4">
@@ -235,7 +237,7 @@ function DemoContent(props) {
 
                   <p className="text-sm font-bold">
                     Packaged :{" "}
-                    {userOrder?.MOrder?.isPacked ? (
+                    {userOrder?.isPacked ? (
                       <span className="text-green-500">Packaged</span>
                     ) : (
                       <span className="text-red-500">Packaging Pending...</span>
@@ -243,7 +245,7 @@ function DemoContent(props) {
                   </p>
                   <p className="text-sm font-bold">
                     Shipment:{" "}
-                    {userOrder?.MOrder?.isShipped ? (
+                    {userOrder?.isShipped ? (
                       <span className="text-green-500">Shipped</span>
                     ) : (
                       <span className="text-red-500">Shipment Pending...</span>
@@ -252,7 +254,7 @@ function DemoContent(props) {
 
                   <p className="text-sm font-bold">
                     Warehouse Arrival:{" "}
-                    {userOrder?.MOrder?.hasArrivedWarehouse ? (
+                    {userOrder?.hasArrivedWarehouse ? (
                       <span className="text-green-500">Arrived</span>
                     ) : (
                       <span className="text-red-500">Arrival Pending...</span>
@@ -261,7 +263,7 @@ function DemoContent(props) {
 
                   <p className="text-sm font-bold">
                     Delivery:{" "}
-                    {userOrder?.MOrder?.isDelivered ? (
+                    {userOrder?.isDelivered ? (
                       <span className="text-green-500">Delivered</span>
                     ) : (
                       <span className="text-red-500">Delivery Pending...</span>

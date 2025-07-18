@@ -7,17 +7,17 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Switch from "@mui/material/Switch";
-import { Button, FormControlLabel } from "@mui/material";
+// import Box from "@mui/material/Box";
+// import Switch from "@mui/material/Switch";
+// import { Button, FormControlLabel } from "@mui/material";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
-import FuseLoading from "@fuse/core/FuseLoading";
-import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import {
-  useGetUserSingleTrip,
-  useReservationPaidUpdateMutation,
-} from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
+// import FuseLoading from "@fuse/core/FuseLoading";
+// import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
+// import {
+//   useGetUserSingleTrip,
+//   useReservationPaidUpdateMutation,
+// } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
 import { useNavigate, useParams } from "react-router";
 import {
   formatCurrency,
@@ -40,12 +40,7 @@ import { selectFuseCurrentLayoutConfig } from "@fuse/core/FuseSettings/fuseSetti
 import { useMyCart } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import CartSummaryAndPay from "./components/CartSummaryAndPay";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-// import { getLgaByStateId, getStateByCountryId } from "app/configs/data/client/clientToApiRoutes";
-import {
-  getLgasByStateId,
-  getMarketsByLgaId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
+import {getMarketsByLgaId, getLgaByStateId, getStateByCountryId } from "app/configs/data/client/clientToApiRoutes";
 
 const container = {
   show: {
@@ -84,21 +79,20 @@ const schema = z.object({
   orderCountryDestination: z
     .string()
     .nonempty("You must enter a country for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
+  // .min(5, "The product name must be at least 5 characters"),
   orderStateProvinceDestination: z
     .string()
     .nonempty("You must enter a state destination for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
+  // .min(5, "The product name must be at least 5 characters"),
   orderLgaDestination: z
     .string()
     .nonempty("You must enter an L.G.A/County for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
-    orderMarketPickupDestination: z
+  // .min(5, "The product name must be at least 5 characters"),
+  orderMarketPickupDestination: z
     .string()
     .nonempty("You must enter a market pick up point for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
+  // .min(5, "The product name must be at least 5 characters"),
 });
-
 
 /**
  * The Courses page.
@@ -106,19 +100,17 @@ const schema = z.object({
 function CartReview() {
   const user = useAppSelector(selectUser);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const { data: cart, isLoading: cartLoading } = useMyCart();
+  const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
 
-
-  if(cart?.data?.cartItems?.length < 1){
-    navigate('/marketplace/cart')
+  if (cart?.data?.cartSession?.cartProducts?.length < 1) {
+    navigate("/marketplace/cart");
   }
   const handleChange = (event) => {
     setSelectedPaymentOption(event.target.value);
   };
-
 
   const methods = useForm({
     mode: "onChange",
@@ -141,8 +133,6 @@ function CartReview() {
   const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
   const email = user?.email;
 
-  
-
   const payments = [
     {
       type: "Paystack",
@@ -161,12 +151,13 @@ function CartReview() {
     },
   ];
 
-
   const { data: countryData } = useSellerCountries();
   const [loading, setLoading] = useState(false);
   const [blgas, setBlgas] = useState([]);
   const [markets, setBMarkets] = useState([]);
   const [stateData, setStateData] = useState([]);
+
+  // console.log("STate__Data", stateData);
 
   useEffect(() => {
     if (getValues()?.orderCountryDestination) {
@@ -188,13 +179,15 @@ function CartReview() {
   ]);
 
   async function findStatesByCountry() {
-    setLoading(true);
+    setLoading(true); 
     const stateResponseData = await getStateByCountryId(
       getValues()?.orderCountryDestination
     );
 
+    // console.log("STate_DATA_Response", stateResponseData.data)
+
     if (stateResponseData) {
-      setStateData(stateResponseData?.data);
+      setStateData(stateResponseData?.data?.states);
 
       setTimeout(
         function () {
@@ -208,10 +201,11 @@ function CartReview() {
   //**Get L.G.As from state_ID data */
   async function getLgasFromState(sid) {
     setLoading(true);
-    const responseData = await getLgasByStateId(sid);
+    const responseData = await getLgaByStateId(sid);
+    // console.log("LGA_DATA_Response", responseData.data)
 
     if (responseData) {
-      setBlgas(responseData?.data);
+      setBlgas(responseData?.data?.lgas);
       setTimeout(
         function () {
           setLoading(false);
@@ -226,9 +220,9 @@ function CartReview() {
     if (lid) {
       setLoading(true);
       const responseData = await getMarketsByLgaId(lid);
-      console.log("marketsByLGA", responseData)
+      // console.log("marketsByLGA", responseData);
       if (responseData) {
-        setBMarkets(responseData?.data);
+        setBMarkets(responseData?.data?.markets);
         setTimeout(
           function () {
             setLoading(false);
@@ -251,7 +245,6 @@ function CartReview() {
 
               <div className="flex-1 p-4 bg-white rounded-md">
                 <div className="max-w-5xl mx-auto p-4 overflow-scroll">
-               
                   <>
                     <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                       <div className="flex justify-between items-center border-b pb-2 mb-2">
@@ -347,13 +340,16 @@ function CartReview() {
                                 variant="outlined"
                                 fullWidth
                                 error={!!errors.orderCountryDestination}
-                                helperText={errors?.orderCountryDestination?.message}
+                                helperText={
+                                  errors?.orderCountryDestination?.message
+                                }
                               >
-                                {countryData?.data?.data?.map(
+                              
+                                {countryData?.data?.countries?.map(
                                   (buzcountry, index) => (
                                     <MenuItem
                                       key={index}
-                                      value={buzcountry?._id}
+                                      value={buzcountry?.id}
                                     >
                                       {buzcountry?.name}
                                     </MenuItem>
@@ -382,10 +378,12 @@ function CartReview() {
                                 variant="outlined"
                                 fullWidth
                                 error={!!errors.orderStateProvinceDestination}
-                                helperText={errors?.orderStateProvinceDestination?.message}
+                                helperText={
+                                  errors?.orderStateProvinceDestination?.message
+                                }
                               >
                                 {stateData?.map((buzstate, index) => (
-                                  <MenuItem key={index} value={buzstate?._id}>
+                                  <MenuItem key={index} value={buzstate?.id}>
                                     {buzstate?.name}
                                   </MenuItem>
                                 ))}
@@ -414,10 +412,12 @@ function CartReview() {
                                 variant="outlined"
                                 fullWidth
                                 error={!!errors.orderLgaDestination}
-                                helperText={errors?.orderLgaDestination?.message}
+                                helperText={
+                                  errors?.orderLgaDestination?.message
+                                }
                               >
                                 {blgas?.map((lga, index) => (
-                                  <MenuItem key={index} value={lga?._id}>
+                                  <MenuItem key={index} value={lga?.id}>
                                     {lga?.name}
                                   </MenuItem>
                                 ))}
@@ -444,10 +444,12 @@ function CartReview() {
                                 variant="outlined"
                                 fullWidth
                                 error={!!errors.orderMarketPickupDestination}
-                                helperText={errors?.orderMarketPickupDestination?.message}
+                                helperText={
+                                  errors?.orderMarketPickupDestination?.message
+                                }
                               >
                                 {markets?.map((market, index) => (
-                                  <MenuItem key={index} value={market?._id}>
+                                  <MenuItem key={index} value={market?.id}>
                                     {market?.name}
                                   </MenuItem>
                                 ))}
@@ -458,7 +460,7 @@ function CartReview() {
                       </div>
                     </div>
                   </>
-                 
+
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                     <div className="flex justify-between items-center border-b pb-2 mb-2">
                       <h2 className="text-lg font-semibold">
@@ -508,7 +510,6 @@ function CartReview() {
                         </div>
                       </div>
                     ))}
-
                   </div>
 
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
@@ -598,6 +599,34 @@ function CartReview() {
                         </p>
                       </div>
                     </div>
+
+                    <div className="flex-1">
+                      {cart?.data?.cartSession?.cartProducts?.length > 0 ? (
+                        cart?.data?.cartSession?.cartProducts?.map(
+                          (cartItem) => (
+                            <span key={cartItem?.id}>
+                              <ReviewCartItem
+                                key={cartItem?.id}
+                                id={cartItem?.id}
+                                title={cartItem?.product?.name}
+                                image={cartItem?.product?.images[0]?.url}
+                                seller="Apple Authorized Reseller"
+                                unitsLeft={cartItem?.product?.quantityInStock}
+                                cartQuantity={cartItem?.quantity}
+                                price={cartItem?.product?.price}
+                                oldPrice={cartItem?.product?.listprice}
+                                discount="-70%"
+                              />
+                            </span>
+                          )
+                        )
+                      ) : (
+                        <Typography className="text-md">
+                          No product in cart
+                        </Typography>
+                      )}
+                    </div>
+
                     <br />
                     <br />
                     <br />
@@ -606,12 +635,11 @@ function CartReview() {
                 </div>
 
                 {/* end of AI build  */}
-             
               </div>
 
               <div className="w-full md:w-1/3 relative  mt-4 md:mt-0 md:sticky top-16 h-[450px]">
                 <CartSummaryAndPay
-                  intemsInCart={cart?.data?.cartItems}
+                  cartSessionPayload={cart?.data?.cartSession}
                   methodOfPay={selectedPaymentOption}
                   name={name}
                   phone={phone}
@@ -627,7 +655,6 @@ function CartReview() {
             </div>
           </div>
         </>
-
       }
       scroll={isMobile ? "normal" : "page"}
     />
@@ -635,3 +662,47 @@ function CartReview() {
 }
 
 export default CartReview;
+
+const ReviewCartItem = ({
+  id,
+  image,
+  title,
+  seller,
+  unitsLeft,
+  price,
+  oldPrice,
+  discount,
+  cartQuantity,
+}) => {
+  return (
+    <div className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 rounded shadow">
+      <img
+        src={image}
+        alt={title}
+        className="w-80 h-80 object-cover mb-4 md:mb-0 rounded-md"
+      />
+      <div className="flex-1 md:ml-4 text-center md:text-left">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <p className="text-sm text-gray-500">Seller: {seller}</p>
+        <p className="text-sm text-red-500">{unitsLeft} units left</p>
+      </div>
+      <div className="text-right md:text-left md:ml-4">
+        <p className="text-xl font-semibold text-gray-800">
+          {formatCurrency(price)}{" "}
+        </p>
+        {oldPrice && !(oldPrice === undefined) && (
+          <>
+            <p className="text-sm text-gray-500 line-through">
+              {formatCurrency(oldPrice)}
+            </p>
+            <p className="text-sm text-orange-500">{discount}</p>
+          </>
+        )}
+
+        <p className="text-sm text-orange-500 font-bold">
+          Total: {formatCurrency(parseInt(price) * parseInt(cartQuantity))}
+        </p>
+      </div>
+    </div>
+  );
+};
