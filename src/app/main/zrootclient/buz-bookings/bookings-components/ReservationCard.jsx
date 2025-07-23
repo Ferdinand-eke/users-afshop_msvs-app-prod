@@ -8,16 +8,16 @@ const ReservationCard = ({ placedReservation }) => {
   return (
     <>
       <div className="flex space-x-4">
-        <img
+        {/* <img
           src={placedReservation?.bookingPropertyId?.imageSrcs[0]?.url}
           alt="6-ways Adjustable Ergonomic Baby Carrier"
           className="w-80 h-140 object-cover"
-        />
+        /> */}
 
         <div className="flex-1">
-          <h3 className="font-bold">
+          {/* <h3 className="font-bold">
             {placedReservation?.bookingPropertyId?.title}
-          </h3>
+          </h3> */}
           <p className="text-[12px]">
             Booking Fee: ₦ {formatCurrency(placedReservation?.totalPrice)}
           </p>
@@ -44,7 +44,7 @@ const ReservationCard = ({ placedReservation }) => {
         {placedReservation?.isPaid && (
           <Typography
             component={NavLinkAdapter}
-            to={`/bookings/${placedReservation?._id}/reservation-detail`}
+            to={`/bookings/${placedReservation?.id}/reservation-detail`}
             className=" text-black boreder-none"
           >
             <span className="bg-orange-300 hover:bg-orange-600 p-4 rounded-4">SEE DETAILS</span>
@@ -54,7 +54,7 @@ const ReservationCard = ({ placedReservation }) => {
         {!placedReservation?.isPaid && (
           <Typography
             component={NavLinkAdapter}
-            to={`/bookings/reservation/review/${placedReservation?._id}`}
+            to={`/bookings/reservation/review/${placedReservation?.id}`}
             size="small"
             className=" text-orange-500 cursor-pointer"
           >

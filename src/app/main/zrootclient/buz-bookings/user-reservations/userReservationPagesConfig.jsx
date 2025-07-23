@@ -57,24 +57,27 @@ const userReservationPagesConfig = {
   },
 
   
+  
   routes: [
     {
       path: "bookings/reservation/review/:reservationId",
-      element: <ReviewReservation />,
+      element: <ReviewReservation />, // (Done => Msvs)
     },
+
+
 
     {
       path: "bookings/my-reservations",
-      // element: <UserReservations />
-      element: <UserReservationsWithSidebarsContentScrollPage />,
+      element: <UserReservationsWithSidebarsContentScrollPage />, // (Done => Msvs)
     },
     
 
     {
       path: "bookings/:reservationId/reservation-detail",
     //   element: <UserReservationsDetail />,
-      element: <UserReservationDetailWithSidebarsContentScrollPage />
+      element: <UserReservationDetailWithSidebarsContentScrollPage /> // (Done => Msvs)
     },
+
 
     {
       path: "bookings/:reservationId/payment-success",

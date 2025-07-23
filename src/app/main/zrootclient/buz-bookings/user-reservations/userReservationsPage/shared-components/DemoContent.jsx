@@ -14,9 +14,8 @@ import CancelledReservationCard from "../../../bookings-components/CancelledRese
  * Demo Content
  */
 function DemoContent(props) {
-  const { isLoading, isError, products, cancelledReservations } = props;
+  const { isLoading, isError, reservations, cancelledReservations } = props;
   const [active, setActive] = useState(1);
-  // console.log("Cancelled__RESERVATIONS", cancelledReservations)
 
   if (isLoading) {
     return <FuseLoading />;
@@ -36,7 +35,7 @@ function DemoContent(props) {
     );
   }
 
-  if (!products) {
+  if (!reservations) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -60,7 +59,7 @@ function DemoContent(props) {
               className={`border-b-2 text-[11px] ${active === 1 ? "border-orange-500" : ""}  pb-2`}
               onClick={() => setActive(1)}
             >
-              ONGOING/FULLFILED RESERVATIONS {products?.length}
+              ONGOING/FULLFILED RESERVATIONS {reservations?.length}
             </button>
             {/* <button className="text-[11px] pb-2" */}
             <button
@@ -74,10 +73,10 @@ function DemoContent(props) {
           {active === 1 ? (
             <>
               <div className="space-y-4">
-                {products?.map((trip) => (
+                {reservations?.map((trip) => (
                   <div
                     className="bg-white p-4 rounded shadow mb-8"
-                    key={trip?._id}
+                    key={trip?.id}
                   >
                     <ReservationCard placedReservation={trip} />
                   </div>
@@ -86,14 +85,15 @@ function DemoContent(props) {
             </>
           ) : null}
 
+
+
           {active === 2 ? (
             <>
               <div className="space-y-4">
-              {/* <h3>Cancelled reservations</h3> */}
                 {cancelledReservations?.map((trip) => (
                   <div
                     className="bg-white p-4 rounded shadow mb-8"
-                    key={trip?._id}
+                    key={trip?.id}
                   >
                     <CancelledReservationCard placedReservation={trip} />
                   </div>

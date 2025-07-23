@@ -11,6 +11,7 @@ import FusePageSimpleWithMargin from '@fuse/core/FusePageSimple/FusePageSimpleWi
 
 import { useGetUserSingleTrip } from 'app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations';
 import { useParams } from 'react-router';
+import { gridRenderContextColumnsSelector } from '@mui/x-data-grid';
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	
@@ -37,6 +38,8 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 /**
  * The SimpleWithSidebarsContentScroll page.
  */
+
+
 function UserReservationDetailWithSidebarsContentScrollPage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
@@ -55,7 +58,10 @@ function UserReservationDetailWithSidebarsContentScrollPage() {
 	  isError,
 	} = useGetUserSingleTrip(reservationId);
   
+
+	// console.log("VIEW-RESERVATION-DETAILS", reservation?.data)
   
+
 	return (
 		<Root
 	
@@ -70,6 +76,7 @@ function UserReservationDetailWithSidebarsContentScrollPage() {
 					}}
 				/>
 			}
+
 			content={<DemoContent
 				reservation={reservation?.data?.reservation}
 				isLoading={isLoading}

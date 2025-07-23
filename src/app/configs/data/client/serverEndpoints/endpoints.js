@@ -36,17 +36,18 @@ export const API_ENDPOINTS = {
 
   /**Get Reservations of Vendors */
   GET_RESERVATIONS: "/bookings*/listing/get-reservations",
-  GET_RESERVATIONS_BY_LISTING_ID: "/reservations",
+  GET_RESERVATIONS_BY_LISTING_ID: "/reservations", // (Done => Msvs)
+  GET_RESERVATIONS_ROOT_ROUTE: "/reservations", // (Done => Msvs)
 
   //Managing Users-booked trips and reservations  get-listing-reservations/:id
   GET_MY_TRIPS_BY: "/listing/get-mytrips",
 
-  GET_USER_TRIPS: "/bookings/get-my-reservations",
-  GET_USER_CANCELLED_TRIPS: "/bookings/get-my-cancelled-reservations",
-  GET_USER_SINGLE_TRIP: "/bookings/get-reservation",
+  GET_USER_TRIPS: "/reservations/get-user-reservations", // (Done => Msvs)
+  GET_USER_CANCELLED_TRIPS: "/reservations/get-my-cancelled-reservations", // (Done => Msvs)
+  GET_USER_SINGLE_TRIP: "/reservations/get-reservation", // (Done => Msvs)
   GET_INVIEW_USER_TRIP: "/inview/user-trip",
 
-  UPDATE_RESERVATIONS_ON_PAYMENT: "/bookings/update-reservation-on-payment",
+  UPDATE_RESERVATIONS_ON_PAYMENT: "/reservations/update-reservation-on-payment",  // (Done => Msvs)
   CANCEL_USER_RESERVATION: "/bookings/cancel-reservation-by-user",
 
   /******

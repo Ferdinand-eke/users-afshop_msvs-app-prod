@@ -136,6 +136,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
   const [totalPrice, setTotalPrice] = useState(booking?.data?.listing?.price);
   const [dateRange, setDateRange] = useState(initialDateRange);
 
+  
   const onCreateReservation = useCallback(() => {
     if(!currentUser?.name){
         navigate('/sign-in')
@@ -227,6 +228,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 		/>
 	);
 }
+
 
 
 export default BookingsSinglePageWithSidebarsContentScroll;

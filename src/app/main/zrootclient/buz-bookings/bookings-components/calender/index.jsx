@@ -12,11 +12,13 @@ import 'react-date-range/dist/theme/default.css';
 // };
 
 
+
 export const Calender = ({
     value,
     disabledDates,
     onChange
 }) => {
+
     return (
         <DateRange
         rangeColors={["#262626"]}

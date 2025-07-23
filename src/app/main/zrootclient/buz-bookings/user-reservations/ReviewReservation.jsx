@@ -19,7 +19,10 @@ import {
   useReservationPaidUpdateMutation,
 } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
 import { useParams } from "react-router";
-import { formatCurrency, generateClientUID } from "src/app/main/vendors-shop/pos/PosUtils";
+import {
+  formatCurrency,
+  generateClientUID,
+} from "src/app/main/vendors-shop/pos/PosUtils";
 import { format } from "date-fns";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { useForm } from "react-hook-form";
@@ -34,6 +37,7 @@ import { PaystackButton } from "react-paystack";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { useAppSelector } from "app/store/hooks";
 import { selectFuseCurrentLayoutConfig } from "@fuse/core/FuseSettings/fuseSettingsSlice";
+import { useVerifyPaystackPaymentMutation } from "app/configs/data/server-calls/auth/paystack-payments/usePaystackPaymentsRepo";
 
 const container = {
   show: {
@@ -60,15 +64,15 @@ const schema = z.object({
   name: z
     .string()
     .nonempty("You must enter name as is in your ID")
-    .min(5, "The product name must be at least 5 characters"),
+    .min(5, "The name must be at least 5 characters"),
   phone: z
     .string()
     .nonempty("You must enter a phone for reaching you")
-    .min(5, "The product name must be at least 5 characters"),
+    .min(5, "The phone number must be at least 5 characters"),
   address: z
     .string()
-    .nonempty("You must enter an address as regulated by the gpvernment")
-    .min(5, "The product name must be at least 5 characters"),
+    .nonempty("You must enter an address as regulated by the government")
+    .min(5, "The adress must be at least 5 characters"),
 });
 
 /**
@@ -89,6 +93,8 @@ function ReviewReservation() {
     isError,
   } = useGetUserSingleTrip(reservationId);
 
+  // console.log("User-single-reservation", singlereservation);
+
   const methods = useForm({
     mode: "onChange",
     defaultValues: {},
@@ -98,42 +104,79 @@ function ReviewReservation() {
   const { errors, isValid, dirtyFields } = formState;
   const { name, phone, address } = watch();
 
-  useEffect(() => {}, [singlereservation?.data?.reservation?._id]);
-
+  useEffect(() => {}, [singlereservation?.data?.reservation?.id]);
 
   const {
     data: updatedPaymentData,
     mutate: updatePayment,
     isLoading: paymentLoading,
   } = useReservationPaidUpdateMutation();
-  const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
-  const amount = singlereservation?.data?.reservation?.totalPrice * 100;
+  // const { mutate: verifyPayment, data: verifyPaymentData } =
+  const verifyPayment = useVerifyPaystackPaymentMutation();
+
+  // const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
+  const VITE_PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
+  const amount = parseInt(
+    singlereservation?.data?.reservation?.totalPrice * 100
+  );
   const email = user?.email;
-  const onSuccess = async (reference) => {
-    //1. update state of order setting isPaid=true
+  // const [paymentSuccessTrigger, setPaymentSuccessTrigger] = useState('');
+
+  // console.log("Payment STATUS-CHECK", verifyPaymentData?.data?.status);
+  // console.log("Payment PUBLIC KEY", VITE_PAYSTACK_PUBLIC_KEY);
+
+  const onSuccess = async (paystackResponse) => {
+    //1. Verify payment from backend
+
+    //2. update state of order setting isPaid=true
     try {
-      const paymentMetaData = {
-        name: name,
-        phone: phone,
-        address: address,
-        amount: amount,
-        reservationToPay: singlereservation?.data?.reservation?._id,
-        paymentResult: reference,
-      };
+      // if (updatedPaymentData?.data?.status.toString() === "success") {
+        const paymentMetaData = {
+          name: name,
+          phone: phone,
+          address: address,
+          amount: amount,
+          reservationToPay: singlereservation?.data?.reservation?.id,
+          paymentResult: paystackResponse,
+          reference: paystackResponse?.reference,
+        };
 
+        // console.log("Reservation__DATA", paymentMetaData);
 
-      if (reference?.status === "success") {
-        return await updatePayment(paymentMetaData);
-      } else {
-        toast.error("Error ocured on this payment");
-      }
+        return verifyPayment.mutate(paymentMetaData);
+
+        // return updatePayment(paymentMetaData);
+
+        // setPaymentSuccessTrigger(verifyPaymentData?.data?.status);
+      // } else {
+      //   toast.error("Error ocured on this payment");
+      // }
     } catch (error) {
-      // setLoading(false)
+      console.log("Payment Verification Error", error);
+      toast.error("Error occurred on this payment", error?.toString());
     }
   };
   const onClose = () => {
     alert("Wait! You need this reservation confirmed, don't go!!!!");
   };
+
+  // useEffect(() => {
+  //   if (verifyPaymentData?.data?.status === 'success') {
+  //     const paymentMetaData = {
+  //         name: name,
+  //         phone: phone,
+  //         address: address,
+  //         amount: amount,
+  //         reservationToPay: singlereservation?.data?.reservation?.id,
+  //         paymentResult: paystackResponse,
+  //       };
+
+  //       console.log("Reservation__DATA", paymentMetaData);
+
+  //       return updatePayment(paymentMetaData);
+
+  //   }
+  // }, [verifyPaymentData?.data?.status]);
 
   if (isLoading) {
     return <FuseLoading />;
@@ -420,13 +463,14 @@ function ReviewReservation() {
                   {!singlereservation?.data?.reservation?.isPaid && (
                     <PaystackButton
                       text={`Make Payment of ${singlereservation?.data?.reservation?.totalPrice}`}
-                      className="bg-orange-500 text-black w-full p-2 rounded-lg"
+                      className={`${!isValid ? "bg-orange-200" : "bg-orange-500"} text-black w-full p-2 rounded-lg`}
                       reference={"BK" + generateClientUID() + "REF"}
                       email={email}
                       amount={
                         singlereservation?.data?.reservation?.totalPrice * 100
                       }
-                      publicKey={publicKey}
+                      // publicKey={publicKey}
+                      publicKey={VITE_PAYSTACK_PUBLIC_KEY}
                       onSuccess={(reference) => onSuccess(reference)}
                       onClose={() => onClose()}
                       disabled={
@@ -461,7 +505,6 @@ function ReviewReservation() {
         </>
       }
       scroll={isMobile ? "normal" : "page"}
-
     />
   );
 }

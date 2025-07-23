@@ -51,7 +51,8 @@ export function AuthApi() {
     baseURL: baseUrl,
     // headers: customHeaders,
     /*****************Previous for Here starts  ends*/
-    headers: { token: `Bearer ${TOKEN}` },
+    // headers: { accesstoken_x_user: `Bearer ${TOKEN}` },
+    headers: { accesstoken_x_user: `${TOKEN}` },
   });
 
   Api.interceptors.response.use(
@@ -167,6 +168,26 @@ export const getUserInvoices = (id) =>
  * ############################################################
  */
 
+  /*******
+ *                      FINTEC-PAYMENTS APP
+ * #######################################################################################
+ *  ACTIVITIES FOR ALL UTULIZING FINTEC-PAYMENTS_APP starts here
+ * #######################################################################################
+ */
+/*******
+ * #######################################################################################
+ *  ACTIVITIES FOR USERS UTILIZING FINTEC-PAYMENTS_APP ends here
+ * #######################################################################################
+ * --------------------------------------------------------------------------------------------------------------------
+ */
+
+/***Verify Paystack Payment => (Done => Msvs) */
+export const verifyPaystackPaymentFromFintechService = (formData) => {
+  return AuthApi().post(`paystack-payment/verify`, formData);
+};
+
+
+
 /*******
  *                      BOOKINGS APP
  * #######################################################################################
@@ -180,13 +201,21 @@ export const createUserReservations = (formData) => {
   return AuthApi().post(`${API_ENDPOINTS.RESERVE_A_PROPERTY}`, formData);
 };
 
+export const createUserReservationsOnRoom = (formData) => {
+  return AuthApi().post(`${API_ENDPOINTS.GET_RESERVATIONS_ROOT_ROUTE}/create-reservation-on-room`, formData);
+}; //(Done => Msvs)
+
+
 /***Update a reservation on payment => Done for africanshops */
 export const updateReservationOnMakingPayment = (formData) => {
-  return AuthApi().put(
-    `${API_ENDPOINTS.UPDATE_RESERVATIONS_ON_PAYMENT}/${formData?.reservationToPay}`,
+  ///${formData?.reservationToPay
+  return AuthApi().post(
+    `${API_ENDPOINTS.UPDATE_RESERVATIONS_ON_PAYMENT}`,
     formData
   );
 };
+
+
 
 export const listingReservationUpdateOnPayment = (reservationId, formData) => {
   return AuthApi().put(
@@ -198,7 +227,7 @@ export const listingReservationUpdateOnPayment = (reservationId, formData) => {
 /***GET USERS-TRIPS  */
 export const getUserTrips = () => {
   return AuthApi().get(`${API_ENDPOINTS.GET_USER_TRIPS}`);
-};
+}; // (Done => Msvs)
 
 
 
@@ -206,7 +235,7 @@ export const getUseTripByReservationId = (reservationId) => {
   return AuthApi().get(
     `${API_ENDPOINTS.GET_USER_SINGLE_TRIP}/${reservationId}`
   );
-};
+}; //(Done => Msvs)
 
 export const cancelReservationApi = (reservationId, formData) => {
   return AuthApi().put(`${API_ENDPOINTS.CANCEL_USER_RESERVATION}/${reservationId}`);
@@ -214,7 +243,7 @@ export const cancelReservationApi = (reservationId, formData) => {
 
 export const getUserCancelledTrips = () => {
   return AuthApi().get(`${API_ENDPOINTS.GET_USER_CANCELLED_TRIPS}`);
-};
+}; //(Done => Msvs)
 
 export const requestRefundForReservationApi = (cancelledReservationId) => {
   return AuthApi().put(`/bookings/${cancelledReservationId}/request-refund`);

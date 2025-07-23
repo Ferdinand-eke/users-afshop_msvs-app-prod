@@ -97,7 +97,7 @@ const cancelMyReservation = useCancelUserReservation()
                   </Typography>
                   <h1 className="text-xl font-bold">Reservation Details</h1>
                 </div>
-                <p>Reservation ID: {reservation?._id}</p>
+                <p>Reservation ID: {reservation?.id}</p>
                 <p>
                   Placed on: {new Date(reservation?.createdAt)?.toDateString()}
                 </p>
@@ -106,15 +106,15 @@ const cancelMyReservation = useCancelUserReservation()
               <div className="space-y-4">
                 <div className="border p-4">
                   <div className="flex flex-col md:flex-row justify-between items-start md:items-center">
-                    <img
+                    {/* <img
                       src={reservation?.bookingPropertyId?.imageSrcs[0]?.url}
                       alt="6-ways Adjustable Ergonomic Baby Carrier"
                       className="w-80 h-[120px] object-cover px-4"
-                    />
+                    /> */}
                     <div>
-                      <p className="font-bold">
+                      {/* <p className="font-bold">
                         {reservation?.bookingPropertyId?.title}
-                      </p>
+                      </p> */}
                       <p className="text-sm">
                         Stay Period:{" "}
                         {new Date(reservation?.startDate)?.toDateString()}{" "}

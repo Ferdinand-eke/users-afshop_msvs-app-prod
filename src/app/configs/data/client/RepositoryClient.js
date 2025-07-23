@@ -11,6 +11,7 @@ import { API_ENDPOINTS } from "./serverEndpoints/endpoints";
 const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;   /**production & dev */
 
 
+
 /**##############################
  * ####MAIN ENDPOINTS ENDS
  ##################################*/
@@ -312,13 +313,19 @@ export const getFoodMartMenuApi = (hub) =>
 export const getAllBookingsPropertyApi = () => Api().get("/bookings/get-listings"); // (Done => Mcsvs)
 
 export const getBookingPropertyApi = (bookingPropId) =>
-  Api().get(`/bookings/guest-listing/${bookingPropId}/view`);// (Done => Mcsvs)
+  Api().get(`/bookings/guest-listing/${bookingPropId}/view`);// (Done => Mcsvs) 
 
 
   export const getUserReservationsByListingId = (listingId) => {
    
     return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}/confirm-free-dates`)
 }
+
+ export const getUserReservationsByRoomId = (roomId) => {
+
+    return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/on-room/${roomId}/confirm-free-dates`)
+}
+
 /**====================================================================================================
  * BOOKINGS ROUTES LISTED ENDS HERE 
  ======================================================================================================*/
