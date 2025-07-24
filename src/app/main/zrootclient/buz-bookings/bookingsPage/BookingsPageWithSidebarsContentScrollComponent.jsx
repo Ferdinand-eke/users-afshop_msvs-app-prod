@@ -54,7 +54,6 @@ function BookingsPageWithSidebarsContentScrollComponent() {
 
   const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
 
-  console.log("bookingprops", bookingprops?.data?.bookingLists);
   
 
   const [loading, setLoading] = useState(false);

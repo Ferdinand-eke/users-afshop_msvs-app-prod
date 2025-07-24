@@ -2,8 +2,6 @@ import FuseLoading from "@fuse/core/FuseLoading";
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-
-// import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { Button, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
@@ -161,18 +159,16 @@ function DemoContent(props) {
                   </div>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
-                  {/* <h2 className="text-xl font-bold">Description</h2> */}
-                  {/* <p className="text-gray-600 mt-2">
-                    {bookingData?.description}
-                  </p> */}
+               
                     
                     <ProductDetailsInfo 
                     data={bookingData}
-                    products={[]}
+                    // products={[]}
                     />
 
 
                 </div>
+
 
                 <br/>
                     <br/>

@@ -1,14 +1,6 @@
-import _ from "@lodash";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
-import TextField from "@mui/material/TextField";
+
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useState } from "react";
-import Box from "@mui/material/Box";
-import Switch from "@mui/material/Switch";
 import { Button, FormControlLabel } from "@mui/material";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
@@ -19,18 +11,6 @@ import {
   useReservationPaidUpdateMutation,
 } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
 import { useParams } from "react-router";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
-import { format } from "date-fns";
-import ClienttErrorPage from "../../components/ClienttErrorPage";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { z } from "zod";
-import {
-  Controller,
-  // useFormContext
-} from "react-hook-form";
-import { toast } from "react-toastify";
-import { PaystackButton } from "react-paystack";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { useAppSelector } from "app/store/hooks";
 import { selectFuseCurrentLayoutConfig } from "@fuse/core/FuseSettings/fuseSettingsSlice";

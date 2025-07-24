@@ -319,12 +319,12 @@ export const getBookingPropertyApi = (bookingPropId) =>
   export const getUserReservationsByListingId = (listingId) => {
    
     return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}/confirm-free-dates`)
-}
+}// (Done => Mcsvs) 
 
  export const getUserReservationsByRoomId = (roomId) => {
 
     return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/on-room/${roomId}/confirm-free-dates`)
-}
+}// (Done => Mcsvs) 
 
 /**====================================================================================================
  * BOOKINGS ROUTES LISTED ENDS HERE 

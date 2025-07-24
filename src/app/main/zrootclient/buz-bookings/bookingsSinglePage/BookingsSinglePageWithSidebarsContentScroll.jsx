@@ -163,11 +163,13 @@ function BookingsSinglePageWithSidebarsContentScroll() {
   useEffect(() => {
     if (dateRange?.startDate && dateRange?.endDate) {
       const dayCount = differenceInCalendarDays(
+        dateRange?.endDate,
         dateRange?.startDate,
-        dateRange?.endDate
+        
       );
       if (dayCount && booking?.data?.listing?.price) {
-        setTotalPrice(dayCount * booking?.data?.listing?.price * -1);
+        setTotalPrice(dayCount * booking?.data?.listing?.price );
+        //* -1
       } else {
         setTotalPrice(booking?.data?.listing?.price);
       }
@@ -175,6 +177,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
   }, [dateRange, booking?.data?.listing?.price]);
 
 
+  
 	return (
 		<Root
 	

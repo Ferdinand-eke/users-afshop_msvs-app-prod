@@ -1,8 +1,4 @@
 import _ from "@lodash";
-import FormControl from "@mui/material/FormControl";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
@@ -93,7 +89,6 @@ function ReviewReservation() {
     isError,
   } = useGetUserSingleTrip(reservationId);
 
-  // console.log("User-single-reservation", singlereservation);
 
   const methods = useForm({
     mode: "onChange",
@@ -114,23 +109,17 @@ function ReviewReservation() {
   // const { mutate: verifyPayment, data: verifyPaymentData } =
   const verifyPayment = useVerifyPaystackPaymentMutation();
 
-  // const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
   const VITE_PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
   const amount = parseInt(
     singlereservation?.data?.reservation?.totalPrice * 100
   );
   const email = user?.email;
-  // const [paymentSuccessTrigger, setPaymentSuccessTrigger] = useState('');
-
-  // console.log("Payment STATUS-CHECK", verifyPaymentData?.data?.status);
-  // console.log("Payment PUBLIC KEY", VITE_PAYSTACK_PUBLIC_KEY);
 
   const onSuccess = async (paystackResponse) => {
     //1. Verify payment from backend
 
     //2. update state of order setting isPaid=true
     try {
-      // if (updatedPaymentData?.data?.status.toString() === "success") {
         const paymentMetaData = {
           name: name,
           phone: phone,
@@ -141,18 +130,10 @@ function ReviewReservation() {
           reference: paystackResponse?.reference,
         };
 
-        // console.log("Reservation__DATA", paymentMetaData);
 
         return verifyPayment.mutate(paymentMetaData);
 
-        // return updatePayment(paymentMetaData);
-
-        // setPaymentSuccessTrigger(verifyPaymentData?.data?.status);
-      // } else {
-      //   toast.error("Error ocured on this payment");
-      // }
     } catch (error) {
-      console.log("Payment Verification Error", error);
       toast.error("Error occurred on this payment", error?.toString());
     }
   };
@@ -160,23 +141,7 @@ function ReviewReservation() {
     alert("Wait! You need this reservation confirmed, don't go!!!!");
   };
 
-  // useEffect(() => {
-  //   if (verifyPaymentData?.data?.status === 'success') {
-  //     const paymentMetaData = {
-  //         name: name,
-  //         phone: phone,
-  //         address: address,
-  //         amount: amount,
-  //         reservationToPay: singlereservation?.data?.reservation?.id,
-  //         paymentResult: paystackResponse,
-  //       };
-
-  //       console.log("Reservation__DATA", paymentMetaData);
-
-  //       return updatePayment(paymentMetaData);
-
-  //   }
-  // }, [verifyPaymentData?.data?.status]);
+ 
 
   if (isLoading) {
     return <FuseLoading />;
@@ -469,7 +434,6 @@ function ReviewReservation() {
                       amount={
                         singlereservation?.data?.reservation?.totalPrice * 100
                       }
-                      // publicKey={publicKey}
                       publicKey={VITE_PAYSTACK_PUBLIC_KEY}
                       onSuccess={(reference) => onSuccess(reference)}
                       onClose={() => onClose()}
@@ -478,7 +442,8 @@ function ReviewReservation() {
                         !isValid ||
                         !name ||
                         !phone ||
-                        !address
+                        !address ||
+                        verifyPayment?.isLoading
                       }
                     />
                   )}

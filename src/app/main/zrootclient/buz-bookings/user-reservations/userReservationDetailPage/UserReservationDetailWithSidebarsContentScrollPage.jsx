@@ -58,8 +58,6 @@ function UserReservationDetailWithSidebarsContentScrollPage() {
 	  isError,
 	} = useGetUserSingleTrip(reservationId);
   
-
-	// console.log("VIEW-RESERVATION-DETAILS", reservation?.data)
   
 
 	return (

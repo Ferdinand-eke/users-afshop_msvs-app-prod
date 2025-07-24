@@ -1,11 +1,7 @@
-import { Box, Button, Grid, Paper, Typography } from "@mui/material";
+import { Box, Paper, Typography } from "@mui/material";
 import React, { lazy, useMemo, useState } from "react";
-import FontAwesome from "react-fontawesome";
 import { ListingReservation } from "./reservationreview";
-import { Link } from "react-router-dom";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import { ListingRooms } from "./property-rooms";
-// import { UilHeart, UilShareAlt, UilShoppingBag } from '@iconscout/react-unicons'
 
 
 const DetailsRight = React.memo(
@@ -48,6 +44,7 @@ const DetailsRight = React.memo(
                 propertyId={listing?.id}
                 merchantId={listing?.shop}
               />
+
             </>
           ) : (
             <>

@@ -61,7 +61,6 @@ function DemoContent(props) {
             >
               ONGOING/FULLFILED RESERVATIONS {reservations?.length}
             </button>
-            {/* <button className="text-[11px] pb-2" */}
             <button
               className={`border-b-2 text-[11px] ${active === 2 ? "border-orange-500" : ""}  pb-2`}
               onClick={() => setActive(2)}

@@ -12,7 +12,6 @@ export function useVerifyPaystackPaymentMutation() {
   const queryClient = useQueryClient();
   return useMutation(
     (postPayload) => {
-      // console.log("Receiving Payload On R-Query Verifying Payment", postPayload);
       return verifyPaystackPaymentFromFintechService(postPayload);
     },
     {

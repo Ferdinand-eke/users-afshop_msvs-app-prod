@@ -1,9 +1,6 @@
 import * as React from "react";
 import { Box, Button, Drawer, Typography } from "@mui/material";
 // import Drawer from "@mui/material/Drawer";
-import { FC } from "react";
-import { Range } from "react-date-range";
-import { Calender } from "../calender";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import RoomAvailableDatesPage from "./RoomAvailableDatesPage";
 
@@ -25,7 +22,6 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
       sm={{ width: 250 }}
       role="presentation"
     >
-      {/* <p>Calender Available Dates, {roomId}</p> */}
 
       <RoomAvailableDatesPage
         roomId={roomId}
@@ -78,8 +74,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
             <Button
               size="small"
               type="primary"
-            //   className="bg-orange-500 hover:bg-orange-800 h-[44px] w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
-            className="w-full bg-orange-500 hover:bg-orange-800 text-white px-4 py-2 rounded-lg bottom-0 h-[30px]"  
+              className="w-full bg-orange-500 hover:bg-orange-800 text-white px-4 py-2 rounded-lg bottom-0 h-[30px]"  
             //   onClick={onSubmit}
               //   disabled={disabled}
               onClick={toggleDrawer(true, room?.id, room?.price)}

@@ -45,9 +45,6 @@ function UserReservationsWithSidebarsContentScrollPage() {
     isError: isCancelledError,
   } = useUserCancelledTrips();
 
-  console.log("RESERVATIONS", myreservations?.data?.myreservations)
-
-  console.log("CANCELLED_RESERVATIONS", cancelledReservations?.data?.myreservations)
 
   return (
     <Root

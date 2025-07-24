@@ -12,7 +12,6 @@ import { Box, Typography } from "@mui/material";
 function DemoSidebarRight(props) {
   
   const {
-    // bookingData,
     isLoading,
 
     listing,
@@ -34,7 +33,6 @@ function DemoSidebarRight(props) {
         Booking Data Views
       </div>
 
-      {/* <BookingsMap items={bookingsData}/> */}
       <div>
         <div className="bg-white p-4 shadow-md">
           <div className="flex items-center">
@@ -58,6 +56,7 @@ function DemoSidebarRight(props) {
                 </Box>
               </>
             ) : listing ? (
+
               <>
                 <Box>
                   <DetailsRight

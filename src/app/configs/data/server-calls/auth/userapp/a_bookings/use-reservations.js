@@ -29,21 +29,12 @@ export function useCreateReservation() {
   const queryClient = useQueryClient();
   return useMutation(
     (newReservation) => {
-      console.log("Run Product : ", newReservation);
-
-      // return;
       return createUserReservations(newReservation);
     },
 
     {
       onSuccess: (data) => {
-        console.log("New Reservation", data);
-        // return
-
         if (data?.data?.success && data?.data?.createdReservation) {
-          console.log("New product  Data", data);
-
-          // return;
           toast.success("reservation  added successfully!");
           queryClient.invalidateQueries(["__reservationsById"]);
           queryClient.refetchQueries("__reservationsById", { force: true });
@@ -61,16 +52,6 @@ export function useCreateReservation() {
     },
     {
       onError: (error, rollback) => {
-        // return;
-        // toast.error(
-        //   error.response && error.response.data.message
-        //     ? error.response.data.message
-        //     : error.message
-        // );
-
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error.data);
-
         const {
           response: { data },
         } = error ?? {};
@@ -89,16 +70,12 @@ export function useCreateReservationOnRoom() {
   const queryClient = useQueryClient();
   return useMutation(
     (newReservation) => {
-      // console.log("Run Product : ", newReservation);
       return createUserReservationsOnRoom(newReservation);
     },
 
     {
       onSuccess: (data) => {
-        console.log("New room reservation  Data", data);
-
         if (data?.data?.success && data?.data?.createdReservation) {
-          // return;
           toast.success("reservation  added successfully!");
           queryClient.invalidateQueries(["__reservationsById"]);
           queryClient.refetchQueries("__reservationsById", { force: true });
@@ -106,21 +83,10 @@ export function useCreateReservationOnRoom() {
             `/bookings/reservation/review/${data?.data?.createdReservation?.id}`
           );
         }
-
-        // else if (data?.data?.error) {
-        //   toast.error(data?.data?.error?.message);
-        //   return;
-        // } else {
-        //   toast.info("something unexpected happened");
-        //   return;
-        // }
       },
     },
     {
       onError: (error, rollback) => {
-        console.log("MutationError", error.response.data);
-        console.log("MutationError", error);
-
         const {
           response: { data },
         } = error ?? {};
@@ -166,24 +132,13 @@ export function useReservationPaidUpdateMutation() {
     },
     {
       onSuccess: (data) => {
-        if (
-          data?.data?.success
-          // && data?.data?.payload
-        ) {
+        if (data?.data?.success) {
           toast.success(
             `${data?.data?.message ? data?.data?.message : "reservation added successfully!"}`
           );
           navigate(`/bookings/${data?.data?.payload?.id}/payment-success`);
           return;
         }
-
-        // else if (data?.data?.error) {
-        //   toast.error(data?.data?.error?.message);
-        //   return;
-        // } else {
-        //   toast.info("something unexpected happened");
-        //   return;
-        // }
       },
       onError: (error) => {
         const {
@@ -236,7 +191,6 @@ export function useCancelUserReservation() {
     },
     {
       onSuccess: (data) => {
-        console.log("cancellation___Response", data);
         if (data?.data?.success) {
           toast.success(
             `${data?.data?.message ? data?.data?.message : "reservation canceled successfully!"}`

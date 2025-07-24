@@ -3,13 +3,6 @@ import FusePageSimple from "@fuse/core/FusePageSimple";
 import Typography from "@mui/material/Typography";
 import Timeline from "@mui/lab/Timeline";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
-import {
-  TimelineConnector,
-  TimelineContent,
-  TimelineDot,
-  TimelineItem,
-  TimelineSeparator,
-} from "@mui/lab";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { format } from "date-fns/format";
@@ -46,32 +39,35 @@ const initialDateRange = {
 };
 
 const parseDateString = (dateString) => {
+  const dateTimeRegex =
+    /^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9](:([0-5][0-9]|60))?(\.[0-9]{1,9})?)?)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)?)?)?$/;
 
-  const dateTimeRegex = /^([0-9]([0-9]([0-9][1-9]|[1-9]0)|[1-9]00)|[1-9]000)(-(0[1-9]|1[0-2])(-(0[1-9]|[1-2][0-9]|3[0-1])(T([01][0-9]|2[0-3]):[0-5][0-9](:([0-5][0-9]|60))?(\.[0-9]{1,9})?)?)?(Z|(\+|-)((0[0-9]|1[0-3]):[0-5][0-9]|14:00)?)?)?$/
-
-  
   if (dateTimeRegex.test(dateString)) {
-    return toDate(dateString)
+    return toDate(dateString);
   }
-  return new Date(dateString)
-}
+  return new Date(dateString);
+};
 
 function RoomAvailableDatesPage(props) {
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
   const { roomId, roomPrice, propertyId, merchantId } = props;
   const [drawerError, setDrawerError] = useState("");
-  const { mutate: createReservationMutation, isLoading: reservationLoading } =  useCreateReservationOnRoom();
+  const { mutate: createReservationMutation, isLoading: reservationLoading } =
+    useCreateReservationOnRoom();
 
   /****For Calender Here */
 
   const { data: reservatons, isLoading } = useGetReservationsOnRoom(roomId);
 
+  console.log("ROOM_RESERVATIONS", reservatons?.data?.reservationsOnRoom);
+
+  console.log("ROOM_RESERVATIONS__222", reservatons?.data);
 
   const disabledDates = useMemo(() => {
     let dates = [];
 
-    reservatons?.data?.reservationsOnRom?.forEach((reservation) => {
+    reservatons?.data?.reservationsOnRoom?.forEach((reservation) => {
       const range = eachDayOfInterval({
         start: new Date(reservation?.startDate),
         end: new Date(reservation.endDate),
@@ -81,9 +77,8 @@ function RoomAvailableDatesPage(props) {
     });
 
     return dates;
-  }, [reservatons?.data?.reservationsOnRom]);
+  }, [reservatons?.data?.reservationsOnRoom]);
 
-  // const [loading, setLoading] = useState(false);
   const [totalPrice, setTotalPrice] = useState(roomPrice);
   const [dateRange, setDateRange] = useState(initialDateRange);
 
@@ -102,17 +97,8 @@ function RoomAvailableDatesPage(props) {
       merchantId: merchantId,
     };
 
-
-    // console.log("Single room booking", formData);
-
     return createReservationMutation(formData);
-  }, [
-    totalPrice,
-    dateRange,
-    roomId,
-    // routeParams,
-    // currentUser
-  ]);
+  }, [totalPrice, dateRange, roomId, currentUser?.id]);
 
   useEffect(() => {
     if (dateRange?.startDate && dateRange?.endDate) {
@@ -135,69 +121,70 @@ function RoomAvailableDatesPage(props) {
         <>
           <div className="flex flex-auto flex-col px-12 py-40 sm:px-6 sm:pb-80 sm:pt-72">
             <Typography className="text-2xl font-extrabold leading-none tracking-tight">
-              View available dates to book here. 
-              <br/>
-              <br/>
-                            
+              View available dates to book here.
+              <br />
+              <br />
             </Typography>
-            <p>Dates to book <span>{ merchantId}</span></p>
-
+            <p>
+              Dates to book <span>{merchantId}</span>
+            </p>
 
             <div
-                  className="
+              className="
                     bg-white
                     rounded-xl
                     border-[1px]
                     border-neutral-200
                     overflow-hidden
                     "
-                >
-                  <div
-                    className="
+            >
+              <div
+                className="
                         flex flex-row items-center 
                         "
-                  >
-                    {/* <div className="text-2xl fonr-semibold">
+              >
+                {/* <div className="text-2xl fonr-semibold">
                                 $ {price}
                             </div> */}
-                    <Typography
-                      className="text-dark dark:text-white/[.87] mt-[18px] mb-2 text-[22px] font-medium"
-                      as="h3"
-                    >
-                      <span className="text-sm text-light dark:text-white/60">₦</span>
-            
-                      <span>
-                        {formatCurrency(roomPrice)}{" "}
-                        <span className="text-sm ltr:ml-1.5 rtl:mr-1.5 text-light dark:text-white/30 font-normal">
-                          {" "}
-                          per night
-                        </span>
-                      </span>
-                    </Typography>
-                    {/* <hr /> */}
-                  </div>
-            
-                  <hr />
-                    <Calender
-              value={dateRange}
-              disabledDates={disabledDates}
-              onChange={(value) => setDateRange(value?.selection)}
-            />
-                  <hr />
-                  <div className="p-4">
-                    <Button
-                      size="small"
-                      type="primary"
-                      className="bg-orange-500 hover:bg-orange-800 h-[34px] w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
-                      onClick={onCreateReservation}
-                      disabled={reservationLoading}
-                    >
-                      Reserve
-                    </Button>
-                  </div>
-            
-                  <div
-                    className="
+                <Typography
+                  className="text-dark dark:text-white/[.87] mt-[18px] mb-2 text-[22px] font-medium"
+                  as="h3"
+                >
+                  <span className="text-sm text-light dark:text-white/60">
+                    ₦
+                  </span>
+
+                  <span>
+                    {formatCurrency(roomPrice)}{" "}
+                    <span className="text-sm ltr:ml-1.5 rtl:mr-1.5 text-light dark:text-white/30 font-normal">
+                      {" "}
+                      per night
+                    </span>
+                  </span>
+                </Typography>
+              </div>
+
+              <hr />
+              <Calender
+                value={dateRange}
+                disabledDates={disabledDates}
+                onChange={(value) => setDateRange(value?.selection)}
+              />
+              <hr />
+              <div className="p-4">
+                <Button
+                  size="small"
+                  type="primary"
+                  className="bg-orange-500 hover:bg-orange-800 h-[34px] w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
+                  onClick={onCreateReservation}
+                  disabled={reservationLoading}
+                >
+                  Reserve
+                </Button>
+              </div>
+
+              <div
+                className="
                             p-4
                             flex
                             flex-row
@@ -206,14 +193,11 @@ function RoomAvailableDatesPage(props) {
                             font-semibold
                             text-lg
                             "
-                  >
-                    <div>Total</div>
-                    <div>₦ {formatCurrency(totalPrice)}</div>
-                  </div>
-                </div>
-
-
-            
+              >
+                <div>Total</div>
+                <div>₦ {formatCurrency(totalPrice)}</div>
+              </div>
+            </div>
           </div>
         </>
       }
