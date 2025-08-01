@@ -103,9 +103,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
     isError,
   } = useGetBookingProperty(bookingId);
 
-// console.log("Slug", bookingId);
-//   console.log("bookingSingle", booking?.data?.listing);
-
 
 
   const config = useAppSelector(selectFuseCurrentLayoutConfig);
@@ -116,7 +113,6 @@ function BookingsSinglePageWithSidebarsContentScroll() {
   const { data: reservatons, isLoading: getReservationLoading } =
     useGetReservations(booking?.data?.listing?.id);
 
-    // console.log("reservatons", reservatons?.data?.reservations);
 
   const coordinates = getByValue(booking?.data?.listing?.locationValue)?.latlng;
   
