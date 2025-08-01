@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 eThis project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
@@ -42,3 +43,7 @@ You don’t have to ever use `eject`. The curated feature set is suitable for sm
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
 
 To learn React, check out the [React documentation](https://reactjs.org/).
+=======
+# users-msvs-africanshops
+Re-modelling our users facing web app to consume our micro-services architecture re-design for africanshops API
+>>>>>>> 462bce87b10262309d09e4bc3df82711dd351292
