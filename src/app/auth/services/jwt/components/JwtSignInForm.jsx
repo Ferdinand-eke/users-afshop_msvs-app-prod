@@ -29,17 +29,15 @@ const schema = z.object({
     .nonempty("Please enter your password."),
 });
 const defaultValues = {
-  // email: '',
-  // password: '',
-  // remember: true
 
   email: "",
   password: "",
   remember: true,
 };
 
+
 function JwtSignInForm() {
-  const { signIn, isLoginLoading } = useJwtAuth();
+  const { signIn, isLoading } = useJwtAuth();
   const { control, formState, handleSubmit, setValue, setError } = useForm({
     mode: "onChange",
     defaultValues,
@@ -128,11 +126,11 @@ function JwtSignInForm() {
         color="secondary"
         className=" mt-16 w-full"
         aria-label="Sign in"
-        disabled={_.isEmpty(dirtyFields) || !isValid || isLoginLoading}
+        disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
         type="submit"
         size="large"
       >
-        {isLoginLoading ? "processing..." : "Sign in"}
+        {isLoading ? "processing..." : "Sign in"}
         {/* Sign in */}
       </Button>
     </form>

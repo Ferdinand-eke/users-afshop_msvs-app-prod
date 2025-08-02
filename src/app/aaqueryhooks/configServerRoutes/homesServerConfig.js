@@ -5,6 +5,7 @@ const homesServerConfig = {
   siggnInBravortStudentUrl: `/user/sign-in`,
   fogotPassBravortStudentUrl: `/user/forgot-password`,
   resetPassBravortStudentUrl: `/user/reset-password-withcode`,
+  
 
 
   /***HANLE USERS : Geta all Homes Users */

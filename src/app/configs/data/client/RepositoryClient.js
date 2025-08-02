@@ -70,7 +70,7 @@ export const clientResetPasswordFromOtp = (formData) =>
 
 // /reset-password
 export const clientSigin = (formData) =>
-  Api().post("/authuser/login", formData);
+  Api().post("/auth-user/login", formData); //(Done => Mcsvs)
 
 export const clientRegister = (formData) =>
   Api().post("/authuser/register", formData);
@@ -308,13 +308,15 @@ export const getFoodMartMenuApi = (hub) =>
 /**=====================================================================================================
  * BOOKINGS ROUTES LISTED BELOW STARTS
  =====================================================================================================*/
-export const getAllBookingsPropertyApi = () => Api().get("/client-booking-props");
+export const getAllBookingsPropertyApi = () => Api().get("/bookings/get-listings"); // (Done => Mcsvs)
+
 export const getBookingPropertyApi = (bookingPropId) =>
-  Api().get(`/client-booking-props/${bookingPropId}`);
+  Api().get(`/bookings/guest-listing/${bookingPropId}/view`);// (Done => Mcsvs)
+
 
   export const getUserReservationsByListingId = (listingId) => {
    
-    return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}`)
+    return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}/confirm-free-dates`)
 }
 /**====================================================================================================
  * BOOKINGS ROUTES LISTED ENDS HERE 

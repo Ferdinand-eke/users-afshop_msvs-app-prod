@@ -41,6 +41,7 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
  * The SimpleWithSidebarsContentScroll page.
  */
 
+
 function BookingsPageWithSidebarsContentScrollComponent() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
@@ -52,6 +53,9 @@ function BookingsPageWithSidebarsContentScrollComponent() {
 
 
   const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
+
+  console.log("bookingprops", bookingprops?.data?.bookingLists);
+  
 
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState([]);
@@ -71,32 +75,6 @@ function BookingsPageWithSidebarsContentScrollComponent() {
   const { selectCountry, selectState, selectLga } = watch();
 
   const { data: countries } = useSellerCountries();
-
-   /****Use-EFFECT to manage filtering of products by Country=>state=>LGA fetch */
-  // useEffect(() => {
-  //   if (allProducts?.data?.products) {
-  //     setProducts(allProducts?.data?.products);
-  //   }else if (selectCountry) {
-  //     setProducts(allProducts?.data?.products);
-    
-  //   }  else if (selectCountry && selectState) {
-  //     setProducts(allProducts?.data?.products);
-    
-  //   }else if (selectCountry && selectState && selectLga) {
-  //     setProducts(allProducts?.data?.products);
-    
-  //   } else {
-  //     setProducts(allProducts?.data?.products);
-  //   }
-
-  //   if (selectCountry && selectState) {
-  //     getLgasFromState(selectState);
-  //   }
-
-    
-  // }, [allProducts?.data?.products,
-  //   selectCountry, selectState, selectLga
-  // ]);
 
   
 
@@ -171,7 +149,7 @@ function BookingsPageWithSidebarsContentScrollComponent() {
 				/>
 			}
 			content={<DemoContent
-				products={bookingprops?.data?.data}
+				products={bookingprops?.data?.bookingLists}
 				isLoading={isLoading}
 				isError={isError}
 				/>}
@@ -185,7 +163,7 @@ function BookingsPageWithSidebarsContentScrollComponent() {
 				setRightSidebarOpen(false);
 			}}
 			rightSidebarContent={<DemoSidebarRight 
-      	bookingsData={bookingprops?.data?.data}
+      	bookingsData={bookingprops?.data?.bookingLists}
       />}
 			scroll="content"
 		/>

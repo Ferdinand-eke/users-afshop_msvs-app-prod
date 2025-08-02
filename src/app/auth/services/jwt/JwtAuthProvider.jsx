@@ -110,7 +110,7 @@ function JwtAuthProvider(props) {
   }, []);
 
   const [user, setUser] = useState(getUserCredentialsStorage());
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [isLoginLoading, setLoginIsLoading] = useState(false);
   const [isAuthenticated, setIsAuthenticated] = useState(
     getIsAuthenticatedStatus()
@@ -266,6 +266,8 @@ function JwtAuthProvider(props) {
     isAuthenticated,
   ]);
 
+
+
   const adminLogIn = useShopAdminLogin();
   const handleRequest = async (
     url,
@@ -278,9 +280,11 @@ function JwtAuthProvider(props) {
   
     
     try {
-      setLoginIsLoading(true);
+      // setLoginIsLoading(true);
+        setIsLoading(true);
       adminLogIn.mutate(data);
-      setLoginIsLoading(false);
+      // setLoginIsLoading(false);
+        setIsLoading(false);
     } catch (error) {
       const axiosError = error;
     
@@ -291,7 +295,8 @@ function JwtAuthProvider(props) {
       );
 
       handleSignInFailure(axiosError);
-      setLoginIsLoading(false);
+      // setLoginIsLoading(false);
+      setIsLoading(false);
       return axiosError;
     }
   };

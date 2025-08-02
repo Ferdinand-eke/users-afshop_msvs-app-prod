@@ -32,6 +32,7 @@ const SignInConfig = {
 			element: <SignInPage />
 		}
 	]
+	
 };
 export default SignInConfig;
 

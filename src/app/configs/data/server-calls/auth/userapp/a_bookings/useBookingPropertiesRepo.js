@@ -5,11 +5,14 @@ export default function useGetAllBookingProperties() {
     return useQuery(['__bookingProps'], getAllBookingsPropertyApi);
 }
 
+
 /***get menu of single booking property */
 export function useGetBookingProperty(propertyId) {
   // if(!propertyId || propertyId === 'new'){
   //   return {};
   // }
+
+  console.log("useGetBookingProperty", propertyId);
   return useQuery(
     ['__bookingProps', propertyId],
     () => getBookingPropertyApi(propertyId),

@@ -459,7 +459,7 @@ const routes = [
   
 
   {
-    path: "/bookings/listings/:bookingId/:slug",
+    path: "/bookings/listings/:bookingId/view",
     settings: {
       layout: {
         config: {

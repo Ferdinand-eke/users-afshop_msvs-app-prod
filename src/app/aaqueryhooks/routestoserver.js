@@ -183,6 +183,7 @@ export const getAllPropertyListings = () =>  {
 };
 
 
+
 /**Get single listing */
 export const getSinglePropertyListing = (listingId) =>  {
   return AuthApi().get(`${homesServerConfig.getAllListings}/${listingId}`)

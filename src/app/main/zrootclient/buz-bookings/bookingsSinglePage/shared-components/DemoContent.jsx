@@ -17,9 +17,9 @@ import { Link } from "react-router-dom";
 function DemoContent(props) {
   const { isLoading, isError, bookingData } = props;
 
-  if (isLoading) {
-    return <FuseLoading />;
-  }
+  // if (isLoading) {
+  //   return <FuseLoading />;
+  // }
 
   if (isError) {
     return (

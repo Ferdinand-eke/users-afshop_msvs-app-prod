@@ -36,7 +36,7 @@ export const API_ENDPOINTS = {
 
   /**Get Reservations of Vendors */
   GET_RESERVATIONS: "/bookings*/listing/get-reservations",
-  GET_RESERVATIONS_BY_LISTING_ID: "/bookings/reservations",
+  GET_RESERVATIONS_BY_LISTING_ID: "/reservations",
 
   //Managing Users-booked trips and reservations  get-listing-reservations/:id
   GET_MY_TRIPS_BY: "/listing/get-mytrips",

@@ -16,9 +16,9 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 function DemoContent(props) {
   const { isLoading, isError, products } = props;
 
-  if (isLoading) {
-    return <FuseLoading />;
-  }
+  // if (isLoading) {
+  //   return <FuseLoading />;
+  // }
 
   if (isError) {
     return (
@@ -55,7 +55,7 @@ function DemoContent(props) {
           {products?.map((property) => (
             <div
               className="relative flex flex-col bg-white rounded-lg shadow p-4"
-              key={property?._id}
+              key={property?.id}
             >
               <div className="relative">
                 <img
@@ -76,7 +76,7 @@ function DemoContent(props) {
 
               <Typography className="text-gray-800 text-[12px] font-bold mt-2 mb-2 inline"
                     component={NavLinkAdapter}
-                    to={`/bookings/listings/${property?._id}/${property?.slug}`}
+                    to={`/bookings/listings/${property?.slug}/view`}
               >
                 {property?.title}
               </Typography>
@@ -114,7 +114,7 @@ function DemoContent(props) {
               <Button
                 size="small"
                 component={NavLinkAdapter}
-                to={`/bookings/listings/${property?._id}/${property?.slug}`}
+                to={`/bookings/listings/${property?.slug}/view`}
                 className="bg-orange-500 hover:bg-orange-800 text-white px-4 py-2 rounded-lg bottom-0 h-[20px]"
               >View<FuseSvgIcon>heroicons-outline:arrow-sm-right</FuseSvgIcon></Button>
             </div>

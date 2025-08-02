@@ -54,57 +54,14 @@ export function AuthApi() {
     headers: { token: `Bearer ${TOKEN}` },
   });
 
-  // Api.interceptors.response.use(
-  //     (response) => response,
-  //     (error) => {
-  //         if (error?.response?.status === 401) {
-  //             logOut();
-
-  //             return Promise.reject({
-  //                 status: 401,
-  //                 errors: ['Unauthorized'],
-  //             });
-  //         }
-
-  //         if (error?.response?.status === 403) {
-  //             let errors = Object.values(error?.response?.data?.errors || {});
-  //             logOut();
-
-  //             return Promise.reject({
-  //                 status: 403,
-  //                 errorsRaw: errors,
-  //                 errors: errors.reduce((error) => error),
-  //             });
-  //         }
-
-  //         toast(
-  //             error?.response && error?.response?.data?.message
-  //                 ? error?.response?.data?.message
-  //                 : error?.message
-  //         );
-
-  //         return Promise.reject({
-  //             status: error.response?.status,
-  //             errors: ['Oops!'],
-  //         });
-  //     }
-  // );
-
   Api.interceptors.response.use(
     (response) => response,
     (error) => {
-      // if (error?.response?.status === 403) {
-      //     // logOutUser();
-
-      //     return Promise.reject({
-      //         status: 401,
-      //         errors: ['Unauthorized'],
-      //     });
-      // }
+    
 
       if (error?.response?.status === 403) {
         let errors = Object.values(error?.response?.data?.errors || {});
-        merchantLogOutCall();
+        // userLogOutCall();
 
         return Promise.reject({
           status: 403,
@@ -415,7 +372,7 @@ export const logOut = () => {
 };
 
 /****Main user logout logic */
-export const merchantLogOutCall = () => {
+export const userLogOutCall = () => {
   if (typeof window !== "undefined") {
     try {
       /**Fuse admin starts */

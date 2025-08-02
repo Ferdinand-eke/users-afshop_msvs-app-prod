@@ -15,23 +15,31 @@ export function useShopAdminLogin() {
   // const navigate = useNavigate();
   return useMutation(clientSigin, {
     onSuccess: (data) => {
-      if (data?.data?.data && data?.data?.token) {
+      console.log("LoginData", data);
+      if (data?.data?.user && data?.data?.userAccessToken
+) {
         /**============================================================================== */
 
         const transFormedUser = {
-          id: data?.data?.data?._id,
-          name: data?.data?.data?.name,
-          email: data?.data?.data?.email,
+          id: data?.data?.user?._id,
+          name: data?.data?.user?.name,
+          email: data?.data?.user?.email,
           role: "user",
-          avatar: data?.data?.data?.avatar,
+          avatar: data?.data?.user?.avatar,
         };
 
-        if (data?.data?.token) {
-          localStorage.setItem(config.tokenStorageKey, data?.data?.token);
-          axios.defaults.headers.common.accessToken = `${data?.data?.token}`;
+        
+
+        if (data?.data?.userAccessToken
+) {
+          localStorage.setItem(config.tokenStorageKey, data?.data?.userAccessToken
+);
+          axios.defaults.headers.common.accessToken = `${data?.data?.userAccessToken
+}`;
         }
 
-        if (isTokenValid(data?.data?.token)) {
+        if (isTokenValid(data?.data?.userAccessToken
+)) {
           localStorage.setItem(config.isAuthenticatedStatus, true);
         } else {
           localStorage.setItem(config.isAuthenticatedStatus, false);

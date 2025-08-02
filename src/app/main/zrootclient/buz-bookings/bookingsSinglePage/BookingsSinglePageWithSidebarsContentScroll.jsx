@@ -103,15 +103,22 @@ function BookingsSinglePageWithSidebarsContentScroll() {
     isError,
   } = useGetBookingProperty(bookingId);
 
+// console.log("Slug", bookingId);
+//   console.log("bookingSingle", booking?.data?.listing);
+
+
 
   const config = useAppSelector(selectFuseCurrentLayoutConfig);
   const currentUser = useAppSelector(selectUser)
   const { mutate: createReservation, isLoading: reservationLoading } =  useCreateReservation();
   const { getByValue } = useCountries();
-  const { data: reservatons, isLoading: getReservationLoading } =
-    useGetReservations(bookingId);
 
-  const coordinates = getByValue(booking?.data?.data?.locationValue)?.latlng;
+  const { data: reservatons, isLoading: getReservationLoading } =
+    useGetReservations(booking?.data?.listing?.id);
+
+    // console.log("reservatons", reservatons?.data?.reservations);
+
+  const coordinates = getByValue(booking?.data?.listing?.locationValue)?.latlng;
   
   const disabledDates = useMemo(() => {
     let dates = [];
@@ -128,8 +135,9 @@ function BookingsSinglePageWithSidebarsContentScroll() {
     return dates;
   }, [reservatons?.data?.reservations]);
 
+
   const [loading, setLoading] = useState(false);
-  const [totalPrice, setTotalPrice] = useState(booking?.data?.data?.price);
+  const [totalPrice, setTotalPrice] = useState(booking?.data?.listing?.price);
   const [dateRange, setDateRange] = useState(initialDateRange);
 
   const onCreateReservation = useCallback(() => {
@@ -142,7 +150,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
       totalPrice,
       startDate: parseDateString(dateRange?.startDate),
       endDate: parseDateString(dateRange?.endDate),
-      listingId: booking?.data?.data?._id,
+      listingId: booking?.data?.listing?._id,
     };
 
    
@@ -150,7 +158,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
   }, [
     totalPrice,
     dateRange,
-    booking?.data?.data,
+    booking?.data?.listing,
     routeParams,
     // currentUser
   ]);
@@ -161,13 +169,13 @@ function BookingsSinglePageWithSidebarsContentScroll() {
         dateRange?.startDate,
         dateRange?.endDate
       );
-      if (dayCount && booking?.data?.data?.price) {
-        setTotalPrice(dayCount * booking?.data?.data?.price * -1);
+      if (dayCount && booking?.data?.listing?.price) {
+        setTotalPrice(dayCount * booking?.data?.listing?.price * -1);
       } else {
-        setTotalPrice(booking?.data?.data?.price);
+        setTotalPrice(booking?.data?.listing?.price);
       }
     }
-  }, [dateRange, booking?.data?.data?.price]);
+  }, [dateRange, booking?.data?.listing?.price]);
 
 
 	return (
@@ -189,7 +197,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 				/>
 			}
 			content={<DemoContent
-				bookingData={ booking?.data?.data}
+				bookingData={ booking?.data?.listing}
 				isLoading={isLoading}
 				isError={isError}
 				/>}
@@ -202,12 +210,16 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 			rightSidebarOnClose={() => {
 				setRightSidebarOpen(false);
 			}}
-			rightSidebarContent={<DemoSidebarRight 
+
+
+			rightSidebarContent=
+      
+      {booking?.data?.listing?.id && <DemoSidebarRight 
         isLoading={isLoading}
-        listing={booking?.data?.data}
-        locationValue={booking?.data?.data?.locationValue}
+        listing={booking?.data?.listing}
+        locationValue={booking?.data?.listing?.locationValue}
         coordinates={coordinates}
-        price={booking?.data?.data?.price}
+        price={booking?.data?.listing?.price}
         totalPrice={totalPrice}
         onChangeDate={(value) => setDateRange(value)}
         dateRange={dateRange}
