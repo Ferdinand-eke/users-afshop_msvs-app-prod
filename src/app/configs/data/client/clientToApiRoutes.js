@@ -151,26 +151,27 @@ export const getTradehubs = () => Api().get("/tradehubs");
 export const getTradehubById = (id) => Api().get(`/tradehubs/${id}`);
 
 //Country Routes
-export const getCountries = () => Api().get("/buzcountries/operational");
+export const getCountries = () => Api().get("/buzcountries/operational"); // (Msvs => done)
 export const getCountryDataById = (id) => Api().get(`/buzcountries/${id}`);
+
 
 //State Routes
 export const getBStates = () => Api().get("/buzstates");
 export const getStateById = (id) => Api().get(`/buzstates/${id}`);
 
 export const getStateByCountryId = (cid) =>
-  Api().get(`/buzstates/operational/country/${cid}`);
+  Api().get(`/buzstates/in-country/${cid}/operational`); // (Msvs => done)
 
 //lgas Routes''
 export const getBLgas = () => Api().get("/buz-lgas"); //done
 export const getLgaById = (id) => Api().get(`/buz-lgas/${id}`); //done
-export const getLgaByStateId = (id) => Api().get(`/buz-lgas/state/${id}`); //done
+export const getLgaByStateId = (sid) => Api().get(`/buz-lgas/in-state/${sid}/operational`); // (Msvs => done)
 
 //========================================Market Routes starts
 export const getAfMarkets = () => Api().get("/markets");
 export const getMarketById = (id) => Api().get(`/markets/${id}`);
 export const getMarketsByStateId = (id) => Api().get(`/markets/states/${id}`);
-export const getMarketsByLgaId = (id) => Api().get(`/markets/lga/${id}`);
+export const getMarketsByLgaId = (id) => Api().get(`/markets/in-state/${id}/operational`);
 
 //========================================Market Routes ends
 

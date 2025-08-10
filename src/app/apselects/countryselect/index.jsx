@@ -19,18 +19,19 @@ import useSellerCountries from "app/configs/data/server-calls/countries/useCount
 const CountrySelect = ({ value, onChange }) => {
   const { getAll } = useCountries();
   const { data: countries } = useSellerCountries();
+
   // console.log("AllCountries", getAll())
 
-  // console.log("SellerCountries", countries?.data?.data)
+  // console.log("SellerCountries", countries?.data?.countries)
   return (
     <div>
       <label style={{ fontSize: "12px", fontWeight: "800" }}>
-        *Shop/Business Country Origin
+        *Country Origin
       </label>
       <Select
         placeholder="Where on the globe are you?"
         isClearable
-        options={countries?.data?.data}
+        options={countries?.data?.countries}
         value={value}
         onChange={(value) => onChange(value)}
         formatOptionLabel={(option) => (

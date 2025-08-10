@@ -1,33 +1,18 @@
-// import useCountries from '@/hooks/useCountries'
 import React from 'react'
 import Select from 'react-select'
-import useCountries from '../../hooks/useCountries'
-import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries'
+// import useCountries from '../../hooks/useCountries'
+// import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries'
 
-// export type StateSelectValue = {
-//     flag: string;
-//     label: string;
-//     latlng: number[];
-//     region: string;
-//     value: string;
-// }
-
-// interface StateSelectProps {
-//     value?: CountrySelectValue
-//     onChange: (value: CountrySelectValue) => void
-// }
 const StateSelect = ({ value, onChange, states }) => {
-    const { getAll } = useCountries()
-    const {data:countries} = useSellerCountries()
-    // console.log("AllCountries", getAll())
-
-    // console.log("SellerStates-By-Country", states)
+    // const { getAll } = useCountries()
+    // const {data:countries} = useSellerCountries()
+   
 
     return (
         <div>
               <label
                                 style={{ fontSize: '12px', fontWeight: '800' }}>
-                                *Shop/Business State Origin
+                                *State Origin
                             </label>
             <Select
                 placeholder="What state are you in?"

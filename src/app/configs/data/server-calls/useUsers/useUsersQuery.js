@@ -10,10 +10,6 @@ import { removeUserSignUpToken, removeResendMerchantSignUpOtp, setMerchantSignUp
 import { useNavigate } from "react-router";
 import { clientForgotPasswordWithOtp, clientResetPasswordFromOtp, preSignUpWithOtp, preUserRegistrationWithOtp,  } from "../../client/RepositoryClient";
 import { clientLoggedInResetPassword, getApiAuthUser, getApiMinimizedAuthUser } from "../../client/RepositoryAuthClient";
-// import {
-//     newShopSignup,
-//     storePreShopUserData,
-// } from '~/repositories/RepositoryClient';
 
 /*****
  * sign up new shop entry without and with otp
@@ -21,26 +17,20 @@ import { clientLoggedInResetPassword, getApiAuthUser, getApiMinimizedAuthUser } 
 
 
 
-export function useShopForgotPassWithOtp() {
+export function useShopForgotPassWithOtp() { //(Msvs => Done)
   const navigate = useNavigate();
 
   return useMutation(clientForgotPasswordWithOtp, {
     onSuccess: (data) => {
-      if (data?.data?.forgotpass_activation_token && data?.data?.success) {
-        // ?.data
-        // setShopForgotPasswordPAYLOAD
-        setShopForgotPasswordPAYLOAD(data?.data?.forgotpass_activation_token);
-        // toast.success('logged in successfully')
+
+      console.log("useShopForgotPassWithOtp", data);
+      if (data?.data?.token && data?.data?.success && data?.data?.message) {
+        
+        setShopForgotPasswordPAYLOAD(data?.data?.token);
         toast.success(data?.data?.message);
-
-        // history('/resetShopPassword');
         navigate('/reset-password');
-        // window.location.replace('/rese')infomessage
-
         return;
       } else if (data?.data?.infomessage) {
-        // console.log('LoginError22', data);
-
        toast.error(data?.data?.infomessage);
         return;
       } else {
@@ -61,7 +51,7 @@ export function useShopForgotPassWithOtp() {
 
 
 
-export function useResetShopPassFromOtp() {
+export function useResetShopPassFromOtp() { //(Msvs => Done)
   const navigate = useNavigate();
   return useMutation(clientResetPasswordFromOtp, {
     onSuccess: (data) => {
@@ -117,19 +107,19 @@ export function useShopSignUp() {
   });
 }
 
-export function useShopSignUpWithOtp() {
+export function useShopSignUpWithOtp() { //(Msvs => Done)
   const queryClient = useQueryClient();
 
   return useMutation(preSignUpWithOtp, {
     onSuccess: (data) => {
     //   console.log("preShopSignUp", data?.data); 
 
-      if (data?.data?.registration_activation_token && data?.data?.message) {
+      if (data?.data?.registration_activation_token && data?.data?.success) {
         //Store tokrn in cookie
         setMerchantSignUpStorage(data?.data?.registration_activation_token)
 
         
-        toast.success(data?.data?.message);
+        toast.success(data?.data?.message ? data?.data?.message : 'Registration successful, please check your email for the activation link');
       }
       if(data?.data?.errors){
           Array.isArray(data?.data?.errors) ? data?.data?.errors?.map((m) =>toast.error(`${m?.message + '' + 'for' + ' ' + ' ' + m?.path[1]}`)) :toast.error(data?.data?.errors?.message);
@@ -146,7 +136,7 @@ export function useShopSignUpWithOtp() {
   });
 }
 
-//Store New Shop User from token
+//Store New Shop User from token //(Msvs => Done)
 export function useStoreShopPreSignUp() {
   const queryClient = useQueryClient();
 
@@ -174,7 +164,7 @@ export function useStoreShopPreSignUp() {
 
 
 
-/***Store New Shop User from OTP  useStoreShopPreSignUpFromOtp*/
+/***Store New Shop User from OTP  useStoreShopPreSignUpFromOtp*/ //(Msvs => Done)
 export function useStoreUserPreSignUpFromOtp() {
     const navigate = useNavigate()
     const queryClient = useQueryClient();
@@ -184,13 +174,11 @@ export function useStoreUserPreSignUpFromOtp() {
         console.log("RegistrationResponse", data?.data);
         console.log("ResponseMessage", data?.data?.message);
   
-        if (data?.data?.success && data?.data?.message && data?.data?.payload) {
-            // && data?.data?.newShopFinanceAccount
-          toast.success(data?.data?.message);
+        if (data?.data?.success  ) {
+          toast.success(data?.data?.message ? data?.data?.message : 'Registration completed successfully!');
           removeUserSignUpToken()
             removeResendMerchantSignUpOtp()
             navigate('/sign-in')
-            // toast.success(data?.data?.success && data?.data?.message && data?.data?.newShopFinanceAccount);
         }
 
         if(data?.data?.errors){
@@ -240,7 +228,6 @@ export function useUserSettingsResetPass() {
 
   return useMutation(clientLoggedInResetPassword, {
     onSuccess: (data) => {
-      // console.log('restUserPass_SUCCESS', data)
       if(data?.data?.updatedPass && data?.data?.success){
         
         toast.success(data?.data?.message);

@@ -46,13 +46,13 @@ export const preSignUp = (formData) =>
   Api().post("/authuser/pre-signup", formData);
 
 export const preSignUpWithOtp = (formData) =>
-  Api().post("/authuser/pre-signup-with-otp", formData);
+  Api().post("/auth-user/pre-signup-with-otp", formData); //(Msvs => Done)
 
 export const preUserRegistration = (formData) =>
   Api().post("/authuser/register-preuser", formData);
 
 export const preUserRegistrationWithOtp = (formData) =>
-  Api().post("/authuser/otp-register-preuser", formData);
+  Api().post("/auth-user/otp-register-preuser", formData); // (Msvs => Done)
 
   /****UN-AUTHENTICATED USER Forgot_PAss FLOW STARTs */
 export const clientForgotPassword = (formData) =>
@@ -61,11 +61,12 @@ export const clientForgotPassword = (formData) =>
 export const clientResetPassword = (formData) =>
   Api().post("/authuser/reset-password ", formData);
 
-  export const clientForgotPasswordWithOtp = (formData) => Api().post("/authuser/forgot-password/with-otp", formData);
+  export const clientForgotPasswordWithOtp = (formData) => Api().post("/auth-user/forgot-password/with-otp", formData); // (Done => Mcsvs)
+
 
 
 export const clientResetPasswordFromOtp = (formData) =>
-  Api().post("/authuser/reset-password/from-otp ", formData);
+  Api().post("/auth-user/reset-password/from-otp ", formData); // (Done => Mcsvs)
   /****UN-AUTHENTICATED USER Forgot_PAss FLOW ENDS */
 
 // /reset-password

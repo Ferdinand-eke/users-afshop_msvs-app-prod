@@ -4,10 +4,6 @@ import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { Link } from "react-router-dom";
 import _ from "@lodash";
-import Paper from "@mui/material/Paper";
-import AvatarGroup from "@mui/material/AvatarGroup";
-import Avatar from "@mui/material/Avatar";
-import Box from "@mui/material/Box";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 
@@ -33,6 +29,7 @@ const defaultValues = {
  * The modern forgot password page.
  */
 function UserModernReversedActivatePage({ resendOTP }) {
+
 
   const remoteResponseToken = getMerchantSignUpToken();
   const avtivateMerchant = useStoreUserPreSignUpFromOtp();
@@ -118,7 +115,6 @@ function UserModernReversedActivatePage({ resendOTP }) {
               <span>Resend OTP on expiration of timer</span> <span>5-55</span>
               <Button
                 className="ml-4 btn cursor-pointer"
-                // to="/sign-in"
                 onClick={() => resendOTP()}
               >
                 Resend

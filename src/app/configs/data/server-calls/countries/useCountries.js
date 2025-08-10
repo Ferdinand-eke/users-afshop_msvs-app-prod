@@ -1,12 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { getCountries } from '../../client/clientToApiRoutes';
-// import { getCountries } from '../../utils';
-// import {
-//   createCountry,
-//   getCountries,
-//   getCountryById,
-//   updateCountryById,
-// } from '../../store-redux/api/apiRoutes';
 
 export default function useSellerCountries() {
   return useQuery(['__countries'], getCountries);

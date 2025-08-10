@@ -13,6 +13,7 @@ import { z } from 'zod';
 import { get_SHOP_FORGOTPASS_TOKEN } from 'app/configs/utils/authUtils';
 // import { useResetShopPass } from 'app/configs/data/server-calls/merchant-auth';
 import { useResetShopPassFromOtp } from 'app/configs/data/server-calls/useUsers/useUsersQuery';
+import { toast } from 'react-toastify';
 /**
  * Form Validation Schema
  */
@@ -29,8 +30,6 @@ const schema = z
 		path: ['confirmpasword']
 	});
 const defaultValues = {
-	// password: '',
-	// passwordConfirm: '',
 	confirmpasword: "",
 	newPassword: "",
 	activationCode: "",
@@ -53,10 +52,19 @@ function ModernReversedResetPasswordPage() {
 	const activationTokenToCheck = get_SHOP_FORGOTPASS_TOKEN()
 	function onSubmit() {
 		const activationTokenToCheck = get_SHOP_FORGOTPASS_TOKEN()
+		// console.log("onSubmit 11", getValues(), activationTokenToCheck);
+		if(!activationTokenToCheck){
+			toast.error("Activation token is missing. Please try again.");
+			return;
+		}
 
 		setValue('activationToken', activationTokenToCheck)
-	
-		shopResetPass(getValues())
+		const payload = {
+			...getValues(),
+			token: activationTokenToCheck
+		}
+	// console.log("onSubmit 22", payload);
+		shopResetPass(payload)
 	}
 
 
@@ -164,7 +172,6 @@ function ModernReversedResetPasswordPage() {
 					<div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
 						<img
 							className="w-40"
-							// src="assets/images/logo/logo.svg"
 							src="assets/images/afslogo/afslogo.png"
 							alt="logo"
 						/>
@@ -173,7 +180,6 @@ function ModernReversedResetPasswordPage() {
 							Reset your password
 						</Typography>
 						<Typography className="font-medium">
-							{/* Create a new password for your account */}
 							Enter the otp-code sent to your email, then provide your new password to complete this process.
 							</Typography>
 
@@ -184,7 +190,7 @@ function ModernReversedResetPasswordPage() {
 							onSubmit={handleSubmit(onSubmit)}
 						>
 
-<Controller
+							<Controller
 								name="activationCode"
 								control={control}
 								render={({ field }) => (

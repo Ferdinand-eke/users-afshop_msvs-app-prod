@@ -1,34 +1,17 @@
-// import useCountries from '@/hooks/useCountries'
 import React from 'react'
 import Select from 'react-select'
-import useCountries from '../../hooks/useCountries'
-import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries'
+// import useCountries from '../../hooks/useCountries'
+// import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries'
 
-// export type MarketSelectValue = {
-//     flag: string;
-//     label: string;
-//     latlng: number[];
-//     region: string;
-//     value: string;
-// }
-
-// interface MarketSelectProps {
-//     value?: CountrySelectValue
-//     onChange: (value: CountrySelectValue) => void
-// }
 const MarketSelect = ({ value, onChange, markets }) => {
-    const { getAll } = useCountries()
-    // const {data:countries} = useSellerCountries()
-    // console.log("AllCountries", getAll())
-
-    // console.log("SellerMARKET-By-LGA-ID", markets)
+    // const { getAll } = useCountries()
 
     return (
         <div>
-              <label
-                                style={{ fontSize: '12px', fontWeight: '800' }}>
-                                *Shop/Business market Origin
-                            </label>
+            <label
+                style={{ fontSize: '12px', fontWeight: '800' }}>
+                *Shop/Business market Origin
+            </label>
             <Select
                 placeholder="What market are you in?"
                 isClearable
@@ -40,13 +23,8 @@ const MarketSelect = ({ value, onChange, markets }) => {
                     
                         <div>
                             {option?.name}
-                            {/* <span className='text-neutral-800 ml-1'>
-                                {option.region}
-                            </span> */}
                         </div>
                     </div>
-
-                    
                 )}
                 theme={(theme) => ({
                     ...theme,
