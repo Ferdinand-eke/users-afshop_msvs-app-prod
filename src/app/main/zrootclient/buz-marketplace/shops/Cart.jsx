@@ -48,170 +48,171 @@ const item = {
   },
 };
 
+
 /****
  * COMODITY CART
  */
-// const CartItem = ({
-//   id,
-//   image,
-//   title,
-//   seller,
-//   unitsLeft,
-//   price,
-//   oldPrice,
-//   discount,
-//   cartQuantity,
-// }) => {
-//   const { mutate: updateCartQty } = useUpdateCartItemQty();
+const CartItem = ({
+  id,
+  image,
+  title,
+  seller,
+  unitsLeft,
+  price,
+  oldPrice,
+  discount,
+  cartQuantity,
+}) => {
+  const { mutate: updateCartQty } = useUpdateCartItemQty();
 
-//   const increaseCart = (itemId) => {
-//     const formData = {
-//       flag: "increase",
-//       cartItemId: itemId,
-//     };
-//     return updateCartQty(formData);
-//   };
+  const increaseCart = (itemId) => {
+    const formData = {
+      flag: "increase",
+      cartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
 
-//   const decreaseCart = (itemId) => {
-//     const formData = {
-//       flag: "decrease",
-//       cartItemId: itemId,
-//     };
-//     return updateCartQty(formData);
-//   };
+  const decreaseCart = (itemId) => {
+    const formData = {
+      flag: "decrease",
+      cartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
 
-//   const removeItemInCart = (itemId) => {
-//     const formData = {
-//       flag: "delete",
-//       cartItemId: itemId,
-//     };
-//     return updateCartQty(formData);
-//   };
+  const removeItemInCart = (itemId) => {
+    const formData = {
+      flag: "delete",
+      cartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
 
-//   return (
-//     <div className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 rounded shadow">
-//       <img
-//         src={image}
-//         alt={title}
-//         className="w-80 h-80 object-cover mb-4 md:mb-0 rounded-md"
-//       />
-//       <div className="flex-1 md:ml-4 text-center md:text-left">
-//         <h2 className="text-lg font-semibold">{title}</h2>
-//         <p className="text-sm text-gray-500">Seller: {seller}</p>
-//         <p className="text-sm text-red-500">{unitsLeft} units left</p>
-//       </div>
-//       <div className="text-right md:text-left md:ml-4">
-//         <p className="text-xl font-semibold text-gray-800">
-//           {formatCurrency(price)}{" "}
-//         </p>
-//         {oldPrice && !(oldPrice === undefined) && (
-//           <>
-//             <p className="text-sm text-gray-500 line-through">
-//               {formatCurrency(oldPrice)}
-//             </p>
-//             <p className="text-sm text-orange-500">{discount}</p>
-//           </>
-//         )}
+  return (
+    <div className="flex flex-col md:flex-row items-center justify-between bg-white p-4 mb-4 rounded shadow">
+      <img
+        src={image}
+        alt={title}
+        className="w-80 h-80 object-cover mb-4 md:mb-0 rounded-md"
+      />
+      <div className="flex-1 md:ml-4 text-center md:text-left">
+        <h2 className="text-lg font-semibold">{title}</h2>
+        <p className="text-sm text-gray-500">Seller: {seller}</p>
+        <p className="text-sm text-red-500">{unitsLeft} units left</p>
+      </div>
+      <div className="text-right md:text-left md:ml-4">
+        <p className="text-xl font-semibold text-gray-800">
+          {formatCurrency(price)}{" "}
+        </p>
+        {oldPrice && !(oldPrice === undefined) && (
+          <>
+            <p className="text-sm text-gray-500 line-through">
+              {formatCurrency(oldPrice)}
+            </p>
+            <p className="text-sm text-orange-500">{discount}</p>
+          </>
+        )}
 
-//         <p className="text-sm text-orange-500 font-bold">
-//           Total: {formatCurrency(parseInt(price) * parseInt(cartQuantity))}
-//         </p>
-//       </div>
-//       <div className="flex items-center mt-4 md:mt-0 md:ml-4 text-lg">
-//         <button
-//           className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-//           onClick={() => decreaseCart(id)}
-//         >
-//           -
-//         </button>
-//         <span className="mx-4">{cartQuantity}</span>
-//         {parseInt(cartQuantity) < parseInt(unitsLeft) && (
-//           <button
-//             className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-//             onClick={() => increaseCart(id)}
-//           >
-//             +
-//           </button>
-//         )}
-//       </div>
-//       <button
-//         className="px-4 text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]"
-//         onClick={() => removeItemInCart(id)}
-//       >
-//         <i className="fas fa-trash-alt"></i> REMOVE
-//       </button>
-//     </div>
-//   );
-// };
+        <p className="text-sm text-orange-500 font-bold">
+          Total: {formatCurrency(parseInt(price) * parseInt(cartQuantity))}
+        </p>
+      </div>
+      <div className="flex items-center mt-4 md:mt-0 md:ml-4 text-lg">
+        <button
+          className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
+          onClick={() => decreaseCart(id)}
+        >
+          -
+        </button>
+        <span className="mx-4">{cartQuantity}</span>
+        {parseInt(cartQuantity) < parseInt(unitsLeft) && (
+          <button
+            className="text-orange-500 border border-orange-500  hover:bg-orange-800 rounded px-4 py-1"
+            onClick={() => increaseCart(id)}
+          >
+            +
+          </button>
+        )}
+      </div>
+      <button
+        className="px-4 text-orange-500 mt-4 md:mt-0 md:ml-4 text-[10px]"
+        onClick={() => removeItemInCart(id)}
+      >
+        <i className="fas fa-trash-alt"></i> REMOVE
+      </button>
+    </div>
+  );
+};
 
-// const CartSummary = ({ intemsInCart }) => {
-//   let checkItemsArrayForTotal = [];
-//   intemsInCart?.forEach((element) => {
-//     checkItemsArrayForTotal?.push({
-//       quantity: element?.quantity,
-//       price: element?.product?.price,
-//     });
-//   });
+const CartSummary = ({ intemsInCart }) => {
+  let checkItemsArrayForTotal = [];
+  intemsInCart?.forEach((element) => {
+    checkItemsArrayForTotal?.push({
+      quantity: element?.quantity,
+      price: element?.product?.price,
+    });
+  });
 
-//   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
-//   const delivery = 0;
-//   const vat = 0;
+  const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
+  const delivery = 0;
+  const vat = 0;
 
-//   return (
-//     <div className="bg-white p-4 rounded shadow mt-4 md:mt-0">
-//       <h2 className="text-lg font-semibold mb-4">CART SUMMARY</h2>
-//       <div className="flex justify-between mb-2">
-//         <span>Subtotal</span>
-//         <span className="font-semibold">₦{formatCurrency(totalAmount)}</span>
-//       </div>
-//       <div className="flex justify-between mb-2">
-//         <p className="text-sm text-gray-500 mb-4">
-//           Delivery fees not included yet.
-//         </p>
-//         <span className="font-semibold">₦{formatCurrency(delivery)}</span>
-//       </div>
-//       <div className="flex justify-between mb-2">
-//         <p className="text-sm text-gray-500 mb-4">V.A.T.</p>
-//         <span className="font-semibold">₦{formatCurrency(vat)}</span>
-//       </div>
+  return (
+    <div className="bg-white p-4 rounded shadow mt-4 md:mt-0">
+      <h2 className="text-lg font-semibold mb-4">CART SUMMARY</h2>
+      <div className="flex justify-between mb-2">
+        <span>Subtotal</span>
+        <span className="font-semibold">₦{formatCurrency(totalAmount)}</span>
+      </div>
+      <div className="flex justify-between mb-2">
+        <p className="text-sm text-gray-500 mb-4">
+          Delivery fees not included yet.
+        </p>
+        <span className="font-semibold">₦{formatCurrency(delivery)}</span>
+      </div>
+      <div className="flex justify-between mb-2">
+        <p className="text-sm text-gray-500 mb-4">V.A.T.</p>
+        <span className="font-semibold">₦{formatCurrency(vat)}</span>
+      </div>
 
-//       {intemsInCart?.length > 0 && (
-//         <Button
-//           component={NavLinkAdapter}
-//           to={`/marketplace/review-cart`}
-//           size="sm"
-//           className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
-//         >
-//           CHECKOUT ₦
-//           {formatCurrency(
-//             parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-//           )}
-//         </Button>
-//       )}
+      {intemsInCart?.length > 0 && (
+        <Button
+          component={NavLinkAdapter}
+          to={`/marketplace/review-cart`}
+          size="sm"
+          className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
+        >
+          CHECKOUT ₦
+          {formatCurrency(
+            parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
+          )}
+        </Button>
+      )}
 
-//       {!(intemsInCart?.length > 0) && (
-//         <Button
-//           component={NavLinkAdapter}
-//           to={`/marketplace/shop`}
-//           size="sm"
-//           className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
-//         >
-//           CART EMPTY, COTINUE SHOPPING
-//         </Button>
-//       )}
+      {!(intemsInCart?.length > 0) && (
+        <Button
+          component={NavLinkAdapter}
+          to={`/marketplace/shop`}
+          size="sm"
+          className="bg-orange-500 hover:bg-orange-800 text-white w-full py-2 rounded"
+        >
+          CART EMPTY, COTINUE SHOPPING
+        </Button>
+      )}
 
-//       <div className="mt-4">
-//         <h3 className="text-sm font-semibold">Returns are easy</h3>
-//         <p className="text-sm text-gray-500">
-//           Free return within 7 days for ALL eligible items{" "}
-//           <a href="#" className="text-blue-500">
-//             Details
-//           </a>
-//         </p>
-//       </div>
-//     </div>
-//   );
-// };
+      <div className="mt-4">
+        <h3 className="text-sm font-semibold">Returns are easy</h3>
+        <p className="text-sm text-gray-500">
+          Free return within 7 days for ALL eligible items{" "}
+          <a href="#" className="text-blue-500">
+            Details
+          </a>
+        </p>
+      </div>
+    </div>
+  );
+};
 
 /**
  * The FOODMART CART.
@@ -384,7 +385,7 @@ function Cart() {
   const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(
     user?.id
   );
-  // const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
+  const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
 
   /***
    * LOG Datas below
@@ -406,7 +407,7 @@ function Cart() {
             <div className="max-w-6xl mx-auto">
               {user?.email && (
                 <>
-                  {/* <>
+                  <>
                     <h1 className="text-2xl font-semibold mb-4">
                       Marketplace Cart (
                       {cart?.data?.cartSession?.cartProducts?.length})
@@ -452,7 +453,7 @@ function Cart() {
                     </>
 
                     
-                  </> */}
+                  </>
 
                   <>
                     <div className="mt-10">

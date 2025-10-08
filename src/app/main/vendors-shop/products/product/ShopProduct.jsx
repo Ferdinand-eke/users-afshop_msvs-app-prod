@@ -67,6 +67,7 @@ function ShopProduct() {
 			reset(ProductModel({}));
 		}
 	}, [productId, reset]);
+	
 	useEffect(() => {
 		if (products?.data) {
 			reset({ ...products?.data });

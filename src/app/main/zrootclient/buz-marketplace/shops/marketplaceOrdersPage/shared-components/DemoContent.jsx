@@ -33,7 +33,7 @@ function DemoContent(props) {
     );
   }
 
-  if (!userCreatedOrders) {
+  if (!(userCreatedOrders?.length > 0)) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -41,7 +41,7 @@ function DemoContent(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          No orders found!
+          No orders found...!
         </Typography>
       </motion.div>
     );

@@ -50,8 +50,6 @@ function FoodmartOrdersWithSidebarsContentScrollPage() {
 
     const user = useAppSelector(selectUser);
 
-//   const {data:userOrders, isLoading, isError } = useGetAuthUserOrders(user?.id);
-
   const {data:userFoodOrders, isLoading:isLoading, isError:isError } = useGetAuthUserFoodOrders();
 
 

@@ -30,58 +30,24 @@ export const serializeQuery = (query) => {
 };
 
 export function AuthApi() {
-  // const TOKEN = JSON.parse(Cookies.get('authClientUserToken'));
-
   const TOKEN = getAdminAccessToken();
-  //   console.log("FETCH-Token", getAdminAccessToken());
+    // console.log("FETCH-Token", TOKEN);
 
-  const customHeaders = {
-    Accept: "application/json",
+  const Api = axios.create({
+     Accept: "application/json",
     withcredentials: true,
     headers: {
       // 'Access-Control-Allow-Origin': '*',
       "Content-Type": "application/json",
     },
     credentials: "include",
-    // token: `Bearer ${TOKEN}`,
-  };
-
-  const Api = axios.create({
     /*************Previous for Here starts */
     baseURL: baseUrl,
     // headers: customHeaders,
     /*****************Previous for Here starts  ends*/
-    // headers: { accesstoken_x_user: `Bearer ${TOKEN}` },
-    headers: { accesstoken_x_user: `${TOKEN}` },
+    // headers: { accesstoken_x_user: `Bearer ${TOKEN}` },  userauthcredential
+    headers: { userauthcredential: `${TOKEN}` },
   });
-
-  // Api.interceptors.response.use(
-  //   (response) => response,
-  //   (error) => {
-    
-
-
-  //     if (error?.response?.status === 403) {
-  //       let errors = Object.values(error?.response?.data?.errors || {});
-  //       // userLogOutCall();
-
-  //       return Promise.reject({
-  //         status: 403,
-  //         errorsRaw: errors,
-  //         errors: errors.reduce((error) => error),
-  //       });
-  //     }
-
-   
-
-  //     return Promise.reject({
-  //       status: error.response?.status,
-  //       errors: ["Oops!"],
-  //     });
-  //   }
-  // );
-
-  // return Api;
 
   Api.interceptors.response.use(
     (response) => response,
@@ -104,8 +70,7 @@ export function AuthApi() {
 
        
       }
-
-      console.log("INTECEPTOR___ERROR", Promise.reject(error))
+      // console.log("INTECEPTOR___ERROR", Promise.reject(error))
        return Promise.reject(error);
    
     }

@@ -27,7 +27,7 @@ function DemoContent(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <ClienttErrorPage
-          message={"Error occurred while retriving reservations"}
+          message={"Error occurred while retriving rcs-orders"}
         />
       </motion.div>
     );
@@ -41,7 +41,7 @@ function DemoContent(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          No orders found!
+          No orders found..!
         </Typography>
       </motion.div>
     );
