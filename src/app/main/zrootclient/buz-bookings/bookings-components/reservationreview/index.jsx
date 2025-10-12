@@ -3,21 +3,9 @@ import { FC } from "react";
 import { Range } from "react-date-range";
 import { Calender } from "../calender";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
-// import Heading from '@/components/heading'
-// import { Calender } from '@/components/calender'
-// import { Buttons } from '@/components/buttons'
 
-// interface IListingReservationProps {
-//     price: number;
-//     totalPrice: number;
-//     onChangeDate: (value: Range) => void;
-//     dateRange: Range;
-//     onSubmit: () => void;
-//     disabled: boolean;
-//     disabledDates: Date[];
-// }
 
-//: FC<IListingReservationProps>
+
 export const ListingReservation = ({
   price,
   totalPrice,
@@ -67,6 +55,9 @@ export const ListingReservation = ({
         value={dateRange}
         disabledDates={disabledDates}
         onChange={(value) => onChangeDate(value?.selection)}
+        // merchantId={merchantId}
+        // propertyId={propertyId}
+        // roomId={roomId}
       />
       <hr />
       <div className="p-4">

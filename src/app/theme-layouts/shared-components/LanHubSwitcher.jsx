@@ -38,20 +38,19 @@ function LanHubSwitcher() {
   return (
     <>
       <Button className="h-40 w-64" onClick={langMenuClick}>
-        <img
+        {/* <img
           className="mx-4 min-w-20"
           src={`assets/images/flags/${currentLanguage.flag}.svg`}
           alt={currentLanguage.title}
-        />
+        /> */}
 
         <Typography
-          className="mx-4 font-semibold uppercase"
+          className="mx-4 font-semibold text-sm uppercase"
           color="text.secondary"
         >
-          {currentLanguage.id}
+          services
         </Typography>
       </Button>
-
 
       <Popover
         open={Boolean(menu)}
@@ -69,19 +68,9 @@ function LanHubSwitcher() {
           paper: "py-8",
         }}
       >
-        <MenuItem
-          component={NavLinkAdapter}
-          to="/marketplace/shop"
-        >
-          <ListItemIcon className="min-w-40">
-            <FuseSvgIcon>heroicons-outline:home</FuseSvgIcon>
-          </ListItemIcon>
-          <ListItemText primary={`marketplace`} />
-        </MenuItem>
 
-		<MenuItem component={NavLinkAdapter} to="/bookings/listings">
+        <MenuItem component={NavLinkAdapter} to="/bookings/listings">
           <ListItemIcon className="min-w-40">
-           
             <FuseSvgIcon>heroicons-outline:book-open</FuseSvgIcon>
           </ListItemIcon>
           <ListItemText primary={`Hotesl & Suites`} />
@@ -94,16 +83,21 @@ function LanHubSwitcher() {
           </ListItemIcon>
           <ListItemText primary={`Real Estate`} />
         </MenuItem> */}
-
-		<MenuItem component={NavLinkAdapter} to="/foodmarts/listings">
+        <MenuItem component={NavLinkAdapter} to="/marketplace/shop">
           <ListItemIcon className="min-w-40">
-           
+            <FuseSvgIcon>heroicons-outline:home</FuseSvgIcon>
+          </ListItemIcon>
+          <ListItemText primary={`marketplace`} />
+        </MenuItem>
+
+        
+
+        <MenuItem component={NavLinkAdapter} to="/foodmarts/listings">
+          <ListItemIcon className="min-w-40">
             <FuseSvgIcon>heroicons-outline:briefcase</FuseSvgIcon>
           </ListItemIcon>
           <ListItemText primary={`Restaurants And Vendors`} />
         </MenuItem>
-
-    
       </Popover>
     </>
   );

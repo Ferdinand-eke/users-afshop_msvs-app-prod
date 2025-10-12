@@ -30,6 +30,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
         merchantId={merchantId}
       />
     </Box>
+    
   );
 
   return (

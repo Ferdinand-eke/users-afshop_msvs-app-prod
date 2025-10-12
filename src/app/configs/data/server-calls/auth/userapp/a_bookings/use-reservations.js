@@ -39,15 +39,9 @@ export function useCreateReservation() {
           queryClient.invalidateQueries(["__reservationsById"]);
           queryClient.refetchQueries("__reservationsById", { force: true });
           navigate(
-            `/bookings/reservation/review/${data?.data?.createdReservation?._id}`
+            `/bookings/reservation/review/${data?.data?.createdReservation?.id}`
           );
-        } else if (data?.data?.error) {
-          toast.error(data?.data?.error?.message);
-          return;
-        } else {
-          toast.info("something unexpected happened");
-          return;
-        }
+        } 
       },
     },
     {

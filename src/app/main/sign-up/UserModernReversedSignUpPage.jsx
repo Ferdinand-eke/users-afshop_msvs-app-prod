@@ -261,7 +261,6 @@ function UserModernReversedSignUpPage() {
   async function findStatesByCountry(countryId) {
     setLoading(true);
     const stateResponseData = await getStateByCountryId(countryId);
-
      console.log("States", stateResponseData?.data)
 
 

@@ -430,6 +430,7 @@ const routes = [
    * BOOKINGS activities starts
    * ##############################################################
    */
+  
   {
     path: "/bookings/listings",
     settings: {

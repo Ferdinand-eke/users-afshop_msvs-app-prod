@@ -291,7 +291,11 @@ export const getRcsFoodMartMenuItemsApi = (rcsId) =>
 /**=====================================================================================================
  * BOOKINGS ROUTES LISTED BELOW STARTS
  =====================================================================================================*/
-export const getAllBookingsPropertyApi = () => Api().get("/bookings/get-listings"); // (Done => Mcsvs)
+export const getAllBookingsPropertyApi = (filters = {}) => {
+  const queryString = serializeQuery(filters);
+  const url = queryString ? `/bookings/get-listings?${queryString}` : `/bookings/get-listings`;
+  return Api().get(url);
+}; // (Done => Mcsvs)
 
 export const getBookingPropertyApi = (bookingPropId) =>
   Api().get(`/bookings/guest-listing/${bookingPropId}/view`);// (Done => Mcsvs) 

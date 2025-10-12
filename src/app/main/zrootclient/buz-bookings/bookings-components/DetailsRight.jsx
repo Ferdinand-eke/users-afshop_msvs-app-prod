@@ -46,6 +46,9 @@ const DetailsRight = React.memo(
               />
 
             </>
+
+    
+
           ) : (
             <>
               {listing ? (

@@ -191,8 +191,9 @@ export const verifyPaystackPaymentFromFintechService = (formData) => {
 /****Reservations */
 /***Create a new reervation => Done for africanshops */
 export const createUserReservations = (formData) => {
-  return AuthApi().post(`${API_ENDPOINTS.RESERVE_A_PROPERTY}`, formData);
+  return AuthApi().post(`${API_ENDPOINTS.GET_RESERVATIONS_ROOT_ROUTE}/create-reservation-on-room`, formData);
 };
+
 
 export const createUserReservationsOnRoom = (formData) => {
   return AuthApi().post(`${API_ENDPOINTS.GET_RESERVATIONS_ROOT_ROUTE}/create-reservation-on-room`, formData);

@@ -85,4 +85,5 @@ const userReservationPagesConfig = {
     },
   ],
 };
+
 export default userReservationPagesConfig;
