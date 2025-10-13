@@ -74,7 +74,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
           <div key={room.id}>
             <div className="flex flex-row items-center gap-4 p-4">
               {/* Left Side - Room Title and Price */}
-              <div className="flex-1 flex flex-col justify-center">
+              <div className="flex-1 flex flex-col justify-center px-2">
                 <div className="flex flex-col gap-1">
                   {/* Room Title */}
                   <Typography
@@ -147,7 +147,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                       </IconButton>
 
                       {/* Image Counter */}
-                      <div className="absolute bottom-1 right-1 bg-black bg-opacity-60 text-white text-xs px-2 py-0.5 rounded">
+                      <div className="absolute bottom-2 right-2 bg-black bg-opacity-60 text-white text-xs px-3 py-1 rounded">
                         {currentIndex + 1}/{roomImages.length}
                       </div>
                     </>
@@ -155,7 +155,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
 
                   {/* Placeholder Text when no images */}
                   {!hasImages && (
-                    <div className="absolute inset-0 flex items-center justify-center">
+                    <div className="absolute inset-0 flex items-center justify-center px-4">
                       <Typography variant="caption" className="text-gray-400 text-xs">
                         No images
                       </Typography>
@@ -165,7 +165,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
               </div>
             </div>
 
-            <div className="p-4">
+            <div className="px-6 py-4">
               <Button
                 size="small"
                 type="primary"

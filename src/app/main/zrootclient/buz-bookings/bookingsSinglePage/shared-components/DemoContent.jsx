@@ -86,9 +86,9 @@ function DemoContent(props) {
                 className="w-full h-[230px] rounded-8 object-cover"
               />
             </div>
-            <div className="bg-white px-4 py-4 mt-4 shadow-md">
-              <div className="flex items-center justify-between">
-                <span className="bg-blue-500 text-white px-2 py-1 rounded">
+            <div className="bg-white px-6 py-4 mt-4 shadow-md">
+              <div className="flex items-center justify-between px-2">
+                <span className="bg-blue-500 text-white px-3 py-1 rounded">
                   FEATURED
                 </span>
                 <div className="flex items-center">
@@ -100,11 +100,11 @@ function DemoContent(props) {
                   <span className="ml-2 text-gray-600">4.3</span>
                 </div>
               </div>
-              <h1 className="text-2xl font-bold mt-2">{bookingData?.title}</h1>
-              <p className="text-gray-600 mt-2">
+              <h1 className="text-2xl font-bold mt-2 px-2">{bookingData?.title}</h1>
+              <p className="text-gray-600 mt-2 px-2">
                 {bookingData?.shortDescription}
               </p>
-              <div className="flex items-center mt-2">
+              <div className="flex items-center mt-2 px-2">
                 <span className="text-gray-600">Share:</span>
                 <i className="fab fa-facebook text-blue-600 ml-2"></i>
                 <i className="fab fa-twitter text-blue-400 ml-2"></i>
@@ -119,9 +119,9 @@ function DemoContent(props) {
                 ₦ {formatCurrency(bookingData?.price)} per night || BOOK NOW
               </Button>
             </div>
-            <div className="bg-white px-4 py-6 mt-4 shadow-md">
-              <h2 className="text-xl font-bold">Amenities</h2>
-              <ul className="list-disc list-inside mt-2 text-gray-600 px-2">
+            <div className="bg-white px-6 py-6 mt-4 shadow-md">
+              <h2 className="text-xl font-bold px-2">Amenities</h2>
+              <ul className="list-disc list-inside mt-2 text-gray-600 px-4">
                 <li className="mb-2 px-2">
                   Create immersive augmented reality scenes for any focal
                   project such as animated walk throughs and product
@@ -155,9 +155,9 @@ function DemoContent(props) {
               </ul>
             </div>
 
-            <div className="bg-white px-4 py-4 mt-4 shadow-md">
-              <h2 className="text-xl font-bold">Gallery</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
+            <div className="bg-white px-6 py-4 mt-4 shadow-md">
+              <h2 className="text-xl font-bold px-2">Gallery</h2>
+              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2 px-2">
                 {bookingData?.imageSrcs?.map((img, index) => (
                   <div
                     key={img?.public_id}
@@ -186,7 +186,7 @@ function DemoContent(props) {
                 reviewCount: 24,
               }}
             />
-            <div className="bg-white px-4 py-4 mt-4 shadow-md">
+            <div className="bg-white px-6 py-4 mt-4 shadow-md">
               <ProductDetailsInfo
                 // data={bookingData}
                 propertyData={{
@@ -274,8 +274,8 @@ const ProductDetailsInfo = ({
   };
 
   return (
-    <div className="px-0 py-2 rounded mb-10">
-      <div className="w-full flex justify-between border-b pt-10 pb-2 space-x-4">
+    <div className="px-2 py-2 rounded mb-10">
+      <div className="w-full flex justify-between border-b pt-10 pb-2 space-x-4 px-2">
         <div className="relative ">
           <h5
             className={
@@ -413,7 +413,7 @@ const ProductDetailsInfo = ({
                 className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}
               >
                 <div
-                  className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"}`}
+                  className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"} px-2`}
                 >
                   <Typography
                     variant={isMobile ? "caption" : "subtitle2"}
@@ -608,7 +608,7 @@ const ProductDetailsInfo = ({
           {!user?.email && (
             <>
               <div className={`${isMobile ? "p-3" : "p-6"} border-b`}>
-                <div className="mb-2">
+                <div className="mb-2 px-2">
                   <Typography
                     variant={isMobile ? "subtitle1" : "h6"}
                     className="font-bold text-gray-900"
@@ -618,13 +618,13 @@ const ProductDetailsInfo = ({
                 </div>
                 <Typography
                   variant={isMobile ? "caption" : "body2"}
-                  className="text-gray-600 mb-2"
+                  className="text-gray-600 mb-2 px-2"
                 >
                   {propertyData?.shortDescription ||
                     "Share your thoughts about this property"}
                 </Typography>
                 {propertyData?.rating && (
-                  <div className="flex items-center gap-2">
+                  <div className="flex items-center gap-2 px-2">
                     <Rating value={propertyData.rating} readOnly size="small" />
                     <Typography
                       variant={isMobile ? "caption" : "body2"}
@@ -636,7 +636,7 @@ const ProductDetailsInfo = ({
                   </div>
                 )}
 
-                <Typography variant="body2" className="text-gray-600">
+                <Typography variant="body2" className="text-gray-600 px-2">
                   Please sign in to leave a review.
                 </Typography>
               </div>

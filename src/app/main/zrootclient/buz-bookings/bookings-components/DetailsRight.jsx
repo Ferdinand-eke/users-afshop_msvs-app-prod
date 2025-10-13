@@ -27,8 +27,8 @@ const DetailsRight = React.memo(
     return (
       <div>
         <Box>
-          <Paper className="lg:mb-5">
-            <Typography className="mx-8 mb-[10px] text-dark dark:text-white/[.87] text-xl lg:text-[16px] sm:text-2xl font-semibold">
+          <Paper className="lg:mb-5 px-4 py-3">
+            <Typography className="px-4 mb-[10px] text-dark dark:text-white/[.87] text-xl lg:text-[16px] sm:text-2xl font-semibold">
               {listing?.title}
             </Typography>
           </Paper>
@@ -65,7 +65,7 @@ const DetailsRight = React.memo(
                   />
                 </>
               ) : (
-                <Box>
+                <Box className="px-4 py-3">
                   <Typography>Data Not Found</Typography>
                 </Box>
               )}

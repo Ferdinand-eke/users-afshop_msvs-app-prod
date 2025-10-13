@@ -152,7 +152,7 @@ function UserMenu({user}) {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+								<FuseSvgIcon>heroicons-outline:map</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="My Trips" />
 						</MenuItem>
@@ -164,7 +164,7 @@ function UserMenu({user}) {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+								<FuseSvgIcon>heroicons-outline:shopping-bag</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Orders" />
 						</MenuItem>
@@ -176,7 +176,7 @@ function UserMenu({user}) {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
+								<FuseSvgIcon>heroicons-outline:shopping-cart</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Food Orders" />
 						</MenuItem>
@@ -188,7 +188,7 @@ function UserMenu({user}) {
 							role="button"
 						>
 							<ListItemIcon className="min-w-40">
-								<FuseSvgIcon>heroicons-outline:mail-open</FuseSvgIcon>
+								<FuseSvgIcon>heroicons-outline:credit-card</FuseSvgIcon>
 							</ListItemIcon>
 							<ListItemText primary="Wallet" />
 						</MenuItem>
