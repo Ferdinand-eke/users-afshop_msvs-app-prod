@@ -6,7 +6,8 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import _ from "@lodash";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { format } from "date-fns/format";
-import { Button, Card, InputAdornment, TextField } from "@mui/material";
+import { Button, Card, InputAdornment, TextField, IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 import clsx from "clsx";
 import { useTheme } from "@mui/material/styles";
 import { toast } from "react-toastify";
@@ -51,7 +52,7 @@ const parseDateString = (dateString) => {
 function RoomAvailableDatesPage(props) {
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
-  const { roomId, roomPrice, propertyId, merchantId } = props;
+  const { roomId, roomPrice, propertyId, merchantId, onClose } = props;
   const [drawerError, setDrawerError] = useState("");
   const { mutate: createReservationMutation, isLoading: reservationLoading } =
     useCreateReservationOnRoom();
@@ -59,10 +60,6 @@ function RoomAvailableDatesPage(props) {
   /****For Calender Here */
 
   const { data: reservatons, isLoading } = useGetReservationsOnRoom(roomId);
-
-  console.log("ROOM_RESERVATIONS", reservatons?.data?.reservationsOnRoom);
-
-  console.log("ROOM_RESERVATIONS__222", reservatons?.data);
 
   const disabledDates = useMemo(() => {
     let dates = [];
@@ -119,15 +116,29 @@ function RoomAvailableDatesPage(props) {
     <FusePageSimple
       content={
         <>
-          <div className="flex flex-auto flex-col px-12 py-40 sm:px-6 sm:pb-80 sm:pt-72">
+          <div className="flex flex-auto flex-col px-12 py-40 sm:px-6 sm:pb-80 sm:pt-72 relative">
+            {/* Close Button */}
+            <IconButton
+              onClick={onClose}
+              sx={{
+                position: 'absolute',
+                top: 16,
+                right: 16,
+                zIndex: 1000,
+                backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                '&:hover': {
+                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                },
+              }}
+            >
+              <Close />
+            </IconButton>
+
             <Typography className="text-2xl font-extrabold leading-none tracking-tight">
               View available dates to book here.
               <br />
               <br />
             </Typography>
-            <p>
-              Dates to book <span>{merchantId}</span>
-            </p>
 
             <div
               className="
@@ -143,9 +154,6 @@ function RoomAvailableDatesPage(props) {
                         flex flex-row items-center 
                         "
               >
-                {/* <div className="text-2xl fonr-semibold">
-                                $ {price}
-                            </div> */}
                 <Typography
                   className="text-dark dark:text-white/[.87] mt-[18px] mb-2 text-[22px] font-medium"
                   as="h3"

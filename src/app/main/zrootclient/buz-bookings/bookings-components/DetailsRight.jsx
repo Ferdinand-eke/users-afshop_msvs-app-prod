@@ -1,7 +1,7 @@
 import { Box, Paper, Typography } from "@mui/material";
 import React, { lazy, useMemo, useState } from "react";
 import { ListingReservation } from "./reservationreview";
-import { ListingRooms } from "./property-rooms";
+import { ListingRooms } from "./property-rooms/ListingRooms";
 
 
 const DetailsRight = React.memo(
@@ -35,8 +35,8 @@ const DetailsRight = React.memo(
 
           {listing?.isRentIndividualRoom ? (
             <>
-              <Typography variant="body2" color="text.secondary">
-                This listing is available for individual room rentals.
+              <Typography className="text-gray-600 mb-2 px-4 text-sm font-semibold" variant="body2" color="text.secondary">
+                View rooms and available dates.
               </Typography>
 
               <ListingRooms

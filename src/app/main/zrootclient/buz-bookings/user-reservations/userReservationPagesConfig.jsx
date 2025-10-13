@@ -64,6 +64,10 @@ const userReservationPagesConfig = {
       element: <ReviewReservation />, // (Done => Msvs)
     },
 
+    {
+      path: "bookings/:reservationId/payment-success",
+      element: <ReviewReservationPaymentSucces />,
+    },
 
 
     {
@@ -79,10 +83,7 @@ const userReservationPagesConfig = {
     },
 
 
-    {
-      path: "bookings/:reservationId/payment-success",
-      element: <ReviewReservationPaymentSucces />,
-    },
+    
   ],
 };
 

@@ -5,13 +5,6 @@ import 'react-date-range/dist/theme/default.css';
 
 
 
-// interface ICalenderProps {
-//     value: Range
-//     disabledDates?: Date[]
-//     onChange: (value: RangeKeyDict) => void
-// };
-
-
 
 export const Calender = ({
     value,
