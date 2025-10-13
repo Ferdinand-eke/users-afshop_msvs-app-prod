@@ -16,13 +16,14 @@ import PaginationBar from "./PaginationBar";
  * Demo Content
  */
 function DemoContent(props) {
+
   const {
     isLoading,
     isError,
     products,
-    totalItems = 0,
-    currentPage = 1,
-    itemsPerPage = 4,
+    totalItems,
+    currentPage,
+    itemsPerPage,
     onPageChange,
     onItemsPerPageChange
   } = props;

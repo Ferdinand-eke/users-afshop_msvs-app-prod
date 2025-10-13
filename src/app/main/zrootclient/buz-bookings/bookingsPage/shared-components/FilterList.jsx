@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import {
   TextField,
   MenuItem,
@@ -70,6 +70,14 @@ const AMENITIES = [
 function FilterList({ onFilterChange, initialFilters = {} }) {
   const { data: COUNTRIES } = useSellerCountries();
 
+  // Use ref to store the latest onFilterChange callback
+  const onFilterChangeRef = useRef(onFilterChange);
+
+  // Update ref when onFilterChange changes
+  useEffect(() => {
+    onFilterChangeRef.current = onFilterChange;
+  }, [onFilterChange]);
+
   // Filter state
   const [keyword, setKeyword] = useState(initialFilters.keyword || "");
   const [propertyType, setPropertyType] = useState(
@@ -122,23 +130,28 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
   //   }
   // }, [lga]);
 
-  // Emit filter changes to parent component
+  // Emit filter changes to parent component with debounce for keyword
   useEffect(() => {
-    if (onFilterChange) {
-      const filters = {
-        keyword,
-        propertyType,
-        country,
-        state,
-        lga,
-        district,
-        priceRange,
-        roomCount,
-        bathroomCount,
-        amenities: selectedAmenities,
-      };
-      onFilterChange(filters);
-    }
+    // Debounce keyword search to prevent excessive API calls
+    const timeoutId = setTimeout(() => {
+      if (onFilterChangeRef.current) {
+        const filters = {
+          keyword,
+          propertyType,
+          country,
+          state,
+          lga,
+          district,
+          priceRange,
+          roomCount,
+          bathroomCount,
+          amenities: selectedAmenities,
+        };
+        onFilterChangeRef.current(filters);
+      }
+    }, keyword ? 500 : 0); // 500ms debounce for keyword, immediate for others
+
+    return () => clearTimeout(timeoutId);
   }, [
     keyword,
     propertyType,
@@ -150,7 +163,6 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
     roomCount,
     bathroomCount,
     selectedAmenities,
-    onFilterChange,
   ]);
 
   //**Get STates from Country_ID data */

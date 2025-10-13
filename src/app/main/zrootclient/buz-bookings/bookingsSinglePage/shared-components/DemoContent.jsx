@@ -2,13 +2,16 @@ import FuseLoading from "@fuse/core/FuseLoading";
 
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import { Button, Typography } from "@mui/material";
+import { Avatar, Button, Divider, IconButton, Rating, TextField, Typography, useMediaQuery, useTheme } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 import siteStyle from "@fuse/sitestaticdata/siteStyle";
 import { Link } from "react-router-dom";
 import ImageGalleryView from "./ImageGalleryView";
+import { Reply, Send, ThumbUp } from "@mui/icons-material";
+import { useAppSelector } from "app/store/hooks";
+import { selectUser } from "src/app/auth/user/store/userSlice";
 
 /**
  * Demo Content
@@ -174,7 +177,16 @@ function DemoContent(props) {
               }}
             />
             <div className="bg-white px-4 py-4 mt-4 shadow-md">
-              <ProductDetailsInfo data={bookingData} />
+              <ProductDetailsInfo 
+              // data={bookingData}
+              propertyData={{
+                title: bookingData?.title,
+                description:bookingData?.description,
+                shortDescription: bookingData?.shortDescription,
+                rating: 4.3,
+                reviewCount: 24,
+              }}
+              />
             </div>
 
             <br />
@@ -193,12 +205,63 @@ function DemoContent(props) {
 export default DemoContent;
 
 const ProductDetailsInfo = ({
-  data,
-  products,
+  // data,
+propertyData,
   // totalReviewsLength,
   // averageRating,
 }) => {
+  const user = useAppSelector(selectUser);
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
+  const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
   const [active, setActive] = useState(1);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+  const [comment, setComment] = useState("");
+  const [rating, setRating] = useState(0);
+
+  // Mock reviews data - Replace with actual data from props or API
+  const [reviews, setReviews] = useState([
+    {
+      id: 1,
+      author: "Authentiano Emmasan",
+      authorImage: "https://placehold.co/40x40",
+      timeAgo: "3d",
+      content: "What's the best source for learning next js",
+      likes: 0,
+      isAuthor: false,
+      replies: [
+        {
+          id: 1,
+          author: "Abdullah Abimbola",
+          authorImage: "https://placehold.co/40x40",
+          timeAgo: "5h",
+          content:
+            "you can use YouTube. It's not a big deal if your JavaScript foundation is solid",
+          isAuthor: true,
+        },
+      ],
+    },
+  ]);
+
+  const handleSubmitComment = () => {
+    if (comment.trim() || rating > 0) {
+      // Here you would typically call an API to submit the review
+      const newReview = {
+        id: reviews.length + 1,
+        author: "Current User", // Replace with actual user data
+        authorImage: "https://placehold.co/40x40",
+        timeAgo: "Just now",
+        content: comment,
+        rating: rating,
+        likes: 0,
+        replies: [],
+        isAuthor: false,
+      };
+      setReviews([newReview, ...reviews]);
+      setComment("");
+      setRating(0);
+    }
+  };
 
   return (
     <div className="px-0 py-2 rounded mb-10">
@@ -233,122 +296,338 @@ const ProductDetailsInfo = ({
       {active === 1 ? (
         <>
           <p className="py-2 text-[12px] leading-8 pb-10 whitespace-pre-line">
-            {data?.description}
+            {propertyData?.description}
           </p>
         </>
       ) : null}
 
       {active === 2 ? (
-        <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
-          <div className="bg-white px-2 py-4 mt-4 shadow-md w-full">
-            <h2 className="text-xl font-bold">Reviews</h2>
-            <div className="mt-4">
-              <div className="flex items-start">
-                <img
-                  src="https://placehold.co/50x50"
-                  alt="Reviewer 1"
-                  className="w-12 h-12 rounded-full"
+        // <div className="w-full min-h-[40vh] flex flex-col items-center py-3 overflow-y-scroll">
+         <div
+            className={`${isMobile ? "w-full" : "w-1/1"} bg-white flex flex-col ${isMobile ? "h-[60vh]" : ""}`}
+          >
+         
+          {user?.email && (
+
+            <>
+            {/* Add Comment Section */}
+            <div className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}>
+              <Typography
+                variant={isMobile ? "caption" : "subtitle2"}
+                className="font-semibold mb-2"
+              >
+                Add a comment
+              </Typography>
+              <div className={`${isMobile ? "mb-2" : "mb-3"}`}>
+                <Typography
+                  variant={isMobile ? "caption" : "body2"}
+                  className="text-gray-700 mb-1"
+                >
+                  Your Rating
+                </Typography>
+                <Rating
+                  value={rating}
+                  onChange={(_, newValue) => setRating(newValue)}
+                  size={isMobile ? "small" : "large"}
                 />
-                <div className="ml-4">
-                  <div className="flex items-center">
-                    <span className="font-bold">Gold Coast</span>
-                    <div className="flex items-center ml-2">
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star-half-alt text-yellow-500"></i>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 mt-1">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam egestas libero ac turpis pharetra, in vehicula lacus
-                    elementum.
-                  </p>
-                </div>
               </div>
-              <div className="flex items-start mt-4">
-                <img
-                  src="https://placehold.co/50x50"
-                  alt="Reviewer 2"
-                  className="w-12 h-12 rounded-full"
-                />
-                <div className="ml-4">
-                  <div className="flex items-center">
-                    <span className="font-bold">Gold Coast</span>
-                    <div className="flex items-center ml-2">
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star-half-alt text-yellow-500"></i>
-                    </div>
+              <div className={`flex ${isMobile ? "gap-1" : "gap-2"}`}>
+                <Avatar
+                  sx={{
+                    width: isMobile ? 28 : 32,
+                    height: isMobile ? 28 : 32,
+                    fontSize: isMobile ? "0.875rem" : "1rem",
+                  }}
+                >
+                  U
+                </Avatar>
+                <div className="flex-1">
+                  <TextField
+                    fullWidth
+                    multiline
+                    rows={isMobile ? 1 : 2}
+                    placeholder="Add a comment..."
+                    value={comment}
+                    onChange={(e) => setComment(e.target.value)}
+                    variant="outlined"
+                    size="small"
+                    sx={{
+                      "& .MuiOutlinedInput-root": {
+                        backgroundColor: "white",
+                        fontSize: isMobile ? "0.875rem" : "1rem",
+                      },
+                    }}
+                  />
+                  <div
+                    className={`flex items-center justify-between ${isMobile ? "mt-1" : "mt-2"}`}
+                  >
+                    {!isMobile && (
+                      <div className="flex gap-2">
+                        <IconButton size="small">😊</IconButton>
+                        <IconButton size="small">📷</IconButton>
+                      </div>
+                    )}
+                    <Button
+                      variant="contained"
+                      size="small"
+                      endIcon={<Send fontSize="small" />}
+                      onClick={handleSubmitComment}
+                      disabled={!comment.trim() && rating === 0}
+                      sx={{
+                        backgroundColor: "#ea580c",
+                        "&:hover": {
+                          backgroundColor: "#c2410c",
+                        },
+                        textTransform: "none",
+                        fontSize: isMobile ? "0.75rem" : "0.875rem",
+                        marginLeft: isMobile ? "auto" : 0,
+                      }}
+                    >
+                      Post
+                    </Button>
                   </div>
-                  <p className="text-gray-600 mt-1">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam egestas libero ac turpis pharetra, in vehicula lacus
-                    elementum.
-                  </p>
-                </div>
-              </div>
-              <div className="flex items-start mt-4">
-                <img
-                  src="https://placehold.co/50x50"
-                  alt="Reviewer 3"
-                  className="w-12 h-12 rounded-full"
-                />
-                <div className="ml-4">
-                  <div className="flex items-center">
-                    <span className="font-bold">Gold Coast</span>
-                    <div className="flex items-center ml-2">
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star text-yellow-500"></i>
-                      <i className="fas fa-star-half-alt text-yellow-500"></i>
-                    </div>
-                  </div>
-                  <p className="text-gray-600 mt-1">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    Aliquam egestas libero ac turpis pharetra, in vehicula lacus
-                    elementum.
-                  </p>
                 </div>
               </div>
             </div>
-          </div>
 
-          <div className="bg-white px-2 py-4 mt-4 shadow-md w-full">
-            <h2 className="text-xl font-bold">Ask a Question</h2>
-            <form className="mt-4">
-              <input
-                type="text"
-                placeholder="Name"
-                className="w-full p-2 border border-gray-300 rounded mt-2"
-              />
-              <input
-                type="email"
-                placeholder="Email"
-                className="w-full p-2 border border-gray-300 rounded mt-2"
-              />
-              <textarea
-                placeholder="Message"
-                className="w-full p-2 border border-gray-300 rounded mt-2"
-              ></textarea>
-              <Button
-                size="sm"
-                className="bg-orange-500 hover:bg-orange-800 text-black px-4 py-2 rounded mt-4 w-full"
+            {/* Reviews/Comments List */}
+            <div
+              className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}
+            >
+              <div
+                className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"}`}
               >
-                Submit Review
-              </Button>
-            </form>
-          </div>
+                <Typography
+                  variant={isMobile ? "caption" : "subtitle2"}
+                  className="font-semibold"
+                >
+                  Comments ({reviews.length})
+                </Typography>
+                <select
+                  className={`${isMobile ? "text-xs" : "text-sm"} text-gray-600 border-none outline-none cursor-pointer`}
+                >
+                  <option>Most relevant</option>
+                  <option>Newest first</option>
+                  <option>Oldest first</option>
+                </select>
+              </div>
 
-          <div className="w-full flex justify-center">
-            {data && data?.reviews?.length === 0 && (
+              <div className={`${isMobile ? "space-y-2" : "space-y-4"}`}>
+                {reviews.map((review) => (
+                  <div
+                    key={review.id}
+                    className={`${isMobile ? "space-y-1" : "space-y-2"}`}
+                  >
+                    <div className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
+                      <Avatar
+                        src={review.authorImage}
+                        alt={review.author}
+                        sx={{
+                          width: isMobile ? 32 : 40,
+                          height: isMobile ? 32 : 40,
+                        }}
+                      />
+                      <div className="flex-1">
+                        <div className="flex items-center gap-2 mb-1">
+                          <Typography
+                            variant={isMobile ? "caption" : "body2"}
+                            className="font-semibold"
+                          >
+                            {review.author}
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            className="text-gray-500"
+                            sx={{
+                              fontSize: isMobile ? "0.65rem" : "0.75rem",
+                            }}
+                          >
+                            • {review.timeAgo}
+                          </Typography>
+                          {review.isAuthor && (
+                            <span
+                              className={`${isMobile ? "text-[10px]" : "text-xs"} bg-orange-100 text-orange-600 px-2 py-0.5 rounded`}
+                            >
+                              Author
+                            </span>
+                          )}
+                        </div>
+                        {review.rating && (
+                          <Rating
+                            value={review.rating}
+                            readOnly
+                            size="small"
+                            className="mb-1"
+                          />
+                        )}
+                        <Typography
+                          variant={isMobile ? "caption" : "body2"}
+                          className="text-gray-700"
+                        >
+                          {review.content}
+                        </Typography>
+                        <div
+                          className={`flex items-center ${isMobile ? "gap-2 mt-1" : "gap-4 mt-2"}`}
+                        >
+                          <button
+                            className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
+                          >
+                            <ThumbUp
+                              fontSize="small"
+                              sx={{ fontSize: isMobile ? 14 : 16 }}
+                            />
+                            <span>
+                              {review.likes > 0 ? review.likes : "Like"}
+                            </span>
+                          </button>
+                          <button
+                            className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
+                          >
+                            <Reply
+                              fontSize="small"
+                              sx={{ fontSize: isMobile ? 14 : 16 }}
+                            />
+                            <span>Reply</span>
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Nested Replies */}
+                    {review.replies && review.replies.length > 0 && (
+                      <div
+                        className={`${isMobile ? "ml-8 space-y-2 mt-2" : "ml-12 space-y-3 mt-3"}`}
+                      >
+                        {review.replies.map((reply) => (
+                          <div
+                            key={reply.id}
+                            className={`flex ${isMobile ? "gap-2" : "gap-3"}`}
+                          >
+                            <Avatar
+                              src={reply.authorImage}
+                              alt={reply.author}
+                              sx={{
+                                width: isMobile ? 28 : 32,
+                                height: isMobile ? 28 : 32,
+                              }}
+                            />
+                            <div className="flex-1">
+                              <div
+                                className={`flex items-center ${isMobile ? "gap-1" : "gap-2"} mb-1`}
+                              >
+                                <Typography
+                                  variant={isMobile ? "caption" : "body2"}
+                                  className="font-semibold"
+                                  sx={{
+                                    fontSize: isMobile ? "0.75rem" : "0.875rem",
+                                  }}
+                                >
+                                  {reply.author}
+                                </Typography>
+                                <Typography
+                                  variant="caption"
+                                  className="text-gray-500"
+                                  sx={{
+                                    fontSize: isMobile ? "0.65rem" : "0.75rem",
+                                  }}
+                                >
+                                  • {reply.timeAgo}
+                                </Typography>
+                                {reply.isAuthor && (
+                                  <span
+                                    className={`${isMobile ? "text-[10px]" : "text-xs"} bg-orange-100 text-orange-600 px-2 py-0.5 rounded`}
+                                  >
+                                    Author
+                                  </span>
+                                )}
+                              </div>
+                              <Typography
+                                variant={isMobile ? "caption" : "body2"}
+                                className="text-gray-700"
+                                sx={{
+                                  fontSize: isMobile ? "0.75rem" : "0.875rem",
+                                }}
+                              >
+                                {reply.content}
+                              </Typography>
+                              <div
+                                className={`flex items-center ${isMobile ? "gap-2" : "gap-4"} mt-1`}
+                              >
+                                <button
+                                  className={`text-gray-600 hover:text-orange-600 ${isMobile ? "text-[10px]" : "text-xs"}`}
+                                >
+                                  Like
+                                </button>
+                                <button
+                                  className={`text-gray-600 hover:text-orange-600 ${isMobile ? "text-[10px]" : "text-xs"}`}
+                                >
+                                  Reply
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                    <Divider />
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            <div className="w-full flex justify-center">
+            {propertyData && propertyData?.reviews?.length === 0 && (
               <h5>No Reviews have for this product!</h5>
             )}
           </div>
+          </>
+          )}
+
+          {!user?.email && (
+                        <>
+                          <div className={`${isMobile ? "p-3" : "p-6"} border-b`}>
+                            <div className="mb-2">
+                              <Typography
+                                variant={isMobile ? "subtitle1" : "h6"}
+                                className="font-bold text-gray-900"
+                              >
+                                {propertyData?.title || "Property Details"}
+                              </Typography>
+                            </div>
+                            <Typography
+                              variant={isMobile ? "caption" : "body2"}
+                              className="text-gray-600 mb-2"
+                            >
+                              {propertyData?.shortDescription ||
+                                "Share your thoughts about this property"}
+                            </Typography>
+                            {propertyData?.rating && (
+                              <div className="flex items-center gap-2">
+                                <Rating
+                                  value={propertyData.rating}
+                                  readOnly
+                                  size="small"
+                                />
+                                <Typography
+                                  variant={isMobile ? "caption" : "body2"}
+                                  className="text-gray-600"
+                                >
+                                  {propertyData.rating} ({propertyData.reviewCount || 0}{" "}
+                                  reviews)
+                                </Typography>
+                              </div>
+                            )}
+          
+                             <Typography variant="body2" className="text-gray-600">
+                           Please sign in to leave a review.
+                         </Typography>
+                          
+                          </div>
+                        </>
+                      )}
+          
+
+          
         </div>
       ) : null}
     </div>
