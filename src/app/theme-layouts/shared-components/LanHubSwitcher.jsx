@@ -76,13 +76,13 @@ function LanHubSwitcher() {
           <ListItemText primary={`Hotesl & Suites`} />
         </MenuItem>
 
-        {/* <MenuItem component={NavLinkAdapter} to="/realestate/listings">
+        <MenuItem component={NavLinkAdapter} to="/realestate/listings">
           <ListItemIcon className="min-w-40">
            
             <FuseSvgIcon>heroicons-outline:briefcase</FuseSvgIcon>
           </ListItemIcon>
           <ListItemText primary={`Real Estate`} />
-        </MenuItem> */}
+        </MenuItem>
         <MenuItem component={NavLinkAdapter} to="/marketplace/shop">
           <ListItemIcon className="min-w-40">
             <FuseSvgIcon>heroicons-outline:home</FuseSvgIcon>

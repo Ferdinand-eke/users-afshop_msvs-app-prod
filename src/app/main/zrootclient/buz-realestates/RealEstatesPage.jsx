@@ -131,7 +131,7 @@ function RealEstatesPage() {
     );
   }
 
-  if (!estates?.data?.data) {
+  if (!estates?.data?.propertyListings) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -327,7 +327,7 @@ function RealEstatesPage() {
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-2 gap-4 p-8">
-                  {estates?.data?.data?.map((property) => (
+                  {estates?.data?.propertyListings?.map((property) => (
                     <div
                       className="relative flex flex-col bg-white rounded-lg shadow p-4"
                       key={property?._id}
@@ -348,7 +348,7 @@ function RealEstatesPage() {
                       <Typography
                         className="text-lg font-semibold"
                         component={NavLinkAdapter}
-                        to={`/realestate/listings/${property?._id}/${property?.slug}`}
+                        to={`/realestate/listings/${property?.id}/${property?.slug}`}
                       >
                         {property?.title}
                       </Typography>
@@ -381,7 +381,7 @@ function RealEstatesPage() {
                       <Button 
                       size="small"
                         component={NavLinkAdapter}
-                        to={`/realestate/listings/${property?._id}/${property?.slug}`}
+                        to={`/realestate/listings/${property?.id}/${property?.slug}`}
                       className="bg-orange-500 text-white px-4 py-2 rounded-lg bottom-0 h-[20px]">{`view =>`}</Button>
                     </div>
                   ))}

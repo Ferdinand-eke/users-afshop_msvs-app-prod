@@ -297,6 +297,7 @@ export const getAllBookingsPropertyApi = (filters = {}) => {
   return Api().get(url);
 }; // (Done => Mcsvs)
 
+
 export const getBookingPropertyApi = (bookingPropId) =>
   Api().get(`/bookings/guest-listing/${bookingPropId}/view`);// (Done => Mcsvs) 
 
@@ -319,9 +320,15 @@ export const getBookingPropertyApi = (bookingPropId) =>
  /**=====================================================================================================
  * ESTATES-PROPERTIES ROUTES LISTED BELOW STARTS
  =====================================================================================================*/
-export const getAllEstatessPropertyApi = () => Api().get("/client-estates");
+export const getAllEstatessPropertyApi = (filters = {}) => {
+
+   const queryString = serializeQuery(filters);
+  const url = queryString ? `/estate-properties/get-listings?${queryString}` : `/estate-properties/get-listings`;
+  return Api().get(url);
+  // return  Api().get("/estate-properties/get-listings"); 
+}
 export const getEstatePropertyApi = (estatePropId) =>
-  Api().get(`/client-estates/${estatePropId}`);
+  Api().get(`/estate-properties/guest-listing/${estatePropId}/view`);
 /**====================================================================================================
  * ESTATES-PROPERTIES ROUTES LISTED ENDS HERE 
  ======================================================================================================*/

@@ -43,12 +43,12 @@ function RealEstateSinglePage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
   const routeParams = useParams();
-  const { propertyId } = routeParams;
+  const { propertyId, slug } = routeParams;
   const {
     data: estate,
     isLoading,
     isError,
-  } = useGetEstateProperty(propertyId);
+  } = useGetEstateProperty(slug);
 
  
   if (isLoading) {
@@ -67,7 +67,7 @@ function RealEstateSinglePage() {
     );
   }
 
-  if (!estate?.data?.data) {
+  if (!estate?.data?.propertyListing) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -96,8 +96,8 @@ function RealEstateSinglePage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                   <img
                     src={
-                      estate?.data?.data?.images[0]
-                        ? estate?.data?.data?.images[0]?.url
+                      estate?.data?.propertyListing?.images[0]
+                        ? estate?.data?.propertyListing?.images[0]?.url
                         : "https://placehold.co/600x400"
                     }
                     alt="Indoor pool area"
@@ -105,8 +105,8 @@ function RealEstateSinglePage() {
                   />
                   <img
                     src={
-                      estate?.data?.data?.images[1]
-                        ? estate?.data?.data?.images[1]?.url
+                      estate?.data?.propertyListing?.images[1]
+                        ? estate?.data?.propertyListing?.images[1]?.url
                         : "https://placehold.co/600x400"
                     }
                     alt="Luxurious lobby area"
@@ -128,10 +128,10 @@ function RealEstateSinglePage() {
                     </div>
                   </div>
                   <h1 className="text-2xl font-bold mt-2">
-                    {estate?.data?.data?.title}
+                    {estate?.data?.propertyListing?.title}
                   </h1>
                   <p className="text-gray-600 mt-2">
-                    {estate?.data?.data?.shortDescription}
+                    {estate?.data?.propertyListing?.shortDescription}
                   </p>
                   <div className="flex items-center mt-2">
                     <span className="text-gray-600">Share:</span>
@@ -145,7 +145,7 @@ function RealEstateSinglePage() {
                     fullWidth
                     className="bg-orange-500 text-white px-4 py-2 rounded mt-4"
                   >
-                    {formatCurrency(estate?.data?.data?.price)} 
+                    {formatCurrency(estate?.data?.propertyListing?.price)} 
                   </Button>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
@@ -186,13 +186,13 @@ function RealEstateSinglePage() {
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Description</h2>
                   <p className="text-gray-600 mt-2">
-                    {estate?.data?.data?.description}
+                    {estate?.data?.propertyListing?.description}
                   </p>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Gallery</h2>
                   <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2">
-                    {estate?.data?.data?.images?.map((img) => (
+                    {estate?.data?.propertyListing?.images?.map((img) => (
                       <img
                         src={img?.url}
                         alt="Gallery image 1"

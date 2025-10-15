@@ -14,30 +14,19 @@ import DocumentationConfig from "../main/documentation/DocumentationConfig";
 import authRoleExamplesConfigs from "../main/auth/authRoleExamplesConfigs";
 import UsersAppConfig from "../main/users/user/UsersAppConfig";
 import StaffAppConfig from "../main/users/admin/StaffAppConfig";
-import PropertiesAppConfig from "../main/properties/listings/PropertiesAppConfig";
-import ServiceTypesAppConfig from "../main/homes/servicetypes/ServiceTypesAppConfig";
-import ManagedListingsAppConfig from "../main/homes/managedproperties/ManagedListingsAppConfig";
-import PropertyTypesAppConfig from "../main/homes/propertytypes/PropertyTypesAppConfig";
 import SignAcceptInviteConfig from "../main/sign-accept-invite/SignAcceptInviteConfig";
-// import ManagedUserListingsAppConfig from "../main/homes/managedusersandproperties/ManagedUserListingsAppConfig";
-// import ShopDashboardAppConfig from "../main/vendors-shop/dasboard/ShopDashboardAppConfig";
-// import ShopProductsAppConfig from "../main/vendors-shop/products/ShopProductsAppConfig";
-// import ShopOrdersAppConfig from "../main/vendors-shop/orders/ShopOrdersAppConfig";
+
 import SupportHelpCenterAppConfig from "../main/vendors-shop/support-center/SupportHelpCenterAppConfig";
 import AfricanshopsFinanceDashboardAppConfig from "../main/africanshops-finance/AfricanshopsFinanceDashboardAppConfig";
 import AfricanshopsMessengerAppConfig from "../main/africanshops-messenger/AfricanshopsMessengerAppConfig";
 import forgotPasswordConfig from "../main/sign-forgot-password/forgotPasswordPagesConfig";
 import resetPasswordConfig from "../main/sign-reset-password/resetPasswordPagesConfig";
-// import merchantProfileAppConfig from "../main/vendors-shop/profile/merchantProfileAppConfig";
-// import SettingsAppConfig from "../main/vendors-shop/settings/SettingsAppConfig";
-// import ShopsPosAppConfig from "../main/vendors-shop/pos/ShopsPosAppConfig";
+
 import blogAppConfig from "../main/newsblog/blogAppConfig";
 import HomeAppConfig from "../main/vendors-shop/home/HomeAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
 import LandingCenterHome from "../main/vendors-shop/home/home/LandingCenterHome";
-import MerchantMailboxAppConfig from "../main/vendors-shop/mailbox/MerchantMailboxAppConfig";
-import ManagedBookingsListingsAppConfig from "../main/hotelsandapartments/managed-booking-listings/ManagedBookingsListingsAppConfig";
-import ManagedFoodMartsAppConfig from "../main/vendor-foodmarts/managed-foood-mart/ManagedFoodMartsAppConfig";
+import MerchantMailboxAppConfig from "../main/vendors-shop/mailbox/MerchantMailboxAppConfig";import ManagedFoodMartsAppConfig from "../main/vendor-foodmarts/managed-foood-mart/ManagedFoodMartsAppConfig";
 import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
 import SingleProduct from "../main/zrootclient/buz-marketplace/shops/SingleProduct";
 import Cart from "../main/zrootclient/buz-marketplace/shops/Cart";
@@ -67,6 +56,8 @@ import FoodMartSingleMenuWithContentScrollPage from "../main/zrootclient/buz-foo
 import SingleProductWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/singleProductPage/SingleProductWithContentScrollPage";
 import MarketplaceProductsByCatWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/marketplaceProductsByCat/MarketplaceProductsByCatWithContentScrollPage";
 import MerchantShopPafeWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/merchanyShopPage/MerchantShopPafeWithContentScrollPage";
+import RealestatePageWithSidebarsContentScrollComponent from "../main/zrootclient/buz-realestates/realestatePage/RealestatePageWithSidebarsContentScrollComponent";
+import RealestateSinglePageWithSidebarsContentScroll from "../main/zrootclient/buz-realestates/realestateSinglePage/RealestateSinglePageWithSidebarsContentScroll";
 // import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
 
 
@@ -100,18 +91,13 @@ const routeConfigs = [
    * */
   // UsersAppConfig,
   // StaffAppConfig,
-  // PropertiesAppConfig,
-  // ServiceTypesAppConfig,
 
 
-  /*****Estates Homes and estate management */
-  // ManagedListingsAppConfig,
 
   /******Hotels, apartment and suites management */
   // ManagedBookingsListingsAppConfig,
 
-  // PropertyTypesAppConfig,
-  // ManagedUserListingsAppConfig,
+
   /*****Food Mart (Restaurants, Bakeries etc) */
   // ManagedFoodMartsAppConfig,
 
@@ -523,11 +509,12 @@ const routes = [
         },
       },
     },
-    element: <RealEstatesPage />,
+    // element: <RealEstatesPage />,
+    element: <RealestatePageWithSidebarsContentScrollComponent />,
   },
 
   {
-    path: "/realestate/listings/:propertyId/:slug",
+    path: "/realestate/listings/:slug/view",
     settings: {
       layout: {
         config: {
@@ -549,7 +536,8 @@ const routes = [
         },
       },
     },
-    element: <RealEstateSinglePage />,
+    // element: <RealEstateSinglePage />,
+    element: <RealestateSinglePageWithSidebarsContentScroll />,
   },
 
   /****
