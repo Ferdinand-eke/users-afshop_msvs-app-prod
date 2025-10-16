@@ -1,7 +1,7 @@
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { Typography } from "@mui/material";
 import { Marker, Popup } from "react-leaflet";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 function Pin({ item }) {
 

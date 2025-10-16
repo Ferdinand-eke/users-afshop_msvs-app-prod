@@ -22,7 +22,7 @@ import {
   useParams,
 } from "react-router";
 import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import CategoryAndTradehub from "./components/CategoryAndTradehub";
 import { use } from "react";

@@ -1,6 +1,6 @@
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { Typography } from "@mui/material";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 const ReservationCard = ({ placedReservation }) => {
  

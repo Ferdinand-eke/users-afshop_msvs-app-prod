@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { Button, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 import ReservationCard from "../../../bookings-components/ReservationCard";
 import { differenceInCalendarDays } from "date-fns";

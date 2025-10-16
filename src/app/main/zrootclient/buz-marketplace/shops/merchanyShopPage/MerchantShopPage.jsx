@@ -19,7 +19,7 @@ import {
   getQueryShopProductsById,
   getShopAndProductById,
 } from "app/configs/data/client/RepositoryClient";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "../../../components/ClienttErrorPage";
 
 const container = {

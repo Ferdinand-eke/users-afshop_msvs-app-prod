@@ -22,7 +22,7 @@ import { useParams } from "react-router";
 import {
   formatCurrency,
   generateClientUID,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+} from "src/app/main/vendors-shop/PosUtils";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";

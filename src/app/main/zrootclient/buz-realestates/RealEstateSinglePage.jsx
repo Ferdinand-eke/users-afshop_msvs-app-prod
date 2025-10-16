@@ -15,7 +15,7 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { useParams } from "react-router";
 import { useGetEstateProperty } from "app/configs/data/server-calls/auth/userapp/a_estates/useEstatePropertiesRepo";
-import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
+import { formatCurrency } from "../../vendors-shop/PosUtils";
 import ClienttErrorPage from "../components/ClienttErrorPage";
 
 const container = {

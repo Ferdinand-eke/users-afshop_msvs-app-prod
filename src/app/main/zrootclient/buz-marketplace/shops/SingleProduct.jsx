@@ -25,7 +25,7 @@ import {
   formatCurrency,
   getShoppingSession,
   storeShoppingSession,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+} from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { useAppSelector } from "app/store/hooks";

@@ -5,7 +5,7 @@ import { useEffect, useState } from "react";
 
 import { Button, Icon, Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 import { useGetRCSMenuItems } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import { BsArrowBarRight } from "react-icons/bs";

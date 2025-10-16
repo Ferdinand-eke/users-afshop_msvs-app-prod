@@ -18,7 +18,7 @@ import { useGetUserSingleTrip, useUserTrips } from "app/configs/data/server-call
 import ReservationCard from "../bookings-components/ReservationCard";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { useParams } from "react-router";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 const container = {
   show: {

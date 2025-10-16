@@ -1,7 +1,7 @@
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { Button, Typography } from "@mui/material";
 import { useRequestRefundForUserCancelledReservation } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 const CancelledReservationCard = ({ placedReservation }) => {
   const requestReservation = useRequestRefundForUserCancelledReservation();

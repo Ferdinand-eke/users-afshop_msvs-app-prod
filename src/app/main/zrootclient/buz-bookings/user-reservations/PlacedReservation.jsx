@@ -1,4 +1,4 @@
-import { formatCurrency, formatDateUtil } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency, formatDateUtil } from "src/app/main/vendors-shop/PosUtils";
 
 /**
  * PlacedReservation Component

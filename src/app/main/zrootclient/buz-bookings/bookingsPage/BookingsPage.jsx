@@ -16,7 +16,7 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
-import { formatCurrency } from "../../../vendors-shop/pos/PosUtils";
+import { formatCurrency } from "../../../vendors-shop/PosUtils";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";

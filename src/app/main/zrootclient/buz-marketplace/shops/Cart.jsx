@@ -22,7 +22,7 @@ import {
 import {
   calculateCartTotalAmount,
   formatCurrency,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+} from "src/app/main/vendors-shop/PosUtils";
 import {
   useGetMyMarketplaceCartByUserCred,
   useMyCart,

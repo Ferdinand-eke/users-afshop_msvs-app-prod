@@ -4,7 +4,7 @@ import { Button, Skeleton, Typography } from "@mui/material";
 import RecommendedHead from "./bookingshubcomponents/RecommendedHead";
 import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 

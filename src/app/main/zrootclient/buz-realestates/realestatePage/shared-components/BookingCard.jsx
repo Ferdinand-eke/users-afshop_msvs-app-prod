@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Typography, IconButton, Button } from '@mui/material';
 import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from '@mui/icons-material';
 import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
-import { formatCurrency } from 'src/app/main/vendors-shop/pos/PosUtils';
+import { formatCurrency } from 'src/app/main/vendors-shop/PosUtils';
 
 /**
  * BookingCard Component

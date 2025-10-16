@@ -15,7 +15,7 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import { useNavigate, useParams } from "react-router";
 import { useGetBookingProperty } from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
-import { formatCurrency } from "../../../vendors-shop/pos/PosUtils";
+import { formatCurrency } from "../../../vendors-shop/PosUtils";
 import DetailsRight from "../bookings-components/DetailsRight";
 import {
   useCreateReservation,

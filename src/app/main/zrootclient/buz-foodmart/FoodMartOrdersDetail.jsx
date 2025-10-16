@@ -15,7 +15,7 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { useParams } from "react-router";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import { useGetAuthUserFoodOrdersAndItems } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import ClienttErrorPage from "../components/ClienttErrorPage";
 import UserAccountLeads from "../components/UserAccountLeads";

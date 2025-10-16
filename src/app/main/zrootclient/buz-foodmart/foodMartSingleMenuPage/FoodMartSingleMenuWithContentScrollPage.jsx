@@ -19,7 +19,7 @@ import useGetAllFoodMarts, { useAddToFoodCart, useGetMyFoodCart, useGetMyFoodCar
 import { useNavigate, useParams } from 'react-router';
 import { useAppSelector } from 'app/store/hooks';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
-import { getFoodVendorSession, storeFoodVendorSession } from 'src/app/main/vendors-shop/pos/PosUtils';
+import { getFoodVendorSession, storeFoodVendorSession } from 'src/app/main/vendors-shop/PosUtils';
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	

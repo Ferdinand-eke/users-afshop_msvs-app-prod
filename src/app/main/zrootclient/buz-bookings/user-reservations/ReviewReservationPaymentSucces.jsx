@@ -14,7 +14,7 @@ import { useParams } from "react-router";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { useAppSelector } from "app/store/hooks";
 import { selectFuseCurrentLayoutConfig } from "@fuse/core/FuseSettings/fuseSettingsSlice";
-import { formatDateUtil } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatDateUtil } from "src/app/main/vendors-shop/PosUtils";
 import PaymentSuccessful from "./PaymentSuccessful";
 
 const container = {

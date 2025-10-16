@@ -1,7 +1,7 @@
 import * as React from "react";
 import { Box, Button, Drawer, Typography, IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import RoomAvailableDatesPage from "./RoomAvailableDatesPage";
 
 export const ListingRooms = ({ rooms, propertyId, merchantId }) => {

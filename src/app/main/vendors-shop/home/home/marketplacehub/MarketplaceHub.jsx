@@ -4,7 +4,7 @@ import { Skeleton, Typography } from "@mui/material";
 import RecommendedHead from "./marketplacehubcomponents/RecommendedHead";
 import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 function MarketplaceHub() {
   const { data: allProducts, isLoading, isError } = useGetAllProducts();

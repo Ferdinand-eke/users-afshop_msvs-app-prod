@@ -12,7 +12,7 @@ import {
   generateClientUID,
   getFoodVendorSession,
   getShoppingSession,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+} from "src/app/main/vendors-shop/PosUtils";
 const FoodCartSummaryAndPay = ({
   intemsInCart,
   methodOfPay,

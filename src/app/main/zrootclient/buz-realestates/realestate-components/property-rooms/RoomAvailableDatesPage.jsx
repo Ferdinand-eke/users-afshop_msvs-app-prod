@@ -28,7 +28,7 @@ import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { useNavigate } from "react-router";
 import { Calender } from "../calender";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 /**
  * The activities page.
  */

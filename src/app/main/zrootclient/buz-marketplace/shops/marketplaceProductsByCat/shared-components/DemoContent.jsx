@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 // import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 
 /**

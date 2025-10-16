@@ -10,7 +10,7 @@ import {
   formatCurrency,
   generateClientUID,
   getShoppingSession,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+} from "src/app/main/vendors-shop/PosUtils";
 const CartSummaryAndPay = ({
   cartSessionPayload,
   methodOfPay,

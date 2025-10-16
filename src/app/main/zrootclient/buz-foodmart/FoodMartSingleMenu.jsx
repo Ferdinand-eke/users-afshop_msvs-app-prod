@@ -15,7 +15,7 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { useNavigate, useParams } from "react-router";
-import { formatCurrency, getFoodVendorSession, storeFoodVendorSession } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency, getFoodVendorSession, storeFoodVendorSession } from "src/app/main/vendors-shop/PosUtils";
 import { useAddToFoodCart, useGetMyFoodCart, useGetMyFoodCartByUserCred, useGetSingleMenuItem } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import ClienttErrorPage from "../components/ClienttErrorPage";
 import { selectUser } from "src/app/auth/user/store/userSlice";

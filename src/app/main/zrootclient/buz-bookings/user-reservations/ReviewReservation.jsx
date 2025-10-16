@@ -19,7 +19,7 @@ import {
   formatCurrency,
   formatDateUtil,
   generateClientUID,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+} from "src/app/main/vendors-shop/PosUtils";
 import { format } from "date-fns";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { useForm } from "react-hook-form";

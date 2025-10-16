@@ -14,7 +14,7 @@ import {
   useTheme,
 } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 import siteStyle from "@fuse/sitestaticdata/siteStyle";
 import { Link } from "react-router-dom";

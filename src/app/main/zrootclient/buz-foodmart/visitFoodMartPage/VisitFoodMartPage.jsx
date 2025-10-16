@@ -16,7 +16,7 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { Link, useParams } from "react-router-dom";
 import { useGetMartMenu } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
-import { formatCurrency } from "../../../vendors-shop/pos/PosUtils";
+import { formatCurrency } from "../../../vendors-shop/PosUtils";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import FoodMartMapSingle from "../components/maps/FoodMartMapSingle";
 

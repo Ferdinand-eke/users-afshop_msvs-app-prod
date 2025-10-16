@@ -15,7 +15,7 @@ import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllEstateProperties from "app/configs/data/server-calls/auth/userapp/a_estates/useEstatePropertiesRepo";
-import { formatCurrency } from "../../vendors-shop/pos/PosUtils";
+import { formatCurrency } from "../../vendors-shop/PosUtils";
 import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 import { Controller, useForm } from "react-hook-form";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";

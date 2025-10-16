@@ -3,7 +3,7 @@ import { Button, Skeleton, Typography } from "@mui/material";
 
 import RecommendedHead from "./rcshubcomponents/RecommendedHead";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/pos/PosUtils";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import useGetAllFoodMarts from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 
