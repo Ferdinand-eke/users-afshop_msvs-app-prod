@@ -3,7 +3,7 @@ import FusePageCarded from '@fuse/core/FusePageCarded';
 import { useEffect, useState } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from '../../shared-components/DemoHeader';
-import DemoContent from '../../shared-components/DemoContent';
+import DemoContent from '../../shared-components/DemoContentSingleProduct';
 import DemoSidebar from '../../shared-components/DemoSidebar';
 
 const Root = styled(FusePageCarded)(() => ({

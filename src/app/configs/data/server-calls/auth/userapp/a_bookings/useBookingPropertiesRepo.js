@@ -10,7 +10,7 @@ export default function useGetAllBookingProperties(filters = {}) {
             staleTime: 20000, // Consider data fresh for 20 seconds
         }
     );
-}
+} //(Msvs => Done)
 
 
 

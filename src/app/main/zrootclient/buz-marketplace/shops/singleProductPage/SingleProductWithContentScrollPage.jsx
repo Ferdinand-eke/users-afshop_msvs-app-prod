@@ -3,7 +3,7 @@ import FusePageSimple from "@fuse/core/FusePageSimple";
 import { useCallback, useEffect, useState } from "react";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import DemoHeader from "./shared-components/DemoHeader";
-import DemoContent from "./shared-components/DemoContent";
+import DemoContentSingleProduct from "./shared-components/DemoContentSingleProduct";
 import DemoSidebar from "./shared-components/DemoSidebar";
 import DemoSidebarRight from "./shared-components/DemoSidebarRight";
 import FusePageSimpleWithMargin from "@fuse/core/FusePageSimple/FusePageSimpleWithMargin";
@@ -13,27 +13,27 @@ import useGetAllProducts, {
   useGetSingleProduct,
   useMyCart,
 } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
-import { useForm } from "react-hook-form";
-import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-import {
-  getLgasByStateId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
-import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
-import useGetAllFoodMarts, {
-  useAddToFoodCart,
-  useGetMyFoodCartByUserCred,
-  useGetSingleMenuItem,
-} from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
+// import { useForm } from "react-hook-form";
+// import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
+// import {
+//   getLgasByStateId,
+//   getStateByCountryId,
+// } from "app/configs/data/client/RepositoryClient";
+// import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
+// import useGetAllFoodMarts, {
+//   useAddToFoodCart,
+//   useGetMyFoodCartByUserCred,
+//   useGetSingleMenuItem,
+// } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import { useNavigate, useParams } from "react-router";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
-import {
-  getFoodVendorSession,
-  getShoppingSession,
-  storeFoodVendorSession,
-  storeShoppingSession,
-} from "src/app/main/vendors-shop/pos/PosUtils";
+// import {
+//   getFoodVendorSession,
+//   getShoppingSession,
+//   storeFoodVendorSession,
+//   storeShoppingSession,
+// } from "src/app/main/vendors-shop/pos/PosUtils";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -105,13 +105,7 @@ function SingleProductWithContentScrollPage() {
     //if same add to cart else show error message
 
     if (userCartData?.data?.cartSession?.cartProducts?.length === 0) {
-      // const sessionPayload = {
-      //   shopID: product?.data?.product?.shop?._id,
-      //   shopCountryOrigin: product?.data?.product?.shop?.businessCountry,
-      //   shopStateProvinceOrigin: product?.data?.product?.shop?.businezState,
-      //   shopLgaProvinceOrigin: product?.data?.product?.shop?.businezLga,
-      //   shopMarketId: product?.data?.product?.market,
-      // };
+    
  
       if (userCartData?.data?.cartSession?.lgaId) {
         addToart(formData);
@@ -145,10 +139,6 @@ function SingleProductWithContentScrollPage() {
     <Root
       header={
         <DemoHeader
-          // countries={countries?.data?.data}
-          // stateData={stateData}
-          // blgas={blgas}
-          // methods={methods}
 
           leftSidebarToggle={() => {
             setLeftSidebarOpen(!leftSidebarOpen);
@@ -159,15 +149,12 @@ function SingleProductWithContentScrollPage() {
         />
       }
       content={
-        <DemoContent
+        <DemoContentSingleProduct
           productData={product?.data?.product}
           isLoading={isLoading}
           isError={isError}
           select={select}
           setSelect={setSelect}
-          // onAddToFoodCart={onAddToUserCart}
-          // addFoodCartLoading={loadingCart}
-          // foodCart={ userCartData?.data?.cartItems}
 
           onSubmit={onAddToUserCart}
           loading={cartLoading}

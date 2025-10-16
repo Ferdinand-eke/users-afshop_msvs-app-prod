@@ -16,17 +16,15 @@ import UsersAppConfig from "../main/users/user/UsersAppConfig";
 import StaffAppConfig from "../main/users/admin/StaffAppConfig";
 import SignAcceptInviteConfig from "../main/sign-accept-invite/SignAcceptInviteConfig";
 
-import SupportHelpCenterAppConfig from "../main/vendors-shop/support-center/SupportHelpCenterAppConfig";
+// import SupportHelpCenterAppConfig from "../main/vendors-shop/support-center/SupportHelpCenterAppConfig";
 import AfricanshopsFinanceDashboardAppConfig from "../main/africanshops-finance/AfricanshopsFinanceDashboardAppConfig";
 import AfricanshopsMessengerAppConfig from "../main/africanshops-messenger/AfricanshopsMessengerAppConfig";
 import forgotPasswordConfig from "../main/sign-forgot-password/forgotPasswordPagesConfig";
 import resetPasswordConfig from "../main/sign-reset-password/resetPasswordPagesConfig";
 
 import blogAppConfig from "../main/newsblog/blogAppConfig";
-import HomeAppConfig from "../main/vendors-shop/home/HomeAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
 import LandingCenterHome from "../main/vendors-shop/home/home/LandingCenterHome";
-import MerchantMailboxAppConfig from "../main/vendors-shop/mailbox/MerchantMailboxAppConfig";import ManagedFoodMartsAppConfig from "../main/vendor-foodmarts/managed-foood-mart/ManagedFoodMartsAppConfig";
 import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
 import SingleProduct from "../main/zrootclient/buz-marketplace/shops/SingleProduct";
 import Cart from "../main/zrootclient/buz-marketplace/shops/Cart";
@@ -98,9 +96,6 @@ const routeConfigs = [
   // ManagedBookingsListingsAppConfig,
 
 
-  /*****Food Mart (Restaurants, Bakeries etc) */
-  // ManagedFoodMartsAppConfig,
-
   /***
    * ##############################################################################
    * User management and properties starts
@@ -112,17 +107,11 @@ const routeConfigs = [
    * Africanshops Dashboard Configs Starts Here
    * #########################################################################################
    * */
-  // ShopDashboardAppConfig,
-  // ShopProductsAppConfig,
-  // ShopOrdersAppConfig,
-  SupportHelpCenterAppConfig,
+  // SupportHelpCenterAppConfig,
   AfricanshopsFinanceDashboardAppConfig,
   AfricanshopsMessengerAppConfig,
-  // merchantProfileAppConfig,
-  MerchantMailboxAppConfig,
 
   // SettingsAppConfig,
-  // ShopsPosAppConfig,
   UserSettingsAppConfig,
   userProfileAppConfig,
 
@@ -183,8 +172,6 @@ const routeConfigs = [
    * Start of Un-Authenticated pages are listed below here
    * #######################################################################
    */
-  //   HomeAppConfig,
-  HomeAppConfig,
   blogAppConfig,
 
   /****

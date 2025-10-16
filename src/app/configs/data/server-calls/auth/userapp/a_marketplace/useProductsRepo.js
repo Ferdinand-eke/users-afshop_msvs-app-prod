@@ -26,8 +26,18 @@ import { toast } from "react-toastify";
  * GUEST PRODUCT HANDLING STARTS HERE
  * #################################################################
  */
-export default function useGetAllProducts() {
-  return useQuery(["__marketplace_products"], getAllProducts);
+
+export default function useGetAllProducts(filters = {}) {
+  // return useQuery(["__marketplace_products"], getAllProducts);
+  console.log("Filtes in Get-All-Producst", filters)
+  return useQuery(
+          ['__marketplace_products', filters],
+          () => getAllProducts(filters),
+          {
+              keepPreviousData: true, // Keep showing previous data while fetching new filtered data
+              staleTime: 20000, // Consider data fresh for 20 seconds
+          }
+      );
 } //(Msvs => Done)
 
 export function useGetProductByCategory(category) {
@@ -48,7 +58,7 @@ export function useGetSingleProduct(productSlug) {
   //   return {};
   // }
   return useQuery(
-    ["__marketplace_products", productSlug],
+    ["__marketplace_products_byslug", productSlug],
     () => getProductById(productSlug),
     {
       enabled: Boolean(productSlug),

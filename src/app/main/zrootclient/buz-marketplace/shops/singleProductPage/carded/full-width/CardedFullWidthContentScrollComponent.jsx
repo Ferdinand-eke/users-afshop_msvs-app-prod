@@ -1,7 +1,7 @@
 import { styled } from '@mui/material/styles';
 import FusePageCarded from '@fuse/core/FusePageCarded';
 import DemoHeader from '../../shared-components/DemoHeader';
-import DemoContent from '../../shared-components/DemoContent';
+import DemoContent from '../../shared-components/DemoContentSingleProduct';
 
 const Root = styled(FusePageCarded)({
 	'& .FusePageCarded-header': {},

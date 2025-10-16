@@ -154,7 +154,6 @@ export const getFeaturedMarketCategories = () =>
 export const getApiGenders = () => Api().get("/genders");
 
 //========================================Product Routes===============================================================
-// export const getProducts = () => Api().get('/clientusersproducts');
 
 export const getProducts = (
   name = "",
@@ -170,8 +169,13 @@ export const getProducts = (
     `/clientusersproducts?name=${name}&pageNumber=${pageNumber}&seller=${seller}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
   );
 
-export const getAllProducts = () => Api().get(`/products`);  //(Msvs => Done)
 
+export const getAllProducts = (filters = {}) =>  {
+  // Api().get(`/products`);  
+    const queryString = serializeQuery(filters);
+  const url = queryString ? `/products?${queryString}` : `/products`;
+  return Api().get(url);
+}//(Msvs => Done)
 
 export const getProductById = (id) => Api().get(`/products/${id}/view`);
 export const getProductByCategory = (category) =>

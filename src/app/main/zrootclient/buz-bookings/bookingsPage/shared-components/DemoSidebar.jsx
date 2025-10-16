@@ -10,7 +10,6 @@ function DemoSidebar({ onFilterChange }) {
 
       <FilterList onFilterChange={onFilterChange} />
 
-     
       
     </div>
    </>

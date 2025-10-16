@@ -151,14 +151,7 @@ function BookingsSinglePageWithSidebarsContentScroll() {
       merchantId: booking?.data?.listing?.shop
     };
 
-    //         const formData = {
-    //   totalPrice,
-    //   startDate: parseDateString(dateRange?.startDate),
-    //   endDate: parseDateString(dateRange?.endDate),
-    //   listingId: propertyId,
-    //   roomOnPropertyId: roomId,
-    //   merchantId: merchantId,
-    // };
+  
 
    
      return createReservation(formData);

@@ -3,7 +3,6 @@ import Button from '@mui/material/Button';
 import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
 import { useContext } from 'react';
 import { ChatAppContext } from './MessengerApp';
-import VendorModernReversedComingSoonPage from '../vendors-shop/vendorcomingsoon/VendorModernReversedComingSoonPage';
 
 /**
  * The chat first screen.
