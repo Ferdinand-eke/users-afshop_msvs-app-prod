@@ -1,5 +1,5 @@
 import { useForm, Controller } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+// import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useState } from "react";
 import { z } from "zod";
 import _ from "@lodash";
@@ -15,23 +15,8 @@ import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import useJwtAuth from "../useJwtAuth";
 import { toast } from "react-toastify";
-/**
- * Form Validation Schema
- */
-const schema = z.object({
-  //   email: z
-  //     .string()
-  //     .email("You must enter a valid email")
-  //     .nonempty("You must enter an email"),
-  email: z
-    .string()
-    .email("You must enter a valid email")
-    .nonempty("You must enter an email"),
-  password: z
-    .string()
-    .min(4, "Password is too short - must be at least 4 chars.")
-    .nonempty("Please enter your password."),
-});
+
+
 const defaultValues = {
 
   email: "",
@@ -47,7 +32,6 @@ function JwtSignInForm() {
   const { control, formState, handleSubmit, setValue, setError } = useForm({
     mode: "onChange",
     defaultValues,
-    resolver: zodResolver(schema),
   });
   const { isValid, dirtyFields, errors } = formState;
 
