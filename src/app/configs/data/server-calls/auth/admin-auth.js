@@ -3,6 +3,7 @@ import config from "../../../../auth/services/jwt/jwtAuthConfig";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import Cookie from "js-cookie";
+import { getSessionRedirectUrl, resetSessionRedirectUrl } from "@fuse/core/FuseAuthorization/sessionRedirectUrl";
 
 import { toast } from "react-toastify";
 
@@ -16,8 +17,7 @@ export function useShopAdminLogin() {
   return useMutation(clientSigin, {
     onSuccess: (data) => {
       console.log("LoginData", data);
-      if (data?.data?.user && data?.data?.userAccessToken
-) {
+      if (data?.data?.user && data?.data?.userAccessToken) {
         /**============================================================================== */
 
         const transFormedUser = {
@@ -28,18 +28,15 @@ export function useShopAdminLogin() {
           avatar: data?.data?.user?.avatar,
         };
 
-        
-
-        if (data?.data?.userAccessToken
-) {
-          localStorage.setItem(config.tokenStorageKey, data?.data?.userAccessToken
-);
-          axios.defaults.headers.common.accessToken = `${data?.data?.userAccessToken
-}`;
+        if (data?.data?.userAccessToken) {
+          localStorage.setItem(
+            config.tokenStorageKey,
+            data?.data?.userAccessToken
+          );
+          axios.defaults.headers.common.accessToken = `${data?.data?.userAccessToken}`;
         }
 
-        if (isTokenValid(data?.data?.userAccessToken
-)) {
+        if (isTokenValid(data?.data?.userAccessToken)) {
           localStorage.setItem(config.isAuthenticatedStatus, true);
         } else {
           localStorage.setItem(config.isAuthenticatedStatus, false);
@@ -95,6 +92,17 @@ const setUserCredentialsStorage = (userCredentials) => {
   );
 
   if (setUserCookie) {
-    window.location.reload();
+    // Get the redirect URL from session storage
+    const redirectUrl = getSessionRedirectUrl();
+
+    if (redirectUrl) {
+      // Clear the redirect URL from session storage
+      resetSessionRedirectUrl();
+      // Redirect to the stored URL
+      window.location.href = redirectUrl;
+    } else {
+      // Default behavior: reload to home page
+      window.location.reload();
+    }
   }
 };

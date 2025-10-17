@@ -12,6 +12,7 @@ import { useSnackbar } from "notistack";
 import Cookie from "js-cookie";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
+import { getSessionRedirectUrl, resetSessionRedirectUrl } from "@fuse/core/FuseAuthorization/sessionRedirectUrl";
 // import { useAdminLogin } from "app/configs/data/server-calls/merchant-auth";
 import { useShopAdminLogin } from "app/configs/data/server-calls/auth/admin-auth";
 
@@ -121,15 +122,27 @@ function JwtAuthProvider(props) {
   /**
    * Handle sign-in success
    */
- 
+
   const handleSignInSuccess = useCallback((userData, accessToken) => {
     setSession(accessToken);
     setIsAuthenticated(setIsAthenticatedStorage(accessToken));
 
- 
+
     setUserCredentialsStorage(userData);
-    window.location.reload();
- 
+
+    // Get the redirect URL from session storage
+    const redirectUrl = getSessionRedirectUrl();
+
+    if (redirectUrl) {
+      // Clear the redirect URL from session storage
+      resetSessionRedirectUrl();
+      // Redirect to the stored URL
+      window.location.href = redirectUrl;
+    } else {
+      // Default behavior: reload to home page
+      window.location.reload();
+    }
+
   }, []); /**here is where token is stored */
   /**
    * Handle sign-up success
@@ -277,17 +290,11 @@ function JwtAuthProvider(props) {
     //  handleFailure,
     handleSignInFailure
   ) => {
-  
-    
     try {
-      // setLoginIsLoading(true);
-        setIsLoading(true);
       adminLogIn.mutate(data);
-      // setLoginIsLoading(false);
-        setIsLoading(false);
     } catch (error) {
       const axiosError = error;
-    
+
       toast.error(
         error?.response && error?.response?.data?.message
           ? error?.response?.data?.message
@@ -295,8 +302,6 @@ function JwtAuthProvider(props) {
       );
 
       handleSignInFailure(axiosError);
-      // setLoginIsLoading(false);
-      setIsLoading(false);
       return axiosError;
     }
   };
@@ -410,7 +415,7 @@ function JwtAuthProvider(props) {
       user,
       isAuthenticated,
       authStatus,
-      isLoading,
+      isLoading: isLoading || adminLogIn.isLoading,
       isLoginLoading,
       signIn,
       signUp,
@@ -424,6 +429,7 @@ function JwtAuthProvider(props) {
       isAuthenticated,
       isLoading,
       isLoginLoading,
+      adminLogIn.isLoading,
       signIn,
       signUp,
       signOut,

@@ -107,8 +107,8 @@ function LandingCenterHome() {
         </Box>
       </ThemeProvider>
 
-      <div className="flex flex-col items-center px-24 sm:px-40 mb-24">
-        <div className=" gap-y-32 md:gap-y-0 md:gap-x-24 w-full max-w-sm md:max-w-4xl -mt-64 sm:-mt-120 z-999">
+      <div className="flex flex-col items-center px-8 md:px-16 lg:px-24 mb-24">
+        <div className=" gap-y-32 md:gap-y-0 md:gap-x-24 w-full max-w-7xl -mt-64 sm:-mt-120 z-999">
           <div className=" flex flex-col  container mx-auto p-4">
             <div className="grid grid-cols-1 md:grid-cols-12 gap-4 h-[350px] mb-64 md:mb-8">
               <div
@@ -123,14 +123,16 @@ function LandingCenterHome() {
                   {/* <h1 className="text-4xl font-bold text-black font-mono absolute">
                     Fresh Deals
                   </h1> */}
-                  <Carousel 
+                  <Carousel
                   autoPlay={true}
-                  // centerMode={true}
-                  // dynamicHeight={true}
                   infiniteLoop={true}
+                  interval={5000}
                   showIndicators={true}
+                  showStatus={false}
                   showThumbs={false}
-                  // className="h-[250px]"
+                  transitionTime={600}
+                  swipeable={true}
+                  emulateTouch={true}
                   >
                     <div>
                       <img
@@ -252,12 +254,16 @@ function LandingCenterHome() {
         </div>
       </div>
 
-      <div className="flex flex-col w-full px-16 items-center my-8">
-        <BookingsHub />
+      <div className="flex flex-col w-full items-center my-16">
+        <div className="w-full max-w-7xl px-8 md:px-16 lg:px-24">
+          <BookingsHub />
+        </div>
       </div>
 
-      <div className="flex flex-col w-full px-16 items-center my-8">
-        <RestaurantAndSpotsHub />
+      <div className="flex flex-col w-full items-center my-16">
+        <div className="w-full max-w-7xl px-8 md:px-16 lg:px-24">
+          <RestaurantAndSpotsHub />
+        </div>
       </div>
 
       <div className="flex flex-col w-full px-16 items-center my-16">

@@ -1,12 +1,16 @@
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { z } from "zod";
 import _ from "@lodash";
 import TextField from "@mui/material/TextField";
 import FormControl from "@mui/material/FormControl";
 import FormControlLabel from "@mui/material/FormControlLabel";
 import Checkbox from "@mui/material/Checkbox";
+import IconButton from "@mui/material/IconButton";
+import InputAdornment from "@mui/material/InputAdornment";
+import Visibility from "@mui/icons-material/Visibility";
+import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import { Link } from "react-router-dom";
 import Button from "@mui/material/Button";
 import useJwtAuth from "../useJwtAuth";
@@ -38,12 +42,18 @@ const defaultValues = {
 
 function JwtSignInForm() {
   const { signIn, isLoading } = useJwtAuth();
+  const [showPassword, setShowPassword] = useState(false);
+
   const { control, formState, handleSubmit, setValue, setError } = useForm({
     mode: "onChange",
     defaultValues,
     resolver: zodResolver(schema),
   });
   const { isValid, dirtyFields, errors } = formState;
+
+  const handleClickShowPassword = () => {
+    setShowPassword(!showPassword);
+  };
 
 
   function onSubmit(formData) {
@@ -92,12 +102,26 @@ function JwtSignInForm() {
             {...field}
             className="mb-24"
             label="Password"
-            type="password"
+            type={showPassword ? "text" : "password"}
             error={!!errors.password}
             helperText={errors?.password?.message}
             variant="outlined"
             required
             fullWidth
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="end">
+                  <IconButton
+                    aria-label="toggle password visibility"
+                    onClick={handleClickShowPassword}
+                    onMouseDown={(e) => e.preventDefault()}
+                    edge="end"
+                  >
+                    {showPassword ? <VisibilityOff /> : <Visibility />}
+                  </IconButton>
+                </InputAdornment>
+              ),
+            }}
           />
         )}
       />

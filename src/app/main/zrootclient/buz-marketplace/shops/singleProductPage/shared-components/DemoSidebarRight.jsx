@@ -122,26 +122,7 @@ function DemoSidebarRight(props) {
         {/* SELLER INFORMATION Section - Enhanced Card */}
         <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border-2 border-gray-100 overflow-hidden">
           {/* Header with Badge */}
-          {/* <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-6 py-5">
-            <div className="flex items-center justify-between">
-              <div className="flex items-center gap-3">
-                <div className="bg-white p-2 rounded-lg shadow-md">
-                  <i className="fas fa-store text-orange-600 text-xl"></i>
-                </div>
-                <Typography
-                  className="text-white font-bold text-xl tracking-wide"
-                  component={NavLinkAdapter}
-                  to={`/marketplace/merchant/${productInfo?.shop?._id}/portal`}
-                >
-                  SELLER PROFILE
-                </Typography>
-              </div>
-              <FuseSvgIcon className="text-white hover:scale-110 transition-transform cursor-pointer">
-                heroicons-outline:arrow-sm-right
-              </FuseSvgIcon>
-            </div>
-          </div> */}
-
+          
           {/* Seller Details */}
           <div className="p-6">
             {/* Store Name & Badge */}

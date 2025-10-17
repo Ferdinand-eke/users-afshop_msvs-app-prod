@@ -4,6 +4,7 @@ import { ListingReservation } from "./reservationreview";
 import { ListingRooms } from "./property-rooms/ListingRooms";
 import RealtorProfile from "./RealtorProfile";
 import GlobalChat from "./GlobalChat";
+import PropertyInteractionCard from "./PropertyInteractionCard";
 
 
 const DetailsRight = React.memo(
@@ -12,22 +13,22 @@ const DetailsRight = React.memo(
   }) => {
     const [isChatOpen, setIsChatOpen] = useState(false);
 
-    // const Map = useMemo(
-    //   () => lazy(() => import("../bookings-components/map")),
-    //   [locationValue]
-    // );
-
-
 
     return (
-      <div>
+      <div className="space-y-4">
 
         {/* Realtor Profile Component */}
         <RealtorProfile realtor={listing?.realtor} />
 
+        {/* Property Interaction Card */}
+        <PropertyInteractionCard
+          propertyData={listing}
+          realtorInfo={listing?.realtor}
+        />
+
         {/* {coordinates && <Map center={coordinates} />} */}
 
-       
+
       </div>
     );
   }
