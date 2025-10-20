@@ -75,9 +75,34 @@ export const API_ENDPOINTS = {
   UPDATE_CART_QTY: "/cart-session/update-cart-item",
   REMOVE_CART_ITEM: "/cart/remove-item",
 
-  PAY_AND_PLACE_ORDER: "/paystack-payment/verify-and-create-marketplace-order"  //(Msvs => Done)
+  PAY_AND_PLACE_ORDER: "/paystack-payment/verify-and-create-marketplace-order",  //(Msvs => Done)
   /******
    * ########################FOOD MART APP SERVER_URLs EDNs Here===========
+   * ----------------------------------------------------------------------------------------------
+   */
+
+  /******
+   * ############INSPECTION SCHEDULES APP SERVER_URLs Start Here##############
+   */
+  CREATE_INSPECTION_SCHEDULE: "/inspection-schedules/create",
+  GET_MY_INSPECTION_SCHEDULES: "/inspection-schedules/my-schedules",
+  GET_MY_INSPECTION_SCHEDULES_CALENDAR: "/inspection-schedules/my-calendar",
+  CANCEL_INSPECTION_SCHEDULE: "/inspection-schedules/cancel",
+  RESCHEDULE_INSPECTION: "/inspection-schedules/reschedule",
+  /******
+   * ########################INSPECTION SCHEDULES APP SERVER_URLs ENDs Here===========
+   * ----------------------------------------------------------------------------------------------
+   */
+
+  /******
+   * ############REALESTATE OFFERS APP SERVER_URLs Start Here##############
+   */
+  CREATE_PROPERTY_OFFER: "/realestate-offers/create",
+  GET_MY_OFFERS: "/realestate-offers/my-offers",
+  UPDATE_OFFER_BID: "/realestate-offers/update",
+  WITHDRAW_OFFER: "/realestate-offers/withdraw"
+  /******
+   * ########################REALESTATE OFFERS APP SERVER_URLs ENDs Here===========
    * ----------------------------------------------------------------------------------------------
    */
 };

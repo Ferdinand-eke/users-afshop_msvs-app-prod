@@ -19,6 +19,7 @@ const DetailsRight = React.memo(
 
         {/* Realtor Profile Component */}
         <RealtorProfile realtor={listing?.realtor} />
+        
 
         {/* Property Interaction Card */}
         <PropertyInteractionCard

@@ -56,8 +56,7 @@ import MarketplaceProductsByCatWithContentScrollPage from "../main/zrootclient/b
 import MerchantShopPafeWithContentScrollPage from "../main/zrootclient/buz-marketplace/shops/merchanyShopPage/MerchantShopPafeWithContentScrollPage";
 import RealestatePageWithSidebarsContentScrollComponent from "../main/zrootclient/buz-realestates/realestatePage/RealestatePageWithSidebarsContentScrollComponent";
 import RealestateSinglePageWithSidebarsContentScroll from "../main/zrootclient/buz-realestates/realestateSinglePage/RealestateSinglePageWithSidebarsContentScroll";
-// import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
-
+import userRealEstatePagesConfig from "../main/zrootclient/buz-realestates/realEstatePagesConfig";
 
 // import FoodMartMenu from "../main/zrootclient/buz-foodmart/FoodMartMenu";
 // import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
@@ -90,11 +89,8 @@ const routeConfigs = [
   // UsersAppConfig,
   // StaffAppConfig,
 
-
-
   /******Hotels, apartment and suites management */
   // ManagedBookingsListingsAppConfig,
-
 
   /***
    * ##############################################################################
@@ -121,52 +117,60 @@ const routeConfigs = [
    * ############################################################################################
    * ----------------------------------------------------------------------------------------------------
    * */
-    /****
+  /****
    * #########################################################################################
    * Africanshops BOOKINGS-ROUTES Configs starts Here
    * #########################################################################################
    * */
   userReservationPagesConfig,
-  
-    /****
+
+  /****
    * #########################################################################################
    * Africanshops BOOKINGS-ROUTES Configs ends Here
    * #########################################################################################
    * -------------------------------------------------------------------------------------------------------
    * */
 
-  
-    /****
+  /****
    * #########################################################################################
    * Africanshops MARKET-PLACE_ROUTES Configs starts Here
    * #########################################################################################
    * */
-    userMarketPlacePagesConfig,
-  
-    /****
+  userMarketPlacePagesConfig,
+
+  /****
+   * #########################################################################################
+   * Africanshops MARKET-PLACE-ROUTES Configs ends Here
+   * #########################################################################################
+   * -------------------------------------------------------------------------------------------------------
+   * */
+
+  /****
+   * #########################################################################################
+   * Africanshops RESTAURANTS_CLUBS_&_SPOTS_ROUTES Configs starts Here
+   * #########################################################################################
+   * */
+  userFoodMartPagesConfig,
+
+  /****
    * #########################################################################################
    * Africanshops BOOKINGS-ROUTES Configs ends Here
    * #########################################################################################
    * -------------------------------------------------------------------------------------------------------
    * */
 
-
-        /****
+   /****
    * #########################################################################################
-   * Africanshops MARKET-PLACE_ROUTES Configs starts Here
+   * Africanshops REAL_ESTATE_ROUTES Configs starts Here
    * #########################################################################################
    * */
-        userFoodMartPagesConfig,
-  
-        /****
-       * #########################################################################################
-       * Africanshops BOOKINGS-ROUTES Configs ends Here
-       * #########################################################################################
-       * -------------------------------------------------------------------------------------------------------
-       * */
+  userRealEstatePagesConfig,
+  /****
+   * #########################################################################################
+   * Africanshops REAL_ESTATE_ROUTES Configs ENDS Here
+   * #########################################################################################
+   * */
 
-    
-   
   /****
    *#################################################################################################
    * Start of Un-Authenticated pages are listed below here
@@ -217,9 +221,8 @@ const routes = [
 
   /***Check Pages starts */
 
-
   /***Check Pages ends */
-//
+  //
   {
     path: "/home",
     settings: {
@@ -303,7 +306,6 @@ const routes = [
     element: <MarketplaceWithSidebarsContentScrollComponent />,
   }, //(Msvs => Done)
 
-
   {
     path: "/marketplace/product/:productSlug/view",
     settings: {
@@ -329,9 +331,7 @@ const routes = [
     },
     // element: <SingleProduct />,
     element: <SingleProductWithContentScrollPage />,
-    
   }, //(Msvs => Done)
-
 
   {
     path: "/marketplace/products/:id/by-category",
@@ -359,8 +359,6 @@ const routes = [
     // element: <MarketplaceProductsByCat />,
 
     element: <MarketplaceProductsByCatWithContentScrollPage />,
-
-    
   },
 
   {
@@ -388,11 +386,10 @@ const routes = [
     },
     // element: <MerchantShopPage />,
     element: <MerchantShopPafeWithContentScrollPage />,
-    
   },
 
   //
-   /****
+  /****
    * ##############################################################
    * Marketplace activiies ends
    * ##############################################################
@@ -403,7 +400,7 @@ const routes = [
    * BOOKINGS activities starts
    * ##############################################################
    */
-  
+
   {
     path: "/bookings/listings",
     settings: {
@@ -429,9 +426,7 @@ const routes = [
     },
     // element: <BookingsPage />,
     element: <BookingsPageWithSidebarsContentScrollComponent />,
-  },//(Msvs => Done)
-
-  
+  }, //(Msvs => Done)
 
   {
     path: "/bookings/listings/:bookingId/view",
@@ -458,9 +453,8 @@ const routes = [
     },
     // element: <BookingSinglePage />,
     element: <BookingsSinglePageWithSidebarsContentScroll />,
-  },//(Msvs => Done)
+  }, //(Msvs => Done)
 
-  
   /****
    * ##############################################################
    * BOOKINGS activities ends
@@ -470,7 +464,7 @@ const routes = [
   /**############################################################### */
   /****
    * ##############################################################
-   * REAL-ESTATE activities starts 
+   * REAL-ESTATE activities starts
    * ##############################################################
    */
   {
@@ -534,7 +528,6 @@ const routes = [
    */
   /**############################################################### */
 
-
   //
   /**############################################################### */
   /****
@@ -567,7 +560,6 @@ const routes = [
     },
     // element: <FoodMartsPage />,
     element: <FoodMartWithSidebarsContentScrollPage />, //(Msvs => Done)
-  
   },
 
   {
@@ -595,9 +587,7 @@ const routes = [
     },
     // element: <VisitFoodMartPage />,
     element: <VisitFoodMartWithContentScrollPage />,
-    
   }, //(Mcsvs => Done)
-
 
   {
     path: "/foodmarts/:rcsId/menu/:menuSlug/view",
@@ -623,14 +613,12 @@ const routes = [
       },
     },
     // element: <FoodMartSingleMenu />,
-    element: <FoodMartSingleMenuWithContentScrollPage />, 
-    
-  },//(Mcsvs => Done)
-
+    element: <FoodMartSingleMenuWithContentScrollPage />,
+  }, //(Mcsvs => Done)
 
   /****
    * ##############################################################
-   * FOOD_MARTS activities ends 
+   * FOOD_MARTS activities ends
    * ##############################################################
    */
   /**############################################################### */

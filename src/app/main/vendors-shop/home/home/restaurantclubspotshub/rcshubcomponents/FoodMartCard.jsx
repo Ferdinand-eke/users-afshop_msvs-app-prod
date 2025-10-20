@@ -182,7 +182,8 @@ function FoodMartCard({
         <Button
           size="small"
           component={NavLinkAdapter}
-          to={`/foodmarts/listings/visit-mart/${id}/${slug}`}
+
+          to={`/foodmarts/${slug}/visit-mart/${slug}/`}
           fullWidth
           className="bg-orange-600 hover:bg-orange-800 text-white font-medium py-1.5 rounded-lg transition-colors duration-200"
         >

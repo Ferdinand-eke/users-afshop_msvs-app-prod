@@ -433,3 +433,81 @@ export const userLogOutCall = () => {
     }
   }
 };
+
+/**
+ * ############################################################
+ * @param {Inspection Schedules Routes starts} FormData
+ * @returns
+ * ############################################################
+ */
+
+/***Create Inspection Schedule */
+export const createInspectionScheduleApi = (formData) => {
+  return AuthApi().post(`${API_ENDPOINTS.CREATE_INSPECTION_SCHEDULE}`, formData);
+};
+
+/***View My Inspection Schedules */
+export const getMyInspectionSchedulesApi = () => {
+  return AuthApi().get(`${API_ENDPOINTS.GET_MY_INSPECTION_SCHEDULES}`);
+};
+
+/***View My Inspection Schedules on Calendar */
+export const getMyInspectionSchedulesOnCalendarApi = (startDate, endDate) => {
+  const params = new URLSearchParams();
+  if (startDate) params.append('startDate', startDate);
+  if (endDate) params.append('endDate', endDate);
+  return AuthApi().get(`${API_ENDPOINTS.GET_MY_INSPECTION_SCHEDULES_CALENDAR}?${params.toString()}`);
+};
+
+/***Cancel Inspection Schedule */
+export const cancelInspectionScheduleApi = (scheduleId, reason) => {
+  return AuthApi().delete(`${API_ENDPOINTS.CANCEL_INSPECTION_SCHEDULE}/${scheduleId}`, {
+    data: { reason }
+  });
+};
+
+/***Reschedule Inspection */
+export const rescheduleInspectionApi = (scheduleId, formData) => {
+  return AuthApi().put(`${API_ENDPOINTS.RESCHEDULE_INSPECTION}/${scheduleId}`, formData);
+};
+
+/**
+ * ############################################################
+ * @param {Inspection Schedules Routes ends} FormData
+ * @returns
+ * ############################################################
+ */
+
+/**
+ * ############################################################
+ * @param {Realestate Offers Routes starts} FormData
+ * @returns
+ * ############################################################
+ */
+
+/***Create Property Offer/Bid */
+export const createPropertyOfferApi = (formData) => {
+  return AuthApi().post(`${API_ENDPOINTS.CREATE_PROPERTY_OFFER}`, formData);
+};
+
+/***View All User Offers with Pagination */
+export const getMyOffersApi = (page = 1, limit = 10) => {
+  return AuthApi().get(`${API_ENDPOINTS.GET_MY_OFFERS}?page=${page}&limit=${limit}`);
+};
+
+/***Upgrade/Update Offer Bid */
+export const updateOfferBidApi = (offerId, formData) => {
+  return AuthApi().put(`${API_ENDPOINTS.UPDATE_OFFER_BID}/${offerId}`, formData);
+};
+
+/***Withdraw Offer */
+export const withdrawOfferApi = (offerId) => {
+  return AuthApi().delete(`${API_ENDPOINTS.WITHDRAW_OFFER}/${offerId}`);
+};
+
+/**
+ * ############################################################
+ * @param {Realestate Offers Routes ends} FormData
+ * @returns
+ * ############################################################
+ */

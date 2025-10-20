@@ -43,8 +43,6 @@ function JwtSignInForm() {
   function onSubmit(formData) {
     const { email, password } = formData;
     signIn({
-      // email,
-      // password
       email,
       password,
     }).catch((error) => {

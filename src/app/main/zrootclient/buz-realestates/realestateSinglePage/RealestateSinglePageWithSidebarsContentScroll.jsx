@@ -108,78 +108,7 @@ function RealestateSinglePageWithSidebarsContentScroll() {
 
 
 
-  // const config = useAppSelector(selectFuseCurrentLayoutConfig);
   const currentUser = useAppSelector(selectUser)
-  // const { mutate: createReservation, isLoading: reservationLoading } =  useCreateReservation();
-  // const { getByValue } = useCountries();
-
-  // const { data: reservatons, isLoading: getReservationLoading } =
-  //   useGetReservations(estateList?.data?.propertyListing?.id);
-
-
-  // const coordinates = getByValue(estateList?.data?.propertyListing?.locationValue)?.latlng;
-  
-  // const disabledDates = useMemo(() => {
-  //   let dates = [];
-
-  //   reservatons?.data?.reservations?.forEach((reservation) => {
-  //     const range = eachDayOfInterval({
-  //       start: new Date(reservation?.startDate),
-  //       end: new Date(reservation.endDate),
-  //     });
-
-  //     dates = [...dates, ...range];
-  //   });
-
-  //   return dates;
-  // }, [reservatons?.data?.reservations]);
-
-
-  // const [loading, setLoading] = useState(false);
-  // const [totalPrice, setTotalPrice] = useState(estateList?.data?.propertyListing?.price);
-  // const [dateRange, setDateRange] = useState(initialDateRange);
-
-  
-  // const onCreateReservation = useCallback(() => {
-  //   if(!currentUser?.name){
-  //       navigate('/sign-in')
-  //       return;
-  //   }
-
-  //   const formData = {
-  //     totalPrice,
-  //     startDate: parseDateString(dateRange?.startDate),
-  //     endDate: parseDateString(dateRange?.endDate),
-  //     listingId: estateList?.data?.propertyListing?.id,
-  //     merchantId: estateList?.data?.propertyListing?.shop
-  //   };
-   
-  //    return createReservation(formData);
-  // }, [
-  //   totalPrice,
-  //   dateRange,
-  //   estateList?.data?.propertyListing,
-  //   routeParams,
-  //   // currentUser
-  // ]);
-
-  // useEffect(() => {
-  //   if (dateRange?.startDate && dateRange?.endDate) {
-  //     const dayCount = differenceInCalendarDays(
-  //       dateRange?.endDate,
-  //       dateRange?.startDate,
-        
-  //     );
-  //     if (dayCount && estateList?.data?.propertyListing?.price) {
-  //       setTotalPrice(dayCount * estateList?.data?.propertyListing?.price );
-  //       //* -1
-  //     } else {
-  //       setTotalPrice(estateList?.data?.propertyListing?.price);
-  //     }
-  //   }
-  // }, [dateRange, estateList?.data?.propertyListing?.price]);
-
-
   
 	return (
 		<>

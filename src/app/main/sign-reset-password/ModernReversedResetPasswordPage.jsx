@@ -19,19 +19,19 @@ import { toast } from 'react-toastify';
  */
 const schema = z
 	.object({
-		newPassword: z
+		password: z
 			.string()
 			.nonempty('Please enter your password.')
 			.min(8, 'Password is too short - should be 8 chars minimum.'),
 		confirmpasword: z.string().nonempty('Password confirmation is required')
 	})
-	.refine((data) => data.newPassword === data.confirmpasword, {
+	.refine((data) => data.password === data.confirmpasword, {
 		message: 'Passwords must match',
 		path: ['confirmpasword']
 	});
 const defaultValues = {
 	confirmpasword: "",
-	newPassword: "",
+	password: "",
 	activationCode: "",
 	activationToken:""
 };
@@ -209,7 +209,7 @@ function ModernReversedResetPasswordPage() {
 							/>
 
 							<Controller
-								name="newPassword"
+								name="password"
 								control={control}
 								render={({ field }) => (
 									<TextField
@@ -217,8 +217,8 @@ function ModernReversedResetPasswordPage() {
 										className="mb-24"
 										label="New Password"
 										type="password"
-										error={!!errors.newPassword}
-										helperText={errors?.newPassword?.message}
+										error={!!errors.password}
+										helperText={errors?.password?.message}
 										variant="outlined"
 										required
 										fullWidth

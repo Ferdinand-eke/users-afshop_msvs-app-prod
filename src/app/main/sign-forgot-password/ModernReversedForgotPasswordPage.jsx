@@ -8,16 +8,16 @@ import Paper from '@mui/material/Paper';
 import AvatarGroup from '@mui/material/AvatarGroup';
 import Avatar from '@mui/material/Avatar';
 import Box from '@mui/material/Box';
-import { zodResolver } from '@hookform/resolvers/zod';
+// import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { useShopForgotPass } from 'app/configs/data/server-calls/merchant-auth';
+// import { useShopForgotPass } from 'app/configs/data/server-calls/merchant-auth';
 import { useShopForgotPassWithOtp } from 'app/configs/data/server-calls/useUsers/useUsersQuery';
 /**
  * Form Validation Schema
  */
-const schema = z.object({
-	email: z.string().email('You must enter a valid email').nonempty('You must enter an email')
-});
+// const schema = z.object({
+// 	email: z.string().email('You must enter a valid email').nonempty('You must enter an email')
+// });
 const defaultValues = {
 	email: ''
 };
@@ -33,7 +33,7 @@ function ModernReversedForgotPasswordPage() {
 	const { control, formState, handleSubmit, reset, getValues } = useForm({
 		mode: 'onChange',
 		defaultValues,
-		resolver: zodResolver(schema)
+		// resolver: zodResolver(schema)
 	});
 	const { isValid, dirtyFields, errors } = formState;
 

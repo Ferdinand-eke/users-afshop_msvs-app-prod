@@ -1,9 +1,11 @@
 import { useState } from "react";
-import { Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+import { Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, CircularProgress } from "@mui/material";
 import { useAppSelector } from 'app/store/hooks';
 // import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
+import { useCreateInspectionSchedule } from 'app/configs/data/server-calls/auth/userapp/a_estates/useInspectionScheduleRepo';
+import { useCreatePropertyOffer } from 'app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo';
 
 /**
  * PropertyInteractionCard Component
@@ -19,36 +21,62 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
   // Form states
   const [inspectionDate, setInspectionDate] = useState("");
   const [inspectionTime, setInspectionTime] = useState("");
+  const [userPhone, setUserPhone] = useState("");
   const [inspectionNotes, setInspectionNotes] = useState("");
   const [offerAmount, setOfferAmount] = useState("");
+  const [offerPhone, setOfferPhone] = useState("");
   const [offerMessage, setOfferMessage] = useState("");
 
+  // Mutations
+  const createInspectionMutation = useCreateInspectionSchedule();
+  const createOfferMutation = useCreatePropertyOffer();
+
   const handleScheduleInspection = () => {
-    // TODO: Implement API call to schedule inspection
-    console.log("Schedule Inspection:", {
+    // Prepare inspection schedule data with all required fields
+    const inspectionData = {
       propertyId: propertyData?.id,
-      date: inspectionDate,
-      time: inspectionTime,
+      scheduledDate: inspectionDate,
+      scheduledTimeSlot: inspectionTime, // Changed from timeSlot to scheduledTimeSlot to match API
+      userName: user?.data?.name || user?.name || `${user?.data?.firstName || ''} ${user?.data?.lastName || ''}`.trim(),
+      userEmail: user?.data?.email || user?.email,
+      userPhone: userPhone, // Use the phone number from the form input
       notes: inspectionNotes,
+    };
+
+    // Call mutation to create inspection schedule
+    createInspectionMutation.mutate(inspectionData, {
+      onSuccess: () => {
+        // Close dialog and reset form on success
+        setInspectionDialogOpen(false);
+        setInspectionDate("");
+        setInspectionTime("");
+        setUserPhone("");
+        setInspectionNotes("");
+      },
     });
-    setInspectionDialogOpen(false);
-    // Reset form
-    setInspectionDate("");
-    setInspectionTime("");
-    setInspectionNotes("");
   };
 
   const handleMakeOffer = () => {
-    // TODO: Implement API call to submit offer
-    console.log("Make Offer:", {
+    // Prepare offer data with all required fields
+    const offerData = {
       propertyId: propertyData?.id,
-      amount: offerAmount,
+      offerAmount: parseFloat(offerAmount),
+      buyerName: user?.data?.name || user?.name || `${user?.data?.firstName || ''} ${user?.data?.lastName || ''}`.trim(),
+      buyerEmail: user?.data?.email || user?.email,
+      buyerPhone: offerPhone,
       message: offerMessage,
+    };
+
+    // Call mutation to create offer
+    createOfferMutation.mutate(offerData, {
+      onSuccess: () => {
+        // Close dialog and reset form on success
+        setOfferDialogOpen(false);
+        setOfferAmount("");
+        setOfferPhone("");
+        setOfferMessage("");
+      },
     });
-    setOfferDialogOpen(false);
-    // Reset form
-    setOfferAmount("");
-    setOfferMessage("");
   };
 
   const handleChatNow = () => {
@@ -276,7 +304,7 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
               </Button>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="py-8 space-y-4">
               <TextField
                 label="Preferred Date"
                 type="date"
@@ -285,6 +313,7 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 onChange={(e) => setInspectionDate(e.target.value)}
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
+                required
               />
               <TextField
                 label="Preferred Time"
@@ -294,6 +323,18 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 onChange={(e) => setInspectionTime(e.target.value)}
                 InputLabelProps={{ shrink: true }}
                 variant="outlined"
+                required
+              />
+              <TextField
+                label="Contact Phone Number"
+                type="tel"
+                fullWidth
+                value={userPhone}
+                onChange={(e) => setUserPhone(e.target.value)}
+                placeholder="Enter your preferred contact number"
+                variant="outlined"
+                required
+                helperText="We'll use this number to confirm your inspection appointment"
               />
               <TextField
                 label="Additional Notes (Optional)"
@@ -322,7 +363,7 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
             <Button
               onClick={handleScheduleInspection}
               variant="contained"
-              disabled={!inspectionDate || !inspectionTime}
+              disabled={!inspectionDate || !inspectionTime || !userPhone || createInspectionMutation.isLoading}
               sx={{
                 backgroundColor: "#ea580c",
                 "&:hover": { backgroundColor: "#c2410c" },
@@ -330,7 +371,14 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 fontSize: "0.95rem",
               }}
             >
-              Schedule Now
+              {createInspectionMutation.isLoading ? (
+                <>
+                  <CircularProgress size={20} sx={{ color: "white", mr: 1 }} />
+                  Scheduling...
+                </>
+              ) : (
+                "Schedule Now"
+              )}
             </Button>
           )}
         </DialogActions>
@@ -376,7 +424,7 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
               </Button>
             </div>
           ) : (
-            <div className="space-y-4">
+            <div className="py-4 space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg">
                 <Typography className="text-sm text-gray-600 mb-1">
                   Listed Price
@@ -393,6 +441,18 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 onChange={(e) => setOfferAmount(e.target.value)}
                 placeholder="Enter your offer amount"
                 variant="outlined"
+                required
+              />
+              <TextField
+                label="Contact Phone Number"
+                type="tel"
+                fullWidth
+                value={offerPhone}
+                onChange={(e) => setOfferPhone(e.target.value)}
+                placeholder="Enter your preferred contact number"
+                variant="outlined"
+                required
+                helperText="We'll use this number to contact you regarding your offer"
               />
               <TextField
                 label="Message to Seller (Optional)"
@@ -422,7 +482,7 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
             <Button
               onClick={handleMakeOffer}
               variant="contained"
-              disabled={!offerAmount}
+              disabled={!offerAmount || !offerPhone || createOfferMutation.isLoading}
               sx={{
                 backgroundColor: "#ea580c",
                 "&:hover": { backgroundColor: "#c2410c" },
@@ -430,7 +490,14 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 fontSize: "0.95rem",
               }}
             >
-              Submit Offer
+              {createOfferMutation.isLoading ? (
+                <>
+                  <CircularProgress size={20} sx={{ color: "white", mr: 1 }} />
+                  Submitting...
+                </>
+              ) : (
+                "Submit Offer"
+              )}
             </Button>
           )}
         </DialogActions>

@@ -58,6 +58,7 @@ const userReservationPagesConfig = {
 
   
   
+  
   routes: [
     {
       path: "bookings/reservation/review/:reservationId",
