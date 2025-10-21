@@ -73,6 +73,7 @@ function FoodmartOrdersWithSidebarsContentScrollPage() {
 				isLoading={isLoading}
 				isError={isError}
 				/>}
+				
 			leftSidebarOpen={leftSidebarOpen}
 			leftSidebarOnClose={() => {
 				setLeftSidebarOpen(false);

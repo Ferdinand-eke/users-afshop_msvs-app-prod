@@ -271,7 +271,11 @@ Api().get(`/foodmarts/get-user-cart/${userId}`);
  * FOOD MART ROUTES LISTED BELOW STARTS
  ==================================================================================================*/
 
-export const getAllFoodMarts = () => Api().get("/food-marts"); //(Mcsvs => Done)
+export const getAllFoodMarts = (filters = {}) => {
+  const queryString = serializeQuery(filters);
+  const url = queryString ? `/food-marts?${queryString}` : `/food-marts`;
+  return Api().get(url);
+}; //(Mcsvs => Done)
 export const getFoodMartMenuApi = (rcsId) =>
   Api().get(`/food-marts/${rcsId}/view`);  //(Mcsvs => Done)
 

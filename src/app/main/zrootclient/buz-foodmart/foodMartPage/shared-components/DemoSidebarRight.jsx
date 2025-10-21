@@ -154,10 +154,12 @@ const navigationData = [
  */
 
 function DemoSidebarRight(props) {
-  const { methods, listingsData } = props;
+  const { listingsData } = props;
   // console.log("Bookin_DATA", bookingsData)
-  const { watch } = methods;
-  const { selectCountry } = watch();
+
+  // Use the first listing's location as the map center if available
+  const defaultCenter = listingsData?.[0] || null;
+
   return (
     <div className="px-12 py-24 h-screen">
       {/* min-h-6xl  */}
@@ -170,8 +172,8 @@ function DemoSidebarRight(props) {
 				className="px-0"
 			/> */}
       {/* <BookingsMap items={bookingsData}/> */}
-      {selectCountry?._id && (
-        <FoodMartMap center={selectCountry} items={listingsData} />
+      {listingsData && listingsData.length > 0 && (
+        <FoodMartMap center={defaultCenter} items={listingsData} />
       )}
     </div>
   );

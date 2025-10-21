@@ -53,9 +53,9 @@ function DemoContent(props) {
   }
 
   return (
-    <div className="flex-auto p-24 sm:p-40 ">
-      <div className="h-7xl min-h-7xl max-h-7xl border-2 border-dashed rounded-2xl">
-        <div className="bg-white w-full p-4 gap-4">
+    <div className="flex-auto p-4 sm:p-6 ">
+      <div className="h-7xl min-h-7xl max-h-7xl">
+        <div className="bg-white w-full p-6 gap-4">
           <div className="flex flex-col lg:flex-row">
             <div className="w-full lg:w-1/2">
               <img
@@ -89,41 +89,39 @@ function DemoContent(props) {
                 </span>
               </div>
               <h1 className="text-2xl font-bold mt-2">{menuData?.title}</h1>
-              <p className="text-gray-800 text-[12px]">
+              <p className="text-gray-800 text-sm">
                 Brand: Apple |{" "}
-                <Typography className="text-orange-500 text-[12px] inline">
+                <Typography className="text-orange-500 text-sm inline">
                   Similar products from {menuData?.title}
                 </Typography>
               </p>
 
-              <div className="flex items-center mt-2">
-                <div className=" overscroll-x-contain">
-                  <span className="flex text-3xl font-bold text-black-500">
-                    ₦ {formatCurrency(menuData?.price)}{" "}
-                    <p className="mx-4 text-sm">
-                      per {menuData?.unitPerQuantity}
-                    </p>
-                  </span>
-                </div>
-                {menuData?.price && (
+              <div className="flex flex-wrap items-baseline gap-3 mt-2">
+                <span className="text-3xl font-bold text-black-500">
+                  ₦ {formatCurrency(menuData?.price)}
+                </span>
+                <span className="text-sm text-gray-600">
+                  per {menuData?.unitPerQuantity}
+                </span>
+                {menuData?.listprice && (
                   <>
-                    <span className="text-gray-500 line-through ml-2">
-                      ₦ {formatCurrency(menuData?.price)}
+                    <span className="text-gray-500 line-through text-lg">
+                      ₦ {formatCurrency(menuData?.listprice)}
                     </span>
-                    <span className="text-white bg-red-500 text-xs px-2 py-1 rounded ml-2">
+                    <span className="text-white bg-red-500 text-xs px-2 py-1 rounded">
                       -70%
                     </span>
                   </>
                 )}
               </div>
               <div className="border-b-2">
-                <p className=" text-black-800 mt-2">
+                <p className=" text-black-800 mt-2 text-base">
                   In-Stock:{" "}
-                  <Typography className="text-black-500 text-[12px] inline">
+                  <Typography className="text-black-500 text-sm inline">
                     {menuData?.quantity} {menuData?.unitPerQuantity} left
                   </Typography>
                 </p>
-                <p className="text-black-300 text-[12px] inline">
+                <p className="text-black-300 text-sm inline">
                   + shipping from ₦ 1,080 to LEKKI-AJAH (SANGOTEDO)
                 </p>
               </div>
@@ -136,7 +134,7 @@ function DemoContent(props) {
                   <i className="far fa-star text-gray-400"></i>
                   <i className="far fa-star text-gray-400"></i>
                 </div>
-                <span className="text-gray-500 ml-2">
+                <span className="text-gray-500 ml-2 text-sm">
                   (No ratings available)
                 </span>
               </div>
@@ -152,14 +150,14 @@ function DemoContent(props) {
 
               <div className="mt-4">
                 <h2 className="text-lg font-bold">PROMOTIONS</h2>
-                <ul className=" list-disc list-inside text-gray-700 text-xs gap-4 space-y-4">
+                <ul className=" list-disc list-inside text-gray-700 text-sm gap-4 space-y-4">
                   <li className="flex items-center space-x-2 p-2 rounded-md relative bg-white  hover:bg-orange-300 py-1 px-4 cursor-pointer">
                     <i className="fas fa-user"></i>
-                    My Call 07006000000 To Place Your Order Account
+                    My Call 0708-720-0297 To Place Your Order Account
                   </li>
                   <li className="flex items-center space-x-2 p-2 rounded-md relative bg-white  hover:bg-orange-300 py-1 px-4 cursor-pointer">
                     <i className="fas fa-user"></i>
-                    Need extra money? Loan up to N500,000 on the JumiaPay
+                    Need extra money? Loan up to N500,000 on the Africanshops Wallet
                     Android app.
                   </li>
                   <li className="flex items-center space-x-2 p-2 rounded-md relative bg-white  hover:bg-orange-300 py-1 px-4 cursor-pointer">
@@ -168,25 +166,7 @@ function DemoContent(props) {
                     at checkout.
                   </li>
 
-                  {/* <div className="flex flex-row ">
-                    <span>#</span>
-                    <li>Call 07006000000 To Place Your Order</li>
-                  </div>
-                  <div className="flex flex-row ">
-                    <span>#</span>
-                    <li>
-                      Need extra money? Loan up to N500,000 on the JumiaPay
-                      Android app.
-                    </li>
-                  </div>
-                  <div className="flex flex-row ">
-                    <span>#</span>
-
-                    <li>
-                      Enjoy cheaper shipping fees when you select a PickUp
-                      Station at checkout.
-                    </li>
-                  </div> */}
+                 
                 </ul>
               </div>
             </div>

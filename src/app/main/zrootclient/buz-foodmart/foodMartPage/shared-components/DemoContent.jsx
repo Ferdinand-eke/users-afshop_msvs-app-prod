@@ -1,18 +1,27 @@
 import FuseLoading from "@fuse/core/FuseLoading";
-
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-import { Button, Typography } from "@mui/material";
-import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
+import { Typography } from "@mui/material";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
+import FoodMartCard from "./FoodMartCard";
+import PaginationBar from "./PaginationBar";
 
 /**
  * Demo Content
  */
 function DemoContent(props) {
-  const { isLoading, isError, products } = props;
+  const {
+    isLoading,
+    isError,
+    foodMarts,
+    totalItems,
+    currentPage,
+    itemsPerPage,
+    onPageChange,
+    onItemsPerPageChange
+  } = props;
+
+  // Fallback: if totalItems is not provided by backend, estimate based on foodMarts length
+  const estimatedTotal = totalItems > 0 ? totalItems : foodMarts?.length || 0;
 
   if (isLoading) {
     return <FuseLoading />;
@@ -25,12 +34,12 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage message={"Error occurred while retriving listings"} />
+        <ClienttErrorPage message={"Error occurred while retrieving food marts"} />
       </motion.div>
     );
   }
 
-  if (!products) {
+  if (!foodMarts || foodMarts.length === 0) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -38,56 +47,41 @@ function DemoContent(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          No listings found!
+          No food marts found!
         </Typography>
       </motion.div>
     );
   }
 
   return (
-    <div className="flex-auto p-24 sm:p-40 ">
-      <div className="h-7xl min-h-7xl max-h-7xl border-2 border-dashed rounded-2xl">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
-          {products?.map((foodmart, index) => (
-            <div
-              key={index}
-              className="bg-white p-4 rounded shadow flex flex-col "
-            >
-              <div className="relative">
-                <img
-                  src={foodmart?.imageSrcs[0]?.url}
-                  alt="MacBook Pro"
-                  className="w-full h-[160px] rounded-lg transition ease-in-out delay-150  hover:scale-105 object-cover"
-                  height={70}
-                />
-                <span className="absolute top-2 left-2 bg-black text-white text-xs px-2 py-1 rounded">
-                  Black Friday deal
-                </span>
-              </div>
-              <div className="mt-4 ">
-                <Typography
-                  className="mt-2 text-sm font-bold cursor-pointer"
-                  component={NavLinkAdapter}
-                  to={`/foodmarts/listings/visit-mart/${foodmart?._id}/${foodmart?.slug}`}
-                >
-                  {foodmart?.title}
-                </Typography>
-              </div>
-
-              <div className="flex justify-between items-center mt-4 bottom-0">
-                <i className="far fa-heart text-xl"></i>
-
-                <Button
-                  className="text-black  border-orange-500 bg-orange-500 hover:bg-orange-800 px-4 py-2 rounded w-full mb-0 "
-                  component={NavLinkAdapter}
-                  to={`/foodmarts/${foodmart?.slug}/visit-mart/${foodmart?.slug}`}
-                >
-                  Visit Mart
-                </Button>
-              </div>
-            </div>
+    <div className="flex-auto p-24 sm:p-40">
+      <div className="flex flex-col">
+        {/* Food Marts Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-8">
+          {foodMarts?.map((foodMart) => (
+            <FoodMartCard
+              key={foodMart?.id || foodMart?._id}
+              id={foodMart?.id || foodMart?._id}
+              slug={foodMart?.slug}
+              images={foodMart?.imageSrcs || []}
+              title={foodMart?.title}
+              address={foodMart?.address}
+              rating={foodMart?.rating || 4.5}
+              reviewCount={foodMart?.reviewCount || 9}
+              duration={foodMart?.duration || "Open daily"}
+              host={foodMart?.host || "Restaurant"}
+            />
           ))}
         </div>
+
+        {/* Pagination Bar */}
+        <PaginationBar
+          totalItems={estimatedTotal}
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          onPageChange={onPageChange}
+          onItemsPerPageChange={onItemsPerPageChange}
+        />
       </div>
     </div>
   );

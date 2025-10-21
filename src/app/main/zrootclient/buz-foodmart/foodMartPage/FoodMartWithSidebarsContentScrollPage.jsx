@@ -1,20 +1,11 @@
 import { styled } from '@mui/material/styles';
-import FusePageSimple from '@fuse/core/FusePageSimple';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoContent from './shared-components/DemoContent';
 import DemoSidebar from './shared-components/DemoSidebar';
 import DemoSidebarRight from './shared-components/DemoSidebarRight';
 import FusePageSimpleWithMargin from '@fuse/core/FusePageSimple/FusePageSimpleWithMargin';
-import useGetAllProducts from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
-import { useForm } from 'react-hook-form';
-import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries';
-import {
-	getLgasByStateId,
-	getStateByCountryId,
-  } from "app/configs/data/client/RepositoryClient";
-import useGetAllBookingProperties from 'app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo';
 import useGetAllFoodMarts from 'app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo';
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
@@ -46,132 +37,98 @@ function FoodMartWithSidebarsContentScrollPage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
 	const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
+
+	// Filter state management
+	const [filters, setFilters] = useState({});
+
+	// Pagination state management - default limit of 10 as requested
+	const [currentPage, setCurrentPage] = useState(1);
+	const [itemsPerPage, setItemsPerPage] = useState(10);
+
 	useEffect(() => {
 		setLeftSidebarOpen(!isMobile);
 		setRightSidebarOpen(!isMobile);
 	}, [isMobile]);
 
-  const { data: AllFoodMarts, isLoading, isError } = useGetAllFoodMarts();
+	// Fetch food marts with filters
+	const {
+		data: AllFoodMarts,
+		isLoading,
+		isError,
+	} = useGetAllFoodMarts(filters);
 
-  // console.log("GUEST___FOODMART", AllFoodMarts?.data)
+	// Handle filter changes from FilterList component
+	const handleFilterChange = useCallback(
+		(newFilters) => {
+			// Map FilterList filter names to API parameter names
+			const apiFilters = {};
 
-  const [loading, setLoading] = useState(false);
-  const [stateData, setStateData] = useState([]);
-  const [blgas, setBlgas] = useState([]);
+			// Pagination parameters
+			apiFilters.limit = itemsPerPage;
+			apiFilters.offset = (currentPage - 1) * itemsPerPage;
 
+			// Keyword search (maps to title)
+			if (newFilters.keyword) {
+				apiFilters.title = newFilters.keyword;
+			}
 
-  const methods = useForm({
-    mode: "onChange",
-    defaultValues: {
-      selectCountry: "",
-      selectState: "",
-      selectLga: "",
-    },
-    // resolver: zodResolver(schema)
-  });
-  const { reset, watch, control, formState, getValues } = methods;
+			// Title filter
+			if (newFilters.title) {
+				apiFilters.title = newFilters.title;
+			}
 
-  const { selectCountry, selectState, selectLga } = watch();
+			// Slug filter
+			if (newFilters.slug) {
+				apiFilters.slug = newFilters.slug;
+			}
 
-  const { data: countries } = useSellerCountries();
+			// Address filter
+			if (newFilters.address) {
+				apiFilters.address = newFilters.address;
+			}
 
-  
-   /****Use-EFFECT to manage filtering of products by Country=>state=>LGA fetch */
-  // useEffect(() => {
-  //   if (allProducts?.data?.products) {
-  //     setProducts(allProducts?.data?.products);
-  //   }else if (selectCountry) {
-  //     setProducts(allProducts?.data?.products);
-    
-  //   }  else if (selectCountry && selectState) {
-  //     setProducts(allProducts?.data?.products);
-    
-  //   }else if (selectCountry && selectState && selectLga) {
-  //     setProducts(allProducts?.data?.products);
-    
-  //   } else {
-  //     setProducts(allProducts?.data?.products);
-  //   }
+			// Location filters - using foodMart prefix as per API convention
+			if (newFilters.country) {
+				apiFilters.foodMartCountry = newFilters.country;
+			}
+			if (newFilters.state) {
+				apiFilters.foodMartState = newFilters.state;
+			}
+			if (newFilters.lga) {
+				apiFilters.foodMartLga = newFilters.lga;
+			}
+			if (newFilters.district) {
+				apiFilters.foodMartDistrict = newFilters.district;
+			}
 
-  //   if (selectCountry && selectState) {
-  //     getLgasFromState(selectState);
-  //   }
+			// Update filters state (this will trigger useGetAllFoodMarts to refetch)
+			setFilters(apiFilters);
+		},
+		[itemsPerPage, currentPage]
+	);
 
-    
-  // }, [allProducts?.data?.products,
-  //   selectCountry, selectState, selectLga
-  // ]);
+	// Handle page change
+	const handlePageChange = useCallback((newPage) => {
+		setCurrentPage(newPage);
+	}, []);
 
-  
+	// Handle items per page change
+	const handleItemsPerPageChange = useCallback((newItemsPerPage) => {
+		setItemsPerPage(newItemsPerPage);
+		setCurrentPage(1); // Reset to first page when changing items per page
+	}, []);
 
-  /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
-  // useEffect(() => {
-  //   if (selectCountry?.length > 0) {
-  //     console.log(`Getting stated in this country ${location?.name}`);
-  //     findStatesByCountry(selectCountry);
-  //   }
-
-  //   if (selectCountry && selectState) {
-  //     getLgasFromState(selectState);
-  //   }
-
-  //   if (selectCountry && selectState && selectLga) {
-  //     console.log("Getting products for this partivular LGA :", selectLga);
-  //   }
-  // }, [selectCountry, selectState, selectLga]);
-  useEffect(() => {
-    if (selectCountry?.id?.length > 0) {
-      findStatesByCountry(selectCountry?.id);
-    }
-
-    if (getValues()?.selectState?.id?.length > 0) {
-      getLgasFromState(getValues()?.selectState?.id);
-    }
-  }, [selectCountry?.id, selectState?._id, selectLga?.id]);
-
-  async function findStatesByCountry(countryId) {
-    setLoading(true);
-    const stateResponseData = await getStateByCountryId(countryId);
-
-    if (stateResponseData) {
-      setStateData(stateResponseData?.data.states);
-
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
-
-  //**Get L.G.As from state_ID data */
-  async function getLgasFromState(sid) {
-    setLoading(true);
-    const responseData = await getLgasByStateId(sid);
-
-    if (responseData) {
-      setBlgas(responseData?.data.lgas);
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
-
+	// Trigger filter change when pagination changes
+	useEffect(() => {
+		if (Object.keys(filters).length > 0) {
+			handleFilterChange(filters);
+		}
+	}, [currentPage, itemsPerPage]);
 
 	return (
 		<Root
-	
 			header={
 				<DemoHeader
-				countries={countries?.data?.countries}
-				stateData={stateData}
-				blgas={blgas}
-				methods={methods}
-
 					leftSidebarToggle={() => {
 						setLeftSidebarOpen(!leftSidebarOpen);
 					}}
@@ -180,24 +137,32 @@ function FoodMartWithSidebarsContentScrollPage() {
 					}}
 				/>
 			}
-			content={<DemoContent
-				products={AllFoodMarts?.data?.foodmarts}
-				isLoading={isLoading}
-				isError={isError}
-				/>}
+			content={
+				<DemoContent
+					foodMarts={AllFoodMarts?.data?.foodmarts}
+					isLoading={isLoading}
+					isError={isError}
+					totalItems={AllFoodMarts?.data?.pagination?.total || 0}
+					currentPage={currentPage}
+					itemsPerPage={itemsPerPage}
+					onPageChange={handlePageChange}
+					onItemsPerPageChange={handleItemsPerPageChange}
+				/>
+			}
 			leftSidebarOpen={leftSidebarOpen}
 			leftSidebarOnClose={() => {
 				setLeftSidebarOpen(false);
 			}}
-			leftSidebarContent={<DemoSidebar />}
+			leftSidebarContent={<DemoSidebar onFilterChange={handleFilterChange} />}
 			rightSidebarOpen={rightSidebarOpen}
 			rightSidebarOnClose={() => {
 				setRightSidebarOpen(false);
 			}}
-			rightSidebarContent={<DemoSidebarRight 
-        methods={methods}
-      	listingsData={AllFoodMarts?.data?.foodmarts}
-      />}
+			rightSidebarContent={
+				<DemoSidebarRight 
+        
+        listingsData={AllFoodMarts?.data?.foodmarts} />
+			}
 			scroll="content"
 		/>
 	);

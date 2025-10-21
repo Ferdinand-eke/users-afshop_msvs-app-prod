@@ -50,6 +50,7 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 /**
  * The SimpleWithSidebarsContentScroll page.
  */
+
 function VisitFoodMartWithContentScrollPage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
@@ -62,12 +63,6 @@ function VisitFoodMartWithContentScrollPage() {
   const routeParams = useParams();
   const { martId } = routeParams;
   const { data: martMenu, isLoading, isError } = useGetMartMenu(martId);
-  // console.log("SINGLE__FOOD__MART", martMenu?.data?.foodMart)
-
-  const [loading, setLoading] = useState(false);
-  const [stateData, setStateData] = useState([]);
-  const [blgas, setBlgas] = useState([]);
-
   const methods = useForm({
     mode: "onChange",
     defaultValues: {
@@ -77,73 +72,14 @@ function VisitFoodMartWithContentScrollPage() {
     },
     // resolver: zodResolver(schema)
   });
-  const { reset, watch, control, formState, getValues } = methods;
 
-  const { selectCountry, selectState, selectLga } = watch();
-
-  const { data: countries } = useSellerCountries();
-
-  // console.log("FOOD_MART_COUNTIIRES", countries?.data)
-
-    
-  useEffect(() => {
-    if (selectCountry?.id?.length > 0) {
-      findStatesByCountry(selectCountry?.id);
-    }
-
-    if (getValues()?.selectState?.id?.length > 0) {
-      getLgasFromState(getValues()?.selectState?.id);
-    }
-  }, [selectCountry?.id, selectState?.id, selectLga?.id]);
-
-  async function findStatesByCountry(countryId) {
-    setLoading(true);
-    const stateResponseData = await getStateByCountryId(countryId);
-
-    if (stateResponseData) {
-      setStateData(stateResponseData?.data?.states);
-
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
-
-  //**Get L.G.As from state_ID data */
-  async function getLgasFromState(sid) {
-    setLoading(true);
-    const responseData = await getLgasByStateId(sid);
-
-    if (responseData) {
-      setBlgas(responseData?.data?.lgas);
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250
-      );
-    }
-  }
-
-
-  // console.log("MART_MENU", martMenu?.data)
-  // console.log("stateCORDINATEs", martMenu?.data?.foodVendor?.foodMartState)
-
-  // console.log("foodVENDOR_CORDINATES", martMenu?.data?.data?.foodVendor)
 
 
 	return (
 		<Root
-	
+
 			header={
 				<DemoHeader
-				countries={countries?.data?.countries}
-				stateData={stateData}
-				blgas={blgas}
-				methods={methods}
 
 					leftSidebarToggle={() => {
 						setLeftSidebarOpen(!leftSidebarOpen);
@@ -164,17 +100,17 @@ function VisitFoodMartWithContentScrollPage() {
 			leftSidebarOnClose={() => {
 				setLeftSidebarOpen(false);
 			}}
-			leftSidebarContent={<DemoSidebar 
+			leftSidebarContent={<DemoSidebar
       martMenu={martMenu?.data?.foodMart}
       />}
 			rightSidebarOpen={rightSidebarOpen}
 			rightSidebarOnClose={() => {
 				setRightSidebarOpen(false);
 			}}
-			rightSidebarContent={<DemoSidebarRight 
-     
-        center={martMenu?.data?.foodMart} 
-        items={martMenu?.data?.foodMart} 
+			rightSidebarContent={<DemoSidebarRight
+
+        center={martMenu?.data?.foodMart}
+        items={martMenu?.data?.foodMart}
       />}
 			scroll="content"
 		/>

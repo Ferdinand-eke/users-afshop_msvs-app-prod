@@ -69,55 +69,7 @@ function FoodMartSingleMenuWithContentScrollPage() {
 
   const { data: foodCart  } = useGetMyFoodCart(user?.id); 
 
-  // console.log("USER__FOOD__CART", foodCart?.data?.userFoodCartSession)
-
-  
-  // const onAddToFoodCart = useCallback(() => {
-  //   if(!user?.email){
-  //       navigate('/sign-in')
-  //       return;
-  //   }
-
-  //   const formData = {
-  //     user:user?.id,
-  //     quantity: 1,
-  //     menu: menu?.data?.menu?.id,
-  //     shop: menu?.data?.menu?.shop,
-  //     foodMart: menu?.data?.menu?.foodMartVendor,
-  //   };
-
-  //    if (foodCart?.data?.foodcart.length < 1) {
-  //     const sessionPayload = {
-  //       shopID: menu?.data?.menu?.shop,
-  //       shopCountryOrigin: menu?.data?.menu?.foodMartMenuCountry,
-  //       shopStateProvinceOrigin: menu?.data?.menu?.foodMartMenuState,
-  //       shopLgaProvinceOrigin: menu?.data?.menu?.foodMartMenuLga,
-  //       foodMartId:menu?.data?.menu?.foodMartVendor
-  //     }
-
-  //     const setCartSessionPayload = storeFoodVendorSession(sessionPayload);
-  //     if(setCartSessionPayload){
-  //       addToFoodMenuToCart(formData);
-     
-  //       return
-  //     }
-      
-  //   } else {
-  //     const payloadData = getFoodVendorSession()
-  //     if (payloadData?.shopLgaProvinceOrigin === menu?.data?.menu?.foodMartMenuLga) {
-  //        addToFoodMenuToCart(formData);
-      
-  //       return
-  //     } else {
-  //       alert("You must shop in one L.G.A/County at a time");
-  //       return
-  //     }
-  //   }
-  // }, [
-  //   menu?.data?.menu?._id,
-  //   routeParams,
-  //   user
-  // ]);
+ 
 
   const onAddToFoodCart = useCallback(() => {
       if (!user?.email) {
@@ -137,21 +89,7 @@ function FoodMartSingleMenuWithContentScrollPage() {
         // shopMarketId: menu?.data?.menu?.market,
         // shoppingSession:''
       };
-  
-      // console.log("FORM_DATA_CART", formData);
-  
-      //if cart is empty create a session and add to cart
-      //if cart is not empty check if lgaId is the same as the product lgaId
-      //if same add to cart else show error message
-  
       if (foodCart?.data?.userFoodCartSession?.cartProducts?.length === 0) {
-        // const sessionPayload = {
-        //   shopID: menu?.data?.menu?.shop?._id,
-        //   shopCountryOrigin: menu?.data?.menu?.shop?.businessCountry,
-        //   shopStateProvinceOrigin: menu?.data?.menu?.shop?.businezState,
-        //   shopLgaProvinceOrigin: menu?.data?.menu?.shop?.businezLga,
-        //   shopMarketId: menu?.data?.menu?.market,
-        // };
    
         if (foodCart?.data?.userFoodCartSession?.lgaId) {
           addToFoodMenuToCart(formData);
@@ -159,7 +97,6 @@ function FoodMartSingleMenuWithContentScrollPage() {
           return;
         }
       } else {
-        // const payloadData = getShoppingSession()
   
         if (
           foodCart?.data?.userFoodCartSession?.lgaId ===
@@ -181,19 +118,12 @@ function FoodMartSingleMenuWithContentScrollPage() {
       foodCart?.data?.userFoodCartSession?.cartProducts?.length,
     ]);
 
-    // console.log("MENU_LGA_LOCATION-1",  menu?.data?.menu)
-    // console.log("foodItem__LGA__LOCATION-2", foodCart?.data?.userFoodCartSession)
-
 
 	return (
 		<Root
 	
 			header={
 				<DemoHeader
-				// countries={countries?.data?.data}
-				// stateData={stateData}
-				// blgas={blgas}
-				// methods={methods}
 
 					leftSidebarToggle={() => {
 						setLeftSidebarOpen(!leftSidebarOpen);

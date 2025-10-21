@@ -5,9 +5,9 @@ import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
 
-/***1) Get All FoordMrt/RCS  */
-export default function useGetAllFoodMarts() {
-    return useQuery(['__foodmarts'], getAllFoodMarts);
+/***1) Get All FoodMart/RCS with filters */
+export default function useGetAllFoodMarts(filters = {}) {
+    return useQuery(['__foodmarts', filters], () => getAllFoodMarts(filters));
 } //(Mcsvs => Done)
 
 
