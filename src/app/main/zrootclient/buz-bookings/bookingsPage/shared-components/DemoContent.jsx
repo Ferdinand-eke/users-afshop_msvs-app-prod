@@ -32,11 +32,10 @@ function DemoContent(props) {
   // This assumes if we get less than itemsPerPage, we're on the last page
   const estimatedTotal = totalItems > 0 ? totalItems : products?.length || 0;
 
-  console.log('DemoContent - totalItems:', totalItems, 'products length:', products?.length, 'estimatedTotal:', estimatedTotal);
-
-  // if (isLoading) {
-  //   return <FuseLoading />;
-  // }
+ 
+  if (isLoading) {
+    return <FuseLoading />;
+  }
 
   if (isError) {
     return (

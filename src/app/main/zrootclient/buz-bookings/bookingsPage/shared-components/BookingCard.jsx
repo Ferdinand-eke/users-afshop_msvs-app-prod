@@ -175,7 +175,7 @@ function BookingCard({
           {/* Price */}
           <div className="flex items-baseline gap-1">
             <Typography variant="h6" className="font-bold text-[13px] text-gray-900">
-              ${formatCurrency(price)}
+              N{formatCurrency(price)}
             </Typography>
             <Typography variant="body2" className="text-gray-600">
               /night

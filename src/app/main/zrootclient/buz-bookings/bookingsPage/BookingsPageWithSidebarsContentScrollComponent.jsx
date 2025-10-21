@@ -134,6 +134,7 @@ function BookingsPageWithSidebarsContentScrollComponent() {
           }}
         />
       }
+      
       content={
         <DemoContent
           products={bookingprops?.data?.bookingLists}

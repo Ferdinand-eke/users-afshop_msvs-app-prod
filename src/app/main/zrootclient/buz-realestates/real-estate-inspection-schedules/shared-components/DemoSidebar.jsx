@@ -155,7 +155,7 @@ function DemoSidebar() {
         </Typography>
         <div className="space-y-2">
           <Link
-            to="/realestate"
+            to="/realestate/listings"
             className="flex items-center gap-2 p-2 text-sm text-gray-700 hover:text-orange-600 hover:bg-orange-50 rounded transition-colors"
           >
             <i className="fas fa-search text-xs"></i>

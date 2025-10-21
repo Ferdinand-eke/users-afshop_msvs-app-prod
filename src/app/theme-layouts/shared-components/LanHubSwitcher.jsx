@@ -96,7 +96,7 @@ function LanHubSwitcher() {
           <ListItemIcon className="min-w-40">
             <FuseSvgIcon>heroicons-outline:briefcase</FuseSvgIcon>
           </ListItemIcon>
-          <ListItemText primary={`Restaurants And Vendors`} />
+          <ListItemText primary={`Restaurants Clubs & Spots`} />
         </MenuItem>
       </Popover>
     </>
