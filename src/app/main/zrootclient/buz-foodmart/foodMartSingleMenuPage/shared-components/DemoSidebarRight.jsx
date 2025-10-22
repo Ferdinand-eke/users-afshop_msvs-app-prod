@@ -1,6 +1,4 @@
-import FuseNavigation from "@fuse/core/FuseNavigation";
-import FoodMartMap from "../../components/maps/FoodMartMap";
-import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
+import SellerInformation from "src/app/main/zrootclient/components/SellerInformation";
 /**
  * Navigation data
  */
@@ -110,43 +108,20 @@ function DemoSidebarRight(props) {
           </div>
         </div>
 
-        <div className="bg-white p-4 rounded mt-4 border-b-2">
-          <div className="border-b-2 ">
-            <div className="flex flex-row justify-between  cursor-pointer">
-              <h2 className="text-lg font-bold">SELLER INFORMATION</h2>
-              <FuseSvgIcon>heroicons-outline:arrow-sm-right</FuseSvgIcon>
-            </div>
-            <div className="flex justify-between">
-			<div className="text-md">
-              <p className="text-gray-700">Apple Authorized Reseller</p>
-              <p className="text-gray-500">94% Seller Score</p>
-              <p className="text-gray-500">2456 Followers</p>
-            </div>
-            <div className="relative">
-              <button className="bg-orange-400 hover:bg-orange-800 text-white text-lg font-bold py-2 px-4 rounded mt-4 mb-4  absolute bottom-0 right-0">
-                FOLLOW
-              </button>
-            </div>
-			</div>
-          </div>
-
-          <div className="mt-4">
-            <h3 className="font-bold">Seller Performance</h3>
-            <div className="text-md">
-			<div className="flex items-center mt-2">
-              <i className="fas fa-check-circle text-green-500"></i>
-              <p className="text-gray-700 ml-2">Shipping speed: Good</p>
-            </div>
-            <div className="flex items-center mt-2">
-              <i className="fas fa-check-circle text-green-500"></i>
-              <p className="text-gray-700 ml-2">Quality score: Excellent</p>
-            </div>
-            <div className="flex items-center mt-2">
-              <i className="fas fa-check-circle text-green-500"></i>
-              <p className="text-gray-700 ml-2">Customer rating: Good</p>
-            </div>
-			</div>
-          </div>
+        {/* SELLER INFORMATION Section */}
+        <div className="mt-4">
+          <SellerInformation
+            sellerName="FoodMart Official Restaurant"
+            sellerDescription="Serving delicious meals since 2019"
+            sellerScore={96}
+            followers={3200}
+            products={450}
+            shippingSpeed={{ label: "Excellent", value: 97, color: "green" }}
+            qualityScore={{ label: "Excellent", value: 99, color: "green" }}
+            customerRating={{ label: "Excellent", value: 95, color: "green" }}
+            responseTime={{ label: "Very Fast", value: 98, color: "blue" }}
+            // storePath={`/foodmarts/${menu?.slug}/visit-mart/${menu?.slug}`}
+          />
         </div>
       </div>
     </div>
