@@ -47,6 +47,7 @@ export default defineConfig({
             "app/shared-components": "/src/app/shared-components",
             "app/configs": "/src/app/configs",
             "app/theme-layouts": "/src/app/theme-layouts",
+            "app/utils": "/src/app/utils",
             "app/AppContext": "/src/app/AppContext"
         },
     },

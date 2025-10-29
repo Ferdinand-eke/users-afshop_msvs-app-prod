@@ -1,16 +1,19 @@
-import BookingsMap from '../../components/maps/BookingsMap';
+import { useAppSelector } from "app/store/hooks";
+import OfferDemoLeftSidebar from "../../real-estate-offers/shared-components/OfferDemoSidebar";
+import { selectUser } from "src/app/auth/user/store/userSlice";
+
 
 /**
  * The DemoSidebarRight component.
  */
 function DemoSidebarRight(props) {
-	const {bookingsData} = props
+	const currentUser = useAppSelector(selectUser);
+
 	return (
 		<div className="px-12 py-24 h-screen">
 			{/* min-h-6xl  */}
-			<div className="mx-12 text-3xl font-bold tracking-tighter">Map Location Site Views</div>
+			{currentUser?.id && <OfferDemoLeftSidebar />}
 
-			 <BookingsMap items={bookingsData}/>
 		</div>
 	);
 }

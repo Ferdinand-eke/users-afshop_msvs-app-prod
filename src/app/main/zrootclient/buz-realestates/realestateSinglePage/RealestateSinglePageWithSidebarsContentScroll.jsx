@@ -106,8 +106,6 @@ function RealestateSinglePageWithSidebarsContentScroll() {
     isError,
   } = useGetEstateProperty(slug);
 
-
-
   const currentUser = useAppSelector(selectUser)
   
 	return (

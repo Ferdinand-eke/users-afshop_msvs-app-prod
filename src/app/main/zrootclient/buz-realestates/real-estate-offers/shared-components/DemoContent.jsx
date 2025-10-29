@@ -1,9 +1,10 @@
 import FuseLoading from "@fuse/core/FuseLoading";
 import { motion } from "framer-motion";
-import { Typography, Card, CardContent, Chip, Button, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, TextField } from "@mui/material";
+import { Typography, Card, CardContent, Chip, Button, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Divider } from "@mui/material";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 import { format, parseISO } from "date-fns";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { useUpdateOfferBid, useWithdrawOffer } from "app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo";
 
 /**
@@ -12,9 +13,16 @@ import { useUpdateOfferBid, useWithdrawOffer } from "app/configs/data/server-cal
 function DemoContent(props) {
   const { isLoading, isError, offers, pagination, currentPage, onPageChange, isPreviousData } = props;
 
+  const navigate = useNavigate();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
+  const [withdrawDialogOpen, setWithdrawDialogOpen] = useState(false);
+  const [acceptedOfferDialogOpen, setAcceptedOfferDialogOpen] = useState(false);
   const [selectedOffer, setSelectedOffer] = useState(null);
+  const [offerToWithdraw, setOfferToWithdraw] = useState(null);
+  const [acceptedOfferDetails, setAcceptedOfferDetails] = useState(null);
   const [newOfferAmount, setNewOfferAmount] = useState("");
+
+  console.log("Real_Estate Offers", offers)
 
   // Mutations
   const updateOfferMutation = useUpdateOfferBid();
@@ -44,9 +52,44 @@ function DemoContent(props) {
     }
   };
 
-  const handleWithdrawOffer = (offerId) => {
-    if (window.confirm("Are you sure you want to withdraw this offer?")) {
-      withdrawOfferMutation.mutate(offerId);
+  const handleWithdrawOffer = (offer) => {
+    setOfferToWithdraw(offer);
+    setWithdrawDialogOpen(true);
+  };
+
+  const confirmWithdrawOffer = () => {
+    if (offerToWithdraw) {
+      withdrawOfferMutation.mutate(offerToWithdraw.id, {
+        onSuccess: () => {
+          setWithdrawDialogOpen(false);
+          setOfferToWithdraw(null);
+        },
+      });
+    }
+  };
+
+  const handleViewAcceptedOffer = (offer) => {
+    // Calculate fees (these should ideally come from the backend)
+    const propertyPrice = offer?.property?.price || offer?.offerAmount;
+    const agencyFee = propertyPrice * 0.05; // 5% agency fee
+    const legalFee = propertyPrice * 0.02; // 2% legal fee
+    const totalCost = parseFloat(propertyPrice) + agencyFee + legalFee;
+
+    setAcceptedOfferDetails({
+      ...offer,
+      propertyPrice,
+      agencyFee,
+      legalFee,
+      totalCost,
+    });
+    setAcceptedOfferDialogOpen(true);
+  };
+
+  const proceedToAcquisition = () => {
+    if (acceptedOfferDetails) {
+      navigate(`/realestate/property-acquisition/${acceptedOfferDetails.id}`, {
+        state: { offerDetails: acceptedOfferDetails }
+      });
     }
   };
 
@@ -193,16 +236,16 @@ function DemoContent(props) {
                           {formatCurrency(offer?.offerAmount)}
                         </Typography>
                       </div>
-                      {offer?.propertyPrice && (
+                      {offer?.property.price && (
                         <div className="text-right">
                           <Typography variant="caption" className="text-gray-600 font-semibold block">
                             Listed Price
                           </Typography>
                           <Typography variant="h6" className="font-semibold text-gray-700">
-                            {formatCurrency(offer?.propertyPrice)}
+                            {formatCurrency(offer?.property.price)}
                           </Typography>
                           <Typography variant="caption" className="text-gray-500">
-                            {((offer?.offerAmount / offer?.propertyPrice) * 100).toFixed(1)}% of asking
+                            {((offer?.offerAmount / offer?.property.price) * 100).toFixed(1)}% of asking
                           </Typography>
                         </div>
                       )}
@@ -316,7 +359,7 @@ function DemoContent(props) {
                           color="error"
                           size="small"
                           startIcon={<i className="fas fa-times-circle"></i>}
-                          onClick={() => handleWithdrawOffer(offer.id)}
+                          onClick={() => handleWithdrawOffer(offer)}
                           disabled={withdrawOfferMutation.isLoading}
                         >
                           Withdraw Offer
@@ -324,12 +367,28 @@ function DemoContent(props) {
                       </>
                     )}
                     {offer?.status?.toLowerCase() === "accepted" && (
-                      <Chip
-                        icon={<i className="fas fa-check-circle"></i>}
-                        label="Offer Accepted - Contact seller to proceed"
-                        color="success"
-                        className="font-semibold"
-                      />
+                      <div className="flex flex-wrap gap-2 w-full">
+                        <Chip
+                          icon={<i className="fas fa-check-circle"></i>}
+                          label="Offer Accepted"
+                          color="success"
+                          className="font-semibold"
+                        />
+                        <Button
+                          variant="contained"
+                          size="small"
+                          startIcon={<i className="fas fa-arrow-right"></i>}
+                          onClick={() => handleViewAcceptedOffer(offer)}
+                          sx={{
+                            background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+                            '&:hover': {
+                              background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
+                            }
+                          }}
+                        >
+                          Proceed to Purchase
+                        </Button>
+                      </div>
                     )}
                     {offer?.status?.toLowerCase() === "rejected" && (
                       <Chip
@@ -458,6 +517,499 @@ function DemoContent(props) {
             }}
           >
             {updateOfferMutation.isLoading ? "Updating..." : "Update Offer"}
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Accepted Offer Details Dialog */}
+      <Dialog
+        open={acceptedOfferDialogOpen}
+        onClose={() => setAcceptedOfferDialogOpen(false)}
+        maxWidth="md"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: '20px',
+            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
+          }
+        }}
+      >
+        <DialogTitle sx={{
+          background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
+          color: 'white',
+          padding: '28px',
+        }}>
+          <div className="flex items-center gap-4">
+            <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
+              <i className="fas fa-check-circle text-white text-2xl"></i>
+            </div>
+            <div>
+              <Typography variant="h5" className="font-bold text-white mb-1">
+                Congratulations!
+              </Typography>
+              <Typography variant="body2" className="text-green-50">
+                Your offer has been accepted
+              </Typography>
+            </div>
+          </div>
+        </DialogTitle>
+
+        <DialogContent sx={{ padding: '32px 28px' }}>
+          <div className="space-y-5">
+            {/* Success Message */}
+            <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-green-500 p-5 rounded-r-xl">
+              <div className="flex items-start gap-3">
+                <i className="fas fa-party-horn text-green-600 text-xl mt-1"></i>
+                <div>
+                  <Typography variant="body1" className="text-gray-800 font-bold mb-2">
+                    Your offer has been accepted by the seller!
+                  </Typography>
+                  <Typography variant="body2" className="text-gray-700">
+                    Review the complete cost breakdown below and proceed to finalize your property acquisition.
+                  </Typography>
+                </div>
+              </div>
+            </div>
+
+            {/* Property & Offer Details */}
+            {acceptedOfferDetails && (
+              <>
+                <Card className="border-2 border-green-200 shadow-md">
+                  <CardContent className="p-5">
+                    <Typography variant="caption" className="text-green-800 font-bold block mb-4 uppercase tracking-wider">
+                      <i className="fas fa-building text-green-600 mr-2"></i>
+                      Property & Offer Information
+                    </Typography>
+
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                      {/* Property ID */}
+                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-hashtag text-orange-600"></i>
+                          <Typography variant="body2" className="text-gray-700 font-medium">
+                            Property ID
+                          </Typography>
+                        </div>
+                        <Typography variant="body2" className="font-mono font-bold text-gray-900">
+                          #{acceptedOfferDetails?.propertyId || "N/A"}
+                        </Typography>
+                      </div>
+
+                      {/* Your Offer */}
+                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-tag text-orange-600"></i>
+                          <Typography variant="body2" className="text-gray-700 font-medium">
+                            Your Accepted Offer
+                          </Typography>
+                        </div>
+                        <Typography variant="body2" className="font-bold text-green-700">
+                          {formatCurrency(acceptedOfferDetails?.offerAmount)}
+                        </Typography>
+                      </div>
+
+                      {/* Buyer Name */}
+                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-user text-orange-600"></i>
+                          <Typography variant="body2" className="text-gray-700 font-medium">
+                            Buyer Name
+                          </Typography>
+                        </div>
+                        <Typography variant="body2" className="font-bold text-gray-900">
+                          {acceptedOfferDetails?.buyerName || "N/A"}
+                        </Typography>
+                      </div>
+
+                      {/* Contact */}
+                      <div className="flex justify-between items-center p-3 bg-gray-50 rounded-lg">
+                        <div className="flex items-center gap-2">
+                          <i className="fas fa-phone text-orange-600"></i>
+                          <Typography variant="body2" className="text-gray-700 font-medium">
+                            Contact Phone
+                          </Typography>
+                        </div>
+                        <Typography variant="body2" className="font-bold text-gray-900">
+                          {acceptedOfferDetails?.buyerPhone || "N/A"}
+                        </Typography>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Cost Breakdown */}
+                <Card className="border-2 border-orange-200 shadow-lg">
+                  <CardContent className="p-5">
+                    <Typography variant="caption" className="text-orange-800 font-bold block mb-4 uppercase tracking-wider">
+                      <i className="fas fa-calculator text-orange-600 mr-2"></i>
+                      Complete Cost Breakdown
+                    </Typography>
+
+                    <div className="space-y-3">
+                      {/* Property Price */}
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg">
+                        <div>
+                          <Typography variant="body2" className="text-blue-900 font-semibold mb-1">
+                            Property Price
+                          </Typography>
+                          <Typography variant="caption" className="text-blue-700">
+                            Agreed purchase amount
+                          </Typography>
+                        </div>
+                        <Typography variant="h6" className="font-bold text-blue-900">
+                          {formatCurrency(acceptedOfferDetails?.propertyPrice)}
+                        </Typography>
+                      </div>
+
+                      <Divider />
+
+                      {/* Agency Fee */}
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
+                        <div>
+                          <Typography variant="body2" className="text-purple-900 font-semibold mb-1">
+                            Agency Fee (5%)
+                          </Typography>
+                          <Typography variant="caption" className="text-purple-700">
+                            Platform service charge
+                          </Typography>
+                        </div>
+                        <Typography variant="h6" className="font-bold text-purple-900">
+                          {formatCurrency(acceptedOfferDetails?.agencyFee)}
+                        </Typography>
+                      </div>
+
+                      {/* Legal Fee */}
+                      <div className="flex justify-between items-center p-4 bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-lg">
+                        <div>
+                          <Typography variant="body2" className="text-indigo-900 font-semibold mb-1">
+                            Legal Fee (2%)
+                          </Typography>
+                          <Typography variant="caption" className="text-indigo-700">
+                            Documentation & processing
+                          </Typography>
+                        </div>
+                        <Typography variant="h6" className="font-bold text-indigo-900">
+                          {formatCurrency(acceptedOfferDetails?.legalFee)}
+                        </Typography>
+                      </div>
+
+                      <Divider sx={{ borderStyle: 'dashed', borderWidth: 2 }} />
+
+                      {/* Total Cost */}
+                      <div className="flex justify-between items-center p-5 bg-gradient-to-r from-orange-100 via-orange-200 to-red-100 rounded-xl border-2 border-orange-400 shadow-md">
+                        <div>
+                          <Typography variant="h6" className="text-orange-900 font-bold mb-1">
+                            Total Amount Due
+                          </Typography>
+                          <Typography variant="caption" className="text-orange-800">
+                            Complete payment required
+                          </Typography>
+                        </div>
+                        <Typography variant="h4" className="font-black text-orange-900">
+                          {formatCurrency(acceptedOfferDetails?.totalCost)}
+                        </Typography>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+
+                {/* Payment Notice */}
+                <div className="bg-gradient-to-br from-yellow-50 to-amber-50 border-2 border-yellow-300 p-5 rounded-xl">
+                  <div className="flex items-start gap-3">
+                    <i className="fas fa-shield-alt text-yellow-600 text-2xl mt-1"></i>
+                    <div>
+                      <Typography variant="body2" className="text-yellow-900 font-bold mb-2">
+                        <i className="fas fa-lock text-yellow-600 mr-1"></i>
+                        Secure Payment Notice
+                      </Typography>
+                      <Typography variant="body2" className="text-yellow-800 mb-2">
+                        All payments are processed securely through the company's official account. Funds will be held in escrow and remitted to the merchant only after:
+                      </Typography>
+                      <ul className="list-disc list-inside space-y-1 text-sm text-yellow-800">
+                        <li>Payment verification by our finance team</li>
+                        <li>Completion of all required documentation</li>
+                        <li>Final approval from legal department</li>
+                      </ul>
+                      <Typography variant="caption" className="text-yellow-700 block mt-3 font-semibold">
+                        <i className="fas fa-info-circle mr-1"></i>
+                        Never make payments directly to individual sellers
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Next Steps */}
+                <div className="bg-gradient-to-br from-green-50 to-emerald-50 border border-green-300 p-4 rounded-lg">
+                  <Typography variant="caption" className="text-green-900 font-bold block mb-3">
+                    <i className="fas fa-list-check text-green-600 mr-2"></i>
+                    NEXT STEPS
+                  </Typography>
+                  <div className="space-y-2">
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <Typography variant="caption" className="text-white font-bold">1</Typography>
+                      </div>
+                      <Typography variant="body2" className="text-green-800">
+                        Click "Proceed to Payment" to continue to the acquisition portal
+                      </Typography>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <Typography variant="caption" className="text-white font-bold">2</Typography>
+                      </div>
+                      <Typography variant="body2" className="text-green-800">
+                        Submit payment to the company's official account
+                      </Typography>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <Typography variant="caption" className="text-white font-bold">3</Typography>
+                      </div>
+                      <Typography variant="body2" className="text-green-800">
+                        Upload required documents for property transfer
+                      </Typography>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
+                        <Typography variant="caption" className="text-white font-bold">4</Typography>
+                      </div>
+                      <Typography variant="body2" className="text-green-800">
+                        Await verification and approval from our teams
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
+          </div>
+        </DialogContent>
+
+        <DialogActions sx={{
+          padding: '20px 28px',
+          background: '#f9fafb',
+          borderTop: '1px solid #e5e7eb',
+          gap: 2,
+        }}>
+          <Button
+            onClick={() => setAcceptedOfferDialogOpen(false)}
+            variant="outlined"
+            sx={{
+              textTransform: "none",
+              fontSize: "1rem",
+              borderColor: '#d1d5db',
+              color: '#374151',
+              paddingX: 4,
+              paddingY: 1.5,
+              '&:hover': {
+                borderColor: '#9ca3af',
+                background: '#f3f4f6',
+              },
+            }}
+          >
+            Close
+          </Button>
+          <Button
+            onClick={proceedToAcquisition}
+            variant="contained"
+            startIcon={<i className="fas fa-arrow-right"></i>}
+            sx={{
+              background: 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)',
+              color: 'white',
+              textTransform: "none",
+              fontSize: "1rem",
+              paddingX: 4,
+              paddingY: 1.5,
+              boxShadow: '0 4px 12px rgba(234, 88, 12, 0.3)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)',
+                boxShadow: '0 6px 16px rgba(234, 88, 12, 0.4)',
+              },
+            }}
+          >
+            Proceed to Payment & Documentation
+          </Button>
+        </DialogActions>
+      </Dialog>
+
+      {/* Withdraw Offer Confirmation Dialog */}
+      <Dialog
+        open={withdrawDialogOpen}
+        onClose={() => setWithdrawDialogOpen(false)}
+        maxWidth="sm"
+        fullWidth
+        PaperProps={{
+          sx: {
+            borderRadius: '16px',
+            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
+          }
+        }}
+      >
+        <DialogTitle sx={{
+          background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+          color: 'white',
+          padding: '24px',
+        }}>
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
+              <i className="fas fa-exclamation-triangle text-white text-xl"></i>
+            </div>
+            <div>
+              <Typography variant="h6" className="font-bold text-white">
+                Withdraw Offer?
+              </Typography>
+              <Typography variant="caption" className="text-red-100">
+                This action cannot be undone
+              </Typography>
+            </div>
+          </div>
+        </DialogTitle>
+
+        <DialogContent sx={{ padding: '32px 24px' }}>
+          <div className="space-y-4">
+            {/* Warning Message */}
+            <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
+              <div className="flex items-start gap-3">
+                <i className="fas fa-info-circle text-red-600 mt-1"></i>
+                <div>
+                  <Typography variant="body2" className="text-gray-800 font-semibold mb-1">
+                    Are you sure you want to withdraw this offer?
+                  </Typography>
+                  <Typography variant="caption" className="text-gray-600">
+                    Once withdrawn, you will need to submit a new offer if you wish to bid on this property again.
+                  </Typography>
+                </div>
+              </div>
+            </div>
+
+            {/* Offer Details Summary */}
+            {offerToWithdraw && (
+              <div className="bg-gradient-to-br from-gray-50 to-gray-100 p-4 rounded-xl border border-gray-200">
+                <Typography variant="caption" className="text-gray-600 font-semibold block mb-3">
+                  OFFER DETAILS
+                </Typography>
+
+                <div className="space-y-3">
+                  {/* Offer Amount */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-tag text-orange-600"></i>
+                      <Typography variant="body2" className="text-gray-700">
+                        Your Offer Amount
+                      </Typography>
+                    </div>
+                    <Typography variant="body2" className="font-bold text-gray-900">
+                      {formatCurrency(offerToWithdraw?.offerAmount)}
+                    </Typography>
+                  </div>
+
+                  {/* Property ID */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-building text-orange-600"></i>
+                      <Typography variant="body2" className="text-gray-700">
+                        Property ID
+                      </Typography>
+                    </div>
+                    <Typography variant="body2" className="font-mono text-gray-900">
+                      #{offerToWithdraw?.propertyId || "N/A"}
+                    </Typography>
+                  </div>
+
+                  {/* Submitted Date */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-calendar text-orange-600"></i>
+                      <Typography variant="body2" className="text-gray-700">
+                        Submitted On
+                      </Typography>
+                    </div>
+                    <Typography variant="body2" className="text-gray-900">
+                      {offerToWithdraw?.createdAt ? formatDate(offerToWithdraw.createdAt) : "N/A"}
+                    </Typography>
+                  </div>
+
+                  {/* Status */}
+                  <div className="flex justify-between items-center">
+                    <div className="flex items-center gap-2">
+                      <i className="fas fa-info-circle text-orange-600"></i>
+                      <Typography variant="body2" className="text-gray-700">
+                        Current Status
+                      </Typography>
+                    </div>
+                    <Chip
+                      label={offerToWithdraw?.status || "Pending"}
+                      color={getStatusColor(offerToWithdraw?.status)}
+                      size="small"
+                    />
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Impact Notice */}
+            <div className="flex items-start gap-2 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
+              <i className="fas fa-lightbulb text-yellow-600 mt-0.5"></i>
+              <Typography variant="caption" className="text-yellow-800">
+                <strong>Note:</strong> Withdrawing this offer will remove it from the seller's consideration.
+                You can submit a new offer later if you change your mind.
+              </Typography>
+            </div>
+          </div>
+        </DialogContent>
+
+        <DialogActions sx={{
+          padding: '16px 24px',
+          background: '#f9fafb',
+          borderTop: '1px solid #e5e7eb',
+          gap: 2,
+        }}>
+          <Button
+            onClick={() => setWithdrawDialogOpen(false)}
+            variant="outlined"
+            sx={{
+              textTransform: "none",
+              fontSize: "0.95rem",
+              borderColor: '#d1d5db',
+              color: '#374151',
+              '&:hover': {
+                borderColor: '#9ca3af',
+                background: '#f3f4f6',
+              },
+              paddingX: 3,
+            }}
+          >
+            Cancel
+          </Button>
+          <Button
+            onClick={confirmWithdrawOffer}
+            variant="contained"
+            disabled={withdrawOfferMutation.isLoading}
+            startIcon={withdrawOfferMutation.isLoading ? null : <i className="fas fa-times-circle"></i>}
+            sx={{
+              background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
+              color: 'white',
+              textTransform: "none",
+              fontSize: "0.95rem",
+              paddingX: 3,
+              boxShadow: '0 4px 6px rgba(220, 38, 38, 0.2)',
+              '&:hover': {
+                background: 'linear-gradient(135deg, #b91c1c 0%, #dc2626 100%)',
+                boxShadow: '0 6px 8px rgba(220, 38, 38, 0.3)',
+              },
+              '&:disabled': {
+                background: '#9ca3af',
+                color: '#fff',
+              }
+            }}
+          >
+            {withdrawOfferMutation.isLoading ? (
+              <span className="flex items-center gap-2">
+                <i className="fas fa-spinner fa-spin"></i>
+                Withdrawing...
+              </span>
+            ) : (
+              "Yes, Withdraw Offer"
+            )}
           </Button>
         </DialogActions>
       </Dialog>

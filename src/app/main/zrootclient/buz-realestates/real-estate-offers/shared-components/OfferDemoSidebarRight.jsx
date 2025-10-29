@@ -1,9 +1,9 @@
 import { Typography, Card, CardContent, Chip } from "@mui/material";
 
 /**
- * The DemoSidebarRight component - Offer Tips & Stats.
+ * The OfferDemoSidebarRight component - Offer Tips & Stats.
  */
-function DemoSidebarRight(props) {
+function OfferDemoSidebarRight(props) {
   return (
     <div className="px-6 py-8 h-screen overflow-y-auto">
       {/* Offer Tips Section */}
@@ -118,4 +118,4 @@ function DemoSidebarRight(props) {
   );
 }
 
-export default DemoSidebarRight;
+export default OfferDemoSidebarRight;

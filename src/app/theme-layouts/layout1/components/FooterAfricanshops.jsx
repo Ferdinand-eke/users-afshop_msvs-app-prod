@@ -5,7 +5,7 @@ import {
   AiFillYoutube,
   AiOutlineTwitter,
 } from "react-icons/ai";
-import { Typography } from "@mui/material";
+import { Typography, Divider } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import {
   footercompanyLinks,
@@ -16,136 +16,175 @@ import { Link } from "react-router-dom";
 
 const FooterAfricanshops = () => {
   return (
-    <div className="bg-[#000] text-white">
-      {/* [#342ac8] */}
-      {/* <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-green-700 py-7">
-        <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
-          <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
-          <br />
-          events and offers
-        </h1>
-        <div>
-          <input
-            type="text"
-            required
-            placeholder="Enter your email..."
-            className="text-gray-800
-                sm:w-72 w-full sm:mr-5 mr-1 lg:mb-0 mb-4 py-2.5 rounded px-2 focus:outline-none"
-          />
-          <button className="bg-[#56d879] hover:bg-teal-500 duration-300 px-5 py-2.5 rounded-md text-whie md:w-auto w-full">
-            Submit
-          </button>
-        </div>
-      </div> */}
-      <div className="grid grid-cols-1 sm:gird-cols-3 lg:grid-cols-4 gap-6 sm:px-8 px-5 py-16 sm:text-center">
-        <ul className="px-5 text-center sm:text-start flex sm:block flex-col items-center">
-          {/* <img
-            src="https://shopo.quomodothemes.website/assets/images/logo.svg"
-            alt=""
-            style={{ filter: "brightness(0) invert(1)" }}
-          /> */}
-          <div className="flex items-center justify-start">
-            <Link to={`/`}>
+    <footer
+      className="text-white"
+      style={{
+        background: 'linear-gradient(to bottom right, #111827, #1f2937, #000000)'
+      }}
+    >
+      {/* Main Footer Content */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 py-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
+          {/* Brand Section */}
+          <div className="space-y-6">
+            <Link to="/" className="inline-flex items-center space-x-3 group" style={{ textDecoration: 'none' }}>
               <img
-                className="mt-14 logo-icon cursor-pointer"
-                // src="assets/images/logo/logo.svg"
-                // src="assets/images/afslogo/afLogo.svg"
                 src="assets/images/afslogo/afslogo.png"
-                width={40}
-                height={40}
-                alt="logo"
+                width={48}
+                height={48}
+                alt="Africanshops Logo"
+                className="transition-transform group-hover:scale-110 duration-300"
               />
+              <Typography className="text-xl font-bold text-white hover:text-orange-500 transition-colors duration-300">
+                Africanshops
+              </Typography>
             </Link>
-            <Typography
-              className="react-text text-16 font-semibold cursor-pointer"
-              component={NavLinkAdapter}
-              to={`/`}
-            >
-              Africanshops
+
+            <Typography className="text-gray-400 leading-relaxed max-w-xs">
+              Nurturing African businesses and ideologies. Your gateway to authentic African commerce.
             </Typography>
+
+            {/* Social Media Icons */}
+            <div className="flex items-center space-x-4">
+              <a
+                href="https://facebook.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300 transform hover:scale-110"
+                aria-label="Facebook"
+              >
+                <AiFillFacebook size={20} />
+              </a>
+              <a
+                href="https://twitter.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300 transform hover:scale-110"
+                aria-label="Twitter"
+              >
+                <AiOutlineTwitter size={20} />
+              </a>
+              <a
+                href="https://instagram.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300 transform hover:scale-110"
+                aria-label="Instagram"
+              >
+                <AiFillInstagram size={20} />
+              </a>
+              <a
+                href="https://youtube.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-10 h-10 bg-gray-800 rounded-full flex items-center justify-center hover:bg-orange-600 transition-all duration-300 transform hover:scale-110"
+                aria-label="YouTube"
+              >
+                <AiFillYoutube size={20} />
+              </a>
+            </div>
           </div>
-          <br />
-          <p>Norturing African businesses and Ideologies.</p>
-          <div className="flex items-center mt-[15px]">
-            <AiFillFacebook size={25} className="cursor-pointer" />
-            <AiOutlineTwitter
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-            <AiFillInstagram
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-            <AiFillYoutube
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
+
+          {/* Company Links */}
+          <div className="space-y-4">
+            <Typography variant="h6" className="font-bold text-white mb-6">
+              Company
+            </Typography>
+            <ul className="space-y-3">
+              {footerProductLinks.map((link, index) => (
+                <li key={index}>
+                  <Typography
+                    className="text-gray-400 hover:text-orange-500 hover:pl-2 duration-300 text-sm cursor-pointer transition-all"
+                    component={NavLinkAdapter}
+                    to={link.link}
+                  >
+                    {link.name}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
           </div>
-        </ul>
 
-        <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Company</h1>
-          {footerProductLinks.map((link, index) => (
-            <li key={index}>
-              <Typography
-                className="text-gray-400 hover:text-teal-400 duration-300
-                   text-sm cursor-pointer leading-6"
-                component={NavLinkAdapter}
-                to={link.link}
-              >
-                {link.name}
-              </Typography>
-            </li>
-          ))}
-        </ul>
+          {/* Shop Links */}
+          <div className="space-y-4">
+            <Typography variant="h6" className="font-bold text-white mb-6">
+              Shop
+            </Typography>
+            <ul className="space-y-3">
+              {footercompanyLinks.map((link, index) => (
+                <li key={index}>
+                  <Typography
+                    className="text-gray-400 hover:text-orange-500 hover:pl-2 duration-300 text-sm cursor-pointer transition-all"
+                    component={NavLinkAdapter}
+                    to={link.link}
+                  >
+                    {link.name}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          </div>
 
-        <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Shop</h1>
-          {footercompanyLinks.map((link, index) => (
-            <li key={index}>
-              <Typography
-                className="text-gray-400 hover:text-teal-400 duration-300
-                   text-sm cursor-pointer leading-6"
-                component={NavLinkAdapter}
-                to={link.link}
-              >
-                {link.name}
-              </Typography>
-            </li>
-          ))}
-        </ul>
-
-        <ul className="text-center sm:text-start">
-          <h1 className="mb-1 font-semibold">Support</h1>
-          {footerSupportLinks.map((link, index) => (
-            <li key={index}>
-              <Typography
-                className="text-gray-400 hover:text-teal-400 duration-300
-                   text-sm cursor-pointer leading-6"
-                component={NavLinkAdapter}
-                to={link.link}
-              >
-                {link.name}
-              </Typography>
-            </li>
-          ))}
-        </ul>
-      </div>
-
-      <div
-        className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10
-         text-center pt-2 text-gray-400 text-sm pb-8"
-      >
-        <span>© 2020 Africanshops. All rights reserved.</span>
-        <span>Terms, Privacy Policy</span>
-        <div className="sm:block flex items-center justify-center w-full">
-          <img
-            src="https://hamart-shop.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ffooter-payment.a37c49ac.png&w=640&q=75"
-            alt=""
-          />
+          {/* Support Links */}
+          <div className="space-y-4">
+            <Typography variant="h6" className="font-bold text-white mb-6">
+              Support
+            </Typography>
+            <ul className="space-y-3">
+              {footerSupportLinks.map((link, index) => (
+                <li key={index}>
+                  <Typography
+                    className="text-gray-400 hover:text-orange-500 hover:pl-2 duration-300 text-sm cursor-pointer transition-all"
+                    component={NavLinkAdapter}
+                    to={link.link}
+                  >
+                    {link.name}
+                  </Typography>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+
+      {/* Divider */}
+      <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+
+      {/* Bottom Footer */}
+      <div className="container mx-auto px-6 md:px-12 lg:px-16 py-8">
+        <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
+          {/* Copyright */}
+          <Typography className="text-gray-400 text-sm text-center md:text-left">
+            © {new Date().getFullYear()} Africanshops. All rights reserved.
+          </Typography>
+
+          {/* Legal Links */}
+          <div className="flex items-center space-x-6">
+            <Link
+              to="/terms"
+              className="text-gray-400 hover:text-orange-500 text-sm transition-colors duration-300"
+            >
+              Terms
+            </Link>
+            <Link
+              to="/privacy"
+              className="text-gray-400 hover:text-orange-500 text-sm transition-colors duration-300"
+            >
+              Privacy Policy
+            </Link>
+          </div>
+
+          {/* Payment Methods */}
+          <div className="flex items-center space-x-3">
+            <img
+              src="https://hamart-shop.vercel.app/_next/image?url=%2F_next%2Fstatic%2Fmedia%2Ffooter-payment.a37c49ac.png&w=640&q=75"
+              alt="Payment Methods"
+              className="h-8 object-contain opacity-80 hover:opacity-100 transition-opacity duration-300"
+            />
+          </div>
+        </div>
+      </div>
+    </footer>
   );
 };
 

@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import DemoHeader from "./shared-components/DemoHeader";
 import DemoContent from "./shared-components/DemoContent";
-import DemoSidebar from "./shared-components/DemoSidebar";
-import DemoSidebarRight from "./shared-components/DemoSidebarRight";
+import OfferDemoSidebar from "./shared-components/OfferDemoSidebar";
+import OfferDemoSidebarRight from "./shared-components/OfferDemoSidebarRight";
 import { useGetMyOffers } from "app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
@@ -43,6 +43,7 @@ function EstateOffersPage() {
   const offers = offersData?.data?.offers;
   const pagination = offersData?.data?.pagination;
 
+
   console.log("Estate Offers Data:", offersData);
   console.log("Offers Payload:", offers);
   console.log("Pagination Info:", pagination);
@@ -74,12 +75,12 @@ function EstateOffersPage() {
       leftSidebarOnClose={() => {
         setLeftSidebarOpen(false);
       }}
-      leftSidebarContent={<DemoSidebar />}
+      leftSidebarContent={<OfferDemoSidebar />}
       rightSidebarOpen={rightSidebarOpen}
       rightSidebarOnClose={() => {
         setRightSidebarOpen(false);
       }}
-      rightSidebarContent={<DemoSidebarRight />}
+      rightSidebarContent={<OfferDemoSidebarRight />}
       scroll="content"
     />
   );

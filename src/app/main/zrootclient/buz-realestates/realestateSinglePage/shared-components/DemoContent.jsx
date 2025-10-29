@@ -19,7 +19,28 @@ import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPa
 import siteStyle from "@fuse/sitestaticdata/siteStyle";
 import { Link } from "react-router-dom";
 import ImageGalleryView from "./ImageGalleryView";
-import { Reply, Send, ThumbUp } from "@mui/icons-material";
+import {
+  Reply,
+  Send,
+  ThumbUp,
+  Facebook,
+  Twitter,
+  Instagram,
+  LinkedIn,
+  Wifi,
+  LocalParking,
+  Pool,
+  FitnessCenter,
+  AcUnit,
+  Kitchen,
+  Tv,
+  LocalLaundryService,
+  Security,
+  Balcony,
+  Pets,
+  Elevator,
+  CheckCircle
+} from "@mui/icons-material";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 
@@ -29,6 +50,8 @@ import { selectUser } from "src/app/auth/user/store/userSlice";
 function DemoContent(props) {
   const { isLoading, isError, estatePropertyData } = props;
   const [galleryOpen, setGalleryOpen] = useState(false);
+
+  console.log("Etate Property Data in DemoContent:", estatePropertyData);
 
   if (isLoading) {
     return <FuseLoading />;
@@ -60,6 +83,7 @@ function DemoContent(props) {
     );
   }
 
+
   return (
     <div className="flex-auto p-8 sm:p-12 ">
       <div className="h-7xl min-h-7xl max-h-7xl ">
@@ -88,72 +112,194 @@ function DemoContent(props) {
             </div>
             <div className="bg-white px-6 py-4 mt-4 shadow-md">
               <div className="flex items-center justify-between px-2">
-                <span className="bg-blue-500 text-white px-3 py-1 rounded">
-                  FEATURED
-                </span>
-                <div className="flex items-center">
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star-half-alt text-yellow-500"></i>
-                  <span className="ml-2 text-gray-600">4.3</span>
-                </div>
+             
               </div>
               <h1 className="text-2xl font-bold mt-2 px-2">{estatePropertyData?.title}</h1>
               <p className="text-gray-600 mt-2 px-2">
                 {estatePropertyData?.shortDescription}
               </p>
-              <div className="flex items-center mt-2 px-2">
+              <div className="flex items-center mt-2 px-2 gap-2">
                 <span className="text-gray-600">Share:</span>
-                <i className="fab fa-facebook text-blue-600 ml-2"></i>
-                <i className="fab fa-twitter text-blue-400 ml-2"></i>
-                <i className="fab fa-instagram text-pink-600 ml-2"></i>
-                <i className="fab fa-linkedin text-blue-700 ml-2"></i>
+                <IconButton size="small" className="text-blue-600 hover:bg-blue-50">
+                  <Facebook />
+                </IconButton>
+                <IconButton size="small" className="text-blue-400 hover:bg-blue-50">
+                  <Twitter />
+                </IconButton>
+                <IconButton size="small" className="text-pink-600 hover:bg-pink-50">
+                  <Instagram />
+                </IconButton>
+                <IconButton size="small" className="text-blue-700 hover:bg-blue-50">
+                  <LinkedIn />
+                </IconButton>
               </div>
-              <Button
-                size="small"
-                fullWidth
-                className="bg-orange-500 hover:bg-orange-800 text-black px-4 py-2 rounded mt-4"
-              >
-                ₦ {formatCurrency(estatePropertyData?.price)} per {estatePropertyData?.leaseTerm || "ANNUM =>" }  Place A Bid
-              </Button>
+              {/* Property Pricing & Use Case Card */}
+              <div className="mt-4 bg-gradient-to-br from-orange-50 via-orange-100 to-red-50 rounded-xl p-6 border-2 border-orange-200 shadow-lg">
+                <div className="flex items-start justify-between mb-4">
+                  <div className="flex-1">
+                    <Typography variant="caption" className="text-orange-800 font-semibold uppercase tracking-wide">
+                      Price
+                    </Typography>
+                    <Typography variant="h4" className="font-black text-gray-900 mt-1">
+                      ₦{formatCurrency(estatePropertyData?.price)}
+                    </Typography>
+                    {estatePropertyData?.propertyUseCase === "RENT" && <>
+                     <Typography variant="caption" className="text-gray-600 mt-1">
+                      {estatePropertyData?.leaseTerm || 'Per Annum'}
+                    </Typography>
+                    </>}
+                   
+                  </div>
+
+                  {estatePropertyData?.propertyUseCase && (
+                    <div className="px-4 py-2 bg-white rounded-lg shadow-sm border border-orange-200">
+                      <Typography variant="caption" className="text-orange-700 font-semibold block text-center">
+                        Use Case
+                      </Typography>
+                      <Typography variant="body2" className="text-gray-800 font-bold text-center capitalize mt-1">
+                        {estatePropertyData?.propertyUseCase}
+                      </Typography>
+                    </div>
+                  )}
+                </div>
+
+                <Divider sx={{ marginY: 2, borderColor: 'rgba(234, 88, 12, 0.2)' }} />
+
+                {/* <div className="flex gap-3">
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    size="large"
+                    sx={{
+                      backgroundColor: '#ea580c',
+                      color: 'white',
+                      fontWeight: 'bold',
+                      textTransform: 'none',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      '&:hover': {
+                        backgroundColor: '#c2410c',
+                      }
+                    }}
+                  >
+                    Place a Bid
+                  </Button>
+                  <Button
+                    fullWidth
+                    variant="outlined"
+                    size="large"
+                    sx={{
+                      borderColor: '#ea580c',
+                      color: '#ea580c',
+                      fontWeight: 'bold',
+                      textTransform: 'none',
+                      borderRadius: '8px',
+                      padding: '12px',
+                      borderWidth: '2px',
+                      '&:hover': {
+                        borderColor: '#c2410c',
+                        backgroundColor: 'rgba(234, 88, 12, 0.05)',
+                        borderWidth: '2px',
+                      }
+                    }}
+                  >
+                    Contact Owner
+                  </Button>
+                </div> */}
+              </div>
             </div>
             
-            <div className="bg-white px-6 py-6 mt-4 shadow-md">
-              <h2 className="text-xl font-bold px-2">Amenities</h2>
-              <ul className="list-disc list-inside mt-2 text-gray-600 px-4">
-                <li className="mb-2 px-2">
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
-                </li>
-                <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
-                </li>
-                <li>
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
-                </li>
-                <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
-                </li>
-                <li>
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
-                </li>
-                <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
-                </li>
-              </ul>
+            <div className="bg-white px-6 py-6 mt-4 shadow-md rounded-lg">
+              <Typography variant="h5" className="font-bold mb-4 px-2">
+                Amenities & Features
+              </Typography>
+
+              {/* Amenities Grid */}
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2">
+                {/* Use actual amenities from database or fallback to placeholder */}
+                {(estatePropertyData?.amenities || [
+                  { id: 1, name: "WiFi", icon: "wifi", available: true },
+                  { id: 2, name: "Parking", icon: "parking", available: true },
+                  { id: 3, name: "Swimming Pool", icon: "pool", available: true },
+                  { id: 4, name: "Gym/Fitness Center", icon: "fitness", available: true },
+                  { id: 5, name: "Air Conditioning", icon: "ac", available: true },
+                  { id: 6, name: "Modern Kitchen", icon: "kitchen", available: true },
+                  { id: 7, name: "Cable TV", icon: "tv", available: true },
+                  { id: 8, name: "Laundry Service", icon: "laundry", available: true },
+                  { id: 9, name: "24/7 Security", icon: "security", available: true },
+                  { id: 10, name: "Balcony/Terrace", icon: "balcony", available: true },
+                  { id: 11, name: "Pet Friendly", icon: "pets", available: false },
+                  { id: 12, name: "Elevator Access", icon: "elevator", available: true },
+                ]).map((amenity) => {
+                  // Icon mapping
+                  const getAmenityIcon = (iconName) => {
+                    const iconMap = {
+                      wifi: Wifi,
+                      parking: LocalParking,
+                      pool: Pool,
+                      fitness: FitnessCenter,
+                      ac: AcUnit,
+                      kitchen: Kitchen,
+                      tv: Tv,
+                      laundry: LocalLaundryService,
+                      security: Security,
+                      balcony: Balcony,
+                      pets: Pets,
+                      elevator: Elevator,
+                    };
+                    return iconMap[iconName] || CheckCircle;
+                  };
+
+                  const IconComponent = getAmenityIcon(amenity.icon);
+
+                  return (
+                    <div
+                      key={amenity.id}
+                      className={`flex items-center gap-3 p-3 rounded-lg border transition-all ${
+                        amenity.available
+                          ? "bg-green-50 border-green-200 hover:bg-green-100"
+                          : "bg-gray-50 border-gray-200 opacity-50"
+                      }`}
+                    >
+                      <IconComponent
+                        sx={{
+                          fontSize: "1.5rem",
+                          color: amenity.available ? "#16a34a" : "#9ca3af",
+                        }}
+                      />
+                      <div className="flex-1">
+                        <Typography
+                          variant="body2"
+                          className={`font-semibold ${
+                            amenity.available ? "text-gray-800" : "text-gray-500"
+                          }`}
+                        >
+                          {amenity.name}
+                        </Typography>
+                      </div>
+                      {amenity.available && (
+                        <CheckCircle
+                          sx={{ fontSize: "1rem", color: "#16a34a" }}
+                        />
+                      )}
+                    </div>
+                  );
+                })}
+              </div>
+
+              {/* Additional Features */}
+              {estatePropertyData?.additionalFeatures && (
+                <div className="mt-6 px-2">
+                  <Typography variant="h6" className="font-semibold mb-3">
+                    Additional Features
+                  </Typography>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <Typography variant="body2" className="text-gray-700 leading-relaxed">
+                      {estatePropertyData.additionalFeatures}
+                    </Typography>
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="bg-white px-6 py-4 mt-4 shadow-md">

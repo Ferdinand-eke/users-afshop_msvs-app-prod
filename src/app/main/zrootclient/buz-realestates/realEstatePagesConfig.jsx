@@ -8,6 +8,10 @@ const EstateOffersPage = lazy(
   () => import("./real-estate-offers/EstateOffersPage")
 );
 
+const PropertyAcquisitionPage = lazy(
+  () => import("./property-acquisition/PropertyAcquisitionPage")
+);
+
 /**
  * The reset password pages config.
  */
@@ -43,13 +47,16 @@ const userRealEstatePagesConfig = {
       element: <InspectionSchedulesPage />, // (Done => Msvs)
     },
 
-      {
+    {
       path: "realestate/my-offers",
       element: <EstateOffersPage />, // (Done => Msvs)
     },
-   
 
-    
+    {
+      path: "realestate/property-acquisition/:offerId",
+      element: <PropertyAcquisitionPage />, // Property Payment & Documentation Portal
+    },
+
   ],
 };
 

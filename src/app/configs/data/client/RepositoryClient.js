@@ -8,9 +8,8 @@ import { API_ENDPOINTS } from "./serverEndpoints/endpoints";
  */
 /******Digital Ocean : Curent Production Main server*/
 
-const baseDomain = import.meta.env.VITE_API_BASE_URL_PROD;   /**production & dev */
-
-
+const baseDomain = import.meta.env
+  .VITE_API_BASE_URL_PROD; /**production & dev */
 
 /**##############################
  * ####MAIN ENDPOINTS ENDS
@@ -55,20 +54,20 @@ export const preUserRegistration = (formData) =>
 export const preUserRegistrationWithOtp = (formData) =>
   Api().post("/auth-user/otp-register-preuser", formData); // (Msvs => Done)
 
-  /****UN-AUTHENTICATED USER Forgot_PAss FLOW STARTs */
+/****UN-AUTHENTICATED USER Forgot_PAss FLOW STARTs */
 export const clientForgotPassword = (formData) =>
   Api().post("/authuser/forgot-password", formData);
 
 export const clientResetPassword = (formData) =>
   Api().post("/authuser/reset-password ", formData);
 
-  export const clientForgotPasswordWithOtp = (formData) => Api().post("/auth-user/forgot-password/with-otp", formData); // (Done => Mcsvs)
-
+export const clientForgotPasswordWithOtp = (formData) =>
+  Api().post("/auth-user/forgot-password/with-otp", formData); // (Done => Mcsvs)
 
 
 export const clientResetPasswordFromOtp = (formData) =>
   Api().post("/auth-user/reset-password/from-otp ", formData); // (Done => Mcsvs)
-  /****UN-AUTHENTICATED USER Forgot_PAss FLOW ENDS */
+/****UN-AUTHENTICATED USER Forgot_PAss FLOW ENDS */
 
 // /reset-password
 export const clientSigin = (formData) =>
@@ -80,8 +79,6 @@ export const clientRegister = (formData) =>
 /***
  * CLIENT USSERS AUTHENTICATION ENDS HERE
  */
-
-
 
 //GET AUTHENTICATE USER WITH TOKEN REQUES
 
@@ -102,7 +99,8 @@ export const getAfPostsByCategory = (category) =>
 export const getAfMarkets = () => Api().get("/markets");
 export const getMarketById = (id) => Api().get(`/markets/${id}`);
 export const getMarketsByStateId = (id) => Api().get(`/markets/states/${id}`);
-export const getMarketsByLgaId = (id) => Api().get(`/markets/in-state/${id}/operational`); //(Mcsvs => Done)
+export const getMarketsByLgaId = (id) =>
+  Api().get(`/markets/in-state/${id}/operational`); //(Mcsvs => Done)
 
 // export const updateMarketById = (id, marketFormData) =>
 //   authApi().put(`/markets/${id}`, marketFormData);
@@ -112,14 +110,15 @@ export const getMarketsByLgaId = (id) => Api().get(`/markets/in-state/${id}/oper
 //==========================================Market Routes end==========================================================//
 //###############################################################################
 //========================================L.G.As  Routes starts
-export const getLgasByStateId = (sid) => Api().get(`/buz-lgas/in-state/${sid}/operational`); //(Mcsvs => Done)
+export const getLgasByStateId = (sid) =>
+  Api().get(`/buz-lgas/in-state/${sid}/operational`); //(Mcsvs => Done)
 
 //###############################################################################
 //========================================States Toutes
 export const getBStates = () => Api().get("/buzstates");
 export const getStateById = (id) => Api().get(`/buzstates/${id}`);
 export const getStateByCountryId = (cid) =>
- Api().get(`/buzstates/in-country/${cid}/operational`);  //(Mcsvs => Done)
+  Api().get(`/buzstates/in-country/${cid}/operational`); //(Mcsvs => Done)
 //=========================================States Toutes end===========================================================//
 
 //========================================Countries Routes
@@ -169,13 +168,12 @@ export const getProducts = (
     `/clientusersproducts?name=${name}&pageNumber=${pageNumber}&seller=${seller}&category=${category}&min=${min}&max=${max}&rating=${rating}&order=${order}`
   );
 
-
-export const getAllProducts = (filters = {}) =>  {
-  // Api().get(`/products`);  
-    const queryString = serializeQuery(filters);
+export const getAllProducts = (filters = {}) => {
+  // Api().get(`/products`);
+  const queryString = serializeQuery(filters);
   const url = queryString ? `/products?${queryString}` : `/products`;
   return Api().get(url);
-}//(Msvs => Done)
+}; //(Msvs => Done)
 
 export const getProductById = (id) => Api().get(`/products/${id}/view`);
 export const getProductByCategory = (category) =>
@@ -256,16 +254,11 @@ export const getApiFeaturedPartners = () => Api().get(`/partners`);
 //==========================Get Our Leaders Routes=====================================
 export const getOurTeam = () => Api().get(`/admin/our-leaders`);
 
-
-
-
-
 /**===============================================================================================
  * MARKET-PLACE ROUTES LISTED BELOW STARTS
  ==================================================================================================*/
 export const getMyMarketplaceCartApi = (userId) =>
-Api().get(`/foodmarts/get-user-cart/${userId}`);
-
+  Api().get(`/foodmarts/get-user-cart/${userId}`);
 
 /**===============================================================================================
  * FOOD MART ROUTES LISTED BELOW STARTS
@@ -277,64 +270,62 @@ export const getAllFoodMarts = (filters = {}) => {
   return Api().get(url);
 }; //(Mcsvs => Done)
 export const getFoodMartMenuApi = (rcsId) =>
-  Api().get(`/food-marts/${rcsId}/view`);  //(Mcsvs => Done)
+  Api().get(`/food-marts/${rcsId}/view`); //(Mcsvs => Done)
 
-export const getRcsFoodMartMenuItemsApi = (rcsId) =>
-  Api().get(`/rcs-menu`);  //(Mcsvs => Done)
+export const getRcsFoodMartMenuItemsApi = (rcsId) => Api().get(`/rcs-menu`); //(Mcsvs => Done)
 
-  export const getFoodMartSingleMenuItemApi = (rcsId, menuSlug) =>
+export const getFoodMartSingleMenuItemApi = (rcsId, menuSlug) =>
   Api().get(`/rcs-menu/foodmart/${rcsId}/menu/${menuSlug}/view`); //(Mcsvs => Done)
 
-
-
-  export const getMyFoodCartpi = () => {
-       ///get-user-cart/${userId}  userId
-    return Api().get(`/rcs-cart-session`);  
-  } //(Mcsvs => Done)
+export const getMyFoodCartpi = () => {
+  ///get-user-cart/${userId}  userId
+  return Api().get(`/rcs-cart-session`);
+}; //(Mcsvs => Done)
 /**======================================================================================================
  * FOOD MART ROUTES LISTED ENDS HERE 
  =========================================================================================================*/
-
 
 /**=====================================================================================================
  * BOOKINGS ROUTES LISTED BELOW STARTS
  =====================================================================================================*/
 export const getAllBookingsPropertyApi = (filters = {}) => {
   const queryString = serializeQuery(filters);
-  const url = queryString ? `/bookings/get-listings?${queryString}` : `/bookings/get-listings`;
+  const url = queryString
+    ? `/bookings/get-listings?${queryString}`
+    : `/bookings/get-listings`;
   return Api().get(url);
 }; // (Done => Mcsvs)
 
-
 export const getBookingPropertyApi = (bookingPropId) =>
-  Api().get(`/bookings/guest-listing/${bookingPropId}/view`);// (Done => Mcsvs) 
+  Api().get(`/bookings/guest-listing/${bookingPropId}/view`); // (Done => Mcsvs)
 
+export const getUserReservationsByListingId = (listingId) => {
+  return Api().get(
+    `${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}/confirm-free-dates`
+  );
+}; // (Done => Mcsvs)
 
-  export const getUserReservationsByListingId = (listingId) => {
-   
-    return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/${listingId}/confirm-free-dates`)
-}// (Done => Mcsvs) 
-
- export const getUserReservationsByRoomId = (roomId) => {
-
-    return Api().get(`${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/on-room/${roomId}/confirm-free-dates`)
-}// (Done => Mcsvs) 
+export const getUserReservationsByRoomId = (roomId) => {
+  return Api().get(
+    `${API_ENDPOINTS.GET_RESERVATIONS_BY_LISTING_ID}/on-room/${roomId}/confirm-free-dates`
+  );
+}; // (Done => Mcsvs)
 
 /**====================================================================================================
  * BOOKINGS ROUTES LISTED ENDS HERE 
  ======================================================================================================*/
 
-
- /**=====================================================================================================
+/**=====================================================================================================
  * ESTATES-PROPERTIES ROUTES LISTED BELOW STARTS
  =====================================================================================================*/
 export const getAllEstatessPropertyApi = (filters = {}) => {
-
-   const queryString = serializeQuery(filters);
-  const url = queryString ? `/estate-properties/get-listings?${queryString}` : `/estate-properties/get-listings`;
+  const queryString = serializeQuery(filters);
+  const url = queryString
+    ? `/estate-properties/get-listings?${queryString}`
+    : `/estate-properties/get-listings`;
   return Api().get(url);
-  // return  Api().get("/estate-properties/get-listings"); 
-}
+  // return  Api().get("/estate-properties/get-listings");
+};
 export const getEstatePropertyApi = (estatePropId) =>
   Api().get(`/estate-properties/guest-listing/${estatePropId}/view`);
 /**====================================================================================================

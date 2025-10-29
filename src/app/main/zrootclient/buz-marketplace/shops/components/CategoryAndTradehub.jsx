@@ -42,8 +42,6 @@ const CategoryAndTradehub = () => {
   return (
     <>
       <div className="md:col-span-6 h-[300px]">
-        <h2 className="font-bold mb-4 p-4">CATEGORY</h2>
-
         {categoriesView}
       </div>
     </>

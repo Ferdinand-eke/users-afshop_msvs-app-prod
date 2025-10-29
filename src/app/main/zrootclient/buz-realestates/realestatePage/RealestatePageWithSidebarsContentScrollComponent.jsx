@@ -9,6 +9,8 @@ import DemoSidebarRight from "./shared-components/DemoSidebarRight";
 import FusePageSimpleWithMargin from "@fuse/core/FusePageSimple/FusePageSimpleWithMargin";
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
 import useGetAllEstateProperties from "app/configs/data/server-calls/auth/userapp/a_estates/useEstatePropertiesRepo";
+import { useAppSelector } from "app/store/hooks";
+import { selectUser } from "src/app/auth/user/store/userSlice";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -43,6 +45,7 @@ function RealestatePageWithSidebarsContentScrollComponent() {
     setLeftSidebarOpen(!isMobile);
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);
+  const currentUser = useAppSelector(selectUser);
 
   // Fetch booking properties with filters
   const {
@@ -109,7 +112,6 @@ function RealestatePageWithSidebarsContentScrollComponent() {
     [itemsPerPage, currentPage]
   );
 
-  
   // Handle page change
   const handlePageChange = useCallback((newPage) => {
     setCurrentPage(newPage);
@@ -120,8 +122,6 @@ function RealestatePageWithSidebarsContentScrollComponent() {
     setItemsPerPage(newItemsPerPage);
     setCurrentPage(1); // Reset to first page when changing items per page
   }, []);
-
-
 
   return (
     <Root
@@ -156,9 +156,13 @@ function RealestatePageWithSidebarsContentScrollComponent() {
       rightSidebarOnClose={() => {
         setRightSidebarOpen(false);
       }}
-      // rightSidebarContent={
-      //   <DemoSidebarRight bookingsData={estateLists?.data?.propertyListings} />
-      // }
+      rightSidebarContent={
+        currentUser?.id && (
+          <>
+            <DemoSidebarRight />
+          </>
+        )
+      }
       scroll="content"
     />
   );

@@ -57,6 +57,10 @@ import MerchantShopPafeWithContentScrollPage from "../main/zrootclient/buz-marke
 import RealestatePageWithSidebarsContentScrollComponent from "../main/zrootclient/buz-realestates/realestatePage/RealestatePageWithSidebarsContentScrollComponent";
 import RealestateSinglePageWithSidebarsContentScroll from "../main/zrootclient/buz-realestates/realestateSinglePage/RealestateSinglePageWithSidebarsContentScroll";
 import userRealEstatePagesConfig from "../main/zrootclient/buz-realestates/realEstatePagesConfig";
+import LandingCenterHomeNew from "../main/vendors-shop/home/home/LandingCenterHomeNEW";
+import ModernLandingPage from "../main/vendors-shop/home/home/ModernLandingPage";
+import AboutUs from "../main/vendors-shop/home/home/AboutUs";
+import ContactUs from "../main/vendors-shop/home/home/ContactUs";
 
 // import FoodMartMenu from "../main/zrootclient/buz-foodmart/FoodMartMenu";
 // import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
@@ -204,27 +208,10 @@ const routes = [
     // element: <Navigate to="/dashboards/project" />,
     // element: <Navigate to="/home" />,
     // auth: settingsConfig.defaultAuth,
-    element: <LandingCenterHome />,
+    element: <ModernLandingPage />,
   },
   {
-    path: "loading",
-    element: <FuseLoading />,
-  },
-  {
-    path: "404",
-    element: <Error404Page />,
-  },
-  {
-    path: "*",
-    element: <Navigate to="404" />,
-  },
-
-  /***Check Pages starts */
-
-  /***Check Pages ends */
-  //
-  {
-    path: "/home",
+    path: "/about",
     settings: {
       layout: {
         config: {
@@ -246,8 +233,77 @@ const routes = [
         },
       },
     },
-    element: <LandingCenterHome />,
+    element: <AboutUs />,
   },
+  {
+    path: "/contact",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <ContactUs />,
+  },
+  {
+    path: "loading",
+    element: <FuseLoading />,
+  },
+  {
+    path: "404",
+    element: <Error404Page />,
+  },
+  {
+    path: "*",
+    element: <Navigate to="404" />,
+  },
+
+  /***Check Pages starts */
+
+  /***Check Pages ends */
+  //
+  // {
+  //   path: "/home",
+  //   settings: {
+  //     layout: {
+  //       config: {
+  //         navbar: {
+  //           display: false,
+  //         },
+  //         toolbar: {
+  //           display: true,
+  //         },
+  //         footer: {
+  //           display: false,
+  //         },
+  //         leftSidePanel: {
+  //           display: false,
+  //         },
+  //         rightSidePanel: {
+  //           display: false,
+  //         },
+  //       },
+  //     },
+  //   },
+  //   element: <ModernLandingPage />,
+
+  //   //
+  // },
 
   /****
    * ##############################################################

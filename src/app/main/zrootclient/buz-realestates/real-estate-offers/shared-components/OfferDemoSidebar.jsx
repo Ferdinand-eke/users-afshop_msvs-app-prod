@@ -2,9 +2,9 @@ import { Link, useLocation } from "react-router-dom";
 import { Typography } from "@mui/material";
 
 /**
- * The DemoSidebar component - Real Estate Navigation.
+ * The OfferDemoLeftSidebar component - Real Estate Navigation.
  */
-function DemoSidebar() {
+function OfferDemoLeftSidebar() {
   const location = useLocation();
 
   const realEstateMenuItems = [
@@ -112,6 +112,7 @@ function DemoSidebar() {
                   ? getActiveColor(item.color) + " shadow-sm"
                   : "border-transparent bg-white hover:bg-gray-50"
               }`}
+              style={{ textDecoration: 'none' }}
             >
               <div className="flex items-start gap-3">
                 <div
@@ -127,12 +128,14 @@ function DemoSidebar() {
                     className={`font-semibold mb-0.5 ${
                       isActive ? "text-gray-900" : "text-gray-800"
                     }`}
+                    style={{ textDecoration: 'none' }}
                   >
                     {item.title}
                   </Typography>
                   <Typography
                     variant="caption"
                     className={isActive ? "text-gray-700" : "text-gray-500"}
+                    style={{ textDecoration: 'none' }}
                   >
                     {item.description}
                   </Typography>
@@ -201,4 +204,4 @@ function DemoSidebar() {
   );
 }
 
-export default DemoSidebar;
+export default OfferDemoLeftSidebar;
