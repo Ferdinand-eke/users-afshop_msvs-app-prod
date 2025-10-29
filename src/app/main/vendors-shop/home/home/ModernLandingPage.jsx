@@ -254,9 +254,9 @@ function ModernLandingPage() {
                 transition={{ delay: 1 }}
               >
                 {[
-                  { num: "50K+", label: "Products" },
-                  { num: "10K+", label: "Merchants" },
-                  { num: "100K+", label: "Happy Customers" },
+                  { num: "3K+", label: "Products" },
+                  { num: "1K+", label: "Merchants" },
+                  { num: "10K+", label: "Happy Customers" },
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
                     <Typography
@@ -270,7 +270,7 @@ function ModernLandingPage() {
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "0.875rem",
+                        fontSize: "1.475rem",
                         color: "rgba(255, 255, 255, 0.9)",
                         marginTop: "4px",
                       }}
