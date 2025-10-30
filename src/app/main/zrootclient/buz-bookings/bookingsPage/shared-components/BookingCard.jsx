@@ -18,8 +18,8 @@ function BookingCard({
   roomCount,
   rating = 0,
   reviewCount = 0,
-  duration = '3 - 8 hours',
-  host = 'Captain'
+  category,
+  bookingPeriod
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -75,9 +75,9 @@ function BookingCard({
   };
 
   return (
-    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm">
+    <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm flex flex-col h-full">
       {/* Image Slider Section */}
-      <div className="relative group">
+      <div className="relative group flex-shrink-0">
         <div className="relative h-160 overflow-hidden">
           {images.length > 0 ? (
             <img
@@ -149,69 +149,136 @@ function BookingCard({
       </div>
 
       {/* Content Section */}
-      <div className="p-10">
-        {/* Duration and Host */}
-        <div className="flex items-center gap-2 text-sm text-gray-600 mb-2">
-          <span>{duration}</span>
-          <span>•</span>
-          <span>{host}</span>
-        </div>
-
-        {/* Title */}
-        <Typography
-          variant="h6"
-          className="font-semibold text-[14px] text-gray-900 mb-1 line-clamp-2 min-h-[3.5rem]"
-        >
-          {title}
-        </Typography>
-
-        {/* Address */}
-        <Typography variant="body2" className="text-gray-600 mb-3 line-clamp-1">
-          {address}
-        </Typography>
-
-        {/* Price and Rating Row */}
-        <div className="flex justify-between mb-4">
-          {/* Price */}
-          <div className="flex items-baseline gap-1">
-            <Typography variant="h6" className="font-bold text-[13px] text-gray-900">
-              N{formatCurrency(price)}
-            </Typography>
-            <Typography variant="body2" className="text-gray-600">
-              /night
-            </Typography>
+      <div className="p-10 flex flex-col flex-grow">
+        {/* Content that can vary in height */}
+        <div className="flex-grow">
+          {/* Duration and Host */}
+          <div className="flex items-center gap-2 text-base text-gray-600 mb-3">
+            <span className="font-serif font-100">{category}</span>
+            {/* <span>•</span>
+            <span className="font-xs">{host}</span> */}
           </div>
-          
 
-          {/* Rating */}
-          <div className="flex items-center gap-2">
-            <div className="flex text-xs">
-              {renderStars()}
-            </div>
-            <Typography variant="body2" className="text-gray-600 text-sm">
-              ({reviewCount.toString().padStart(2, '0')})
-            </Typography>
-          </div>
-        </div>
-
-        {/* Room Count */}
-        {roomCount && (
-          <Typography variant="body2" className="text-gray-600 mb-4">
-            <i className="fas fa-door-open mr-2"></i>
-            {roomCount} {roomCount === 1 ? 'Room' : 'Rooms'}
+          {/* Title */}
+          <Typography
+            variant="h6"
+            sx={{
+              fontWeight: 700,
+              fontSize: '1.625rem',
+              color: '#111827',
+              marginBottom: '4px',
+              lineHeight: 1.4,
+              display: '-webkit-box',
+              WebkitLineClamp: 2,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+              minHeight: '3.5rem',
+            }}
+          >
+            {title}
           </Typography>
-        )}
 
-        {/* View More Button */}
-        <Button
-         size="small"
-          component={NavLinkAdapter}
-          to={`/bookings/listings/${slug}/view`}
-          fullWidth
-          className="bg-orange-600 hover:bg-orange-800 text-white font-medium py-1.5 rounded-lg transition-colors duration-200"
-        >
-          View Details
-        </Button>
+          {/* Address */}
+          <Typography
+            variant="body1"
+            sx={{
+              fontSize: '1rem',
+              color: '#6b7280',
+              marginBottom: '16px',
+              display: '-webkit-box',
+              WebkitLineClamp: 1,
+              WebkitBoxOrient: 'vertical',
+              overflow: 'hidden',
+            }}
+          >
+            {address}
+          </Typography>
+
+          {/* Price and Rating Row */}
+          <div className="flex justify-between mb-4">
+            {/* Price */}
+            <div className="flex items-baseline gap-1">
+              <Typography
+                variant="h6"
+                sx={{
+                  fontWeight: 800,
+                  fontSize: '1.45rem',
+                  color: '#ea580c',
+                }}
+              >
+                N{formatCurrency(price)}
+              </Typography>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: '0.95rem',
+                  color: '#6b7280',
+                }}
+              >
+                /{bookingPeriod}
+              </Typography>
+            </div>
+
+            {/* Rating */}
+            <div className="flex items-center gap-2">
+              <div className="flex text-sm">
+                {renderStars()}
+              </div>
+              <Typography
+                variant="body1"
+                sx={{
+                  fontSize: '0.95rem',
+                  color: '#6b7280',
+                }}
+              >
+                ({reviewCount.toString().padStart(2, '0')})
+              </Typography>
+            </div>
+          </div>
+
+          {/* Room Count */}
+          {roomCount && (
+            <Typography
+              variant="body1"
+              sx={{
+                fontSize: '1rem',
+                color: '#6b7280',
+                marginBottom: '16px',
+                fontWeight: 500,
+              }}
+            >
+              <i className="fas fa-door-open mr-2"></i>
+              {roomCount} {roomCount === 1 ? 'Room' : 'Rooms'}
+            </Typography>
+          )}
+        </div>
+
+        {/* Button Section - Always at bottom */}
+        <div className="mt-auto pt-4">
+          <Button
+            size="medium"
+            component={NavLinkAdapter}
+            to={`/bookings/listings/${slug}/view`}
+            fullWidth
+            sx={{
+              backgroundColor: '#ea580c',
+              color: 'white',
+              fontWeight: 700,
+              fontSize: '1rem',
+              padding: '12px 24px',
+              borderRadius: '12px',
+              textTransform: 'none',
+              transition: 'all 0.3s ease',
+              '&:hover': {
+                backgroundColor: '#c2410c',
+                transform: 'translateY(-2px)',
+                boxShadow: '0 10px 20px rgba(234, 88, 12, 0.3)',
+              },
+            }}
+          >
+            View Details
+          </Button>
+        </div>
       </div>
     </div>
   );

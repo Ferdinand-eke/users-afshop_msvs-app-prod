@@ -60,12 +60,12 @@ function PaginationBar({
             label="Items per page"
             onChange={handleItemsPerPageChange}
           >
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
-            <MenuItem value={12}>12</MenuItem>
-            <MenuItem value={16}>16</MenuItem>
+           
+            <MenuItem value={10}>10</MenuItem>
             <MenuItem value={20}>20</MenuItem>
-            <MenuItem value={24}>24</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={40}>40</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
           </Select>
         </FormControl>
 

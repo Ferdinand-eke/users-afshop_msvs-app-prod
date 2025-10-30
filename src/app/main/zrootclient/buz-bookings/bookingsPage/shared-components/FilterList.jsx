@@ -234,16 +234,27 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto lg:max-w-xs ">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <FilterListIcon className="text-orange-600" />
-        <Typography variant="h6" className="font-semibold text-gray-900">
+    <div
+      className="rounded-2xl shadow-lg p-6 max-w-md mx-auto lg:max-w-xs overflow-hidden"
+      style={{
+        background: 'linear-gradient(135deg, #ffffff 0%, #fff5f0 50%, #ffedd5 100%)',
+      }}
+    >
+      {/* Header with Gradient */}
+      <div
+        className="flex items-center gap-3 mb-6 p-4 rounded-xl -mx-6 -mt-6 mb-6"
+        style={{
+          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+          boxShadow: '0 4px 15px rgba(249, 115, 22, 0.3)',
+        }}
+      >
+        <FilterListIcon sx={{ color: 'white', fontSize: '1.75rem' }} />
+        <Typography variant="h6" sx={{ fontWeight: 700, color: 'white', fontSize: '1.25rem' }}>
           Filter Properties
         </Typography>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 overflow-y-auto overflow-x-hidden" style={{ maxHeight: 'calc(100% - 80px)' }}>
         {/* Keyword Search */}
         <TextField
           fullWidth
@@ -251,10 +262,22 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
           placeholder="Search by keyword..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover fieldset': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused fieldset': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Search className="text-gray-400" fontSize="small" />
+                <Search className="text-orange-500" fontSize="small" />
               </InputAdornment>
             ),
             endAdornment: keyword && (
@@ -276,7 +299,20 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </Typography>
 
         {/* Country */}
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small"
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
+        >
           <InputLabel id="country-label">Country</InputLabel>
           <Select
             labelId="country-label"
@@ -296,7 +332,20 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* State */}
-        <FormControl fullWidth size="small" disabled={!country}>
+        <FormControl fullWidth size="small" disabled={!country}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
+        >
           <InputLabel id="state-label">State</InputLabel>
           <Select
             labelId="state-label"
@@ -317,7 +366,20 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* LGA */}
-        <FormControl fullWidth size="small" disabled={!state}>
+        <FormControl fullWidth size="small" disabled={!state}
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
+        >
           <InputLabel id="lga-label">LGA</InputLabel>
           <Select
             labelId="lga-label"
@@ -360,7 +422,20 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         <Divider className="my-4" />
 
         {/* Property Type */}
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small"
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
+        >
           <InputLabel id="property-type-label">Property Type</InputLabel>
           <Select
             labelId="property-type-label"
@@ -413,7 +488,20 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </div>
 
         {/* Room Count */}
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small"
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
+        >
           <InputLabel id="room-count-label">Bedrooms</InputLabel>
           <Select
             labelId="room-count-label"
@@ -438,7 +526,20 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* Bathroom Count */}
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small"
+          sx={{
+            backgroundColor: 'white',
+            borderRadius: '8px',
+            '& .MuiOutlinedInput-root': {
+              '&:hover .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#f97316',
+              },
+              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
+                borderColor: '#ea580c',
+              },
+            },
+          }}
+        >
           <InputLabel id="bathroom-count-label">Bathrooms</InputLabel>
           <Select
             labelId="bathroom-count-label"

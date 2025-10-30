@@ -1,16 +1,9 @@
-import FuseLoading from "@fuse/core/FuseLoading";
-
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-
-// import ClienttErrorPage from "../../components/ClienttErrorPage";
-import { Button, Typography } from "@mui/material";
-import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
+import { Typography } from "@mui/material";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
-import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import BookingCard from "./BookingCard";
 import PaginationBar from "./PaginationBar";
+import ContentLoadingPlaceholder from "./ContentLoadingPlaceholder";
 
 /**
  * Demo Content
@@ -32,9 +25,9 @@ function DemoContent(props) {
   // This assumes if we get less than itemsPerPage, we're on the last page
   const estimatedTotal = totalItems > 0 ? totalItems : products?.length || 0;
 
- 
+  // Show loading placeholder
   if (isLoading) {
-    return <FuseLoading />;
+    return <ContentLoadingPlaceholder />;
   }
 
   if (isError) {
@@ -66,10 +59,40 @@ function DemoContent(props) {
   
 
   return (
-    <div className="flex-auto p-24 sm:p-40">
+    <div
+      className="flex-auto p-24 sm:p-40"
+      style={{
+        background: 'linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)',
+        minHeight: '100vh',
+      }}
+    >
       <div className="flex flex-col">
+        {/* Header Section */}
+        <div className="mb-8">
+          <Typography
+            variant="h4"
+            sx={{
+              fontWeight: 800,
+              color: '#1f2937',
+              marginBottom: '8px',
+              fontSize: '2rem',
+            }}
+          >
+            Available Properties
+          </Typography>
+          <Typography
+            variant="body1"
+            sx={{
+              color: '#6b7280',
+              fontSize: '1.125rem',
+            }}
+          >
+            Find your perfect accommodation from our curated listings
+          </Typography>
+        </div>
+
         {/* Property Grid */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 p-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 bg-white/60 backdrop-blur-sm rounded-3xl shadow-lg mb-8">
           {products?.map((property) => (
             <BookingCard
               key={property?.id || property?._id}
@@ -82,15 +105,13 @@ function DemoContent(props) {
               roomCount={property?.roomCount}
               rating={property?.rating || 4.5}
               reviewCount={property?.reviewCount || 9}
-              duration={property?.duration || "3 - 8 hours"}
-              host={property?.host || "Captain"}
+              category={property?.category}
+              bookingPeriod={property?.bookingPeriod}
             />
           ))}
-       
         </div>
 
-
-        {/* Pagination Bar - Always show for testing */}
+        {/* Pagination Bar */}
         <PaginationBar
           totalItems={estimatedTotal}
           currentPage={currentPage}

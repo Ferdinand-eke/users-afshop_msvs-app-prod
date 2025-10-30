@@ -276,35 +276,142 @@ const routes = [
   /***Check Pages starts */
 
   /***Check Pages ends */
-  //
-  // {
-  //   path: "/home",
-  //   settings: {
-  //     layout: {
-  //       config: {
-  //         navbar: {
-  //           display: false,
-  //         },
-  //         toolbar: {
-  //           display: true,
-  //         },
-  //         footer: {
-  //           display: false,
-  //         },
-  //         leftSidePanel: {
-  //           display: false,
-  //         },
-  //         rightSidePanel: {
-  //           display: false,
-  //         },
-  //       },
-  //     },
-  //   },
-  //   element: <ModernLandingPage />,
 
-  //   //
-  // },
+  /**############################################################### */
+  /****
+   * ##############################################################
+   * BOOKINGS activities starts
+   * ##############################################################
+   */
 
+  {
+    path: "/bookings/listings",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    // element: <BookingsPage />,
+    element: <BookingsPageWithSidebarsContentScrollComponent />,
+  }, //(Msvs => Done)
+
+  {
+    path: "/bookings/listings/:bookingId/view",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    // element: <BookingSinglePage />,
+    element: <BookingsSinglePageWithSidebarsContentScroll />,
+  }, //(Msvs => Done)
+
+  /****
+   * ##############################################################
+   * BOOKINGS activities ends
+   * ##############################################################
+   */
+  /**############################################################### */
+  /**############################################################### */
+  /****
+   * ##############################################################
+   * REAL-ESTATE activities starts
+   * ##############################################################
+   */
+  {
+    path: "/realestate/listings",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    // element: <RealEstatesPage />,
+    element: <RealestatePageWithSidebarsContentScrollComponent />,
+  },
+
+  {
+    path: "/realestate/listings/:slug/view",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    // element: <RealEstateSinglePage />,
+    element: <RealestateSinglePageWithSidebarsContentScroll />,
+  },
+
+  /****
+   * ##############################################################
+   * REALE-STATE activities ends
+   * ##############################################################
+   */
+  /**############################################################### */
+
+  
   /****
    * ##############################################################
    * Marketplace activiies starts
@@ -450,140 +557,9 @@ const routes = [
    * Marketplace activiies ends
    * ##############################################################
    */
-  /**############################################################### */
-  /****
-   * ##############################################################
-   * BOOKINGS activities starts
-   * ##############################################################
-   */
 
-  {
-    path: "/bookings/listings",
-    settings: {
-      layout: {
-        config: {
-          navbar: {
-            display: false,
-          },
-          toolbar: {
-            display: true,
-          },
-          footer: {
-            display: false,
-          },
-          leftSidePanel: {
-            display: false,
-          },
-          rightSidePanel: {
-            display: false,
-          },
-        },
-      },
-    },
-    // element: <BookingsPage />,
-    element: <BookingsPageWithSidebarsContentScrollComponent />,
-  }, //(Msvs => Done)
 
-  {
-    path: "/bookings/listings/:bookingId/view",
-    settings: {
-      layout: {
-        config: {
-          navbar: {
-            display: false,
-          },
-          toolbar: {
-            display: true,
-          },
-          footer: {
-            display: false,
-          },
-          leftSidePanel: {
-            display: false,
-          },
-          rightSidePanel: {
-            display: false,
-          },
-        },
-      },
-    },
-    // element: <BookingSinglePage />,
-    element: <BookingsSinglePageWithSidebarsContentScroll />,
-  }, //(Msvs => Done)
-
-  /****
-   * ##############################################################
-   * BOOKINGS activities ends
-   * ##############################################################
-   */
-  /**############################################################### */
-  /**############################################################### */
-  /****
-   * ##############################################################
-   * REAL-ESTATE activities starts
-   * ##############################################################
-   */
-  {
-    path: "/realestate/listings",
-    settings: {
-      layout: {
-        config: {
-          navbar: {
-            display: false,
-          },
-          toolbar: {
-            display: true,
-          },
-          footer: {
-            display: false,
-          },
-          leftSidePanel: {
-            display: false,
-          },
-          rightSidePanel: {
-            display: false,
-          },
-        },
-      },
-    },
-    // element: <RealEstatesPage />,
-    element: <RealestatePageWithSidebarsContentScrollComponent />,
-  },
-
-  {
-    path: "/realestate/listings/:slug/view",
-    settings: {
-      layout: {
-        config: {
-          navbar: {
-            display: false,
-          },
-          toolbar: {
-            display: true,
-          },
-          footer: {
-            display: false,
-          },
-          leftSidePanel: {
-            display: false,
-          },
-          rightSidePanel: {
-            display: false,
-          },
-        },
-      },
-    },
-    // element: <RealEstateSinglePage />,
-    element: <RealestateSinglePageWithSidebarsContentScroll />,
-  },
-
-  /****
-   * ##############################################################
-   * REALE-STATE activities ends
-   * ##############################################################
-   */
-  /**############################################################### */
-
+  
   //
   /**############################################################### */
   /****

@@ -36,7 +36,7 @@ function BookingsPageWithSidebarsContentScrollComponent() {
 
   // Pagination state management
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(8);
+  const [itemsPerPage, setItemsPerPage] = useState(10);
 
   useEffect(() => {
     setLeftSidebarOpen(!isMobile);
@@ -120,6 +120,7 @@ function BookingsPageWithSidebarsContentScrollComponent() {
     setCurrentPage(1); // Reset to first page when changing items per page
   }, []);
 
+console.log("Booking Properties", bookingprops?.data?.bookingLists)
 
 
   return (
