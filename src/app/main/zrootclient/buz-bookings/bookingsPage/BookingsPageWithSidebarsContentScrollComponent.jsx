@@ -120,9 +120,6 @@ function BookingsPageWithSidebarsContentScrollComponent() {
     setCurrentPage(1); // Reset to first page when changing items per page
   }, []);
 
-console.log("Booking Properties", bookingprops?.data?.bookingLists)
-
-
   return (
     <Root
       header={

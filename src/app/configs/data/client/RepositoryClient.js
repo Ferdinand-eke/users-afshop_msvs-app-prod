@@ -329,5 +329,14 @@ export const getAllEstatessPropertyApi = (filters = {}) => {
 export const getEstatePropertyApi = (estatePropId) =>
   Api().get(`/estate-properties/guest-listing/${estatePropId}/view`);
 /**====================================================================================================
- * ESTATES-PROPERTIES ROUTES LISTED ENDS HERE 
+ * ESTATES-PROPERTIES ROUTES LISTED ENDS HERE
+ ======================================================================================================*/
+
+/**=====================================================================================================
+ * MERCHANT ROUTES LISTED BELOW STARTS
+ =====================================================================================================*/
+export const getMerchantPreviewApi = (merchantId) =>
+  Api().get(`/auth-merchant/get-merchant/${merchantId}/preview`); // (Done => Mcsvs)
+/**====================================================================================================
+ * MERCHANT ROUTES LISTED ENDS HERE
  ======================================================================================================*/

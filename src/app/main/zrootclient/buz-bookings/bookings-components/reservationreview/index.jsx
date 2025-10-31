@@ -25,53 +25,60 @@ export const ListingReservation = ({
         overflow-hidden
         "
     >
-      <div
-        className="
-            flex flex-row items-center 
-            "
-      >
-        {/* <div className="text-2xl fonr-semibold">
-                    $ {price}
-                </div> */}
+      {/* Price Header */}
+      <div className="px-4 py-4 border-b border-neutral-200">
         <Typography
-          className="text-dark dark:text-white/[.87] mt-[18px] mb-2 text-[22px] font-medium"
+          className="text-dark dark:text-white/[.87] text-[24px] font-bold"
           as="h3"
         >
-          <span className="text-sm text-light dark:text-white/60">₦</span>
-
+          <span className="text-base text-light dark:text-white/60">₦</span>
           <span>
             {formatCurrency(price)}{" "}
-            <span className="text-sm ltr:ml-1.5 rtl:mr-1.5 text-light dark:text-white/30 font-normal">
-              {" "}
+            <span className="text-base ltr:ml-1.5 rtl:mr-1.5 text-light dark:text-white/30 font-normal">
               per night
             </span>
           </span>
         </Typography>
-        {/* <hr /> */}
+      </div>
+
+      {/* Calendar - Full Width */}
+      <div className="w-full">
+        <Calender
+          value={dateRange}
+          disabledDates={disabledDates}
+          onChange={(value) => onChangeDate(value?.selection)}
+        />
       </div>
 
       <hr />
-      <Calender
-        value={dateRange}
-        disabledDates={disabledDates}
-        onChange={(value) => onChangeDate(value?.selection)}
-        // merchantId={merchantId}
-        // propertyId={propertyId}
-        // roomId={roomId}
-      />
-      <hr />
+
+      {/* Reserve Button */}
       <div className="p-4">
         <Button
-          size="small"
+          size="large"
           type="primary"
-          className="bg-orange-500 hover:bg-orange-800 h-[44px] w-full px-[30px] bg-primary text-black dark:text-white/[.87] text-sm font-semibold border-primary rounded-[6px]"
+          className="h-[52px] w-full px-[30px] text-white text-base font-bold rounded-lg transition-all duration-300"
           onClick={onSubmit}
           disabled={disabled}
+          sx={{
+            backgroundColor: '#ea580c',
+            '&:hover': {
+              backgroundColor: '#c2410c',
+              transform: 'translateY(-2px)',
+              boxShadow: '0 10px 20px rgba(234, 88, 12, 0.3)',
+            },
+            '&:disabled': {
+              backgroundColor: '#9ca3af',
+              cursor: 'not-allowed',
+            },
+            textTransform: 'none',
+          }}
         >
-          Reserve
+          Reserve Now
         </Button>
       </div>
 
+      {/* Total Price */}
       <div
         className="
                 p-4
@@ -79,12 +86,15 @@ export const ListingReservation = ({
                 flex-row
                 items-center
                 justify-between
-                font-semibold
-                text-lg
+                font-bold
+                text-xl
+                border-t
+                border-neutral-200
+                bg-orange-50
                 "
       >
-        <div>Total</div>
-        <div>₦ {formatCurrency(totalPrice)}</div>
+        <div className="text-gray-800">Total</div>
+        <div className="text-orange-600">₦ {formatCurrency(totalPrice)}</div>
       </div>
     </div>
   );

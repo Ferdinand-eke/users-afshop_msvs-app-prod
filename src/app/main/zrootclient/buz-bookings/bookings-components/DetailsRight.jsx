@@ -17,10 +17,10 @@ const DetailsRight = React.memo(
     disabled,
     disabledDates,
   }) => {
-    const Map = useMemo(
-      () => lazy(() => import("../bookings-components/map")),
-      [locationValue]
-    );
+    // const Map = useMemo(
+    //   () => lazy(() => import("../bookings-components/map")),
+    //   [locationValue]
+    // );
 
 
 
@@ -73,7 +73,7 @@ const DetailsRight = React.memo(
           )}
         </Box>
 
-        {coordinates && <Map center={coordinates} />}
+       
       </div>
     );
   }

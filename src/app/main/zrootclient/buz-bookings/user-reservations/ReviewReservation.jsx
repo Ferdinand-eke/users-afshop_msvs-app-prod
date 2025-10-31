@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
-import { Button, FormControlLabel, Backdrop } from "@mui/material";
+import { Button, FormControlLabel, Backdrop, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
@@ -13,6 +13,7 @@ import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import {
   useGetUserSingleTrip,
   useReservationPaidUpdateMutation,
+  useCancelUserReservation,
 } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
 import { useParams } from "react-router";
 import {
@@ -87,6 +88,9 @@ function ReviewReservation() {
   // State for MyAddresses modal
   const [addressModalOpen, setAddressModalOpen] = useState(false);
 
+  // State for payment close dialog
+  const [paymentCloseDialogOpen, setPaymentCloseDialogOpen] = useState(false);
+
   const routeParams = useParams();
   const { reservationId } = routeParams;
 
@@ -115,6 +119,9 @@ function ReviewReservation() {
   // } = useReservationPaidUpdateMutation();
   // const { mutate: verifyPayment, data: verifyPaymentData } =
   const verifyPayment = useVerifyPaystackPaymentMutation();
+
+  // Cancel reservation mutation
+  const cancelReservation = useCancelUserReservation();
 
   const VITE_PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
   const amount = parseInt(
@@ -163,7 +170,14 @@ function ReviewReservation() {
     });
   };
   const onClose = () => {
-    alert("Wait! You need this reservation confirmed, don't go!!!!");
+    setPaymentCloseDialogOpen(true);
+  };
+
+  // Handle cancel reservation
+  const handleCancelReservation = () => {
+    if (window.confirm("Are you sure you want to cancel this reservation?")) {
+      cancelReservation.mutate({ reservationId: singlereservation?.data?.reservation?.id });
+    }
   };
 
   // Handle address selection from modal
@@ -232,14 +246,14 @@ function ReviewReservation() {
     <FusePageSimple
       content={
         <>
-          <div className="h-screen flex flex-col md:mx-200 mt-20">
-            <div className="flex flex-1 flex-col md:flex-row gap-8">
+          <div className="min-h-screen flex flex-col px-4 md:px-8 lg:mx-200 py-8 md:py-12">
+            <div className="flex flex-1 flex-col lg:flex-row gap-6 lg:gap-8">
               {/* Map */}
 
               {/* Main Content */}
 
-              <div className="flex-1 p-4 bg-white rounded-md">
-                <div className="max-w-5xl mx-auto p-4">
+              <div className="flex-1 w-full lg:w-2/3">
+                <div className="max-w-5xl mx-auto">
                   {singlereservation?.data?.reservation?.isPaid && (
                     <>
                       <span
@@ -258,86 +272,214 @@ function ReviewReservation() {
 
                   {!singlereservation?.data?.reservation?.isPaid && (
                     <>
-                      <div className="bg-white p-4 rounded-lg shadow-md mb-4">
-                        <div className="flex justify-between items-center border-b pb-2 mb-2">
-                          <h2 className="text-lg font-semibold">
-                            1. CUSTOMER ADDRESS
-                          </h2>
-                          <span
-                            onClick={() => setAddressModalOpen(true)}
-                            className="text-blue-500 hover:underline cursor-pointer text-sm"
-                          >
-                            Use my address
-                          </span>
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.5 }}
+                        className="bg-white rounded-2xl shadow-lg mb-6 overflow-hidden"
+                        style={{
+                          border: '2px solid rgba(234, 88, 12, 0.1)'
+                        }}
+                      >
+                        {/* Header with Gradient */}
+                        <div
+                          className="p-4 sm:p-6"
+                          style={{
+                            background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.05) 100%)'
+                          }}
+                        >
+                          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+                            <div className="flex items-center gap-3">
+                              <div
+                                className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
+                                style={{
+                                  background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+                                }}
+                              >
+                                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                </svg>
+                              </div>
+                              <div>
+                                <h2 className="text-lg sm:text-xl font-bold text-gray-800">
+                                  Customer Information
+                                </h2>
+                                <p className="text-xs sm:text-sm text-gray-600">
+                                  Required for booking confirmation
+                                </p>
+                              </div>
+                            </div>
+                            <button
+                              onClick={() => setAddressModalOpen(true)}
+                              className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all hover:shadow-md text-xs sm:text-sm font-semibold w-full sm:w-auto"
+                              style={{
+                                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                                color: 'white'
+                              }}
+                            >
+                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
+                              Use Saved Address
+                            </button>
+                          </div>
                         </div>
-                        {name && <p className="font-semibold">{name}</p>}
 
-                        {address && (
-                          <p>
-                            {address} | {phone}
-                          </p>
-                        )}
-
-                        <Controller
-                          name="name"
-                          control={control}
-                          render={({ field }) => (
-                            <TextField
-                              {...field}
-                              className="mt-8 mb-16"
-                              required
-                              label="Name"
-                              autoFocus
-                              id="name"
-                              variant="outlined"
-                              fullWidth
-                              size="small"
-                              error={!!errors.name}
-                              helperText={errors?.name?.message}
-                            />
+                        {/* Form Content */}
+                        <div className="p-4 sm:p-6 space-y-4">
+                          {/* Display Current Values if Set */}
+                          {(name || address) && (
+                            <motion.div
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: 1 }}
+                              className="p-4 rounded-xl mb-4"
+                              style={{
+                                background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)',
+                                border: '1px solid rgba(34, 197, 94, 0.2)'
+                              }}
+                            >
+                              <div className="flex items-start gap-3">
+                                <svg className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                </svg>
+                                <div className="flex-1">
+                                  {name && <p className="font-semibold text-gray-800">{name}</p>}
+                                  {address && (
+                                    <p className="text-sm text-gray-600 mt-1">
+                                      {address} {phone && `| ${phone}`}
+                                    </p>
+                                  )}
+                                </div>
+                              </div>
+                            </motion.div>
                           )}
-                        />
 
-                        <Controller
-                          name="phone"
-                          control={control}
-                          render={({ field }) => (
-                            <TextField
-                              {...field}
-                              className="mt-8 mb-16"
-                              required
-                              label="Phone"
-                              autoFocus
-                              id="phone"
-                              variant="outlined"
-                              fullWidth
-                              size="small"
-                              error={!!errors.phone}
-                              helperText={errors?.phone?.message}
-                            />
-                          )}
-                        />
+                          {/* Name Field */}
+                          <Controller
+                            name="name"
+                            control={control}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                label="Full Name (as per ID)"
+                                id="name"
+                                variant="outlined"
+                                fullWidth
+                                error={!!errors.name}
+                                helperText={errors?.name?.message}
+                                InputProps={{
+                                  startAdornment: (
+                                    <svg className="w-5 h-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    </svg>
+                                  )
+                                }}
+                                sx={{
+                                  '& .MuiOutlinedInput-root': {
+                                    '&:hover fieldset': {
+                                      borderColor: '#f97316'
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                      borderColor: '#ea580c'
+                                    }
+                                  }
+                                }}
+                              />
+                            )}
+                          />
 
-                        <Controller
-                          name="address"
-                          control={control}
-                          render={({ field }) => (
-                            <TextField
-                              {...field}
-                              className="mt-8 mb-16"
-                              required
-                              label="address"
-                              autoFocus
-                              id="address"
-                              variant="outlined"
-                              fullWidth
-                              size="small"
-                              error={!!errors.address}
-                              helperText={errors?.address?.message}
-                            />
-                          )}
-                        />
-                      </div>
+                          {/* Phone Field */}
+                          <Controller
+                            name="phone"
+                            control={control}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                label="Phone Number"
+                                id="phone"
+                                variant="outlined"
+                                fullWidth
+                                error={!!errors.phone}
+                                helperText={errors?.phone?.message}
+                                InputProps={{
+                                  startAdornment: (
+                                    <svg className="w-5 h-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    </svg>
+                                  )
+                                }}
+                                sx={{
+                                  '& .MuiOutlinedInput-root': {
+                                    '&:hover fieldset': {
+                                      borderColor: '#f97316'
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                      borderColor: '#ea580c'
+                                    }
+                                  }
+                                }}
+                              />
+                            )}
+                          />
+
+                          {/* Address Field */}
+                          <Controller
+                            name="address"
+                            control={control}
+                            render={({ field }) => (
+                              <TextField
+                                {...field}
+                                required
+                                label="Complete Address"
+                                id="address"
+                                variant="outlined"
+                                fullWidth
+                                multiline
+                                rows={3}
+                                error={!!errors.address}
+                                helperText={errors?.address?.message || "Include street, city, state for verification"}
+                                InputProps={{
+                                  startAdornment: (
+                                    <svg className="w-5 h-5 text-gray-400 mr-2 mt-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    </svg>
+                                  )
+                                }}
+                                sx={{
+                                  '& .MuiOutlinedInput-root': {
+                                    '&:hover fieldset': {
+                                      borderColor: '#f97316'
+                                    },
+                                    '&.Mui-focused fieldset': {
+                                      borderColor: '#ea580c'
+                                    }
+                                  }
+                                }}
+                              />
+                            )}
+                          />
+
+                          {/* Info Box */}
+                          <div
+                            className="p-4 rounded-xl flex items-start gap-3"
+                            style={{
+                              background: 'rgba(59, 130, 246, 0.05)',
+                              border: '1px solid rgba(59, 130, 246, 0.2)'
+                            }}
+                          >
+                            <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <p className="text-sm text-gray-700">
+                              Your information is securely stored and will only be used for booking confirmation and communication purposes. We comply with data protection regulations.
+                            </p>
+                          </div>
+                        </div>
+                      </motion.div>
                     </>
                   )}
 
@@ -348,6 +490,8 @@ function ReviewReservation() {
                       // Scroll to payment button or trigger payment
                       window.scrollTo({ top: 0, behavior: "smooth" });
                     }}
+                    onCancelClick={handleCancelReservation}
+                    isCancelling={cancelReservation.isLoading}
                   />
 
                   {/* Terms & Conditions */}
@@ -448,83 +592,304 @@ function ReviewReservation() {
                 {/* end of AI build  */}
               </div>
 
-              <div className="w-full md:w-1/3 bg-gray-100 mt-4 md:mt-0 md:sticky md:top-20 md:self-start">
-                <div className="bg-white p-4 rounded-lg shadow-md">
-                  <h2 className="text-lg font-semibold mb-2">
-                    Apartment Booking Summary
-                  </h2>
-                  <div className="flex justify-between mb-2">
-                    <p>Check In</p>
-                    <p>
-                      {formatDateUtil(singlereservation?.data?.reservation?.startDate)}
-                     
-                    </p>
-                  </div>
-                  <div className="flex justify-between mb-2">
-                    <p>Check Out</p>
-                    <p>
-                      {formatDateUtil(singlereservation?.data?.reservation?.endDate)}
-                      
-                    </p>
-                  </div>
-                  <div className="flex justify-between font-semibold mb-4">
-                    <p>Total</p>
-                    <p>
-                      ₦{" "}
-                      {formatCurrency(
-                        singlereservation?.data?.reservation?.totalPrice
-                      )}
-                    </p>
-                  </div>
-
-                  <div className="flex mb-4">
-                    <input
-                      type="text"
-                      placeholder="Enter code here"
-                      className="border p-2 flex-grow mr-2"
-                    />
-                    <button className="bg-gray-200 p-2">APPLY</button>
+              <div className="w-full lg:w-1/3 lg:sticky lg:top-20 lg:self-start">
+                <motion.div
+                  initial={{ opacity: 0, x: 20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                  className="bg-white rounded-2xl shadow-2xl overflow-hidden"
+                  style={{
+                    border: '2px solid rgba(234, 88, 12, 0.15)'
+                  }}
+                >
+                  {/* Header with Gradient */}
+                  <div
+                    className="p-4 sm:p-6"
+                    style={{
+                      background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+                    }}
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h2 className="text-lg sm:text-xl font-bold text-white">
+                          Booking Summary
+                        </h2>
+                        <p className="text-xs sm:text-sm text-white/80">
+                          Review your reservation details
+                        </p>
+                      </div>
+                    </div>
                   </div>
 
-                  {!singlereservation?.data?.reservation?.isPaid && (
-                    <PaystackButton
-                      text={`Make Payment of ${singlereservation?.data?.reservation?.totalPrice}`}
-                      className={`${!isValid ? "bg-orange-200" : "bg-orange-500"} text-black w-full p-2 rounded-lg`}
-                      reference={"BK" + generateClientUID() + "REF"}
-                      email={email}
-                      amount={
-                        singlereservation?.data?.reservation?.totalPrice * 100
-                      }
-                      publicKey={VITE_PAYSTACK_PUBLIC_KEY}
-                      onSuccess={(reference) => onSuccess(reference)}
-                      onClose={() => onClose()}
-                      disabled={
-                        _.isEmpty(dirtyFields) ||
-                        !isValid ||
-                        !name ||
-                        !phone ||
-                        !address ||
-                        verifyPayment?.isLoading
-                      }
-                    />
-                  )}
-
-                  {singlereservation?.data?.reservation?.isPaid && (
-                    <span
-                      onClick={() => {}}
-                      className="cursor-pointer inline-flex  items-center gap-x-1.5 bg-green-500 dark:bg-white/10 text-success h-[45px] px-[14px] text-xs font-medium border border-normal dark:border-white/10 rounded-md sm:justify-center sm:px-0 "
+                  {/* Booking Details */}
+                  <div className="p-4 sm:p-6 space-y-4">
+                    {/* Property Image/Icon */}
+                    <div
+                      className="relative h-40 rounded-xl overflow-hidden"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)'
+                      }}
                     >
-                      {`Payment of ${formatCurrency(singlereservation?.data?.reservation?.totalPrice)} done alread, proceed to track your trip`}
-                    </span>
-                  )}
+                      <div className="absolute inset-0 flex items-center justify-center">
+                        <svg className="w-20 h-20 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                      </div>
+                    </div>
 
-                  <p className="text-sm text-gray-500 mt-2">
-                    By proceeding, you are automatically accepting the{" "}
-                    <span className="text-blue-500 hover:underline cursor-pointer text-sm">
-                      Terms & Conditions
-                    </span>
-                  </p>
-                </div>
+                    {/* Check-in/Check-out Dates */}
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+                      <div
+                        className="p-3 sm:p-4 rounded-xl"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)',
+                          border: '1px solid rgba(34, 197, 94, 0.2)'
+                        }}
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <svg className="w-4 h-4 text-green-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                          </svg>
+                          <span className="text-xs font-semibold text-gray-600">Check In</span>
+                        </div>
+                        <p className="text-xs sm:text-sm font-bold text-gray-800">
+                          {formatDateUtil(singlereservation?.data?.reservation?.startDate)}
+                        </p>
+                      </div>
+
+                      <div
+                        className="p-3 sm:p-4 rounded-xl"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.05) 100%)',
+                          border: '1px solid rgba(239, 68, 68, 0.2)'
+                        }}
+                      >
+                        <div className="flex items-center gap-2 mb-2">
+                          <svg className="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          </svg>
+                          <span className="text-xs font-semibold text-gray-600">Check Out</span>
+                        </div>
+                        <p className="text-xs sm:text-sm font-bold text-gray-800">
+                          {formatDateUtil(singlereservation?.data?.reservation?.endDate)}
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* Price Breakdown */}
+                    <div
+                      className="p-4 rounded-xl space-y-3"
+                      style={{
+                        background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.02) 100%)',
+                        border: '1px solid rgba(234, 88, 12, 0.15)'
+                      }}
+                    >
+                      <div className="flex justify-between text-sm">
+                        <span className="text-gray-600">Subtotal</span>
+                        <span className="font-semibold text-gray-800">
+                          ₦ {formatCurrency(singlereservation?.data?.reservation?.totalPrice)}
+                        </span>
+                      </div>
+
+                      {/* VAT Calculation (7.5% in Nigeria) */}
+                      <div className="flex justify-between text-sm">
+                        <div className="flex items-center gap-2">
+                          <span className="text-gray-600">VAT (7.5%)</span>
+                          <div className="group relative">
+                            <svg className="w-4 h-4 text-gray-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <div className="absolute hidden group-hover:block bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
+                              Required for tax compliance
+                            </div>
+                          </div>
+                        </div>
+                        <span className="font-semibold text-gray-800">
+                          ₦ {formatCurrency(singlereservation?.data?.reservation?.totalPrice * 0.075)}
+                        </span>
+                      </div>
+
+                      <div className="h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent" />
+
+                      {/* Total with VAT */}
+                      <div className="flex justify-between items-center pt-2">
+                        <span className="text-lg font-bold text-gray-800">Total</span>
+                        <div className="text-right">
+                          <span
+                            className="text-2xl font-extrabold"
+                            style={{
+                              background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                              WebkitBackgroundClip: 'text',
+                              WebkitTextFillColor: 'transparent',
+                              backgroundClip: 'text'
+                            }}
+                          >
+                            ₦ {formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)}
+                          </span>
+                          <p className="text-xs text-gray-500 mt-1">
+                            (incl. VAT)
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Promo Code Section */}
+                    <div className="flex gap-2">
+                      <input
+                        type="text"
+                        placeholder="Promo code"
+                        className="flex-1 px-4 py-3 border-2 border-gray-200 rounded-xl focus:border-orange-500 focus:outline-none transition-colors text-sm"
+                      />
+                      <button
+                        className="px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:shadow-md"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(234, 88, 12, 0.1) 100%)',
+                          color: '#ea580c',
+                          border: '2px solid rgba(234, 88, 12, 0.2)'
+                        }}
+                      >
+                        APPLY
+                      </button>
+                    </div>
+
+                    {/* Payment Button */}
+                    {!singlereservation?.data?.reservation?.isPaid && (
+                      <div className="relative">
+                        <style>
+                          {`
+                            .paystack-button-enabled:hover {
+                              transform: translateY(-2px);
+                              box-shadow: 0 8px 25px rgba(234, 88, 12, 0.5) !important;
+                            }
+                            .paystack-button-enabled:active {
+                              transform: translateY(0px);
+                            }
+                          `}
+                        </style>
+                        <PaystackButton
+                          text={`🔒 Pay ₦${formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)}`}
+                          className={`w-full py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 ${
+                            (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
+                              ? ''
+                              : 'paystack-button-enabled'
+                          }`}
+                          style={{
+                            background: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
+                              ? 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)'
+                              : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                            color: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
+                              ? '#9ca3af'
+                              : 'white',
+                            border: 'none',
+                            cursor: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address) ? 'not-allowed' : 'pointer',
+                            boxShadow: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
+                              ? 'none'
+                              : '0 4px 15px rgba(234, 88, 12, 0.4)',
+                            filter: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
+                              ? 'grayscale(20%)'
+                              : 'none',
+                            whiteSpace: 'nowrap',
+                            overflow: 'hidden',
+                            textOverflow: 'ellipsis'
+                          }}
+                          reference={"BK" + generateClientUID() + "REF"}
+                          email={email}
+                          amount={
+                            singlereservation?.data?.reservation?.totalPrice * 1.075 * 100
+                          }
+                          publicKey={VITE_PAYSTACK_PUBLIC_KEY}
+                          onSuccess={(reference) => onSuccess(reference)}
+                          onClose={() => onClose()}
+                          disabled={
+                            _.isEmpty(dirtyFields) ||
+                            !isValid ||
+                            !name ||
+                            !phone ||
+                            !address ||
+                            verifyPayment?.isLoading
+                          }
+                        />
+                        {(!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address) && (
+                          <div className="mt-3 text-center">
+                            <div
+                              className="inline-flex items-center gap-2 px-4 py-2 rounded-lg"
+                              style={{
+                                background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%)',
+                                border: '1px solid rgba(239, 68, 68, 0.2)'
+                              }}
+                            >
+                              <svg className="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              </svg>
+                              <p className="text-xs text-red-700 font-semibold">
+                                Please fill in all customer information above to proceed
+                              </p>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    {/* Payment Success Message */}
+                    {singlereservation?.data?.reservation?.isPaid && (
+                      <motion.div
+                        initial={{ scale: 0.9, opacity: 0 }}
+                        animate={{ scale: 1, opacity: 1 }}
+                        className="p-4 rounded-xl flex items-center gap-3"
+                        style={{
+                          background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.1) 100%)',
+                          border: '2px solid rgba(34, 197, 94, 0.3)'
+                        }}
+                      >
+                        <svg className="w-8 h-8 text-green-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        </svg>
+                        <div>
+                          <p className="font-bold text-green-800 text-sm">
+                            Payment Successful!
+                          </p>
+                          <p className="text-xs text-green-700 mt-1">
+                            ₦{formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)} paid. Track your trip below.
+                          </p>
+                        </div>
+                      </motion.div>
+                    )}
+
+                    {/* Security Badges */}
+                    <div className="flex items-center justify-center gap-4 pt-4 border-t border-gray-200">
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        </svg>
+                        <span className="text-xs text-gray-600 font-medium">Secure Payment</span>
+                      </div>
+                      <div className="w-px h-4 bg-gray-300" />
+                      <div className="flex items-center gap-2">
+                        <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        </svg>
+                        <span className="text-xs text-gray-600 font-medium">Protected</span>
+                      </div>
+                    </div>
+
+                    {/* Terms */}
+                    <p className="text-xs text-gray-500 text-center leading-relaxed">
+                      By proceeding, you agree to our{" "}
+                      <span className="text-orange-600 hover:underline cursor-pointer font-medium">
+                        Terms & Conditions
+                      </span>{" "}
+                      and{" "}
+                      <span className="text-orange-600 hover:underline cursor-pointer font-medium">
+                        Privacy Policy
+                      </span>
+                    </p>
+                  </div>
+                </motion.div>
               </div>
             </div>
           </div>
@@ -560,6 +925,148 @@ function ReviewReservation() {
               Do not close or refresh this page
             </Typography>
           </Backdrop>
+
+          {/* Payment Close Warning Dialog */}
+          <Dialog
+            open={paymentCloseDialogOpen}
+            onClose={() => setPaymentCloseDialogOpen(false)}
+            maxWidth="sm"
+            fullWidth
+            PaperProps={{
+              sx: {
+                borderRadius: '16px',
+                overflow: 'hidden'
+              }
+            }}
+          >
+            <DialogTitle
+              sx={{
+                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                color: 'white',
+                padding: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2
+              }}
+            >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span className="font-bold text-xl">Complete Your Reservation</span>
+            </DialogTitle>
+
+            <DialogContent sx={{ padding: '32px 24px' }}>
+              <div className="space-y-4">
+                <Typography variant="h6" className="font-bold text-gray-800">
+                  Don't miss out on your booking!
+                </Typography>
+
+                <Typography variant="body1" className="text-gray-700 leading-relaxed">
+                  Your reservation is almost complete. By closing now without payment, you risk:
+                </Typography>
+
+                <div className="space-y-3 ml-4">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>Losing this property</strong> - Other guests are actively booking
+                    </Typography>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>Price increases</strong> - Rates may change based on demand
+                    </Typography>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>Cancellation of reservation</strong> - Unpaid bookings expire after 30 minutes
+                    </Typography>
+                  </div>
+                </div>
+
+                <div
+                  className="p-4 rounded-xl mt-6"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)',
+                    border: '2px solid rgba(234, 88, 12, 0.2)'
+                  }}
+                >
+                  <div className="flex items-center gap-3">
+                    <svg className="w-6 h-6 text-orange-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    </svg>
+                    <div>
+                      <Typography variant="body2" className="font-bold text-gray-800">
+                        Secure Your Booking Now
+                      </Typography>
+                      <Typography variant="caption" className="text-gray-600">
+                        Complete payment to guarantee your reservation
+                      </Typography>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </DialogContent>
+
+            <DialogActions
+              sx={{
+                padding: '16px 24px 24px',
+                gap: 2,
+                flexDirection: { xs: 'column', sm: 'row' }
+              }}
+            >
+              <Button
+                onClick={() => setPaymentCloseDialogOpen(false)}
+                variant="outlined"
+                fullWidth
+                sx={{
+                  borderColor: '#9ca3af',
+                  color: '#6b7280',
+                  '&:hover': {
+                    borderColor: '#6b7280',
+                    backgroundColor: '#f3f4f6'
+                  },
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  padding: '10px 24px'
+                }}
+              >
+                Leave Without Payment
+              </Button>
+
+              <Button
+                onClick={() => {
+                  setPaymentCloseDialogOpen(false);
+                  window.scrollTo({ top: 0, behavior: "smooth" });
+                }}
+                variant="contained"
+                fullWidth
+                sx={{
+                  background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                  color: 'white',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                    boxShadow: '0 8px 20px rgba(234, 88, 12, 0.4)'
+                  },
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  padding: '10px 24px'
+                }}
+              >
+                Complete Payment Now
+              </Button>
+            </DialogActions>
+          </Dialog>
         </>
       }
       scroll={isMobile ? "normal" : "page"}

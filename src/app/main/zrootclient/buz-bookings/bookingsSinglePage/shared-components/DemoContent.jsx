@@ -1,649 +1,494 @@
-import FuseLoading from "@fuse/core/FuseLoading";
-
+import { useState } from "react";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
 import {
-  Avatar,
-  Button,
-  Divider,
-  IconButton,
-  Rating,
-  TextField,
   Typography,
-  useMediaQuery,
-  useTheme,
+  Chip,
+  Divider,
+  Card,
+  CardContent,
+  Button,
+  Rating,
 } from "@mui/material";
-import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
+import {
+  Verified,
+  Wifi,
+  AcUnit,
+  LocalParking,
+  Pool,
+  Restaurant,
+  FitnessCenter,
+  Spa,
+  Share,
+  Favorite,
+  FavoriteBorder,
+  LocationOn,
+  BedroomParent,
+  Bathtub,
+  SquareFoot,
+} from "@mui/icons-material";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
-import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
-import siteStyle from "@fuse/sitestaticdata/siteStyle";
-import { Link } from "react-router-dom";
 import ImageGalleryView from "./ImageGalleryView";
-import { Reply, Send, ThumbUp } from "@mui/icons-material";
-import { useAppSelector } from "app/store/hooks";
-import { selectUser } from "src/app/auth/user/store/userSlice";
+import ContentLoadingPlaceholder from "../../bookingsPage/shared-components/ContentLoadingPlaceholder";
 
 /**
- * Demo Content
+ * DemoContent Component - REDESIGNED
+ * Compelling, production-ready property details page
  */
 function DemoContent(props) {
   const { isLoading, isError, bookingData } = props;
   const [galleryOpen, setGalleryOpen] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
 
+  // Loading state
   if (isLoading) {
-    return <FuseLoading />;
+    return <ContentLoadingPlaceholder />;
   }
 
+  // Error state
   if (isError) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <ClienttErrorPage message={"Error occurred while retriving products"} />
-      </motion.div>
+      <div className="flex items-center justify-center h-screen">
+        <Typography variant="h5" color="error">
+          Error loading property details
+        </Typography>
+      </div>
     );
   }
 
+  // No data state
   if (!bookingData) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
-      >
-        <Typography color="text.secondary" variant="h5">
-          No listing with this id
+      <div className="flex items-center justify-center h-screen">
+        <Typography variant="h5" color="text.secondary">
+          Property not found
         </Typography>
-      </motion.div>
+      </div>
     );
   }
 
+  // Mock amenities data - replace with actual data
+  const amenities = [
+    { icon: <Wifi />, label: "Free WiFi" },
+    { icon: <AcUnit />, label: "Air Conditioning" },
+    { icon: <LocalParking />, label: "Free Parking" },
+    { icon: <Pool />, label: "Swimming Pool" },
+    { icon: <Restaurant />, label: "Restaurant" },
+    { icon: <FitnessCenter />, label: "Fitness Center" },
+    { icon: <Spa />, label: "Spa & Wellness" },
+  ];
+
   return (
-    <div className="flex-auto p-8 sm:p-12 ">
-      <div className="h-7xl min-h-7xl max-h-7xl ">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-4 px-0">
-          {/* Put Booking Data Here */}
-          <div className="col-span-2">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-              <img
-                src={
-                  bookingData?.imageSrcs[0]
-                    ? bookingData?.imageSrcs[0]?.url
-                    : "https://placehold.co/600x400"
-                }
-                alt="Indoor pool area"
-                className="w-full h-[230px] rounded-8 object-cover"
-              />
-              <img
-                src={
-                  bookingData?.imageSrcs[1]
-                    ? bookingData?.imageSrcs[1]?.url
-                    : "https://placehold.co/600x400"
-                }
-                alt="Luxurious lobby area"
-                className="w-full h-[230px] rounded-8 object-cover"
-              />
-            </div>
-            <div className="bg-white px-6 py-4 mt-4 shadow-md">
-              <div className="flex items-center justify-between px-2">
-                <span className="bg-blue-500 text-white px-3 py-1 rounded">
-                  FEATURED
-                </span>
-                <div className="flex items-center">
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star text-yellow-500"></i>
-                  <i className="fas fa-star-half-alt text-yellow-500"></i>
-                  <span className="ml-2 text-gray-600">4.3</span>
-                </div>
-              </div>
-              <h1 className="text-2xl font-bold mt-2 px-2">{bookingData?.title}</h1>
-              <p className="text-gray-600 mt-2 px-2">
-                {bookingData?.shortDescription}
-              </p>
-              <div className="flex items-center mt-2 px-2">
-                <span className="text-gray-600">Share:</span>
-                <i className="fab fa-facebook text-blue-600 ml-2"></i>
-                <i className="fab fa-twitter text-blue-400 ml-2"></i>
-                <i className="fab fa-instagram text-pink-600 ml-2"></i>
-                <i className="fab fa-linkedin text-blue-700 ml-2"></i>
-              </div>
-              <Button
-                size="small"
-                fullWidth
-                className="bg-orange-500 hover:bg-orange-800 text-black px-4 py-2 rounded mt-4"
-              >
-                ₦ {formatCurrency(bookingData?.price)} per night || BOOK NOW
-              </Button>
-            </div>
-            <div className="bg-white px-6 py-6 mt-4 shadow-md">
-              <h2 className="text-xl font-bold px-2">Amenities</h2>
-              <ul className="list-disc list-inside mt-2 text-gray-600 px-4">
-                <li className="mb-2 px-2">
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
-                </li>
-                <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
-                </li>
-                <li>
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
-                </li>
-                <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
-                </li>
-                <li>
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
-                </li>
-                <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
-                </li>
-              </ul>
-            </div>
-
-            <div className="bg-white px-6 py-4 mt-4 shadow-md">
-              <h2 className="text-xl font-bold px-2">Gallery</h2>
-              <div className="grid grid-cols-2 md:grid-cols-3 gap-2 mt-2 px-2">
-                {bookingData?.imageSrcs?.map((img, index) => (
-                  <div
-                    key={img?.public_id}
-                    className="cursor-pointer transition-transform hover:scale-105"
-                    onClick={() => setGalleryOpen(true)}
-                  >
-                    <img
-                      src={img?.url}
-                      alt={`Gallery image ${index + 1}`}
-                      className="w-full h-[130px] rounded-8 gap-4 object-cover"
-                    />
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Image Gallery Modal */}
-            <ImageGalleryView
-              open={galleryOpen}
-              onClose={() => setGalleryOpen(false)}
-              images={bookingData?.imageSrcs || []}
-              propertyData={{
-                title: bookingData?.title,
-                shortDescription: bookingData?.shortDescription,
-                rating: 4.3,
-                reviewCount: 24,
-              }}
+    <div
+      className="flex-auto p-8 sm:p-12"
+      style={{
+        background: "linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)",
+        minHeight: "100vh",
+      }}
+    >
+      {/* Hero Image Gallery Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="mb-8"
+      >
+        {/* Image Grid */}
+        <div
+          className="grid grid-cols-4 gap-3 rounded-3xl overflow-hidden shadow-2xl cursor-pointer"
+          onClick={() => setGalleryOpen(true)}
+        >
+          {/* Main Large Image */}
+          <div className="col-span-4 md:col-span-2 row-span-2 relative group">
+            <img
+              src={bookingData?.imageSrcs?.[0]?.url || "https://placehold.co/800x600"}
+              alt="Main property"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ minHeight: "500px", maxHeight: "500px" }}
             />
-            <div className="bg-white px-6 py-4 mt-4 shadow-md">
-              <ProductDetailsInfo
-                // data={bookingData}
-                propertyData={{
-                  title: bookingData?.title,
-                  description: bookingData?.description,
-                  shortDescription: bookingData?.shortDescription,
-                  rating: 4.3,
-                  reviewCount: 24,
+            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
+              <Typography
+                sx={{
+                  color: "white",
+                  fontSize: "1.5rem",
+                  fontWeight: 700,
                 }}
-              />
+              >
+                View All {bookingData?.imageSrcs?.length || 0} Photos
+              </Typography>
             </div>
+          </div>
 
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
-            <br />
+          {/* Top Right Image */}
+          <div className="col-span-2 md:col-span-1 relative group">
+            <img
+              src={bookingData?.imageSrcs?.[1]?.url || "https://placehold.co/400x300"}
+              alt="Property view 2"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ minHeight: "245px", maxHeight: "245px" }}
+            />
+          </div>
+
+          <div className="col-span-2 md:col-span-1 relative group">
+            <img
+              src={bookingData?.imageSrcs?.[2]?.url || "https://placehold.co/400x300"}
+              alt="Property view 3"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ minHeight: "245px", maxHeight: "245px" }}
+            />
+          </div>
+
+          {/* Bottom Right Images */}
+          <div className="col-span-2 md:col-span-1 relative group">
+            <img
+              src={bookingData?.imageSrcs?.[3]?.url || "https://placehold.co/400x300"}
+              alt="Property view 4"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ minHeight: "245px", maxHeight: "245px" }}
+            />
+          </div>
+
+          <div className="col-span-2 md:col-span-1 relative group">
+            <img
+              src={bookingData?.imageSrcs?.[4]?.url || "https://placehold.co/400x300"}
+              alt="Property view 5"
+              className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+              style={{ minHeight: "245px", maxHeight: "245px" }}
+            />
+            {bookingData?.imageSrcs?.length > 5 && (
+              <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
+                <Typography
+                  sx={{
+                    color: "white",
+                    fontSize: "1.75rem",
+                    fontWeight: 800,
+                  }}
+                >
+                  +{bookingData.imageSrcs.length - 5} more
+                </Typography>
+              </div>
+            )}
           </div>
         </div>
-      </div>
+      </motion.div>
+
+      {/* Property Header */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <Card
+          sx={{
+            borderRadius: "24px",
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
+            marginBottom: "24px",
+            background: "linear-gradient(135deg, #ffffff 0%, #fff5f0 100%)",
+          }}
+        >
+          <CardContent sx={{ padding: "32px" }}>
+            {/* Title and Actions Row */}
+            <div className="flex items-start justify-between mb-4">
+              <div className="flex-1">
+                <div className="flex items-center gap-3 mb-3">
+                  <Chip
+                    label="FEATURED"
+                    sx={{
+                      backgroundColor: "#3b82f6",
+                      color: "white",
+                      fontWeight: 700,
+                      fontSize: "0.875rem",
+                    }}
+                  />
+                  <Chip
+                    icon={<Verified sx={{ color: "white !important" }} />}
+                    label="Verified"
+                    sx={{
+                      backgroundColor: "#10b981",
+                      color: "white",
+                      fontWeight: 700,
+                      fontSize: "0.875rem",
+                    }}
+                  />
+                </div>
+
+                <Typography
+                  variant="h3"
+                  sx={{
+                    fontWeight: 900,
+                    color: "#111827",
+                    marginBottom: "12px",
+                    fontSize: "2.5rem",
+                  }}
+                >
+                  {bookingData?.title}
+                </Typography>
+
+                {/* Rating and Location */}
+                <div className="flex items-center gap-4 mb-3">
+                  <div className="flex items-center gap-2">
+                    <Rating value={4.3} precision={0.5} readOnly size="medium" />
+                    <Typography
+                      sx={{
+                        fontSize: "1.25rem",
+                        fontWeight: 700,
+                        color: "#111827",
+                      }}
+                    >
+                      4.3
+                    </Typography>
+                    <Typography
+                      sx={{
+                        fontSize: "1.125rem",
+                        color: "#6b7280",
+                      }}
+                    >
+                      (24 reviews)
+                    </Typography>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2 text-gray-600">
+                  <LocationOn sx={{ color: "#ea580c", fontSize: "1.5rem" }} />
+                  <Typography sx={{ fontSize: "1.125rem", color: "#6b7280" }}>
+                    {bookingData?.address || "Location not specified"}
+                  </Typography>
+                </div>
+              </div>
+
+              {/* Action Buttons */}
+              <div className="flex gap-2">
+                <Button
+                  variant="outlined"
+                  startIcon={<Share />}
+                  sx={{
+                    borderColor: "#ea580c",
+                    color: "#ea580c",
+                    borderWidth: "2px",
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                    padding: "10px 20px",
+                    borderRadius: "12px",
+                    textTransform: "none",
+                    "&:hover": {
+                      borderColor: "#c2410c",
+                      backgroundColor: "#fff7ed",
+                      borderWidth: "2px",
+                    },
+                  }}
+                >
+                  Share
+                </Button>
+                <Button
+                  variant="outlined"
+                  startIcon={isFavorite ? <Favorite /> : <FavoriteBorder />}
+                  onClick={() => setIsFavorite(!isFavorite)}
+                  sx={{
+                    borderColor: isFavorite ? "#ef4444" : "#ea580c",
+                    color: isFavorite ? "#ef4444" : "#ea580c",
+                    borderWidth: "2px",
+                    fontWeight: 700,
+                    fontSize: "1rem",
+                    padding: "10px 20px",
+                    borderRadius: "12px",
+                    textTransform: "none",
+                    "&:hover": {
+                      borderColor: isFavorite ? "#dc2626" : "#c2410c",
+                      backgroundColor: isFavorite ? "#fef2f2" : "#fff7ed",
+                      borderWidth: "2px",
+                    },
+                  }}
+                >
+                  Save
+                </Button>
+              </div>
+            </div>
+
+            <Divider sx={{ my: 3 }} />
+
+            {/* Property Stats */}
+            <div className="grid grid-cols-4 gap-6">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-orange-100 rounded-xl">
+                  <BedroomParent sx={{ fontSize: "2rem", color: "#ea580c" }} />
+                </div>
+                <div>
+                  <Typography sx={{ fontSize: "1.75rem", fontWeight: 800, color: "#111827" }}>
+                    {bookingData?.roomCount || 0}
+                  </Typography>
+                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>
+                    Bedrooms
+                  </Typography>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-blue-100 rounded-xl">
+                  <Bathtub sx={{ fontSize: "2rem", color: "#3b82f6" }} />
+                </div>
+                <div>
+                  <Typography sx={{ fontSize: "1.75rem", fontWeight: 800, color: "#111827" }}>
+                    {bookingData?.bathroomCount || 0}
+                  </Typography>
+                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>
+                    Bathrooms
+                  </Typography>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-green-100 rounded-xl">
+                  <SquareFoot sx={{ fontSize: "2rem", color: "#10b981" }} />
+                </div>
+                <div>
+                  <Typography sx={{ fontSize: "1.75rem", fontWeight: 800, color: "#111827" }}>
+                    2,400
+                  </Typography>
+                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>
+                    Sq Ft
+                  </Typography>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div
+                  className="p-4 rounded-xl"
+                  style={{
+                    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                  }}
+                >
+                  <Typography sx={{ fontSize: "1.5rem", fontWeight: 900, color: "white" }}>
+                    ₦{formatCurrency(bookingData?.price)}
+                  </Typography>
+                  <Typography sx={{ fontSize: "0.95rem", color: "rgba(255,255,255,0.9)" }}>
+                    per night
+                  </Typography>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Description Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
+        <Card
+          sx={{
+            borderRadius: "24px",
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
+            marginBottom: "24px",
+          }}
+        >
+          <CardContent sx={{ padding: "32px" }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 800,
+                color: "#111827",
+                marginBottom: "16px",
+              }}
+            >
+              About This Property
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "1.125rem",
+                color: "#6b7280",
+                lineHeight: 1.8,
+                marginBottom: "16px",
+              }}
+            >
+              {bookingData?.shortDescription}
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "1.125rem",
+                color: "#6b7280",
+                lineHeight: 1.8,
+              }}
+            >
+              {bookingData?.description}
+            </Typography>
+          </CardContent>
+        </Card>
+      </motion.div>
+
+      {/* Amenities Section */}
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5, delay: 0.3 }}
+      >
+        <Card
+          sx={{
+            borderRadius: "24px",
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
+            marginBottom: "24px",
+            background: "linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)",
+          }}
+        >
+          {/* <CardContent sx={{ padding: "32px" }}>
+            <Typography
+              variant="h4"
+              sx={{
+                fontWeight: 800,
+                color: "#111827",
+                marginBottom: "24px",
+              }}
+            >
+              Amenities & Features
+            </Typography>
+            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+              {amenities.map((amenity, index) => (
+                <div
+                  key={index}
+                  className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
+                >
+                  <div className="p-2 bg-orange-100 rounded-lg">
+                    {amenity.icon && (
+                      <span style={{ color: "#ea580c", fontSize: "1.5rem" }}>
+                        {amenity.icon}
+                      </span>
+                    )}
+                  </div>
+                  <Typography
+                    sx={{
+                      fontSize: "1.125rem",
+                      fontWeight: 600,
+                      color: "#111827",
+                    }}
+                  >
+                    {amenity.label}
+                  </Typography>
+                </div>
+              ))}
+            </div>
+          </CardContent> */}
+        </Card>
+      </motion.div>
+
+      {/* Image Gallery Modal */}
+      <ImageGalleryView
+        open={galleryOpen}
+        onClose={() => setGalleryOpen(false)}
+        images={bookingData?.imageSrcs || []}
+        propertyData={{
+          title: bookingData?.title,
+          shortDescription: bookingData?.shortDescription,
+          rating: 4.3,
+          reviewCount: 24,
+        }}
+      />
     </div>
   );
 }
 
 export default DemoContent;
 
-const ProductDetailsInfo = ({
-  // data,
-  propertyData,
-  // totalReviewsLength,
-  // averageRating,
-}) => {
-  const user = useAppSelector(selectUser);
-  const theme = useTheme();
-  const isMobile = useMediaQuery(theme.breakpoints.down("md"));
-  const isTablet = useMediaQuery(theme.breakpoints.down("lg"));
-  const [active, setActive] = useState(1);
-  const [currentImageIndex, setCurrentImageIndex] = useState(0);
-  const [comment, setComment] = useState("");
-  const [rating, setRating] = useState(0);
-
-  // Mock reviews data - Replace with actual data from props or API
-  const [reviews, setReviews] = useState([
-    {
-      id: 1,
-      author: "Authentiano Emmasan",
-      authorImage: "https://placehold.co/40x40",
-      timeAgo: "3d",
-      content: "What's the best source for learning next js",
-      likes: 0,
-      isAuthor: false,
-      replies: [
-        {
-          id: 1,
-          author: "Abdullah Abimbola",
-          authorImage: "https://placehold.co/40x40",
-          timeAgo: "5h",
-          content:
-            "you can use YouTube. It's not a big deal if your JavaScript foundation is solid",
-          isAuthor: true,
-        },
-      ],
-    },
-  ]);
-
-  const handleSubmitComment = () => {
-    if (comment.trim() || rating > 0) {
-      // Here you would typically call an API to submit the review
-      const newReview = {
-        id: reviews.length + 1,
-        author: "Current User", // Replace with actual user data
-        authorImage: "https://placehold.co/40x40",
-        timeAgo: "Just now",
-        content: comment,
-        rating: rating,
-        likes: 0,
-        replies: [],
-        isAuthor: false,
-      };
-      setReviews([newReview, ...reviews]);
-      setComment("");
-      setRating(0);
-    }
-  };
-
-  return (
-    <div className="px-2 py-2 rounded mb-10">
-      <div className="w-full flex justify-between border-b pt-10 pb-2 space-x-4 px-2">
-        <div className="relative ">
-          <h5
-            className={
-              "text-[#000] text-[14px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
-            }
-            onClick={() => setActive(1)}
-          >
-            Description
-          </h5>
-          {active === 1 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
-        </div>
-        <div className="relative">
-          <h5
-            className={
-              "text-[#000] text-[14px] px-1 leading-5 font-[600] cursor-pointer 800px:text-[20px]"
-            }
-            onClick={() => setActive(2)}
-          >
-            Apartment Reviews
-          </h5>
-          {active === 2 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
-        </div>
-      </div>
-      {active === 1 ? (
-        <>
-          <div
-            className={`${isMobile ? "w-full" : "w-1/1"} bg-white flex flex-col ${isMobile ? "h-[60vh]" : ""}`}
-          >
-            <div className={`${isMobile ? "p-3" : "p-6"} border-b`}>
-              <Typography
-                variant={isMobile ? "caption" : "body2"}
-                className="text-gray-600 mb-2"
-              >
-                {propertyData?.description}
-              </Typography>
-            </div>
-          </div>
-        </>
-      ) : null}
-
-      {active === 2 ? (
-        <div
-          className={`${isMobile ? "w-full" : "w-1/1"} bg-white flex flex-col ${isMobile ? "h-[60vh]" : ""}`}
-        >
-          {user?.email && (
-            <>
-              {/* Add Comment Section */}
-              <div
-                className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}
-              >
-                <Typography
-                  variant={isMobile ? "caption" : "subtitle2"}
-                  className="font-semibold mb-2"
-                >
-                  Add a comment
-                </Typography>
-                <div className={`${isMobile ? "mb-2" : "mb-3"}`}>
-                  <Typography
-                    variant={isMobile ? "caption" : "body2"}
-                    className="text-gray-700 mb-1"
-                  >
-                    Your Rating
-                  </Typography>
-                  <Rating
-                    value={rating}
-                    onChange={(_, newValue) => setRating(newValue)}
-                    size={isMobile ? "small" : "large"}
-                  />
-                </div>
-                <div className={`flex ${isMobile ? "gap-1" : "gap-2"}`}>
-                  <Avatar
-                    sx={{
-                      width: isMobile ? 28 : 32,
-                      height: isMobile ? 28 : 32,
-                      fontSize: isMobile ? "0.875rem" : "1rem",
-                    }}
-                  >
-                    U
-                  </Avatar>
-                  <div className="flex-1">
-                    <TextField
-                      fullWidth
-                      multiline
-                      rows={isMobile ? 1 : 2}
-                      placeholder="Add a comment..."
-                      value={comment}
-                      onChange={(e) => setComment(e.target.value)}
-                      variant="outlined"
-                      size="small"
-                      sx={{
-                        "& .MuiOutlinedInput-root": {
-                          backgroundColor: "white",
-                          fontSize: isMobile ? "0.875rem" : "1rem",
-                        },
-                      }}
-                    />
-                    <div
-                      className={`flex items-center justify-between ${isMobile ? "mt-1" : "mt-2"}`}
-                    >
-                      {!isMobile && (
-                        <div className="flex gap-2">
-                          <IconButton size="small">😊</IconButton>
-                          <IconButton size="small">📷</IconButton>
-                        </div>
-                      )}
-                      <Button
-                        variant="contained"
-                        size="small"
-                        endIcon={<Send fontSize="small" />}
-                        onClick={handleSubmitComment}
-                        disabled={!comment.trim() && rating === 0}
-                        sx={{
-                          backgroundColor: "#ea580c",
-                          "&:hover": {
-                            backgroundColor: "#c2410c",
-                          },
-                          textTransform: "none",
-                          fontSize: isMobile ? "0.75rem" : "0.875rem",
-                          marginLeft: isMobile ? "auto" : 0,
-                        }}
-                      >
-                        Post
-                      </Button>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Reviews/Comments List */}
-              <div
-                className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}
-              >
-                <div
-                  className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"} px-2`}
-                >
-                  <Typography
-                    variant={isMobile ? "caption" : "subtitle2"}
-                    className="font-semibold"
-                  >
-                    Comments ({reviews.length})
-                  </Typography>
-                  <select
-                    className={`${isMobile ? "text-xs" : "text-sm"} text-gray-600 border-none outline-none cursor-pointer`}
-                  >
-                    <option>Most relevant</option>
-                    <option>Newest first</option>
-                    <option>Oldest first</option>
-                  </select>
-                </div>
-
-                <div className={`${isMobile ? "space-y-2" : "space-y-4"}`}>
-                  {reviews.map((review) => (
-                    <div
-                      key={review.id}
-                      className={`${isMobile ? "space-y-1" : "space-y-2"}`}
-                    >
-                      <div className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
-                        <Avatar
-                          src={review.authorImage}
-                          alt={review.author}
-                          sx={{
-                            width: isMobile ? 32 : 40,
-                            height: isMobile ? 32 : 40,
-                          }}
-                        />
-                        <div className="flex-1">
-                          <div className="flex items-center gap-2 mb-1">
-                            <Typography
-                              variant={isMobile ? "caption" : "body2"}
-                              className="font-semibold"
-                            >
-                              {review.author}
-                            </Typography>
-                            <Typography
-                              variant="caption"
-                              className="text-gray-500"
-                              sx={{
-                                fontSize: isMobile ? "0.65rem" : "0.75rem",
-                              }}
-                            >
-                              • {review.timeAgo}
-                            </Typography>
-                            {review.isAuthor && (
-                              <span
-                                className={`${isMobile ? "text-[10px]" : "text-xs"} bg-orange-100 text-orange-600 px-2 py-0.5 rounded`}
-                              >
-                                Author
-                              </span>
-                            )}
-                          </div>
-                          {review.rating && (
-                            <Rating
-                              value={review.rating}
-                              readOnly
-                              size="small"
-                              className="mb-1"
-                            />
-                          )}
-                          <Typography
-                            variant={isMobile ? "caption" : "body2"}
-                            className="text-gray-700"
-                          >
-                            {review.content}
-                          </Typography>
-                          <div
-                            className={`flex items-center ${isMobile ? "gap-2 mt-1" : "gap-4 mt-2"}`}
-                          >
-                            <button
-                              className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
-                            >
-                              <ThumbUp
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 14 : 16 }}
-                              />
-                              <span>
-                                {review.likes > 0 ? review.likes : "Like"}
-                              </span>
-                            </button>
-                            <button
-                              className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
-                            >
-                              <Reply
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 14 : 16 }}
-                              />
-                              <span>Reply</span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-
-                      {/* Nested Replies */}
-                      {review.replies && review.replies.length > 0 && (
-                        <div
-                          className={`${isMobile ? "ml-8 space-y-2 mt-2" : "ml-12 space-y-3 mt-3"}`}
-                        >
-                          {review.replies.map((reply) => (
-                            <div
-                              key={reply.id}
-                              className={`flex ${isMobile ? "gap-2" : "gap-3"}`}
-                            >
-                              <Avatar
-                                src={reply.authorImage}
-                                alt={reply.author}
-                                sx={{
-                                  width: isMobile ? 28 : 32,
-                                  height: isMobile ? 28 : 32,
-                                }}
-                              />
-                              <div className="flex-1">
-                                <div
-                                  className={`flex items-center ${isMobile ? "gap-1" : "gap-2"} mb-1`}
-                                >
-                                  <Typography
-                                    variant={isMobile ? "caption" : "body2"}
-                                    className="font-semibold"
-                                    sx={{
-                                      fontSize: isMobile
-                                        ? "0.75rem"
-                                        : "0.875rem",
-                                    }}
-                                  >
-                                    {reply.author}
-                                  </Typography>
-                                  <Typography
-                                    variant="caption"
-                                    className="text-gray-500"
-                                    sx={{
-                                      fontSize: isMobile
-                                        ? "0.65rem"
-                                        : "0.75rem",
-                                    }}
-                                  >
-                                    • {reply.timeAgo}
-                                  </Typography>
-                                  {reply.isAuthor && (
-                                    <span
-                                      className={`${isMobile ? "text-[10px]" : "text-xs"} bg-orange-100 text-orange-600 px-2 py-0.5 rounded`}
-                                    >
-                                      Author
-                                    </span>
-                                  )}
-                                </div>
-                                <Typography
-                                  variant={isMobile ? "caption" : "body2"}
-                                  className="text-gray-700"
-                                  sx={{
-                                    fontSize: isMobile ? "0.75rem" : "0.875rem",
-                                  }}
-                                >
-                                  {reply.content}
-                                </Typography>
-                                <div
-                                  className={`flex items-center ${isMobile ? "gap-2" : "gap-4"} mt-1`}
-                                >
-                                  <button
-                                    className={`text-gray-600 hover:text-orange-600 ${isMobile ? "text-[10px]" : "text-xs"}`}
-                                  >
-                                    Like
-                                  </button>
-                                  <button
-                                    className={`text-gray-600 hover:text-orange-600 ${isMobile ? "text-[10px]" : "text-xs"}`}
-                                  >
-                                    Reply
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
-                      )}
-                      <Divider />
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <div className="w-full flex justify-center">
-                {propertyData && propertyData?.reviews?.length === 0 && (
-                  <h5>No Reviews have for this product!</h5>
-                )}
-              </div>
-            </>
-          )}
-
-          {!user?.email && (
-            <>
-              <div className={`${isMobile ? "p-3" : "p-6"} border-b`}>
-                <div className="mb-2 px-2">
-                  <Typography
-                    variant={isMobile ? "subtitle1" : "h6"}
-                    className="font-bold text-gray-900"
-                  >
-                    {propertyData?.title || "Property Details"}
-                  </Typography>
-                </div>
-                <Typography
-                  variant={isMobile ? "caption" : "body2"}
-                  className="text-gray-600 mb-2 px-2"
-                >
-                  {propertyData?.shortDescription ||
-                    "Share your thoughts about this property"}
-                </Typography>
-                {propertyData?.rating && (
-                  <div className="flex items-center gap-2 px-2">
-                    <Rating value={propertyData.rating} readOnly size="small" />
-                    <Typography
-                      variant={isMobile ? "caption" : "body2"}
-                      className="text-gray-600"
-                    >
-                      {propertyData.rating} ({propertyData.reviewCount || 0}{" "}
-                      reviews)
-                    </Typography>
-                  </div>
-                )}
-
-                <Typography variant="body2" className="text-gray-600 px-2">
-                  Please sign in to leave a review.
-                </Typography>
-              </div>
-            </>
-          )}
-        </div>
-      ) : null}
-    </div>
-  );
-};
+/*
+ * OLD COMPONENT BACKUP (before redesign)
+ * Located at: DemoContent_OLD_BACKUP.jsx
+ */

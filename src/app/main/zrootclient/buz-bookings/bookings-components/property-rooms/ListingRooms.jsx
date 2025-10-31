@@ -3,6 +3,7 @@ import { Box, Button, Drawer, Typography, IconButton } from "@mui/material";
 import { ChevronLeft, ChevronRight } from "@mui/icons-material";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import RoomAvailableDatesPage from "./RoomAvailableDatesPage";
+import RoomDetailsModal from "./RoomDetailsModal";
 
 export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
     const [open, setOpen] = React.useState(false);
@@ -12,10 +13,25 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
     // State to track current image index for each room
     const [currentImageIndexes, setCurrentImageIndexes] = React.useState({});
 
+    // State for room details modal
+    const [modalOpen, setModalOpen] = React.useState(false);
+    const [selectedRoom, setSelectedRoom] = React.useState(null);
+
     const toggleDrawer = (newOpen, idOfRoom, priceOfRoom) => () => {
         setOpen(newOpen);
         setRoomId(idOfRoom);
         setRoomPrice(priceOfRoom);
+    };
+
+    // Handler to open room details modal
+    const handleOpenRoomModal = (room) => {
+        setSelectedRoom(room);
+        setModalOpen(true);
+    };
+
+    const handleCloseRoomModal = () => {
+        setModalOpen(false);
+        setSelectedRoom(null);
     };
 
     // Handle image navigation
@@ -64,14 +80,14 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
         overflow-hidden
         "
     >
-      {rooms.map((room) => {
-        const roomImages = room.images || room.imageSrcs || [];
-        const currentIndex = getCurrentImageIndex(room.id);
+      {rooms?.map((room) => {
+        const roomImages = room?.images || room?.imageSrcs || [];
+        const currentIndex = getCurrentImageIndex(room?.id);
         const hasImages = roomImages.length > 0;
         const currentImage = hasImages ? (roomImages[currentIndex]?.url || roomImages[currentIndex]) : 'https://placehold.co/400x300';
 
         return (
-          <div key={room.id}>
+          <div key={room?.id}>
             <div className="flex flex-row items-center gap-4 p-4">
               {/* Left Side - Room Title and Price */}
               <div className="flex-1 flex flex-col justify-center px-2">
@@ -81,14 +97,14 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                     variant="h6"
                     className="text-gray-800 dark:text-white/90 text-base font-semibold"
                   >
-                    {room.title}
+                    {room?.title}
                   </Typography>
 
                   {/* Room Price */}
                   <div className="flex items-baseline gap-1">
                     <span className="text-xs text-gray-600 dark:text-white/60">₦</span>
                     <span className="text-lg font-bold text-gray-900 dark:text-white">
-                      {formatCurrency(room.price)}
+                      {formatCurrency(room?.price)}
                     </span>
                     <span className="text-xs text-gray-500 dark:text-white/40">
                       per night
@@ -100,18 +116,20 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
               {/* Right Side - Image Slider */}
               <div className="flex-1">
                 <div className="relative w-full h-40 md:h-52 rounded-lg overflow-hidden bg-gray-100">
-                  {/* Room Image */}
+                  {/* Room Image - Clickable */}
                   <img
                     src={currentImage}
-                    alt={`${room.title} - Image ${currentIndex + 1}`}
-                    className="w-full h-full object-cover"
+                    alt={`${room?.title} - Image ${currentIndex + 1}`}
+                    className="w-full h-full object-cover cursor-pointer transition-transform hover:scale-105"
+                    onClick={() => handleOpenRoomModal(room)}
+                    style={{ transition: 'transform 0.3s ease' }}
                   />
 
                   {/* Navigation Arrows - Only show if there are multiple images */}
                   {hasImages && roomImages.length > 1 && (
                     <>
                       <IconButton
-                        onClick={() => handlePrevImage(room.id, roomImages)}
+                        onClick={() => handlePrevImage(room?.id, roomImages)}
                         sx={{
                           position: 'absolute',
                           left: 4,
@@ -129,7 +147,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                       </IconButton>
 
                       <IconButton
-                        onClick={() => handleNextImage(room.id, roomImages)}
+                        onClick={() => handleNextImage(room?.id, roomImages)}
                         sx={{
                           position: 'absolute',
                           right: 4,
@@ -193,6 +211,19 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
       >
         {AvailableDates}
       </Drawer>
+
+      {/* Room Details Modal */}
+      <RoomDetailsModal
+        open={modalOpen}
+        onClose={handleCloseRoomModal}
+        room={selectedRoom}
+        onViewAvailableDates={() => {
+          // Open the booking calendar drawer for the selected room
+          if (selectedRoom) {
+            toggleDrawer(true, selectedRoom.id, selectedRoom.price)();
+          }
+        }}
+      />
     </div>
   );
 };

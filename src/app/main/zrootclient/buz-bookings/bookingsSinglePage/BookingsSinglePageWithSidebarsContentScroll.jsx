@@ -20,6 +20,7 @@ import { useAppSelector } from 'app/store/hooks';
 import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { useCreateReservation, useGetReservations } from 'app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations';
+import { useGetMerchantPreview } from 'app/configs/data/server-calls/auth/userapp/a_merchants/useMerchantRepo';
 import useCountries from "src/app/hooks/useCountries";
 import {
   differenceInCalendarDays,
@@ -103,7 +104,17 @@ function BookingsSinglePageWithSidebarsContentScroll() {
     isError,
   } = useGetBookingProperty(bookingId);
 
+// console.log("SINGLE__BOOKING", booking?.data?.listing)
 
+  // Fetch merchant preview data using the shop/merchant ID from booking
+  const merchantId = booking?.data?.listing?.shop;
+  const {
+    data: merchantData,
+    isLoading: merchantLoading,
+    isError: merchantError,
+  } = useGetMerchantPreview(merchantId);
+
+// console.log("MERCHANT__PREVIEW", merchantData)
 
   const config = useAppSelector(selectFuseCurrentLayoutConfig);
   const currentUser = useAppSelector(selectUser)
@@ -208,16 +219,19 @@ function BookingsSinglePageWithSidebarsContentScroll() {
 			leftSidebarOnClose={() => {
 				setLeftSidebarOpen(false);
 			}}
-			leftSidebarContent={<DemoSidebar />}
+			leftSidebarContent={<DemoSidebar
+				merchantData={merchantData?.data?.merchant}
+				coordinates={coordinates}
+				propertyName={booking?.data?.listing?.title}
+				propertyAddress={booking?.data?.listing?.address}
+			/>}
 			rightSidebarOpen={rightSidebarOpen}
 			rightSidebarOnClose={() => {
 				setRightSidebarOpen(false);
 			}}
 
 
-			rightSidebarContent=
-      
-      {booking?.data?.listing?.id && <DemoSidebarRight 
+			rightSidebarContent={booking?.data?.listing?.id && <DemoSidebarRight 
         isLoading={isLoading}
         listing={booking?.data?.listing}
         locationValue={booking?.data?.listing?.locationValue}

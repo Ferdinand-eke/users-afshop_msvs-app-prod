@@ -61,12 +61,22 @@ import LandingCenterHomeNew from "../main/vendors-shop/home/home/LandingCenterHo
 import ModernLandingPage from "../main/vendors-shop/home/home/ModernLandingPage";
 import AboutUs from "../main/vendors-shop/home/home/AboutUs";
 import ContactUs from "../main/vendors-shop/home/home/ContactUs";
+import MerchantSubdomainConfig from "../main/merchant-subdomain/MerchantSubdomainConfig";
+import { isSubdomainRoute } from "app/utils/subdomainUtils";
 
-// import FoodMartMenu from "../main/zrootclient/buz-foodmart/FoodMartMenu";
-// import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
-// import AfricanshopsMessengerAppConfig from '../main/africanshops-messenger/AfricanshopsMessengerAppConfig';
+// Check if we're on a merchant subdomain
+const onMerchantSubdomain = isSubdomainRoute();
 
 const routeConfigs = [
+  /***
+   * ##########################################################################
+   * MERCHANT SUBDOMAIN ROUTES (Conditional - only active on subdomains)
+   * ############################################################################
+   * */
+  // ...(onMerchantSubdomain ? [MerchantSubdomainConfig] : []),
+  // MerchantSubdomainConfig,
+ 
+
   /***
    * ##########################################################################
    * Authentication concern routes starts here
@@ -183,6 +193,14 @@ const routeConfigs = [
   blogAppConfig,
 
   /****
+   * #########################################################################################
+   * MERCHANT SUBDOMAIN ROUTES (Guest/Unauthenticated)
+   * NOTE: Removed from routeConfigs - handled separately in routes array below
+   * #########################################################################################
+   * */
+  // MerchantSubdomainConfig,
+
+  /****
    *################################################################################################
    * End of Un-Authenticated pages are listed below here
    * ###############################################################################################
@@ -199,17 +217,28 @@ const routeConfigs = [
  * The routes of the application.
  */
 const routes = [
+  // MERCHANT SUBDOMAIN ROUTES (must come first to match before main domain)
+  ...(onMerchantSubdomain
+    ? FuseUtils.generateRoutesFromConfigs(
+        [MerchantSubdomainConfig],
+        null // No auth required for merchant subdomain
+      )
+    : []),
+
   ...FuseUtils.generateRoutesFromConfigs(
     routeConfigs,
     settingsConfig.defaultAuth
   ),
-  {
-    path: "/",
-    // element: <Navigate to="/dashboards/project" />,
-    // element: <Navigate to="/home" />,
-    // auth: settingsConfig.defaultAuth,
-    element: <ModernLandingPage />,
-  },
+
+  // Main domain homepage (only if NOT on merchant subdomain)
+  ...(!onMerchantSubdomain
+    ? [
+        {
+          path: "/",
+          element: <ModernLandingPage />,
+        },
+      ]
+    : []),
   {
     path: "/about",
     settings: {
