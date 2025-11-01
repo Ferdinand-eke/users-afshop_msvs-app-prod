@@ -72,6 +72,20 @@ function JwtSignInForm() {
             variant="outlined"
             required
             fullWidth
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: '#ea580c',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#ea580c',
+                  borderWidth: '2px',
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#ea580c',
+              },
+            }}
           />
         )}
       />
@@ -98,11 +112,28 @@ function JwtSignInForm() {
                     onClick={handleClickShowPassword}
                     onMouseDown={(e) => e.preventDefault()}
                     edge="end"
+                    sx={{
+                      color: '#ea580c',
+                    }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
                   </IconButton>
                 </InputAdornment>
               ),
+            }}
+            sx={{
+              '& .MuiOutlinedInput-root': {
+                '&:hover fieldset': {
+                  borderColor: '#ea580c',
+                },
+                '&.Mui-focused fieldset': {
+                  borderColor: '#ea580c',
+                  borderWidth: '2px',
+                },
+              },
+              '& .MuiInputLabel-root.Mui-focused': {
+                color: '#ea580c',
+              },
             }}
           />
         )}
@@ -116,28 +147,59 @@ function JwtSignInForm() {
             <FormControl>
               <FormControlLabel
                 label="Remember me"
-                control={<Checkbox size="small" {...field} />}
+                control={
+                  <Checkbox
+                    size="small"
+                    {...field}
+                    sx={{
+                      '&.Mui-checked': {
+                        color: '#ea580c',
+                      },
+                    }}
+                  />
+                }
               />
             </FormControl>
           )}
         />
 
-        <Link className="text-md font-medium" to="/forgot-password">
+        <Link
+          className="text-md font-medium"
+          to="/forgot-password"
+          style={{
+            background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+            WebkitBackgroundClip: 'text',
+            WebkitTextFillColor: 'transparent',
+            backgroundClip: 'text',
+          }}
+        >
           Forgot password?
         </Link>
       </div>
 
       <Button
         variant="contained"
-        color="secondary"
-        className=" mt-16 w-full"
+        className="mt-16 w-full"
         aria-label="Sign in"
         disabled={_.isEmpty(dirtyFields) || !isValid || isLoading}
         type="submit"
         size="large"
+        sx={{
+          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+          color: 'white',
+          fontWeight: 600,
+          height: '48px',
+          fontSize: '1rem',
+          '&:hover': {
+            background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+          },
+          '&:disabled': {
+            background: '#e5e7eb',
+            color: '#9ca3af',
+          },
+        }}
       >
-        {isLoading ? "processing..." : "Sign in"}
-        {/* Sign in */}
+        {isLoading ? "Signing in..." : "Sign in"}
       </Button>
     </form>
   );

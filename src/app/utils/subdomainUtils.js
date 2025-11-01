@@ -40,9 +40,13 @@ export const getSubdomain = () => {
 /**
  * Check if current route is a subdomain route
  * @returns {boolean}
+ *
+ * DISABLED FOR VERCEL STAGING DEPLOYMENT
+ * Uncomment the line below to re-enable subdomain routing
  */
 export const isSubdomainRoute = () => {
-  return getSubdomain() !== null;
+  // return getSubdomain() !== null;
+  return false; // DISABLED - Always return false to disable subdomain routing
 };
 
 /**

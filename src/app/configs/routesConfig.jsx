@@ -65,7 +65,9 @@ import MerchantSubdomainConfig from "../main/merchant-subdomain/MerchantSubdomai
 import { isSubdomainRoute } from "app/utils/subdomainUtils";
 
 // Check if we're on a merchant subdomain
-const onMerchantSubdomain = isSubdomainRoute();
+// DISABLED FOR VERCEL STAGING DEPLOYMENT
+// const onMerchantSubdomain = isSubdomainRoute();
+const onMerchantSubdomain = false; // DISABLED - Set to false to disable subdomain routing
 
 const routeConfigs = [
   /***
@@ -73,9 +75,7 @@ const routeConfigs = [
    * MERCHANT SUBDOMAIN ROUTES (Conditional - only active on subdomains)
    * ############################################################################
    * */
-  // ...(onMerchantSubdomain ? [MerchantSubdomainConfig] : []),
-  // MerchantSubdomainConfig,
- 
+
 
   /***
    * ##########################################################################
@@ -218,27 +218,29 @@ const routeConfigs = [
  */
 const routes = [
   // MERCHANT SUBDOMAIN ROUTES (must come first to match before main domain)
-  ...(onMerchantSubdomain
-    ? FuseUtils.generateRoutesFromConfigs(
-        [MerchantSubdomainConfig],
-        null // No auth required for merchant subdomain
-      )
-    : []),
+  // DISABLED FOR VERCEL STAGING DEPLOYMENT
+  // Uncomment the block below to re-enable subdomain routing
+  // ...(onMerchantSubdomain
+  //   ? FuseUtils.generateRoutesFromConfigs(
+  //       [MerchantSubdomainConfig],
+  //       null // No auth required for merchant subdomain
+  //     )
+  //   : []),
 
   ...FuseUtils.generateRoutesFromConfigs(
     routeConfigs,
     settingsConfig.defaultAuth
   ),
 
-  // Main domain homepage (only if NOT on merchant subdomain)
-  ...(!onMerchantSubdomain
-    ? [
+  // Main domain homepage (ALWAYS ACTIVE - subdomain routing disabled)
+  // ...(!onMerchantSubdomain
+  //   ? [
         {
           path: "/",
           element: <ModernLandingPage />,
         },
-      ]
-    : []),
+  //     ]
+  //   : []),
   {
     path: "/about",
     settings: {
