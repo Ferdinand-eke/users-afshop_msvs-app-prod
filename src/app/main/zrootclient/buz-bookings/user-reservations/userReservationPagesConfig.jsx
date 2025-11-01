@@ -63,23 +63,22 @@ const userReservationPagesConfig = {
     {
       path: "bookings/reservation/review/:reservationId",
       element: <ReviewReservation />, // (Done => Msvs)
-    },
+    }, // (Done => Msvs)  **cleaned for prod**
 
     {
       path: "bookings/:reservationId/payment-success",
       element: <ReviewReservationPaymentSucces />,
-    },
+    }, // (Done => Msvs) **cleaned for prod**
 
 
     {
       path: "bookings/my-reservations",
-      element: <UserReservationsWithSidebarsContentScrollPage />, // (Done => Msvs)
+      element: <UserReservationsWithSidebarsContentScrollPage />, // (Done => Msvs) **cleaned for prod**
     },
     
 
     {
       path: "bookings/:reservationId/reservation-detail",
-    //   element: <UserReservationsDetail />,
       element: <UserReservationDetailWithSidebarsContentScrollPage /> // (Done => Msvs)
     },
 

@@ -255,7 +255,7 @@ function UserModernReversedSignUpPage() {
   }, [
     sigupClientUsers?.isSuccess,
      remoteResponseToken,
-     
+
     ]);
 
   async function findStatesByCountry(countryId) {
@@ -314,10 +314,10 @@ function UserModernReversedSignUpPage() {
   let bodyContent = (
     <div className="flex flex-col gap-8">
       <Typography
-        className="px-[10px] xs:px-[30px] pt-[26px] pb-[25px] text-dark dark:text-white/[.87] text-[18px] font-semibold border-b border-regular dark:border-white/10"
+        className="text-lg font-semibold text-gray-900 mb-4"
       >
-        Email Details :{" "}
-        <span className="mt-2 flex items-baseline font-medium">
+        Email Details{" "}
+        <span className="block mt-2 text-sm font-medium text-gray-600">
           What e-mail are you looking to use as your primary contact email
         </span>
       </Typography>
@@ -330,14 +330,27 @@ function UserModernReversedSignUpPage() {
               <TextField
                 {...field}
                 className="mb-24"
-                label="Name"
+                label="Business/Shop Name"
                 autoFocus
-                type="name"
+                type="text"
                 error={!!errors.name}
                 helperText={errors?.name?.message}
                 variant="outlined"
                 required
                 fullWidth
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#ea580c',
+                  },
+                }}
               />
             )}
           />
@@ -349,13 +362,26 @@ function UserModernReversedSignUpPage() {
               <TextField
                 {...field}
                 className="mb-24"
-                label="Email"
+                label="Email Address"
                 type="email"
                 error={!!errors.email}
                 helperText={errors?.email?.message}
                 variant="outlined"
                 required
                 fullWidth
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#ea580c',
+                  },
+                }}
               />
             )}
           />
@@ -374,6 +400,19 @@ function UserModernReversedSignUpPage() {
                 variant="outlined"
                 required
                 fullWidth
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#ea580c',
+                  },
+                }}
               />
             )}
           />
@@ -385,38 +424,45 @@ function UserModernReversedSignUpPage() {
               <TextField
                 {...field}
                 className="mb-24"
-                label="Password (Confirm)"
+                label="Confirm Password"
                 type="password"
                 error={!!errors.passwordConfirm}
                 helperText={errors?.passwordConfirm?.message}
                 variant="outlined"
                 required
                 fullWidth
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#ea580c',
+                  },
+                }}
               />
             )}
           />
         </>
-
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[30vh] overflow-y-auto"></div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[30vh] overflow-y-auto"></div>
       </>
     </div>
   );
 
-  
+
   if (step == STEPS.LOCATION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-        <Typography
-          // as="h3"
-          className="px-[40px] xs:px-[30px] pt-[26px] pb-[25px] text-dark dark:text-white/[.87] text-[18px] font-semibold border-b border-regular dark:border-white/10"
-        >
-          Location : Where are you located?. <p className="text-[10px]">Note: This location will be used as your closest pick-up location</p>
+        <Typography className="text-lg font-semibold text-gray-900 mb-4">
+          Location : Where are you located?
+          <span className="block mt-2 text-xs text-gray-600">
+            Note: This location will be used as your closest pick-up location
+          </span>
         </Typography>
         <>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-3 max-h-[30vh] overflow-y-auto"></div>
           <CountrySelect
             value={location}
             onChange={(value) => setCustomValue("location", value)}
@@ -454,11 +500,11 @@ function UserModernReversedSignUpPage() {
   if (step == STEPS.MOREINFO) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-        <Typography
-          // as="h3"
-          className="px-[40px] xs:px-[30px] pt-[26px] pb-[25px] text-dark dark:text-white/[.87] text-[18px] font-semibold border-b border-regular dark:border-white/10"
-        >
-          More Info : Provide us some more info to set you up nicely <p className="text-[10px]">Note: This address provided here will be used as your delivery and billing address</p>
+        <Typography className="text-lg font-semibold text-gray-900 mb-4">
+          More Info : Provide us some more info to set you up nicely
+          <span className="block mt-2 text-xs text-gray-600">
+            Note: This address provided here will be used as your delivery and billing address
+          </span>
         </Typography>
         <>
           <Controller
@@ -468,17 +514,26 @@ function UserModernReversedSignUpPage() {
               <TextField
                 {...field}
                 className="mt-8 mb-16"
-                label="Merchant Phone"
+                label="Phone Number"
                 id="phone"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">Phone</InputAdornment>
-                  ),
-                }}
+                placeholder="Enter your phone number"
                 fullWidth
                 error={!!errors.phone}
                 helperText={errors?.phone?.message}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#ea580c',
+                  },
+                }}
               />
             )}
           />
@@ -490,17 +545,28 @@ function UserModernReversedSignUpPage() {
               <TextField
                 {...field}
                 className="mt-8 mb-16"
-                label="Merchant Phone"
+                label="Business Address"
                 id="address"
                 variant="outlined"
-                InputProps={{
-                  startAdornment: (
-                    <InputAdornment position="start">Address</InputAdornment>
-                  ),
-                }}
+                placeholder="Enter your full business address"
                 fullWidth
+                multiline
+                rows={3}
                 error={!!errors.address}
                 helperText={errors?.address?.message}
+                sx={{
+                  '& .MuiOutlinedInput-root': {
+                    '&:hover fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                    '&.Mui-focused fieldset': {
+                      borderColor: '#ea580c',
+                    },
+                  },
+                  '& .MuiInputLabel-root.Mui-focused': {
+                    color: '#ea580c',
+                  },
+                }}
               />
             )}
           />
@@ -511,14 +577,11 @@ function UserModernReversedSignUpPage() {
   if (step == STEPS.DESCRIPTION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
-        <Typography
-          // as="h3"
-          className="px-[40px] xs:px-[30px] pt-[26px] pb-[25px] text-dark dark:text-white/[.87] text-[18px] font-semibold border-b border-regular dark:border-white/10"
-        >
-          T&C : Accept our terms and conditions and proceed
+        <Typography className="text-lg font-semibold text-gray-900 mb-4">
+          Terms & Conditions : Accept our terms and conditions and proceed
         </Typography>
         <>
-  
+
 
           <Controller
             name="acceptTermsConditions"
@@ -530,7 +593,17 @@ function UserModernReversedSignUpPage() {
               >
                 <FormControlLabel
                   label="I agree to the Terms of Service and Privacy Policy"
-                  control={<Checkbox size="small" {...field} />}
+                  control={
+                    <Checkbox
+                      size="small"
+                      {...field}
+                      sx={{
+                        '&.Mui-checked': {
+                          color: '#ea580c',
+                        },
+                      }}
+                    />
+                  }
                 />
                 <FormHelperText>
                   {errors?.acceptTermsConditions?.message}
@@ -545,10 +618,14 @@ function UserModernReversedSignUpPage() {
   return (
     <div className="flex min-w-0 flex-auto flex-col items-center sm:justify-center md:p-32">
       <Paper className="flex min-h-full w-full overflow-hidden rounded-0 sm:min-h-auto sm:w-auto sm:rounded-2xl sm:shadow md:w-full md:max-w-6xl">
+        {/* Right Side - Illustration */}
         <Box
           className="relative hidden h-full flex-auto items-center justify-center overflow-hidden p-64 md:flex lg:px-112"
-          sx={{ backgroundColor: "primary.main" }}
+          style={{
+            background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          }}
         >
+          {/* Decorative SVG Background */}
           <svg
             className="pointer-events-none absolute inset-0"
             viewBox="0 0 960 540"
@@ -557,22 +634,14 @@ function UserModernReversedSignUpPage() {
             preserveAspectRatio="xMidYMax slice"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <Box
-              component="g"
-              sx={{ color: "primary.light" }}
-              className="opacity-20"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="100"
-            >
+            <g className="opacity-20" fill="none" stroke="white" strokeWidth="100">
               <circle r="234" cx="196" cy="23" />
               <circle r="234" cx="790" cy="491" />
-            </Box>
+            </g>
           </svg>
           <Box
             component="svg"
             className="absolute -right-64 -top-64 opacity-20"
-            sx={{ color: "primary.light" }}
             viewBox="0 0 220 192"
             width="220px"
             height="192px"
@@ -580,88 +649,213 @@ function UserModernReversedSignUpPage() {
           >
             <defs>
               <pattern
-                id="837c3e70-6c3a-44e6-8854-cc48c737b659"
+                id="signup-pattern"
                 x="0"
                 y="0"
                 width="20"
                 height="20"
                 patternUnits="userSpaceOnUse"
               >
-                <rect x="0" y="0" width="4" height="4" fill="currentColor" />
+                <rect x="0" y="0" width="4" height="4" fill="white" />
               </pattern>
             </defs>
             <rect
               width="220"
               height="192"
-              fill="url(#837c3e70-6c3a-44e6-8854-cc48c737b659)"
+              fill="url(#signup-pattern)"
             />
           </Box>
 
           <div className="relative z-10 w-full max-w-2xl">
-            <div className="text-7xl font-bold leading-none text-gray-100">
-              <div>Welcome to</div>
-              <div>our community</div>
+            <div className="text-7xl font-bold leading-none text-white">
+              <div>Join Our</div>
+              <div>Community</div>
             </div>
-            <div className="mt-24 text-lg leading-6 tracking-tight text-gray-400">
-      
+            <div className="mt-24 text-lg leading-6 tracking-tight text-white/90">
+              Start your journey with AfricanShops and connect with thousands of merchants across Africa.
             </div>
-            
+
+            {/* Features Grid */}
+            <div className="mt-32 grid grid-cols-2 gap-16">
+              <div className="flex flex-col">
+                <div className="flex h-44 w-44 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                  <Typography className="text-2xl font-bold text-white">🛍️</Typography>
+                </div>
+                <Typography className="mt-12 text-lg font-semibold text-white">
+                  Easy Setup
+                </Typography>
+                <Typography className="mt-4 text-sm text-white/80">
+                  Get your shop online in minutes
+                </Typography>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex h-44 w-44 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                  <Typography className="text-2xl font-bold text-white">📊</Typography>
+                </div>
+                <Typography className="mt-12 text-lg font-semibold text-white">
+                  Track Sales
+                </Typography>
+                <Typography className="mt-4 text-sm text-white/80">
+                  Real-time analytics and insights
+                </Typography>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex h-44 w-44 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                  <Typography className="text-2xl font-bold text-white">🌍</Typography>
+                </div>
+                <Typography className="mt-12 text-lg font-semibold text-white">
+                  Reach Customers
+                </Typography>
+                <Typography className="mt-4 text-sm text-white/80">
+                  Connect with buyers nationwide
+                </Typography>
+              </div>
+              <div className="flex flex-col">
+                <div className="flex h-44 w-44 items-center justify-center rounded-xl bg-white/20 backdrop-blur-sm">
+                  <Typography className="text-2xl font-bold text-white">💳</Typography>
+                </div>
+                <Typography className="mt-12 text-lg font-semibold text-white">
+                  Secure Payments
+                </Typography>
+                <Typography className="mt-4 text-sm text-white/80">
+                  Safe and reliable transactions
+                </Typography>
+              </div>
+            </div>
           </div>
         </Box>
 
-        
-        
-       <>
+        {/* Left Side - Form */}
         {!remoteResponseToken.length > 0 ? (
           <div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
             <div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
-              <img
-                className="w-40"
-                src="assets/images/afslogo/afslogo.png"
-                alt="logo"
-              />
+              {/* Logo with Orange Gradient Background */}
+              <div
+                className="flex h-56 w-56 items-center justify-center rounded-xl mb-32"
+                style={{
+                  background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                  boxShadow: "0 4px 20px rgba(234, 88, 12, 0.3)",
+                }}
+              >
+                <img
+                  className="w-40"
+                  src="assets/images/afslogo/afslogo.png"
+                  alt="logo"
+                />
+              </div>
 
-              <Typography className="mt-32 text-4xl font-extrabold leading-tight tracking-tight">
-                Sign up for trade based activities
+              <Typography className="text-4xl font-extrabold leading-tight tracking-tight">
+                Create Your Account
               </Typography>
-              <div className="mt-2 flex items-baseline font-medium">
-                <Typography>Already have an account?</Typography>
-                <Link className="ml-4" to="/sign-in">
+              <div className="mt-8 flex items-baseline font-medium">
+                <Typography className="text-gray-600">Already have an account?</Typography>
+                <Link
+                  className="ml-4 font-semibold"
+                  to="/sign-in"
+                  style={{
+                    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                  }}
+                >
                   Sign in
                 </Link>
+              </div>
+
+              {/* Progress Indicator */}
+              <div className="mt-32 mb-24">
+                <div className="flex items-center justify-between relative">
+                  {['Email', 'Location', 'Details', 'Terms'].map((label, idx) => (
+                    <div key={idx} className="flex flex-col items-center flex-1 relative">
+                      <div
+                        className={`w-32 h-32 rounded-full flex items-center justify-center z-10 ${
+                          step >= idx
+                            ? 'text-white'
+                            : 'bg-gray-200 text-gray-400'
+                        }`}
+                        style={
+                          step >= idx
+                            ? {
+                                background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              }
+                            : {}
+                        }
+                      >
+                        <Typography className="text-xs font-bold">{idx + 1}</Typography>
+                      </div>
+                      <Typography className="mt-4 text-xs text-gray-600">{label}</Typography>
+                    </div>
+                  ))}
+                  {/* Progress Line */}
+                  <div className="absolute top-16 left-0 right-0 h-2 bg-gray-200" style={{ zIndex: 0 }}>
+                    <div
+                      className="h-full transition-all duration-300"
+                      style={{
+                        width: `${(step / 3) * 100}%`,
+                        background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      }}
+                    />
+                  </div>
+                </div>
               </div>
 
               <form
                 name="registerForm"
                 noValidate
-                className="mt-32 flex w-full flex-col justify-center overflow-scroll"
+                className="mt-32 flex w-full flex-col justify-center"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                {bodyContent}
+                <div className="max-h-[50vh] overflow-y-auto pr-8" style={{ scrollbarWidth: 'thin', scrollbarColor: '#ea580c #f5f5f4' }}>
+                  {bodyContent}
+                </div>
 
-                <Button
-                  className="bg-regularBG dark:bg-regularBGdark h-[50px] ltr:mr-[20px] rtl:ml-[20px] px-[22px] text-[15px] text-body dark:text-white/60 hover:text-light font-normal border-regular dark:border-white/10"
-                  size="large"
-                  onClick={secondaryAction}
-                  disabled={step == STEPS.CATEGORY}
-                >
-                  Back
-                </Button>
-                {step < 3 ? (
+                {/* Action Buttons */}
+                <div className="flex gap-16 mt-32">
                   <Button
-                    className="bg-regularBG dark:bg-regularBGdark h-[50px] ltr:mr-[20px] rtl:ml-[20px] px-[22px] text-[15px] text-body dark:text-white/60 hover:text-light font-normal border-regular dark:border-white/10"
+                    variant="outlined"
                     size="large"
-                    onClick={onNext}
-                    disabled={step == STEPS.DESCRIPTION}
+                    onClick={secondaryAction}
+                    disabled={step === STEPS.CATEGORY}
+                    sx={{
+                      flex: 1,
+                      borderColor: '#ea580c',
+                      color: '#ea580c',
+                      fontWeight: 600,
+                      '&:hover': {
+                        borderColor: '#c2410c',
+                        backgroundColor: 'rgba(234, 88, 12, 0.05)',
+                      },
+                      '&:disabled': {
+                        borderColor: '#e5e7eb',
+                        color: '#9ca3af',
+                      },
+                    }}
                   >
-                    Next
+                    Back
                   </Button>
-                ) : (
-                  <>
+                  {step < 3 ? (
                     <Button
                       variant="contained"
-                      color="secondary"
-                      className=" mt-24 w-full"
+                      size="large"
+                      onClick={onNext}
+                      disabled={step === STEPS.DESCRIPTION}
+                      sx={{
+                        flex: 1,
+                        background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                        color: 'white',
+                        fontWeight: 600,
+                        '&:hover': {
+                          background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                        },
+                      }}
+                    >
+                      Next
+                    </Button>
+                  ) : (
+                    <Button
+                      variant="contained"
+                      size="large"
                       aria-label="Register"
                       disabled={
                         _.isEmpty(dirtyFields) ||
@@ -669,24 +863,30 @@ function UserModernReversedSignUpPage() {
                         sigupClientUsers?.isLoading
                       }
                       type="submit"
-                      size="large"
+                      sx={{
+                        flex: 1,
+                        background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
+                        color: 'white',
+                        fontWeight: 600,
+                        '&:hover': {
+                          background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                        },
+                        '&:disabled': {
+                          background: '#e5e7eb',
+                          color: '#9ca3af',
+                        },
+                      }}
                     >
-                      Create your free account
+                      {sigupClientUsers?.isLoading ? 'Creating Account...' : 'Create Your Free Account'}
                     </Button>
-                  </>
-                )}
+                  )}
+                </div>
               </form>
             </div>
           </div>
         ) : (
           <MerchantModernReversedActivatePage resendOTP={resendOTP} />
         )}
-        </>
-       
-
-
-
-
       </Paper>
     </div>
   );
