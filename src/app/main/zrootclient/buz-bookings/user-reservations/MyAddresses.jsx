@@ -9,43 +9,34 @@ import {
   Radio,
   Button,
   Divider,
+  CircularProgress,
+  Alert,
 } from "@mui/material";
-import { Close } from "@mui/icons-material";
-import { useState } from "react";
+import { Close, Add } from "@mui/icons-material";
+import { useState, useEffect } from "react";
+import { useGetUserAddresses } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-addresses";
+import AddressFormDialog from "./AddressFormDialog";
 
 /**
  * MyAddresses Modal Component
  * Displays saved billing addresses and allows user to select one
  */
-function MyAddresses({ open, onClose, onSelectAddress, savedAddresses = [] }) {
+function MyAddresses({ open, onClose, onSelectAddress, onCreateNew }) {
   const [selectedAddressId, setSelectedAddressId] = useState(null);
+  const [formDialogOpen, setFormDialogOpen] = useState(false);
 
-  // Placeholder addresses if no saved addresses are provided
-  const defaultAddresses = [
-    {
-      id: 1,
-      name: "John Doe",
-      phone: "08012345678",
-      address: "123 Main Street, Victoria Island, Lagos",
-      isDefault: true,
-    },
-    {
-      id: 2,
-      name: "John Doe",
-      phone: "08087654321",
-      address: "45 Allen Avenue, Ikeja, Lagos",
-      isDefault: false,
-    },
-    {
-      id: 3,
-      name: "Jane Smith",
-      phone: "09023456789",
-      address: "78 Admiralty Way, Lekki Phase 1, Lagos",
-      isDefault: false,
-    },
-  ];
+  // Fetch user addresses from API
+  const { data: addresses = [], isLoading, isError } = useGetUserAddresses();
 
-  const addresses = savedAddresses.length > 0 ? savedAddresses : defaultAddresses;
+  // Auto-select default address when addresses load
+  useEffect(() => {
+    if (addresses && addresses.length > 0) {
+      const defaultAddress = addresses.find((addr) => addr.isDefault);
+      if (defaultAddress) {
+        setSelectedAddressId(defaultAddress.id);
+      }
+    }
+  }, [addresses]);
 
   const handleSelectAddress = () => {
     const selected = addresses.find((addr) => addr.id === selectedAddressId);
@@ -57,6 +48,22 @@ function MyAddresses({ open, onClose, onSelectAddress, savedAddresses = [] }) {
 
   const handleAddressClick = (addressId) => {
     setSelectedAddressId(addressId);
+  };
+
+  const handleCreateNew = () => {
+    setFormDialogOpen(true);
+  };
+
+  const handleFormDialogClose = () => {
+    setFormDialogOpen(false);
+  };
+
+  const handleAddressCreated = (newAddress) => {
+    // Address was created successfully
+    // Auto-select it if it's the default or the only one
+    if (newAddress) {
+      setSelectedAddressId(newAddress.id);
+    }
   };
 
   return (
@@ -76,73 +83,167 @@ function MyAddresses({ open, onClose, onSelectAddress, savedAddresses = [] }) {
         <Typography variant="h6" component="span" className="font-semibold">
           My Addresses
         </Typography>
-        <IconButton
-          aria-label="close"
-          onClick={onClose}
-          sx={{
-            color: (theme) => theme.palette.grey[500],
-          }}
-        >
-          <Close />
-        </IconButton>
+        <div className="flex items-center gap-2">
+          {/* Add New Address Button - Show when there are existing addresses */}
+          {!isLoading && !isError && addresses.length > 0 && (
+            <Button
+              variant="outlined"
+              size="small"
+              startIcon={<Add />}
+              onClick={handleCreateNew}
+              sx={{
+                textTransform: "none",
+                borderColor: "#ea580c",
+                color: "#ea580c",
+                "&:hover": {
+                  borderColor: "#c2410c",
+                  backgroundColor: "rgba(234, 88, 12, 0.05)",
+                },
+              }}
+            >
+              Add New
+            </Button>
+          )}
+          <IconButton
+            aria-label="close"
+            onClick={onClose}
+            sx={{
+              color: (theme) => theme.palette.grey[500],
+            }}
+          >
+            <Close />
+          </IconButton>
+        </div>
       </DialogTitle>
 
       <Divider />
 
       {/* Content */}
       <DialogContent sx={{ p: 0 }}>
-        <RadioGroup
-          value={selectedAddressId}
-          onChange={(e) => setSelectedAddressId(Number(e.target.value))}
-        >
-          {addresses.map((address, index) => (
-            <div key={address.id}>
-              <div
-                onClick={() => handleAddressClick(address.id)}
-                className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${
-                  selectedAddressId === address.id ? "bg-orange-50" : ""
-                }`}
+        {/* Loading State */}
+        {isLoading && (
+          <div className="flex items-center justify-center p-8">
+            <CircularProgress sx={{ color: "#ea580c" }} />
+          </div>
+        )}
+
+        {/* Error State */}
+        {isError && (
+          <div className="p-4">
+            <Alert severity="error">
+              Failed to load addresses. Please try again later.
+            </Alert>
+          </div>
+        )}
+
+        {/* Empty State - No Addresses */}
+        {!isLoading && !isError && addresses.length === 0 && (
+          <div className="p-8 text-center">
+            <div
+              className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
+              style={{
+                background: "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%)",
+              }}
+            >
+              <svg
+                className="w-8 h-8"
+                style={{ color: "#ea580c" }}
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
               >
-                <div className="flex items-start gap-2">
-                  <FormControlLabel
-                    value={address.id}
-                    control={
-                      <Radio
-                        sx={{
-                          color: "#9ca3af",
-                          "&.Mui-checked": {
-                            color: "#ea580c",
-                          },
-                        }}
-                      />
-                    }
-                    label=""
-                    sx={{ margin: 0 }}
-                  />
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <Typography variant="body1" className="font-semibold text-gray-900">
-                        {address.name}
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+              </svg>
+            </div>
+            <Typography variant="h6" className="font-semibold mb-2 text-gray-800">
+              No Saved Addresses
+            </Typography>
+            <Typography variant="body2" className="text-gray-600 mb-4">
+              You haven't added any addresses yet. Create one to continue with your booking.
+            </Typography>
+            <Button
+              variant="contained"
+              startIcon={<Add />}
+              onClick={handleCreateNew}
+              sx={{
+                textTransform: "none",
+                background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                "&:hover": {
+                  background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                },
+              }}
+            >
+              Create New Address
+            </Button>
+          </div>
+        )}
+
+        {/* Addresses List */}
+        {!isLoading && !isError && addresses.length > 0 && (
+          <RadioGroup
+            value={selectedAddressId}
+            onChange={(e) => setSelectedAddressId(Number(e.target.value))}
+          >
+            {addresses.map((address, index) => (
+              <div key={address.id}>
+                <div
+                  onClick={() => handleAddressClick(address.id)}
+                  className={`p-4 cursor-pointer hover:bg-gray-50 transition-colors ${
+                    selectedAddressId === address.id ? "bg-orange-50" : ""
+                  }`}
+                >
+                  <div className="flex items-start gap-2">
+                    <FormControlLabel
+                      value={address.id}
+                      control={
+                        <Radio
+                          sx={{
+                            color: "#9ca3af",
+                            "&.Mui-checked": {
+                              color: "#ea580c",
+                            },
+                          }}
+                        />
+                      }
+                      label=""
+                      sx={{ margin: 0 }}
+                    />
+                    <div className="flex-1">
+                      <div className="flex items-center gap-2 mb-1">
+                        <Typography variant="body1" className="font-semibold text-gray-900">
+                          {address.name}
+                        </Typography>
+                        {address.isDefault && (
+                          <span className="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded">
+                            Default
+                          </span>
+                        )}
+                      </div>
+                      <Typography variant="body2" className="text-gray-700 mb-1">
+                        {address.address}
                       </Typography>
-                      {address.isDefault && (
-                        <span className="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded">
-                          Default
-                        </span>
-                      )}
+                      <Typography variant="body2" className="text-gray-600">
+                        Phone: {address.phone}
+                      </Typography>
                     </div>
-                    <Typography variant="body2" className="text-gray-700 mb-1">
-                      {address.address}
-                    </Typography>
-                    <Typography variant="body2" className="text-gray-600">
-                      Phone: {address.phone}
-                    </Typography>
                   </div>
                 </div>
+                {index < addresses.length - 1 && <Divider />}
               </div>
-              {index < addresses.length - 1 && <Divider />}
-            </div>
-          ))}
-        </RadioGroup>
+            ))}
+          </RadioGroup>
+        )}
       </DialogContent>
 
       <Divider />
@@ -183,6 +284,13 @@ function MyAddresses({ open, onClose, onSelectAddress, savedAddresses = [] }) {
           Use This Address
         </Button>
       </div>
+
+      {/* Address Form Dialog */}
+      <AddressFormDialog
+        open={formDialogOpen}
+        onClose={handleFormDialogClose}
+        onSuccess={handleAddressCreated}
+      />
     </Dialog>
   );
 }

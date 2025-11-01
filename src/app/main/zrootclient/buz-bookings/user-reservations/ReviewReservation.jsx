@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
-import { Button, FormControlLabel, Backdrop, Dialog, DialogTitle, DialogContent, DialogActions } from "@mui/material";
+import { Button, FormControlLabel, Backdrop, Dialog, DialogTitle, DialogContent, DialogActions, CircularProgress } from "@mui/material";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
@@ -91,6 +91,9 @@ function ReviewReservation() {
   // State for payment close dialog
   const [paymentCloseDialogOpen, setPaymentCloseDialogOpen] = useState(false);
 
+  // State for cancel confirmation dialog
+  const [cancelDialogOpen, setCancelDialogOpen] = useState(false);
+
   const routeParams = useParams();
   const { reservationId } = routeParams;
 
@@ -175,9 +178,13 @@ function ReviewReservation() {
 
   // Handle cancel reservation
   const handleCancelReservation = () => {
-    if (window.confirm("Are you sure you want to cancel this reservation?")) {
-      cancelReservation.mutate({ reservationId: singlereservation?.data?.reservation?.id });
-    }
+    setCancelDialogOpen(true);
+  };
+
+  // Confirm cancel reservation
+  const confirmCancelReservation = () => {
+    cancelReservation.mutate({ reservationId: singlereservation?.data?.reservation?.id });
+    setCancelDialogOpen(false);
   };
 
   // Handle address selection from modal
@@ -203,7 +210,7 @@ function ReviewReservation() {
     await trigger(["name", "phone", "address"]);
 
     // Show success message
-    toast.success("Address populated successfully!");
+    // toast.success("Address populated successfully!");
   };
 
 
@@ -899,31 +906,187 @@ function ReviewReservation() {
             open={addressModalOpen}
             onClose={() => setAddressModalOpen(false)}
             onSelectAddress={handleSelectAddress}
-            savedAddresses={[]} // Pass actual saved addresses from user data here
+            onCreateNew={() => {
+              // User wants to create a new address - they can fill the form manually
+              toast.info("Please fill in your address details in the form above");
+            }}
           />
 
           {/* Payment Processing Backdrop */}
           <Backdrop
             sx={{
-              color: '#fff',
               zIndex: (theme) => theme.zIndex.modal + 1000,
-              backgroundColor: 'rgba(0, 0, 0, 0.85)',
-              display: 'flex',
-              flexDirection: 'column',
-              gap: 3
+              backgroundColor: 'rgba(0, 0, 0, 0.75)',
+              backdropFilter: 'blur(8px)',
             }}
             open={verifyPayment?.isLoading || false}
           >
-            <FuseLoading />
-            <Typography variant="h5" className="text-white font-semibold">
-              Processing Payment...
-            </Typography>
-            <Typography variant="body1" className="text-gray-300">
-              Please wait while we verify your payment
-            </Typography>
-            <Typography variant="body2" className="text-gray-400 text-center px-8">
-              Do not close or refresh this page
-            </Typography>
+            <motion.div
+              initial={{ opacity: 0, scale: 0.9 }}
+              animate={{ opacity: 1, scale: 1 }}
+              transition={{ duration: 0.3 }}
+              className="flex flex-col items-center gap-6 px-4"
+            >
+              {/* Logo with Circular Progress */}
+              <div className="relative">
+                {/* Circular Progress - Orange Theme */}
+                <CircularProgress
+                  size={160}
+                  thickness={3}
+                  sx={{
+                    color: "#ea580c",
+                    position: "absolute",
+                    top: -20,
+                    left: -20,
+                  }}
+                />
+
+                {/* AfricanShops Logo Container */}
+                <div
+                  className="w-[120px] h-[120px] rounded-full flex items-center justify-center shadow-2xl"
+                  style={{
+                    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                  }}
+                >
+                  <img
+                    src="/assets/images/logo/logo.svg"
+                    alt="AfricanShops"
+                    className="w-20 h-20"
+                    onError={(e) => {
+                      // Fallback if logo doesn't exist
+                      e.target.style.display = "none";
+                      e.target.parentElement.innerHTML = `
+                        <div style="color: white; font-size: 2.5rem; font-weight: 900;">AS</div>
+                      `;
+                    }}
+                  />
+                </div>
+
+                {/* Pulsing Ring Animation */}
+                <motion.div
+                  animate={{
+                    scale: [1, 1.2, 1],
+                    opacity: [0.5, 0.2, 0.5],
+                  }}
+                  transition={{
+                    duration: 2,
+                    repeat: Infinity,
+                    ease: "easeInOut",
+                  }}
+                  className="absolute inset-0 rounded-full"
+                  style={{
+                    border: "3px solid #ea580c",
+                    margin: "-20px",
+                  }}
+                />
+              </div>
+
+              {/* Processing Text with Pulse Animation */}
+              <motion.div
+                animate={{ opacity: [0.7, 1, 0.7] }}
+                transition={{
+                  duration: 1.5,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+                className="text-center"
+              >
+                <Typography
+                  sx={{
+                    fontSize: { xs: "1.5rem", sm: "2rem" },
+                    fontWeight: 800,
+                    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    WebkitBackgroundClip: "text",
+                    WebkitTextFillColor: "transparent",
+                    backgroundClip: "text",
+                    marginBottom: 2,
+                  }}
+                >
+                  Processing Payment...
+                </Typography>
+
+                <Typography
+                  variant="body1"
+                  sx={{
+                    color: "#e5e7eb",
+                    fontSize: { xs: "0.9rem", sm: "1rem" },
+                    fontWeight: 500,
+                  }}
+                >
+                  Please wait while we verify your payment
+                </Typography>
+              </motion.div>
+
+              {/* Security Icons with Animation */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex items-center gap-4 mt-4"
+              >
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm">
+                  <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <Typography variant="caption" className="text-white font-semibold">
+                    Secure
+                  </Typography>
+                </div>
+
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm">
+                  <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <Typography variant="caption" className="text-white font-semibold">
+                    Protected
+                  </Typography>
+                </div>
+              </motion.div>
+
+              {/* Warning Message */}
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.5 }}
+                className="max-w-md mx-auto mt-4"
+              >
+                <div
+                  className="p-4 rounded-xl flex items-start gap-3"
+                  style={{
+                    background: "rgba(234, 88, 12, 0.15)",
+                    border: "2px solid rgba(234, 88, 12, 0.3)",
+                    backdropFilter: "blur(10px)",
+                  }}
+                >
+                  <svg className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  </svg>
+                  <div>
+                    <Typography
+                      variant="body2"
+                      sx={{
+                        color: "#fff",
+                        fontWeight: 600,
+                        fontSize: { xs: "0.8rem", sm: "0.875rem" },
+                      }}
+                    >
+                      Do not close or refresh this page
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        color: "#e5e7eb",
+                        fontSize: { xs: "0.7rem", sm: "0.75rem" },
+                        display: "block",
+                        marginTop: "4px",
+                      }}
+                    >
+                      Your payment is being securely processed
+                    </Typography>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
           </Backdrop>
 
           {/* Payment Close Warning Dialog */}
@@ -1064,6 +1227,195 @@ function ReviewReservation() {
                 }}
               >
                 Complete Payment Now
+              </Button>
+            </DialogActions>
+          </Dialog>
+
+          {/* Cancel Reservation Confirmation Dialog */}
+          <Dialog
+            open={cancelDialogOpen}
+            onClose={() => setCancelDialogOpen(false)}
+            maxWidth="sm"
+            fullWidth
+            PaperProps={{
+              sx: {
+                borderRadius: '16px',
+                overflow: 'hidden'
+              }
+            }}
+          >
+            <DialogTitle
+              sx={{
+                background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                color: 'white',
+                padding: '24px',
+                display: 'flex',
+                alignItems: 'center',
+                gap: 2
+              }}
+            >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+              <span className="font-bold text-xl">Cancel Reservation?</span>
+            </DialogTitle>
+
+            <DialogContent sx={{ padding: '32px 24px' }}>
+              <div className="space-y-4">
+                <Typography variant="h6" className="font-bold text-gray-800">
+                  Are you sure you want to cancel this reservation?
+                </Typography>
+
+                <Typography variant="body1" className="text-gray-700 leading-relaxed">
+                  Please consider the following before cancelling:
+                </Typography>
+
+                <div className="space-y-3 ml-4">
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>Your reservation will be permanently cancelled</strong>
+                    </Typography>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>This property may not be available later</strong> - Other guests are actively booking
+                    </Typography>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>Prices may increase</strong> if you try to book again
+                    </Typography>
+                  </div>
+
+                  <div className="flex items-start gap-3">
+                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <Typography variant="body2" className="text-gray-600">
+                      <strong>Cancellation is immediate and cannot be undone</strong>
+                    </Typography>
+                  </div>
+                </div>
+
+                {/* Reservation Details Summary */}
+                <div
+                  className="p-4 rounded-xl mt-6"
+                  style={{
+                    background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.05) 100%)',
+                    border: '2px solid rgba(220, 38, 38, 0.2)'
+                  }}
+                >
+                  <Typography variant="body2" className="font-bold text-gray-800 mb-2">
+                    Reservation Details:
+                  </Typography>
+                  <div className="space-y-1 text-sm text-gray-700">
+                    <div className="flex justify-between">
+                      <span>Check-in:</span>
+                      <span className="font-semibold">
+                        {formatDateUtil(singlereservation?.data?.reservation?.startDate)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span>Check-out:</span>
+                      <span className="font-semibold">
+                        {formatDateUtil(singlereservation?.data?.reservation?.endDate)}
+                      </span>
+                    </div>
+                    <div className="flex justify-between pt-2 border-t border-red-200">
+                      <span>Total Amount:</span>
+                      <span className="font-bold text-red-700">
+                        ₦ {formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+
+                <div
+                  className="p-3 rounded-lg flex items-start gap-3"
+                  style={{
+                    background: 'rgba(59, 130, 246, 0.05)',
+                    border: '1px solid rgba(59, 130, 246, 0.2)'
+                  }}
+                >
+                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <Typography variant="caption" className="text-gray-700">
+                    <strong>Note:</strong> If you're experiencing issues with payment, please contact our support team instead of cancelling.
+                  </Typography>
+                </div>
+              </div>
+            </DialogContent>
+
+            <DialogActions
+              sx={{
+                padding: '16px 24px 24px',
+                gap: 2,
+                flexDirection: { xs: 'column', sm: 'row' }
+              }}
+            >
+              <Button
+                onClick={() => setCancelDialogOpen(false)}
+                variant="outlined"
+                fullWidth
+                sx={{
+                  borderColor: '#9ca3af',
+                  color: '#6b7280',
+                  '&:hover': {
+                    borderColor: '#6b7280',
+                    backgroundColor: '#f3f4f6'
+                  },
+                  textTransform: 'none',
+                  fontWeight: 600,
+                  padding: '10px 24px'
+                }}
+              >
+                Keep My Reservation
+              </Button>
+
+              <Button
+                onClick={confirmCancelReservation}
+                variant="contained"
+                fullWidth
+                disabled={cancelReservation.isLoading}
+                sx={{
+                  background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
+                  color: 'white',
+                  '&:hover': {
+                    background: 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)',
+                    boxShadow: '0 8px 20px rgba(220, 38, 38, 0.4)'
+                  },
+                  '&:disabled': {
+                    background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.5) 0%, rgba(185, 28, 28, 0.5) 100%)',
+                    color: 'rgba(255, 255, 255, 0.7)'
+                  },
+                  textTransform: 'none',
+                  fontWeight: 'bold',
+                  padding: '10px 24px'
+                }}
+              >
+                {cancelReservation.isLoading ? (
+                  <div className="flex items-center gap-2">
+                    <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                    </svg>
+                    Cancelling...
+                  </div>
+                ) : (
+                  'Yes, Cancel Reservation'
+                )}
               </Button>
             </DialogActions>
           </Dialog>

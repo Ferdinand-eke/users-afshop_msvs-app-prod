@@ -48,7 +48,7 @@ export const API_ENDPOINTS = {
   GET_INVIEW_USER_TRIP: "/inview/user-trip",
 
   UPDATE_RESERVATIONS_ON_PAYMENT: "/reservations/update-reservation-on-payment",  // (Done => Msvs)
-  CANCEL_USER_RESERVATION: "/bookings/cancel-reservation-by-user",
+  CANCEL_USER_RESERVATION: "/reservations/cancel-reservation",
 
   /******
    * ############FOOD MART APP SERVER_URLs Start Here##############

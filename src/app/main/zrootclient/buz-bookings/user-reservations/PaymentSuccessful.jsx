@@ -35,17 +35,17 @@ function PaymentSuccessful({
   };
 
   const confettiColors = [
-    "bg-red-500",
-    "bg-blue-500",
-    "bg-green-500",
-    "bg-yellow-500",
-    "bg-purple-500",
-    "bg-pink-500",
     "bg-orange-500",
+    "bg-orange-600",
+    "bg-yellow-500",
+    "bg-amber-500",
+    "bg-orange-400",
+    "bg-yellow-600",
+    "bg-orange-700",
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-blue-50 flex items-center justify-center p-4 md:p-8">
+    <div className="w-full flex items-center justify-center">
       <motion.div
         className="max-w-6xl w-full bg-white rounded-2xl shadow-2xl overflow-hidden"
         style={{ minHeight: '70vh' }}
@@ -98,10 +98,18 @@ function PaymentSuccessful({
               <motion.div variants={itemVariants}>
                 {/* Success Icon */}
                 <div className="flex items-center gap-3 mb-6">
-                  <div className="bg-green-100 rounded-full p-3">
-                    <CheckCircle className="text-green-600 text-4xl" />
+                  <div
+                    className="rounded-full p-3"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(234, 88, 12, 0.1) 100%)",
+                    }}
+                  >
+                    <CheckCircle
+                      sx={{ fontSize: "2.5rem", color: "#ea580c" }}
+                    />
                   </div>
-                  <h1 className="text-3xl font-bold text-gray-800">
+                  <h1 className="text-3xl md:text-4xl font-bold text-gray-800">
                     Payment Successful
                   </h1>
                 </div>
@@ -120,29 +128,59 @@ function PaymentSuccessful({
             <motion.div variants={itemVariants} className="mb-8">
               <div className="flex items-center justify-between mb-4">
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center mb-2">
-                    <CheckCircle className="text-white text-xl" />
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center mb-2"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    }}
+                  >
+                    <CheckCircle sx={{ fontSize: "1.25rem", color: "white" }} />
                   </div>
                   <span className="text-xs text-gray-600 text-center">
-                    Sites selected
+                    Property selected
                   </span>
                 </div>
-                <div className="flex-1 h-1 bg-green-600 mx-2"></div>
+                <div
+                  className="flex-1 h-1 mx-2"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #f97316 0%, #ea580c 100%)",
+                  }}
+                ></div>
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-green-600 flex items-center justify-center mb-2">
-                    <CheckCircle className="text-white text-xl" />
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center mb-2"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    }}
+                  >
+                    <CheckCircle sx={{ fontSize: "1.25rem", color: "white" }} />
                   </div>
                   <span className="text-xs text-gray-600 text-center">
                     Payment received
                   </span>
                 </div>
-                <div className="flex-1 h-1 bg-gray-300 mx-2"></div>
+                <div
+                  className="flex-1 h-1 mx-2"
+                  style={{
+                    background:
+                      "linear-gradient(90deg, #f97316 0%, #ea580c 100%)",
+                  }}
+                ></div>
                 <div className="flex flex-col items-center">
-                  <div className="w-10 h-10 rounded-full bg-gray-300 flex items-center justify-center mb-2">
-                    <span className="text-gray-500 text-xl">3</span>
+                  <div
+                    className="w-10 h-10 rounded-full flex items-center justify-center mb-2"
+                    style={{
+                      background:
+                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    }}
+                  >
+                    <CheckCircle sx={{ fontSize: "1.25rem", color: "white" }} />
                   </div>
-                  <span className="text-xs text-gray-400 text-center">
-                    Processing report
+                  <span className="text-xs text-gray-600 text-center">
+                    Reservation confirmed
                   </span>
                 </div>
               </div>
@@ -185,12 +223,16 @@ function PaymentSuccessful({
                 component={NavLinkAdapter}
                 to={`/bookings/${reservationId}/reservation-detail`}
                 sx={{
-                  backgroundColor: "#16a34a",
+                  background:
+                    "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                   textTransform: "none",
                   px: 4,
                   py: 1.5,
+                  fontWeight: 600,
                   "&:hover": {
-                    backgroundColor: "#15803d",
+                    background:
+                      "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                    boxShadow: "0 8px 20px rgba(234, 88, 12, 0.4)",
                   },
                 }}
               >
@@ -229,7 +271,13 @@ function PaymentSuccessful({
           </div>
 
           {/* Right Illustration Section */}
-          <div className="md:w-1/2 bg-gradient-to-br from-green-100 to-green-50 flex items-center justify-center p-8 md:p-12 relative overflow-hidden">
+          <div
+            className="md:w-1/2 flex items-center justify-center p-8 md:p-12 relative overflow-hidden"
+            style={{
+              background:
+                "linear-gradient(135deg, rgba(254, 243, 226, 0.8) 0%, rgba(253, 186, 116, 0.5) 100%)",
+            }}
+          >
             {/* Background Confetti */}
             <div className="absolute inset-0 pointer-events-none">
               {[...Array(20)].map((_, i) => (

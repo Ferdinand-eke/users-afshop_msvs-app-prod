@@ -231,8 +231,9 @@ export const getUseTripByReservationId = (reservationId) => {
   );
 }; //(Done => Msvs)
 
-export const cancelReservationApi = (reservationId) => {
-  return AuthApi().put(`${API_ENDPOINTS.CANCEL_USER_RESERVATION}/${reservationId}`);
+export const cancelReservationApi = (formData) => {
+  console.log("Canceling reservation....1", formData?.reservationId)
+  return AuthApi().put(`${API_ENDPOINTS.CANCEL_USER_RESERVATION}/${formData?.reservationId}`);
 };
 
 export const getUserCancelledTrips = () => {
@@ -508,6 +509,50 @@ export const withdrawOfferApi = (offerId) => {
 /**
  * ############################################################
  * @param {Realestate Offers Routes ends} FormData
+ * @returns
+ * ############################################################
+ */
+
+/**
+ * ############################################################
+ * @param {User Addresses CRUD Routes starts} FormData
+ * @returns
+ * ############################################################
+ */
+
+/***Create User Address */
+export const createUserAddressApi = (formData) => {
+  return AuthApi().post(`/auth-user/addresses`, formData);
+};
+
+/***Get All User Addresses */
+export const getUserAddressesApi = () => {
+  return AuthApi().get(`/auth-user/addresses`);
+};
+
+/***Get Single Address */
+export const getSingleUserAddressApi = (addressId) => {
+  return AuthApi().get(`/auth-user/addresses/${addressId}`);
+};
+
+/***Update User Address */
+export const updateUserAddressApi = (addressId, formData) => {
+  return AuthApi().put(`/auth-user/addresses/${addressId}`, formData);
+};
+
+/***Delete User Address */
+export const deleteUserAddressApi = (addressId) => {
+  return AuthApi().delete(`/auth-user/addresses/${addressId}`);
+};
+
+/***Set Default Address */
+export const setDefaultUserAddressApi = (addressId) => {
+  return AuthApi().put(`/auth-user/addresses/${addressId}/set-default`);
+};
+
+/**
+ * ############################################################
+ * @param {User Addresses CRUD Routes ends} FormData
  * @returns
  * ############################################################
  */
