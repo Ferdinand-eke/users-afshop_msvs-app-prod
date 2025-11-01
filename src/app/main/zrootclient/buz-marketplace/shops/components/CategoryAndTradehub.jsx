@@ -19,20 +19,33 @@ const CategoryAndTradehub = () => {
           key={item.id}
           className={
             item.id === id
-              ? "relative bg-orange-100 rounded-md hover:bg-orange-300 py-1 px-4 cursor-pointer"
-              : "relative bg-white rounded-md hover:bg-orange-500 py-1 px-4 cursor-pointer"
+              ? "relative bg-orange-100 rounded-lg hover:bg-orange-200 py-3 px-4 cursor-pointer mb-2 shadow-sm transition-all duration-200 border-l-4 border-orange-600"
+              : "relative bg-white rounded-lg hover:bg-orange-50 py-3 px-4 cursor-pointer mb-2 shadow-sm transition-all duration-200 border-l-4 border-transparent hover:border-orange-400"
           }
         >
           <Typography
-            //  href={`/afshopcategory/${item._id}`}
             component={NavLinkAdapter}
             to={`/marketplace/products/${item?.id}/by-category`}
+            sx={{
+              fontSize: '0.95rem',
+              fontWeight: item.id === id ? 700 : 500,
+              color: item.id === id ? '#ea580c' : '#374151',
+              textDecoration: 'none',
+              display: 'block',
+              width: '100%',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              whiteSpace: 'nowrap',
+              '&:hover': {
+                color: '#ea580c',
+              },
+            }}
           >
             {item.name}
           </Typography>
         </li>
       ));
-      categoriesView = <ul className="space-y-2 p-4">{items}</ul>;
+      categoriesView = <ul className="p-2">{items}</ul>;
     } else {
     }
   } else {
@@ -40,11 +53,25 @@ const CategoryAndTradehub = () => {
   }
 
   return (
-    <>
-      <div className="md:col-span-6 h-[300px]">
+    <div className="flex flex-col h-full">
+      {/* Header */}
+      <div className="p-4 bg-gradient-to-r from-orange-600 to-red-600 sticky top-0 z-10">
+        <Typography
+          sx={{
+            fontSize: '1.125rem',
+            fontWeight: 700,
+            color: 'white',
+          }}
+        >
+          Product Categories
+        </Typography>
+      </div>
+
+      {/* Categories List */}
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2">
         {categoriesView}
       </div>
-    </>
+    </div>
   );
 };
 

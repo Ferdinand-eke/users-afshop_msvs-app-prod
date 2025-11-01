@@ -24,6 +24,7 @@ const MarketplaceOrderDetailWithSidebarsContentScrollPage = lazy(() => import('.
  * The reset password pages config.
  */
 
+
 const userMarketPlacePagesConfig = {
 	settings: {
 		layout: {
