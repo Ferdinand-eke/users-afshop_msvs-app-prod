@@ -53,11 +53,10 @@ function ProductPaginationBar({
             label="Items per page"
             onChange={handleItemsPerPageChange}
           >
-            <MenuItem value={4}>4</MenuItem>
-            <MenuItem value={8}>8</MenuItem>
-            <MenuItem value={16}>16</MenuItem>
-            <MenuItem value={32}>32</MenuItem>
-            <MenuItem value={64}>64</MenuItem>
+            <MenuItem value={20}>20</MenuItem>
+            <MenuItem value={30}>30</MenuItem>
+            <MenuItem value={40}>40</MenuItem>
+            <MenuItem value={50}>50</MenuItem>
           </Select>
         </FormControl>
 

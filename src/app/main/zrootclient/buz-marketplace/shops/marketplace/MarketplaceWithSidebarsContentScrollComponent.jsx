@@ -56,7 +56,7 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 
 	// Pagination state management
 	const [currentPage, setCurrentPage] = useState(1);
-	const [itemsPerPage, setItemsPerPage] = useState(4);
+	const [itemsPerPage, setItemsPerPage] = useState(20);
 
 	useEffect(() => {
 		setLeftSidebarOpen(!isMobile);
@@ -66,7 +66,7 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 	// const [products, setProducts] = useState([]);
   const { data: allProducts, isLoading, isError } = useGetAllProducts(filters);
 
-  console.log("All PRODUCTS", allProducts?.data?.products)
+//   console.log("All PRODUCTS", allProducts?.data?.products)
 
 	// Handle filter changes from ProductFilter component
 	const handleFilterChange = useCallback(

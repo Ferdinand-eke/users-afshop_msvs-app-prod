@@ -81,6 +81,7 @@ const parseDateString = (dateString) => {
  * The SimpleWithSidebarsContentScroll page.
  */
 
+
 function BookingsSinglePageWithSidebarsContentScroll() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);

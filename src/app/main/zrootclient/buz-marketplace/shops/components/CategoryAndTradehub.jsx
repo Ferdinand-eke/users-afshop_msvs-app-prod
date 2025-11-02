@@ -27,7 +27,7 @@ const CategoryAndTradehub = () => {
             component={NavLinkAdapter}
             to={`/marketplace/products/${item?.id}/by-category`}
             sx={{
-              fontSize: '0.95rem',
+              fontSize: '1.125rem',
               fontWeight: item.id === id ? 700 : 500,
               color: item.id === id ? '#ea580c' : '#374151',
               textDecoration: 'none',
@@ -58,7 +58,7 @@ const CategoryAndTradehub = () => {
       <div className="p-4 bg-gradient-to-r from-orange-600 to-red-600 sticky top-0 z-10">
         <Typography
           sx={{
-            fontSize: '1.125rem',
+            fontSize: '1.25rem',
             fontWeight: 700,
             color: 'white',
           }}

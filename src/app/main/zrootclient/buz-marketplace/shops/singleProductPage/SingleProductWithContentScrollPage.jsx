@@ -48,6 +48,7 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
   "& .FusePageSimple-sidebarContent": {},
 }));
 
+
 /**
  * The SimpleWithSidebarsContentScroll page.
  */

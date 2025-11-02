@@ -43,11 +43,12 @@ function ProductCard({ product, index }) {
       className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer flex flex-col"
     >
       {/* Image Section */}
-      <div className="relative h-100 overflow-hidden bg-gray-100">
+      <div className="relative overflow-hidden bg-gray-100" style={{ height: '250px' }}>
         <img
           src={product?.image || "https://via.placeholder.com/400x300?text=No+Image"}
           alt={product?.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          style={{ minHeight: '250px', maxHeight: '250px', objectFit: 'cover' }}
         />
 
         {/* Overlay gradient */}

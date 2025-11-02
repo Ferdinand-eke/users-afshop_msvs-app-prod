@@ -1,133 +1,122 @@
+import { Typography, Divider } from "@mui/material";
+import { Campaign, TrendingUp } from "@mui/icons-material";
+import { motion } from "framer-motion";
 import MinimumOrderDialogue from "./MinimumOrderDialogue";
-import SellerInformation from "src/app/main/zrootclient/components/SellerInformation";
-/**
- * Navigation data
- */
+import AdsSlider from "./AdsSlider";
 
 /**
- * The DemoSidebarRight component.
+ * DemoSidebarRight Component
+ * Completely redesigned with compelling, engaging, and professional UI
+ * Features minimum order dialogue and beautiful ads slider
  */
 function DemoSidebarRight(props) {
   const { productInfo } = props;
 
-
   return (
-    <div className="px-12 py-24 h-screen overflow-y-auto">
-      {/* min-h-6xl  */}
-      <div className="w-full p-4 flex flex-col">
-        {/* DELIVERY & RETURNS SECTION - COMMENTED OUT
-        <div className="bg-white p-4 rounded">
-          <h2 className="text-lg font-bold">DELIVERY & RETURNS</h2>
-          <div className="mt-2 space-y-4">
-            <label className="block text-gray-800">Choose your location</label>
-            <select className="w-full mt-1 p-2 border rounded">
-              <option>Lagos</option>
-            </select>
-            <select className="w-full mt-1 p-2 border rounded">
-              <option>LEKKI-AJAH (SANGOTEDO)</option>
-            </select>
+    <div
+      className="h-screen overflow-y-auto p-6"
+      style={{
+        background: "linear-gradient(180deg, #fafaf9 0%, #f3f4f6 100%)",
+      }}
+    >
+      <div className="w-full flex flex-col gap-8">
+        {/* Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="mb-4"
+        >
+          <div
+            className="p-4 rounded-xl flex items-center gap-3"
+            style={{
+              background: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
+              boxShadow: "0 4px 15px rgba(234, 88, 12, 0.3)",
+            }}
+          >
+            <TrendingUp sx={{ color: "white", fontSize: "1.75rem" }} />
+            <Typography
+              sx={{
+                fontSize: "1.25rem",
+                fontWeight: 700,
+                color: "white",
+              }}
+            >
+              Bulk Orders & Deals
+            </Typography>
           </div>
-          <div className="mt-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex gap-4">
-                    <img
-                      src="http://localhost:3000/assets/images/afslogo/afslogo.png"
-                      width={20}
-                      height={10}
-                    />
-                    <h3 className="font-bold">Pickup Station</h3>
-                  </div>
-                  <span
-                    href="#"
-                    className="text-orange-500 inline cursor-pointer"
-                  >
-                    Details
-                  </span>
-                </div>
-
-                <p className="text-gray-500 text-sm">Delivery Fees ₦ 1,080</p>
-                <p className="text-gray-500 text-sm">
-                  Arriving between 21 November & 22 November. Order within 3mins
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-4">
-              <div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex gap-4">
-                    <img
-                      src="http://localhost:3000/assets/images/afslogo/afslogo.png"
-                      width={20}
-                      height={10}
-                    />
-                    <h3 className="font-bold">Door Delivery</h3>
-                  </div>
-                  <span
-                    href="#"
-                    className="text-orange-500 inline cursor-pointer"
-                  >
-                    Details
-                  </span>
-                </div>
-
-                <p className="text-gray-500 text-sm">Delivery Fees ₦ 1,790</p>
-                <p className="text-gray-500 text-sm">
-                  Ready for delivery between 21 November & 22 November when you
-                  order within next 3mins
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-4">
-              <div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex gap-4">
-                    <img
-                      src="http://localhost:3000/assets/images/afslogo/afslogo.png"
-                      width={20}
-                      height={10}
-                    />
-                    <h3 className="font-bold">Return Policy</h3>
-                  </div>
-                  <span
-                    href="#"
-                    className="text-orange-500 inline cursor-pointer"
-                  >
-                    Details
-                  </span>
-                </div>
-
-                <p className="text-gray-500 text-sm">
-                  Free return within 7 days for ALL eligible items and items in
-                  food cart
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
-        END DELIVERY & RETURNS SECTION */}
+        </motion.div>
 
         {/* MinimumOrderDialogue Component */}
-        <div className="mb-8">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.2, duration: 0.5 }}
+        >
           <MinimumOrderDialogue productData={productInfo} />
-        </div>
+        </motion.div>
 
-        {/* SELLER INFORMATION Section */}
-        <SellerInformation
-          sellerName="Apple Authorized Reseller"
-          sellerDescription="Official Apple partner since 2018"
-          sellerScore={94}
-          followers={2500}
-          products={1200}
-          shippingSpeed={{ label: "Excellent", value: 95, color: "green" }}
-          qualityScore={{ label: "Excellent", value: 98, color: "green" }}
-          customerRating={{ label: "Good", value: 88, color: "orange" }}
-          responseTime={{ label: "Fast", value: 92, color: "blue" }}
-          storePath={`/marketplace/merchant/${productInfo?.shop}/portal`}
-        />
+        {/* Divider with Icon */}
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.4, duration: 0.5 }}
+          className="flex items-center gap-4"
+        >
+          <Divider sx={{ flex: 1 }} />
+          <Campaign sx={{ color: "#ea580c", fontSize: "1.5rem" }} />
+          <Divider sx={{ flex: 1 }} />
+        </motion.div>
+
+        {/* Ads Section Header */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+          <div
+            className="p-4 rounded-xl flex items-center gap-3 mb-6"
+            style={{
+              background: "linear-gradient(135deg, #8b5cf6 0%, #6366f1 100%)",
+              boxShadow: "0 4px 15px rgba(139, 92, 246, 0.3)",
+            }}
+          >
+            <Campaign sx={{ color: "white", fontSize: "1.75rem" }} />
+            <Typography
+              sx={{
+                fontSize: "1.25rem",
+                fontWeight: 700,
+                color: "white",
+              }}
+            >
+              Special Promotions
+            </Typography>
+          </div>
+
+          {/* Ads Slider */}
+          <AdsSlider />
+        </motion.div>
+
+        {/* Trust Badge Section */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.5 }}
+          className="bg-white rounded-2xl shadow-lg p-6 border-2 border-gray-100"
+        >
+          <Typography
+            sx={{
+              fontSize: "0.875rem",
+              color: "#6b7280",
+              textAlign: "center",
+              lineHeight: 1.6,
+            }}
+          >
+            <span className="font-bold text-gray-900">Safe & Secure Shopping</span>
+            <br />
+            All transactions are encrypted and protected
+          </Typography>
+        </motion.div>
       </div>
     </div>
   );
