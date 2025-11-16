@@ -13,7 +13,7 @@ function DemoContent(props) {
   const {
     isLoading,
     isError,
-    products,
+    listings,
     totalItems,
     currentPage,
     itemsPerPage,
@@ -21,10 +21,11 @@ function DemoContent(props) {
     onItemsPerPageChange
   } = props;
 
-  // Fallback: if totalItems is not provided by backend, estimate based on products length
+  // Fallback: if totalItems is not provided by backend, estimate based on listings length
   // This assumes if we get less than itemsPerPage, we're on the last page
-  const estimatedTotal = totalItems > 0 ? totalItems : products?.length || 0;
+  const estimatedTotal = totalItems > 0 ? totalItems : listings?.length || 0;
 
+  console.log('DemoContent listings:', listings);
   // Show loading placeholder
   if (isLoading) {
     return <ContentLoadingPlaceholder />;
@@ -37,12 +38,12 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage message={"Error occurred while retriving products"} />
+        <ClienttErrorPage message={"Error occurred while retriving listings"} />
       </motion.div>
     );
   }
 
-  if (!products) {
+  if (!listings) {
     return (
       <motion.div
         initial={{ opacity: 0 }}
@@ -50,13 +51,12 @@ function DemoContent(props) {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <Typography color="text.secondary" variant="h5">
-          No products products
+          No listings listings
         </Typography>
       </motion.div>
     );
   }
 
-  
 
   return (
     <div
@@ -93,12 +93,12 @@ function DemoContent(props) {
 
         {/* Property Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8 bg-white/60 backdrop-blur-sm rounded-3xl shadow-lg mb-8">
-          {products?.map((property) => (
+          {listings?.map((property) => (
             <BookingCard
               key={property?.id || property?._id}
               id={property?.id || property?._id}
               slug={property?.slug}
-              images={property?.imageSrcs || []}
+              images={property?.listingImages || []}
               title={property?.title}
               address={property?.address}
               price={property?.price}

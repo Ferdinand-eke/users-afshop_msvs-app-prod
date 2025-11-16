@@ -44,6 +44,7 @@ function DemoContent(props) {
     return <ContentLoadingPlaceholder />;
   }
 
+
   // Error state
   if (isError) {
     return (
@@ -100,7 +101,7 @@ function DemoContent(props) {
           {/* Main Large Image */}
           <div className="col-span-4 md:col-span-2 row-span-2 relative group">
             <img
-              src={bookingData?.imageSrcs?.[0]?.url || "https://placehold.co/800x600"}
+              src={bookingData?.listingImages?.[0]?.url || "https://placehold.co/800x600"}
               alt="Main property"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               style={{ minHeight: "500px", maxHeight: "500px" }}
@@ -113,7 +114,7 @@ function DemoContent(props) {
                   fontWeight: 700,
                 }}
               >
-                View All {bookingData?.imageSrcs?.length || 0} Photos
+                View All {bookingData?.listingImages?.length || 0} Photos
               </Typography>
             </div>
           </div>
@@ -121,7 +122,7 @@ function DemoContent(props) {
           {/* Top Right Image */}
           <div className="col-span-2 md:col-span-1 relative group">
             <img
-              src={bookingData?.imageSrcs?.[1]?.url || "https://placehold.co/400x300"}
+              src={bookingData?.listingImages?.[1]?.url || "https://placehold.co/400x300"}
               alt="Property view 2"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               style={{ minHeight: "245px", maxHeight: "245px" }}
@@ -130,7 +131,7 @@ function DemoContent(props) {
 
           <div className="col-span-2 md:col-span-1 relative group">
             <img
-              src={bookingData?.imageSrcs?.[2]?.url || "https://placehold.co/400x300"}
+              src={bookingData?.listingImages?.[2]?.url || "https://placehold.co/400x300"}
               alt="Property view 3"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               style={{ minHeight: "245px", maxHeight: "245px" }}
@@ -140,7 +141,7 @@ function DemoContent(props) {
           {/* Bottom Right Images */}
           <div className="col-span-2 md:col-span-1 relative group">
             <img
-              src={bookingData?.imageSrcs?.[3]?.url || "https://placehold.co/400x300"}
+              src={bookingData?.listingImages?.[3]?.url || "https://placehold.co/400x300"}
               alt="Property view 4"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               style={{ minHeight: "245px", maxHeight: "245px" }}
@@ -149,12 +150,12 @@ function DemoContent(props) {
 
           <div className="col-span-2 md:col-span-1 relative group">
             <img
-              src={bookingData?.imageSrcs?.[4]?.url || "https://placehold.co/400x300"}
+              src={bookingData?.listingImages?.[4]?.url || "https://placehold.co/400x300"}
               alt="Property view 5"
               className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
               style={{ minHeight: "245px", maxHeight: "245px" }}
             />
-            {bookingData?.imageSrcs?.length > 5 && (
+            {bookingData?.listingImages?.length > 5 && (
               <div className="absolute inset-0 bg-black/60 flex items-center justify-center">
                 <Typography
                   sx={{
@@ -163,7 +164,7 @@ function DemoContent(props) {
                     fontWeight: 800,
                   }}
                 >
-                  +{bookingData.imageSrcs.length - 5} more
+                  +{bookingData.listingImages.length - 5} more
                 </Typography>
               </div>
             )}

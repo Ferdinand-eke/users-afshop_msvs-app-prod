@@ -16,6 +16,7 @@ import UserModernReversedSignUpPage from './UserModernReversedSignUpPage';
  */
 
 
+
 function RegisterUserPage() {
 	const mainThemeDark = useAppSelector(selectMainThemeDark);
 	

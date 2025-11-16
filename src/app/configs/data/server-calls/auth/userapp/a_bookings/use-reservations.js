@@ -17,6 +17,77 @@ import {
   getUserReservationsByRoomId,
 } from "app/configs/data/client/RepositoryClient";
 
+/**
+ * Handles NestJS and generic API errors and displays appropriate toast messages
+ *
+ * @param {Error} error - The error object from the API call
+ * @param {Object} options - Configuration options
+ * @param {boolean} options.logError - Whether to log the error to console (default: true)
+ * @param {string} options.fallbackMessage - Fallback message if no error message is found
+ * @param {Function} options.onErrorCallback - Optional callback to execute after error handling (e.g., rollback)
+ */
+const handleApiError = (error, options = {}) => {
+  const {
+    logError = true,
+    fallbackMessage = "An unexpected error occurred. Please try again.",
+    onErrorCallback = null
+  } = options;
+
+  // Log error for debugging
+  if (logError) {
+    console.error("API Error:", error);
+    console.error("Error Response:", error?.response?.data);
+  }
+
+  // Extract error data from response
+  const errorData = error?.response?.data;
+  const errorMessage = errorData?.message;
+
+  // Handle different error message formats
+  if (errorMessage) {
+    // Case 1: Array of error messages (NestJS validation errors)
+    if (Array.isArray(errorMessage)) {
+      errorMessage.forEach((msg) => {
+        toast.error(msg);
+      });
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    // Case 2: Single error message string
+    if (typeof errorMessage === "string") {
+      toast.error(errorMessage);
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+  }
+
+  // Case 3: Handle error object with nested message
+  if (errorData?.error) {
+    toast.error(`${errorData.error}: ${errorData.message || "Unknown error"}`);
+    if (onErrorCallback) onErrorCallback();
+    return;
+  }
+
+  // Case 4: Network or other errors
+  if (error?.message) {
+    // Don't show technical error messages to users, use fallback instead
+    if (error.message.includes("Network Error") || error.message.includes("timeout")) {
+      toast.error("Network error. Please check your connection and try again.");
+      if (onErrorCallback) onErrorCallback();
+      return;
+    }
+
+    toast.error(error.message);
+    if (onErrorCallback) onErrorCallback();
+    return;
+  }
+
+  // Case 5: Fallback for unknown errors
+  toast.error(fallbackMessage);
+  if (onErrorCallback) onErrorCallback();
+};
+
 /***
  * ==========================================================================
  * BY AUTHENTICATED USERS
@@ -41,18 +112,13 @@ export function useCreateReservation() {
           navigate(
             `/bookings/reservation/review/${data?.data?.createdReservation?.id}`
           );
-        } 
+        }
       },
-    },
-    {
       onError: (error, rollback) => {
-        const {
-          response: { data },
-        } = error ?? {};
-        Array.isArray(data?.message)
-          ? data?.message?.map((m) => toast.error(m))
-          : toast.error(data?.message);
-        rollback();
+        handleApiError(error, {
+          fallbackMessage: "Failed to create reservation. Please try again.",
+          onErrorCallback: rollback
+        });
       },
     }
   );
@@ -78,16 +144,11 @@ export function useCreateReservationOnRoom() {
           );
         }
       },
-    },
-    {
       onError: (error, rollback) => {
-        const {
-          response: { data },
-        } = error ?? {};
-        Array.isArray(data?.message)
-          ? data?.message?.map((m) => toast.error(m))
-          : toast.error(data?.message);
-        rollback();
+        handleApiError(error, {
+          fallbackMessage: "Failed to create room reservation. Please try again.",
+          onErrorCallback: rollback
+        });
       },
     }
   );
@@ -117,7 +178,6 @@ export function useGetUserTripsInView() {
 
 /**** 5) Update new reservation on payment */ //(Done => Msvs)
 export function useReservationPaidUpdateMutation() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   return useMutation(
@@ -135,12 +195,9 @@ export function useReservationPaidUpdateMutation() {
         }
       },
       onError: (error) => {
-        const {
-          response: { data },
-        } = error ?? {};
-        Array.isArray(data?.message)
-          ? data?.message?.map((m) => toast.error(m))
-          : toast.error(data?.message);
+        handleApiError(error, {
+          fallbackMessage: "Failed to update reservation payment. Please try again."
+        });
       },
     }
   );
@@ -176,7 +233,6 @@ export function useGetReservationsOnRoom(params) {
 
 /**** 7) cancel reservation within 48hrs-window before check-in */
 export function useCancelUserReservation() {
-  const queryClient = useQueryClient();
   const navigate = useNavigate();
 
   return useMutation(
@@ -202,12 +258,9 @@ export function useCancelUserReservation() {
         }
       },
       onError: (error) => {
-        const {
-          response: { data },
-        } = error ?? {};
-        Array.isArray(data?.message)
-          ? data?.message?.map((m) => toast.error(m))
-          : toast.error(data?.message);
+        handleApiError(error, {
+          fallbackMessage: "Failed to cancel reservation. Please try again or contact support."
+        });
       },
     }
   );
@@ -221,7 +274,6 @@ export function useUserCancelledTrips() {
 /**** 9)Request Refund For cancelled reservation */
 export function useRequestRefundForUserCancelledReservation() {
   const queryClient = useQueryClient();
-  const navigate = useNavigate();
 
   return useMutation(
     (formData) => {
@@ -248,12 +300,9 @@ export function useRequestRefundForUserCancelledReservation() {
         }
       },
       onError: (error) => {
-        const {
-          response: { data },
-        } = error ?? {};
-        Array.isArray(data?.message)
-          ? data?.message?.map((m) => toast.error(m))
-          : toast.error(data?.message);
+        handleApiError(error, {
+          fallbackMessage: "Failed to request refund. Please try again or contact support."
+        });
       },
     }
   );

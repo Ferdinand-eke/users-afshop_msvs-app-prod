@@ -6,6 +6,7 @@ import useGetAllFoodMarts from "app/configs/data/server-calls/auth/userapp/a_foo
 import FoodMartCard from "./rcshubcomponents/FoodMartCard";
 
 function RestaurantAndSpotsHub() {
+  
   const { data: AllFoodMarts, isLoading, isError } = useGetAllFoodMarts();
 
   // Filter for first 12 promoted restaurants

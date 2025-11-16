@@ -3,9 +3,11 @@ import Select from "react-select";
 import useCountries from "../../hooks/useCountries";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
 
+
 const CountrySelect = ({ value, onChange }) => {
   // const { getAll } = useCountries();
   const { data: countries } = useSellerCountries();
+  console.log("countries", countries);
   return (
     <div>
       <label style={{ fontSize: "12px", fontWeight: "800" }}>

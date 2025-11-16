@@ -135,7 +135,7 @@ function BookingsPageWithSidebarsContentScrollComponent() {
       
       content={
         <DemoContent
-          products={bookingprops?.data?.bookingLists}
+          listings={bookingprops?.data?.bookingLists}
           isLoading={isLoading}
           isError={isError}
           totalItems={bookingprops?.data?.pagination?.total || 0}

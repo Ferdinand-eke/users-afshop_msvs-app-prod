@@ -73,6 +73,7 @@ function BookingCard({
 
     return stars;
   };
+  
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm flex flex-col h-full">

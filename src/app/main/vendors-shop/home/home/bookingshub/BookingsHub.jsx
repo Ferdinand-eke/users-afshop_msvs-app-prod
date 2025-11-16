@@ -37,7 +37,7 @@ function BookingsHub() {
                        key={property?.id || property?._id}
               id={property?.id || property?._id}
               slug={property?.slug}
-              images={property?.imageSrcs || []}
+              images={property?.listingImages || []}
               title={property?.title}
               address={property?.address}
               price={property?.price}

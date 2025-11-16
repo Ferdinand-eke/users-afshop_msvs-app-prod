@@ -7,6 +7,7 @@ import { formatCurrency } from 'src/app/main/vendors-shop/PosUtils';
  * RoomDetailsModal - Minimal modal to view room images and details
  * Images on the right, scrollable details on the left
  */
+
 const RoomDetailsModal = ({ open, onClose, room, onViewAvailableDates }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 

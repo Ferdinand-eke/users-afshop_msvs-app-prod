@@ -5,6 +5,7 @@ import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import RoomAvailableDatesPage from "./RoomAvailableDatesPage";
 import RoomDetailsModal from "./RoomDetailsModal";
 
+
 export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
     const [open, setOpen] = React.useState(false);
     const [roomId, setRoomId] = React.useState('');
@@ -211,6 +212,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
       >
         {AvailableDates}
       </Drawer>
+
 
       {/* Room Details Modal */}
       <RoomDetailsModal

@@ -8,7 +8,7 @@ import Paper from "@mui/material/Paper";
 import Box from "@mui/material/Box";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useStoreUserPreSignUpFromOtp } from "app/configs/data/server-calls/useUsers/useUsersQuery";
 import {
   getMerchantSignUpToken,
@@ -16,8 +16,8 @@ import {
   removeResendMerchantSignUpOtp,
   getResendMerchantSignUpOtp,
 } from "app/configs/utils/authUtils";
-import { Alert, CircularProgress } from "@mui/material";
-import { CheckCircleOutline, Email } from "@mui/icons-material";
+import { Alert, CircularProgress, LinearProgress } from "@mui/material";
+import { Email, AccessTime } from "@mui/icons-material";
 
 /**
  * Form Validation Schema
@@ -32,6 +32,93 @@ const defaultValues = {
 };
 
 /**
+ * Countdown Timer Component
+ */
+function CountdownTimer({ initialMinutes = 10, onExpire }) {
+  const [timeLeft, setTimeLeft] = useState(initialMinutes * 60); // Convert to seconds
+  const [isExpired, setIsExpired] = useState(false);
+
+  useEffect(() => {
+    if (timeLeft <= 0) {
+      setIsExpired(true);
+      if (onExpire) onExpire();
+      return;
+    }
+
+    const timer = setInterval(() => {
+      setTimeLeft((prev) => {
+        if (prev <= 1) {
+          clearInterval(timer);
+          return 0;
+        }
+        return prev - 1;
+      });
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, [timeLeft, onExpire]);
+
+  const minutes = Math.floor(timeLeft / 60);
+  const seconds = timeLeft % 60;
+  const progress = (timeLeft / (initialMinutes * 60)) * 100;
+
+  // Determine color based on time remaining
+  const getColor = () => {
+    if (timeLeft <= 60) return "#dc2626"; // Red for last minute
+    if (timeLeft <= 180) return "#f59e0b"; // Amber for last 3 minutes
+    return "#22c55e"; // Green otherwise
+  };
+
+  return (
+    <Box className="w-full">
+      <div className="flex items-center justify-between mb-8">
+        <div className="flex items-center gap-8">
+          <AccessTime sx={{ fontSize: "1.25rem", color: getColor() }} />
+          <Typography
+            variant="body2"
+            className="font-semibold"
+            style={{ color: getColor() }}
+          >
+            {isExpired ? "Code Expired" : "Time Remaining"}
+          </Typography>
+        </div>
+        <Typography
+          variant="body1"
+          className="font-mono font-bold"
+          style={{ color: getColor() }}
+        >
+          {isExpired
+            ? "00:00"
+            : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`}
+        </Typography>
+      </div>
+      <LinearProgress
+        variant="determinate"
+        value={progress}
+        sx={{
+          height: 8,
+          borderRadius: 4,
+          backgroundColor: "rgba(0, 0, 0, 0.1)",
+          "& .MuiLinearProgress-bar": {
+            backgroundColor: getColor(),
+            borderRadius: 4,
+            transition: "background-color 0.3s ease",
+          },
+        }}
+      />
+      {isExpired && (
+        <Typography
+          variant="caption"
+          className="text-red-600 mt-8 block text-center"
+        >
+          Your verification code has expired. Please request a new one.
+        </Typography>
+      )}
+    </Box>
+  );
+}
+
+/**
  * UserModernReversedActivatePage Component
  * Professional OTP activation page with orange gradient branding
  */
@@ -39,7 +126,9 @@ function UserModernReversedActivatePage({ resendOTP }) {
   const remoteResponseToken = getMerchantSignUpToken();
   const avtivateMerchant = useStoreUserPreSignUpFromOtp();
   const clientSignUpData = getResendMerchantSignUpOtp();
+  const [isCodeExpired, setIsCodeExpired] = useState(false);
 
+  console.log("remote__User", remoteResponseToken)
   const { control, formState, handleSubmit, reset, getValues, setValue } =
     useForm({
       mode: "onChange",
@@ -50,8 +139,19 @@ function UserModernReversedActivatePage({ resendOTP }) {
   const { isValid, dirtyFields, errors } = formState;
 
   function onSubmit() {
+    if (isCodeExpired) {
+      return;
+    }
     setValue("preuser", remoteResponseToken);
     avtivateMerchant.mutate(getValues());
+  }
+
+  function handleResendOTP() {
+    setIsCodeExpired(false);
+    reset(defaultValues);
+    if (resendOTP) {
+      resendOTP();
+    }
   }
 
   useEffect(() => {
@@ -63,91 +163,16 @@ function UserModernReversedActivatePage({ resendOTP }) {
 
   return (
     <div className="flex min-w-0 flex-auto flex-col items-center sm:justify-center md:p-32">
+       
+
       <Paper className="flex min-h-full w-full overflow-hidden rounded-0 sm:min-h-auto sm:w-auto sm:rounded-2xl sm:shadow md:w-full md:max-w-6xl">
-        {/* Right Side - Illustration */}
-        <Box
-          className="relative hidden h-full flex-auto items-center justify-center overflow-hidden p-64 md:flex lg:px-112"
-          style={{
-            background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
-          }}
-        >
-          {/* Decorative SVG Background */}
-          <svg
-            className="pointer-events-none absolute inset-0"
-            viewBox="0 0 960 540"
-            width="100%"
-            height="100%"
-            preserveAspectRatio="xMidYMax slice"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <g className="opacity-20" fill="none" stroke="white" strokeWidth="100">
-              <circle r="234" cx="196" cy="23" />
-              <circle r="234" cx="790" cy="491" />
-            </g>
-          </svg>
-          <Box
-            component="svg"
-            className="absolute -right-64 -top-64 opacity-20"
-            viewBox="0 0 220 192"
-            width="220px"
-            height="192px"
-            fill="none"
-          >
-            <defs>
-              <pattern
-                id="activate-pattern"
-                x="0"
-                y="0"
-                width="20"
-                height="20"
-                patternUnits="userSpaceOnUse"
-              >
-                <rect x="0" y="0" width="4" height="4" fill="white" />
-              </pattern>
-            </defs>
-            <rect width="220" height="192" fill="url(#activate-pattern)" />
-          </Box>
+        {/* Left Side - Illustration */}
+       
 
-          <div className="relative z-10 w-full max-w-2xl">
-            <div className="text-7xl font-bold leading-none text-white">
-              <div>Almost</div>
-              <div>There!</div>
-            </div>
-            <div className="mt-24 text-lg leading-6 tracking-tight text-white/90">
-              We've sent a verification code to your email. Please check your inbox and enter the code below to activate your account.
-            </div>
-
-            {/* Visual Email Illustration */}
-            <div className="mt-32 flex items-center justify-center">
-              <div
-                className="relative p-32 rounded-2xl"
-                style={{
-                  background: "rgba(255, 255, 255, 0.1)",
-                  backdropFilter: "blur(10px)",
-                }}
-              >
-                <Email sx={{ fontSize: "8rem", color: "white" }} />
-                <div
-                  className="absolute -top-8 -right-8 w-64 h-64 rounded-full flex items-center justify-center"
-                  style={{
-                    background: "rgba(34, 197, 94, 0.9)",
-                  }}
-                >
-                  <CheckCircleOutline sx={{ fontSize: "2rem", color: "white" }} />
-                </div>
-              </div>
-            </div>
-
-            <div className="mt-32">
-              <Typography className="text-white/80 text-sm text-center">
-                Can't find the email? Check your spam folder or request a new code.
-              </Typography>
-            </div>
-          </div>
-        </Box>
-
-        {/* Left Side - Form */}
+        {/* Right Side - Form */}
         <div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
+
+         
           <div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
             {/* Logo with Orange Gradient Background */}
             <div
@@ -184,22 +209,38 @@ function UserModernReversedActivatePage({ resendOTP }) {
               </Typography>
             </div>
 
+            {/* Countdown Timer */}
+            <div
+              className="mt-32 p-20 rounded-xl border-2"
+              style={{
+                borderColor: isCodeExpired ? "#fecaca" : "#fed7aa",
+                backgroundColor: isCodeExpired
+                  ? "rgba(254, 202, 202, 0.1)"
+                  : "rgba(254, 215, 170, 0.1)",
+              }}
+            >
+              <CountdownTimer
+                initialMinutes={10}
+                onExpire={() => setIsCodeExpired(true)}
+              />
+            </div>
+
             {/* Info Box */}
             <div
-              className="mt-32 p-16 rounded-xl border-2"
+              className="mt-24 p-16 rounded-xl border-2"
               style={{
-                borderColor: "#fed7aa",
-                backgroundColor: "rgba(254, 215, 170, 0.1)",
+                borderColor: "#e0e7ff",
+                backgroundColor: "rgba(224, 231, 255, 0.1)",
               }}
             >
               <div className="flex items-start gap-12">
-                <Email sx={{ color: "#ea580c", fontSize: "1.5rem", mt: 0.5 }} />
+                <Email sx={{ color: "#6366f1", fontSize: "1.5rem", mt: 0.5 }} />
                 <div>
                   <Typography variant="body2" className="font-semibold text-gray-900 mb-4">
                     Check Your Inbox
                   </Typography>
                   <Typography variant="caption" className="text-gray-700 leading-relaxed block">
-                    We've sent a verification code to your email address. The code will expire in 10 minutes.
+                    The verification code will expire after 10 minutes for security purposes.
                   </Typography>
                 </div>
               </div>
@@ -238,6 +279,23 @@ function UserModernReversedActivatePage({ resendOTP }) {
               </Alert>
             )}
 
+            {isCodeExpired && (
+              <Alert
+                severity="warning"
+                className="mt-24"
+                sx={{
+                  borderRadius: "12px",
+                  backgroundColor: "rgba(245, 158, 11, 0.1)",
+                  color: "#92400e",
+                  "& .MuiAlert-icon": {
+                    color: "#f59e0b",
+                  },
+                }}
+              >
+                Your verification code has expired. Please request a new one below.
+              </Alert>
+            )}
+
             <form
               name="registerForm"
               noValidate
@@ -253,13 +311,14 @@ function UserModernReversedActivatePage({ resendOTP }) {
                     className="mb-24"
                     label="Verification Code"
                     type="text"
-                    placeholder="Enter your verification code"
+                    placeholder="Enter code"
                     error={!!errors.otp}
                     helperText={errors?.otp?.message}
                     variant="outlined"
                     required
                     fullWidth
                     autoFocus
+                    disabled={isCodeExpired}
                     inputProps={{
                       style: {
                         fontSize: "1.25rem",
@@ -267,6 +326,7 @@ function UserModernReversedActivatePage({ resendOTP }) {
                         textAlign: "center",
                         fontWeight: "600",
                       },
+                      maxLength: 6,
                     }}
                     sx={{
                       "& .MuiOutlinedInput-root": {
@@ -291,7 +351,10 @@ function UserModernReversedActivatePage({ resendOTP }) {
                 className="w-full mt-16"
                 aria-label="Verify"
                 disabled={
-                  _.isEmpty(dirtyFields) || !isValid || avtivateMerchant.isLoading
+                  _.isEmpty(dirtyFields) ||
+                  !isValid ||
+                  avtivateMerchant.isLoading ||
+                  isCodeExpired
                 }
                 type="submit"
                 size="large"
@@ -301,8 +364,10 @@ function UserModernReversedActivatePage({ resendOTP }) {
                   fontWeight: 600,
                   height: "48px",
                   fontSize: "1rem",
+                  textTransform: "none",
                   "&:hover": {
                     background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                    boxShadow: "0 4px 12px rgba(234, 88, 12, 0.4)",
                   },
                   "&:disabled": {
                     background: "#e5e7eb",
@@ -327,11 +392,12 @@ function UserModernReversedActivatePage({ resendOTP }) {
                 </Typography>
                 <Button
                   variant="text"
-                  onClick={resendOTP}
+                  onClick={handleResendOTP}
                   disabled={avtivateMerchant.isLoading}
                   sx={{
                     textTransform: "none",
                     fontWeight: 600,
+                    fontSize: "0.875rem",
                     background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                     WebkitBackgroundClip: "text",
                     WebkitTextFillColor: "transparent",

@@ -24,6 +24,7 @@ const SignUpConfig = {
 			}
 		}
 	},
+	
 	auth: authRoles.onlyGuest,
 	routes: [ 
 		{

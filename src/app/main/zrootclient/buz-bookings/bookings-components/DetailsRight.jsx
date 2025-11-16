@@ -4,6 +4,7 @@ import { ListingReservation } from "./reservationreview";
 import { ListingRooms } from "./property-rooms/ListingRooms";
 
 
+
 const DetailsRight = React.memo(
   ({
     listing,
@@ -72,6 +73,7 @@ const DetailsRight = React.memo(
             </>
           )}
         </Box>
+
 
        
       </div>

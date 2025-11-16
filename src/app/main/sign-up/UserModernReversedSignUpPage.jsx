@@ -15,6 +15,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
 import { useEffect, useMemo, useState } from "react";
 import CountrySelect from "src/app/apselects/countryselect";
+
 import {
   getLgaByStateId,
   getMarketsByLgaId,
@@ -88,8 +89,8 @@ const defaultValues = {
 const STEPS = {
   CATEGORY: 0,
   LOCATION: 1,
-  MOREINFO: 2,
-  DESCRIPTION: 3,
+  // MOREINFO: 2,
+  DESCRIPTION: 2,
 };
 
 /***Styled */
@@ -330,7 +331,7 @@ function UserModernReversedSignUpPage() {
               <TextField
                 {...field}
                 className="mb-24"
-                label="Business/Shop Name"
+                label="Name"
                 autoFocus
                 type="text"
                 error={!!errors.name}
@@ -497,83 +498,83 @@ function UserModernReversedSignUpPage() {
     );
   }
 
-  if (step == STEPS.MOREINFO) {
-    bodyContent = (
-      <div className="flex flex-col gap-8">
-        <Typography className="text-lg font-semibold text-gray-900 mb-4">
-          More Info : Provide us some more info to set you up nicely
-          <span className="block mt-2 text-xs text-gray-600">
-            Note: This address provided here will be used as your delivery and billing address
-          </span>
-        </Typography>
-        <>
-          <Controller
-            name="phone"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                className="mt-8 mb-16"
-                label="Phone Number"
-                id="phone"
-                variant="outlined"
-                placeholder="Enter your phone number"
-                fullWidth
-                error={!!errors.phone}
-                helperText={errors?.phone?.message}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover fieldset': {
-                      borderColor: '#ea580c',
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#ea580c',
-                    },
-                  },
-                  '& .MuiInputLabel-root.Mui-focused': {
-                    color: '#ea580c',
-                  },
-                }}
-              />
-            )}
-          />
+  // if (step == STEPS.MOREINFO) {
+  //   bodyContent = (
+  //     <div className="flex flex-col gap-8">
+  //       <Typography className="text-lg font-semibold text-gray-900 mb-4">
+  //         More Info : Provide us some more info to set you up nicely
+  //         <span className="block mt-2 text-xs text-gray-600">
+  //           Note: This address provided here will be used as your delivery and billing address
+  //         </span>
+  //       </Typography>
+  //       <>
+  //         <Controller
+  //           name="phone"
+  //           control={control}
+  //           render={({ field }) => (
+  //             <TextField
+  //               {...field}
+  //               className="mt-8 mb-16"
+  //               label="Phone Number"
+  //               id="phone"
+  //               variant="outlined"
+  //               placeholder="Enter your phone number"
+  //               fullWidth
+  //               error={!!errors.phone}
+  //               helperText={errors?.phone?.message}
+  //               sx={{
+  //                 '& .MuiOutlinedInput-root': {
+  //                   '&:hover fieldset': {
+  //                     borderColor: '#ea580c',
+  //                   },
+  //                   '&.Mui-focused fieldset': {
+  //                     borderColor: '#ea580c',
+  //                   },
+  //                 },
+  //                 '& .MuiInputLabel-root.Mui-focused': {
+  //                   color: '#ea580c',
+  //                 },
+  //               }}
+  //             />
+  //           )}
+  //         />
 
-          <Controller
-            name="address"
-            control={control}
-            render={({ field }) => (
-              <TextField
-                {...field}
-                className="mt-8 mb-16"
-                label="Business Address"
-                id="address"
-                variant="outlined"
-                placeholder="Enter your full business address"
-                fullWidth
-                multiline
-                rows={3}
-                error={!!errors.address}
-                helperText={errors?.address?.message}
-                sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover fieldset': {
-                      borderColor: '#ea580c',
-                    },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#ea580c',
-                    },
-                  },
-                  '& .MuiInputLabel-root.Mui-focused': {
-                    color: '#ea580c',
-                  },
-                }}
-              />
-            )}
-          />
-        </>
-      </div>
-    );
-  }
+  //         <Controller
+  //           name="address"
+  //           control={control}
+  //           render={({ field }) => (
+  //             <TextField
+  //               {...field}
+  //               className="mt-8 mb-16"
+  //               label="Business Address"
+  //               id="address"
+  //               variant="outlined"
+  //               placeholder="Enter your full business address"
+  //               fullWidth
+  //               multiline
+  //               rows={3}
+  //               error={!!errors.address}
+  //               helperText={errors?.address?.message}
+  //               sx={{
+  //                 '& .MuiOutlinedInput-root': {
+  //                   '&:hover fieldset': {
+  //                     borderColor: '#ea580c',
+  //                   },
+  //                   '&.Mui-focused fieldset': {
+  //                     borderColor: '#ea580c',
+  //                   },
+  //                 },
+  //                 '& .MuiInputLabel-root.Mui-focused': {
+  //                   color: '#ea580c',
+  //                 },
+  //               }}
+  //             />
+  //           )}
+  //         />
+  //       </>
+  //     </div>
+  //   );
+  // }
   if (step == STEPS.DESCRIPTION) {
     bodyContent = (
       <div className="flex flex-col gap-8">
@@ -766,7 +767,7 @@ function UserModernReversedSignUpPage() {
               {/* Progress Indicator */}
               <div className="mt-32 mb-24">
                 <div className="flex items-center justify-between relative">
-                  {['Email', 'Location', 'Details', 'Terms'].map((label, idx) => (
+                  {['Email', 'Location', 'Terms'].map((label, idx) => (
                     <div key={idx} className="flex flex-col items-center flex-1 relative">
                       <div
                         className={`w-32 h-32 rounded-full flex items-center justify-center z-10 ${
@@ -792,7 +793,7 @@ function UserModernReversedSignUpPage() {
                     <div
                       className="h-full transition-all duration-300"
                       style={{
-                        width: `${(step / 3) * 100}%`,
+                        width: `${(step / 2) * 100}%`,
                         background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                       }}
                     />
@@ -834,7 +835,7 @@ function UserModernReversedSignUpPage() {
                   >
                     Back
                   </Button>
-                  {step < 3 ? (
+                  {step < 2 ? (
                     <Button
                       variant="contained"
                       size="large"

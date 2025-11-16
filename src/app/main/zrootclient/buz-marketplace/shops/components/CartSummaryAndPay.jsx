@@ -88,6 +88,7 @@ const CartSummaryAndPay = ({
 }) => {
   const user = useAppSelector(selectUser);
 
+  
   // State for calculated delivery fee
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [deliveryDistance, setDeliveryDistance] = useState(0);

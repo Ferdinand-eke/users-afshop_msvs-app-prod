@@ -50,6 +50,7 @@ const parseDateString = (dateString) => {
 };
 
 function RoomAvailableDatesPage(props) {
+  
   const navigate = useNavigate();
   const currentUser = useAppSelector(selectUser);
   const { roomId, roomPrice, propertyId, merchantId, onClose } = props;
