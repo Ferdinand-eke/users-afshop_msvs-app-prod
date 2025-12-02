@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import {
   Drawer,
   IconButton,
@@ -25,42 +25,35 @@ import {
   DeleteOutline,
 } from "@mui/icons-material";
 import { motion, AnimatePresence } from "framer-motion";
+import {
+  useAddToCart,
+  useMyCart,
+  useUpdateCartItemQty,
+} from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
+import { selectUser } from "src/app/auth/user/store/userSlice";
+import { useAppSelector } from "app/store/hooks";
+import {
+  calculateCartTotalAmount,
+  formatCurrency,
+} from "src/app/main/vendors-shop/PosUtils";
+import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
+import { useNavigate } from "react-router";
 
 /**
  * UseMinimumOrder Slider Component
  * Completely redesigned with compelling, engaging, and professional UI
  * Modal slider for selecting product variations and quantities for bulk orders
  */
-function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
-  const [priceDetailsOpen, setPriceDetailsOpen] = useState(false);
 
-  // Sample cart items with different variations
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      color: "Pink",
-      colorImage: "https://placehold.co/60x60/ec4899/white",
-      price: "2,804.76",
-      quantity: 50,
-      productId: productData?.id || productData?._id || "default-product-id",
-    },
-    {
-      id: 2,
-      color: "Blue",
-      colorImage: "https://placehold.co/60x60/3b82f6/white",
-      price: "2,804.76",
-      quantity: 30,
-      productId: productData?.id || productData?._id || "default-product-id",
-    },
-    {
-      id: 3,
-      color: "Purple",
-      colorImage: "https://placehold.co/60x60/9333ea/white",
-      price: "2,804.76",
-      quantity: 20,
-      productId: productData?.id || productData?._id || "default-product-id",
-    },
-  ]);
+function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
+  const user = useAppSelector(selectUser);
+  const navigate = useNavigate();
+  const { data: userCartData } = useMyCart(user?.id);
+  const allCartItems = userCartData?.data?.cartSession?.cartProducts || [];
+
+  const [priceDetailsOpen, setPriceDetailsOpen] = useState(false);
+  const [selectedTier, setSelectedTier] = useState(null);
+  const [selectedQuantity, setSelectedQuantity] = useState(0);
 
   // Persist slider state in localStorage
   useEffect(() => {
@@ -71,84 +64,251 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
         productData?.id || productData?._id || ""
       );
     }
-  }, [open, productData]);
+  }, [open, productData, selectedTier?.id || selectedTier?._id]);
 
-  const handleClose = () => {
+  const handleClose = (event, reason) => {
+    // Prevent closing when clicking outside (backdrop click) or pressing escape
+    if (reason === "backdropClick" || reason === "escapeKeyDown") {
+      return;
+    }
     localStorage.setItem("minimumOrderSliderOpen", "false");
     onClose();
   };
 
-  const handleQuantityChange = (itemId, value) => {
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId
-          ? { ...item, quantity: Math.max(1, item.quantity + value) }
-          : item
-      )
-    );
+  // Explicit close handler for the close button (bypasses backdrop/escape prevention)
+  const handleCloseButtonClick = () => {
+    localStorage.setItem("minimumOrderSliderOpen", "false");
+    onClose();
   };
 
-  const handleQuantityInput = (itemId, inputValue) => {
-    const value = parseInt(inputValue) || 1;
-    setCartItems((prevItems) =>
-      prevItems.map((item) =>
-        item.id === itemId ? { ...item, quantity: Math.max(1, value) } : item
-      )
-    );
+  const { mutate: updateCartQty } = useUpdateCartItemQty();
+
+  const increaseCart = (itemId) => {
+    const formData = {
+      flag: "increase",
+      cartItemId: itemId,
+    };
+    return updateCartQty(formData);
   };
 
-  const handleRemoveItem = (itemId) => {
-    if (cartItems.length > 1) {
-      setCartItems((prevItems) => prevItems.filter((item) => item.id !== itemId));
+  const decreaseCart = (itemId) => {
+    const formData = {
+      flag: "decrease",
+      cartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
+
+  const removeItemInCart = (itemId) => {
+    const formData = {
+      flag: "delete",
+      cartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
+
+  // Handle tier selection
+  const handleTierSelect = (tier) => {
+    setSelectedTier(tier);
+    setSelectedQuantity(tier.minQuantity); // Set initial quantity to minimum
+  };
+
+  // Handle quantity change for selected tier
+  const handleSelectedQuantityChange = (delta) => {
+    if (!selectedTier) return;
+    const newQuantity = selectedQuantity + delta;
+    // Ensure quantity stays within tier's min and max
+    if (
+      newQuantity >= selectedTier.minQuantity &&
+      newQuantity <= selectedTier.maxQuantity
+    ) {
+      setSelectedQuantity(newQuantity);
     }
   };
 
-  // Calculate item subtotal
-  const calculateItemSubtotal = () => {
-    return cartItems.reduce((total, item) => {
-      const price = parseFloat(item.price.replace(/,/g, ""));
-      return total + price * item.quantity;
-    }, 0);
+  // Handle direct quantity input
+  const handleQuantityInputChange = (value) => {
+    if (!selectedTier) return;
+    const numValue = parseInt(value) || selectedTier.minQuantity;
+    // Clamp between min and max
+    const clampedValue = Math.max(
+      selectedTier.minQuantity,
+      Math.min(selectedTier.maxQuantity, numValue)
+    );
+    setSelectedQuantity(clampedValue);
   };
 
+  const { mutate: addToart, isLoading: addToCartLoading } = useAddToCart();
+
+  const onAddToUserCart = useCallback(() => {
+    if (!user?.email) {
+      navigate("/sign-in");
+      return;
+    }
+
+    // Validate that a tier is selected
+    if (!selectedTier) {
+      alert("Please select a pricing tier before adding to cart");
+      return;
+    }
+
+    // Validate that quantity is set
+    if (!selectedQuantity || selectedQuantity <= 0) {
+      alert("Please select a valid quantity");
+      return;
+    }
+
+    // Get the tier ID
+    const tierId = selectedTier?.id || selectedTier?._id;
+
+    // Validate that tier ID exists
+    if (!tierId) {
+      console.error("Selected tier is missing ID:", selectedTier);
+      alert("Invalid price tier selected. Please try again.");
+      return;
+    }
+
+    console.log("Selected Tier and Quantity", selectedTier, selectedQuantity);
+    console.log("Tier ID extracted:", tierId);
+
+    const formData = {
+      user: user?.id,
+      quantity: parseInt(selectedQuantity),
+      product: productData?.id,
+      seller: productData?.shop,
+      shopID: productData?.shop,
+      shopCountryOrigin: productData?.productCountry,
+      shopStateProvinceOrigin: productData?.productState,
+      shopLgaProvinceOrigin: productData?.productLga,
+      shopMarketId: productData?.market,
+      isBulkOrder: true,
+      bulkPriceTierId: tierId,
+    };
+
+    console.log("Adding bulk order to cart", formData);
+
+    // return
+
+    if (userCartData?.data?.cartSession?.cartProducts?.length === 0) {
+      if (userCartData?.data?.cartSession?.lgaId) {
+        addToart(formData);
+        // getCartWhenAuth()
+        return;
+      }
+    } else {
+      // const payloadData = getShoppingSession()
+
+      if (
+        userCartData?.data?.cartSession?.lgaId === productData?.productLga ||
+        !userCartData?.data?.cartSession?.lgaId
+      ) {
+        addToart(formData);
+        // getCartWhenAuth()
+        return;
+      } else {
+        alert("You must shop in one L.G.A/County at a time");
+        return;
+      }
+    }
+  }, [
+    productData?.id,
+    productData?.shop,
+    productData?.productCountry,
+    productData?.productState,
+    productData?.productLga,
+    productData?.market,
+    user,
+    user?.id,
+    user?.email,
+    selectedTier,
+    selectedQuantity,
+    userCartData?.data?.cartSession?.cartProducts,
+    userCartData?.data?.cartSession?.cartProducts?.length,
+    userCartData?.data?.cartSession?.lgaId,
+    addToart,
+    navigate,
+  ]);
+
+  let checkItemsArrayForTotal = [];
+  allCartItems?.forEach((element) => {
+    // Check if item is bulk order and use appropriate price
+    let itemPrice = element?.product?.price;
+
+    if (element?.isBulkOrder && element?.bulkPriceTierId) {
+      // Find the matching price tier from product's priceTiers array
+      const matchingTier = element?.product?.priceTiers?.find(
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+      );
+
+      if (matchingTier) {
+        itemPrice = matchingTier?.price;
+      }
+    }
+
+    checkItemsArrayForTotal?.push({
+      quantity: element?.quantity,
+      price: itemPrice,
+    });
+  });
+
+  const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
+  const shippingTotal = 0; // Placeholder delivery cost
+  const vat = 0; // Placeholder VAT
+  const grandTotal =
+    parseInt(totalAmount) + parseInt(shippingTotal) + parseInt(vat);
+
+  // Calculate item subtotal
+  // const calculateItemSubtotal = () => {
+  //   return cartItems.reduce((total, item) => {
+  //     const price = parseFloat(item.price.replace(/,/g, ""));
+  //     return total + price * item.quantity;
+  //   }, 0);
+  // };
+
   // Calculate total variations and items
+  // tier.minQuantity
   const getTotalVariationsAndItems = () => {
-    const totalVariations = cartItems.length;
-    const totalItems = cartItems.reduce((sum, item) => sum + item.quantity, 0);
+    const totalVariations = allCartItems.length;
+    const totalItems = allCartItems.reduce(
+      (sum, item) => sum + item.quantity,
+      0
+    );
     return { totalVariations, totalItems };
   };
 
   // Placeholder shipping cost
-  const shippingTotal = 62328;
 
   // Calculate grand total
-  const calculateGrandTotal = () => {
-    return calculateItemSubtotal() + shippingTotal;
-  };
+  // const calculateGrandTotal = () => {
+  //   return calculateItemSubtotal() + shippingTotal;
+  // };
 
-  const calculatePerSetPrice = () => {
-    const { totalItems } = getTotalVariationsAndItems();
-    if (totalItems === 0) return 0;
-    return calculateGrandTotal() / totalItems;
-  };
+  // const calculatePerSetPrice = () => {
+  //   const { totalItems } = getTotalVariationsAndItems();
+  //   if (totalItems === 0) return 0;
+  //   return calculateGrandTotal() / totalItems;
+  // };
 
   // Determine which tier applies
   const getCurrentTier = () => {
     const { totalItems } = getTotalVariationsAndItems();
     return pricingTiers?.find((tier) => {
-      const range = tier.range.replace(/[≥\s]/g, "");
+      const range = `${tier.minQuantity} - ${tier.maxQuantity}`;
       if (range.includes("-")) {
         const [min, max] = range.split("-").map((n) => parseInt(n));
+        // const min = tier.maxQuantity
+        // const max = tier.maxQuantity
         return totalItems >= min && totalItems <= max;
       } else {
-        const min = parseInt(range);
+        const min = parseInt(tier.minQuantity);
         return totalItems >= min;
       }
     });
   };
 
   const currentTier = getCurrentTier();
-  const { totalItems } = getTotalVariationsAndItems();
+  // console.log("current TIER", currentTier)
+  // const { totalItems } = getTotalVariationsAndItems();
 
   return (
     <Drawer
@@ -169,22 +329,33 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
           initial={{ y: -20, opacity: 0 }}
           animate={{ y: 0, opacity: 1 }}
           transition={{ duration: 0.3 }}
-          className="bg-gradient-to-r from-orange-600 to-red-600 px-6 py-5 flex items-center justify-between shadow-lg sticky top-0 z-10"
+          className="flex items-center justify-between sticky top-0 z-10"
+          style={{
+            background: "linear-gradient(to right, #ea580c, #dc2626)",
+            padding: "20px 24px",
+            boxShadow:
+              "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+          }}
         >
           <div className="flex items-center gap-3">
             <ShoppingCart sx={{ color: "white", fontSize: "1.75rem" }} />
             <div>
               <Typography
                 variant="h6"
-                className="font-bold text-white"
-                sx={{ fontSize: "1.25rem" }}
+                sx={{
+                  fontSize: "1.25rem",
+                  fontWeight: 700,
+                  color: "white",
+                }}
               >
                 Bulk Order Selection
               </Typography>
               <Typography
                 variant="caption"
-                className="text-orange-100"
-                sx={{ fontSize: "0.875rem" }}
+                sx={{
+                  fontSize: "0.875rem",
+                  color: "rgba(255, 237, 213, 1)",
+                }}
               >
                 Select variations and quantity
               </Typography>
@@ -270,122 +441,297 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                 Bulk Pricing Tiers
               </Typography>
             </div>
-            <div className="flex gap-3 overflow-x-auto pb-2">
+            <div className="space-y-4">
               {pricingTiers?.map((tier, index) => {
                 const isCurrent = currentTier?.id === tier.id;
+                const isSelected = selectedTier?.id === tier.id;
+                const savingsPercent = Math.round(
+                  ((productData?.price - tier.price) / productData?.price) * 100
+                );
+
                 return (
                   <motion.div
                     key={index}
-                    initial={{ opacity: 0, x: -20 }}
-                    animate={{ opacity: 1, x: 0 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
                     transition={{ delay: 0.1 * index }}
-                    whileHover={{ scale: 1.05, y: -5 }}
-                    className={`text-center py-4 px-5 rounded-xl border-2 flex-shrink-0 min-w-[160px] transition-all ${
-                      isCurrent
-                        ? "bg-gradient-to-br from-orange-50 to-red-50 border-orange-500 shadow-lg"
-                        : "bg-white border-gray-200 hover:border-orange-300"
+                    className={`rounded-xl border-2 overflow-hidden transition-all ${
+                      isSelected
+                        ? "border-orange-600 shadow-xl"
+                        : isCurrent
+                          ? "border-orange-400 shadow-lg"
+                          : "border-gray-200 hover:border-orange-300"
                     }`}
+                    style={{
+                      background: isSelected
+                        ? "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)"
+                        : isCurrent
+                          ? "linear-gradient(135deg, #fef3f2 0%, #fee2e2 100%)"
+                          : "white",
+                    }}
                   >
-                    {isCurrent && (
-                      <Chip
-                        label="ACTIVE"
-                        size="small"
-                        sx={{
-                          backgroundColor: "#10b981",
-                          color: "white",
-                          fontWeight: 800,
-                          fontSize: "0.65rem",
-                          height: "20px",
-                          marginBottom: "8px",
-                        }}
-                      />
-                    )}
-                    <Typography
-                      className={`text-xs mb-2 leading-tight font-semibold ${
-                        isCurrent ? "text-orange-700" : "text-gray-600"
-                      }`}
+                    {/* Tier Header */}
+                    <div
+                      className="p-5 cursor-pointer"
+                      onClick={() => handleTierSelect(tier)}
                     >
-                      {tier.range} {tier.unit}
-                    </Typography>
-                    <Typography
-                      className={`font-black text-xl ${
-                        isCurrent ? "text-orange-600" : "text-gray-900"
-                      }`}
-                    >
-                      ₦{tier.price}
-                    </Typography>
-                    {tier.savings && (
-                      <Chip
-                        label={`Save ${tier.savings}`}
-                        size="small"
-                        sx={{
-                          marginTop: "8px",
-                          backgroundColor: isCurrent ? "#10b981" : "#f3f4f6",
-                          color: isCurrent ? "white" : "#065f46",
-                          fontWeight: 700,
-                          fontSize: "0.7rem",
-                        }}
-                      />
-                    )}
+                      <div className="flex items-center justify-between mb-3">
+                        <div className="flex items-center gap-2">
+                          {isCurrent && (
+                            <Chip
+                              label="ACTIVE"
+                              size="small"
+                              sx={{
+                                backgroundColor: "#10b981",
+                                color: "white",
+                                fontWeight: 800,
+                                fontSize: "1rem",
+                                height: "22px",
+                              }}
+                            />
+                          )}
+                          {isSelected && (
+                            <Chip
+                              label="SELECTED"
+                              size="small"
+                              sx={{
+                                backgroundColor: "#ea580c",
+                                color: "white",
+                                fontWeight: 800,
+                                fontSize: "1rem",
+                                height: "22px",
+                              }}
+                            />
+                          )}
+                        </div>
+                        <Chip
+                          label={`Save ${savingsPercent}%`}
+                          size="small"
+                          sx={{
+                            backgroundColor:
+                              isSelected || isCurrent ? "#10b981" : "#f3f4f6",
+                            color:
+                              isSelected || isCurrent ? "white" : "#065f46",
+                            fontWeight: 700,
+                            fontSize: "0.95rem",
+                          }}
+                        />
+                      </div>
+
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <Typography
+                            sx={{
+                              fontSize: "0.975rem",
+                              color:
+                                isSelected || isCurrent ? "#c2410c" : "#6b7280",
+                              fontWeight: 600,
+                              marginBottom: "4px",
+                            }}
+                          >
+                            {`${tier.minQuantity} - ${tier.maxQuantity}`}{" "}
+                            {productData?.unitweight?.unitname}
+                          </Typography>
+                          <Typography
+                            sx={{
+                              fontSize: "1.75rem",
+                              fontWeight: 900,
+                              color:
+                                isSelected || isCurrent ? "#ea580c" : "#111827",
+                            }}
+                          >
+                            ₦{formatCurrency(tier.price)}
+                          </Typography>
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              color: "#6b7280",
+                              fontSize: "0.95rem",
+                            }}
+                          >
+                            per {productData?.unitweight?.unitname}
+                          </Typography>
+                        </div>
+
+                        {!isSelected && (
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleTierSelect(tier);
+                            }}
+                            sx={{
+                              borderColor: "#ea580c",
+                              color: "#ea580c",
+                              fontWeight: 700,
+                              fontSize: "1rem",
+                              textTransform: "none",
+                              "&:hover": {
+                                borderColor: "#c2410c",
+                                backgroundColor: "#fff7ed",
+                              },
+                            }}
+                          >
+                            Select
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Quantity Controls - Show when selected */}
+                    <Collapse in={isSelected}>
+                      <Divider />
+                      <div className="p-5 bg-white">
+                        <Typography
+                          sx={{
+                            fontSize: "0.975rem",
+                            fontWeight: 700,
+                            color: "#111827",
+                            marginBottom: "12px",
+                          }}
+                        >
+                          Select Quantity
+                        </Typography>
+
+                        <div className="flex items-center gap-3 mb-4">
+                          <motion.div whileTap={{ scale: 0.9 }}>
+                            <IconButton
+                              onClick={() => handleSelectedQuantityChange(-1)}
+                              disabled={selectedQuantity <= tier.minQuantity}
+                              sx={{
+                                backgroundColor: "#f3f4f6",
+                                "&:hover": {
+                                  backgroundColor: "#fee2e2",
+                                  color: "#dc2626",
+                                },
+                                "&:disabled": {
+                                  backgroundColor: "#f9fafb",
+                                  opacity: 0.5,
+                                },
+                              }}
+                            >
+                              <Remove />
+                            </IconButton>
+                          </motion.div>
+
+                          <TextField
+                            value={selectedQuantity}
+                            onChange={(e) =>
+                              handleQuantityInputChange(e.target.value)
+                            }
+                            size="small"
+                            sx={{
+                              flex: 1,
+                              "& .MuiOutlinedInput-root": {
+                                backgroundColor: "#f9fafb",
+                                fontWeight: 900,
+                                fontSize: "1.25rem",
+                                "& input": {
+                                  textAlign: "center",
+                                  color: "#111827",
+                                },
+                              },
+                            }}
+                          />
+
+                          <motion.div whileTap={{ scale: 0.9 }}>
+                            <IconButton
+                              onClick={() => handleSelectedQuantityChange(1)}
+                              disabled={selectedQuantity >= tier.maxQuantity}
+                              sx={{
+                                backgroundColor: "#f3f4f6",
+                                "&:hover": {
+                                  backgroundColor: "#dcfce7",
+                                  color: "#16a34a",
+                                },
+                                "&:disabled": {
+                                  backgroundColor: "#f9fafb",
+                                  opacity: 0.5,
+                                },
+                              }}
+                            >
+                              <Add />
+                            </IconButton>
+                          </motion.div>
+                        </div>
+
+                        <Typography
+                          variant="caption"
+                          sx={{
+                            display: "block",
+                            textAlign: "center",
+                            color: "#6b7280",
+                            marginBottom: "16px",
+                          }}
+                        >
+                          Min: {tier.minQuantity} • Max: {tier.maxQuantity}
+                        </Typography>
+
+                        {/* Subtotal Display */}
+                        <div className="bg-gradient-to-r from-orange-50 to-red-50 rounded-lg p-3 mb-3">
+                          <div className="flex items-center justify-between">
+                            <Typography
+                              sx={{
+                                fontSize: "0.975rem",
+                                fontWeight: 600,
+                                color: "#6b7280",
+                              }}
+                            >
+                              Subtotal:
+                            </Typography>
+                            <Typography
+                              sx={{
+                                fontSize: "1.25rem",
+                                fontWeight: 900,
+                                color: "#ea580c",
+                              }}
+                            >
+                              ₦
+                              {formatCurrency(
+                                tier.price * selectedQuantity
+                              ).toLocaleString()}
+                            </Typography>
+                          </div>
+                        </div>
+
+                        {/* Add to Cart Button */}
+                        <motion.div
+                          whileHover={{ scale: 1.02 }}
+                          whileTap={{ scale: 0.98 }}
+                        >
+                          <Button
+                            variant="contained"
+                            fullWidth
+                            startIcon={<ShoppingCart />}
+                            onClick={onAddToUserCart}
+                            disabled={addToCartLoading}
+                            sx={{
+                              background:
+                                "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
+                              "&:hover": {
+                                background:
+                                  "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
+                              },
+                              textTransform: "none",
+                              fontSize: "1.15rem",
+                              fontWeight: 700,
+                              py: 1.5,
+                              borderRadius: "8px",
+                              boxShadow: "0 4px 15px rgba(234, 88, 12, 0.3)",
+                            }}
+                          >
+                            Add {selectedQuantity}{" "}
+                            {productData?.unitweight?.unitname} to Cart
+                          </Button>
+                        </motion.div>
+                      </div>
+                    </Collapse>
                   </motion.div>
                 );
               })}
             </div>
           </motion.div>
-
-          {/* Progress to Next Tier */}
-          {totalItems < 10000 && (
-            <motion.div
-              initial={{ scale: 0.9, opacity: 0 }}
-              animate={{ scale: 1, opacity: 1 }}
-              transition={{ delay: 0.4 }}
-              className="mb-8 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-xl p-5 border-2 border-blue-200"
-            >
-              <div className="flex items-center gap-2 mb-3">
-                <TrendingUp sx={{ color: "#3b82f6", fontSize: "1.5rem" }} />
-                <Typography
-                  sx={{
-                    fontSize: "1rem",
-                    fontWeight: 700,
-                    color: "#1e40af",
-                  }}
-                >
-                  Progress to Next Tier
-                </Typography>
-              </div>
-              <Typography variant="body2" className="text-blue-700 mb-3">
-                Add{" "}
-                <span className="font-bold">
-                  {currentTier?.id === 1
-                    ? 1000 - totalItems
-                    : currentTier?.id === 2
-                    ? 10000 - totalItems
-                    : 0}{" "}
-                  more items
-                </span>{" "}
-                to unlock better pricing!
-              </Typography>
-              <LinearProgress
-                variant="determinate"
-                value={
-                  currentTier?.id === 1
-                    ? (totalItems / 1000) * 100
-                    : currentTier?.id === 2
-                    ? ((totalItems - 1000) / 9000) * 100
-                    : 100
-                }
-                sx={{
-                  height: 8,
-                  borderRadius: 4,
-                  backgroundColor: "#dbeafe",
-                  "& .MuiLinearProgress-bar": {
-                    backgroundColor: "#3b82f6",
-                    borderRadius: 4,
-                  },
-                }}
-              />
-            </motion.div>
-          )}
 
           {/* Cart Items - Color Variations - Enhanced */}
           <motion.div
@@ -402,10 +748,10 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                   color: "#111827",
                 }}
               >
-                Selected Variations
+                Selected Items
               </Typography>
               <Chip
-                label={`${cartItems.length} colors`}
+                label={`${allCartItems.length} item(s)`}
                 size="small"
                 sx={{
                   backgroundColor: "#ffedd5",
@@ -416,7 +762,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
             </div>
             <div className="space-y-3">
               <AnimatePresence>
-                {cartItems.map((item, index) => (
+                {allCartItems.map((item, index) => (
                   <motion.div
                     key={item.id}
                     initial={{ opacity: 0, x: -20 }}
@@ -428,26 +774,44 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                   >
                     <div className="flex items-center justify-between gap-4">
                       <div className="flex items-center gap-4 flex-1">
-                        {/* Color Swatch */}
                         <div className="w-20 h-20 rounded-xl border-3 border-gray-300 overflow-hidden flex-shrink-0 shadow-md">
                           <img
-                            src={item.colorImage}
-                            alt={item.color}
+                            src={item?.product?.imageLinks[0]?.url}
+                            alt={item?.name}
                             className="w-full h-full object-cover"
                           />
                         </div>
-                        {/* Color Name and Price */}
+
                         <div className="flex-1">
-                          <Typography
-                            sx={{
-                              fontSize: "1rem",
-                              fontWeight: 700,
-                              color: "#111827",
-                              marginBottom: "4px",
-                            }}
-                          >
-                            {item.color}
-                          </Typography>
+                          <div className="flex items-center gap-2 flex-wrap mb-2">
+                            <Typography
+                              sx={{
+                                fontSize: "1rem",
+                                fontWeight: 700,
+                                color: "#111827",
+                              }}
+                            >
+                              {item?.product?.name}
+                            </Typography>
+                            {item?.isBulkOrder && (
+                              <Chip
+                                icon={<LocalOffer />}
+                                label="Bulk Order"
+                                size="small"
+                                sx={{
+                                  backgroundColor: "#ea580c",
+                                  color: "white",
+                                  fontWeight: 700,
+                                  fontSize: "0.7rem",
+                                  height: "20px",
+                                  "& .MuiChip-icon": {
+                                    color: "white",
+                                    fontSize: "0.9rem",
+                                  },
+                                }}
+                              />
+                            )}
+                          </div>
                           <Typography
                             sx={{
                               fontSize: "1.125rem",
@@ -455,84 +819,135 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                               color: "#ea580c",
                             }}
                           >
-                            ₦{item.price}
+                            ₦{" "}
+                            {(() => {
+                              let itemPrice = item?.product?.price;
+                              if (item?.isBulkOrder && item?.bulkPriceTierId) {
+                                // Find the matching price tier from product's priceTiers array
+                                const matchingTier =
+                                  item?.product?.priceTiers?.find(
+                                    (tier) =>
+                                      (tier?.id || tier?._id) ===
+                                      item?.bulkPriceTierId
+                                  );
+
+                                if (matchingTier) {
+                                  itemPrice = matchingTier?.price;
+                                }
+                              }
+                              return formatCurrency(itemPrice).toLocaleString();
+                            })()}
                           </Typography>
+
                           <Typography
                             variant="caption"
                             className="text-gray-500"
                           >
                             Subtotal: ₦
-                            {(
-                              parseFloat(item.price.replace(/,/g, "")) *
-                              item.quantity
-                            ).toLocaleString()}
+                            {(() => {
+                              let itemPrice = item?.product?.price;
+                              if (item?.isBulkOrder && item?.bulkPriceTierId) {
+                                // Find the matching price tier from product's priceTiers array
+                                const matchingTier =
+                                  item?.product?.priceTiers?.find(
+                                    (tier) =>
+                                      (tier?.id || tier?._id) ===
+                                      item?.bulkPriceTierId
+                                  );
+
+                                if (matchingTier) {
+                                  itemPrice = matchingTier?.price;
+                                }
+                              }
+                              return formatCurrency(
+                                itemPrice * item?.quantity
+                              ).toLocaleString();
+                            })()}
+                            {/* {(
+                              parseInt(item?.product?.price) *
+                              item?.quantity
+                            ).toLocaleString()} */}
                           </Typography>
                         </div>
                       </div>
 
-                      {/* Quantity Controls */}
                       <div className="flex flex-col gap-2 items-end">
                         <div className="flex items-center gap-2 bg-gray-50 border-2 border-gray-300 rounded-xl">
-                          <motion.div whileTap={{ scale: 0.9 }}>
+                          <motion.div
+                            whileTap={{ scale: item?.isBulkOrder ? 1 : 0.9 }}
+                          >
                             <IconButton
                               size="small"
-                              onClick={() => handleQuantityChange(item.id, -1)}
+                              onClick={() => decreaseCart(item?.id)}
+                              disabled={item?.isBulkOrder}
                               sx={{
                                 backgroundColor: "white",
                                 "&:hover": {
-                                  backgroundColor: "#fee2e2",
-                                  color: "#dc2626",
+                                  backgroundColor: item?.isBulkOrder
+                                    ? "white"
+                                    : "#fee2e2",
+                                  color: item?.isBulkOrder
+                                    ? "inherit"
+                                    : "#dc2626",
                                 },
                                 padding: "8px",
+                                opacity: item?.isBulkOrder ? 0.5 : 1,
+                                cursor: item?.isBulkOrder
+                                  ? "not-allowed"
+                                  : "pointer",
                               }}
                             >
                               <Remove fontSize="small" />
                             </IconButton>
                           </motion.div>
-                          <TextField
-                            value={item.quantity}
-                            onChange={(e) =>
-                              handleQuantityInput(item.id, e.target.value)
-                            }
-                            size="small"
+                          <Typography
                             sx={{
                               width: "80px",
-                              "& .MuiOutlinedInput-root": {
-                                "& fieldset": {
-                                  border: "none",
-                                },
-                              },
-                              "& input": {
-                                textAlign: "center",
-                                padding: "8px",
-                                fontSize: "1rem",
-                                fontWeight: 800,
-                                color: "#111827",
-                              },
+                              textAlign: "center",
+                              padding: "8px",
+                              fontSize: "1rem",
+                              fontWeight: 800,
+                              color: "#111827",
                             }}
-                          />
-                          <motion.div whileTap={{ scale: 0.9 }}>
+                          >
+                            {item?.quantity}
+                          </Typography>
+                          <motion.div
+                            whileTap={{ scale: item?.isBulkOrder ? 1 : 0.9 }}
+                          >
                             <IconButton
                               size="small"
-                              onClick={() => handleQuantityChange(item.id, 1)}
+                              onClick={() => increaseCart(item?.id)}
+                              disabled={item?.isBulkOrder}
                               sx={{
                                 backgroundColor: "white",
                                 "&:hover": {
-                                  backgroundColor: "#dcfce7",
-                                  color: "#16a34a",
+                                  backgroundColor: item?.isBulkOrder
+                                    ? "white"
+                                    : "#dcfce7",
+                                  color: item?.isBulkOrder
+                                    ? "inherit"
+                                    : "#16a34a",
                                 },
                                 padding: "8px",
+                                opacity: item?.isBulkOrder ? 0.5 : 1,
+                                cursor: item?.isBulkOrder
+                                  ? "not-allowed"
+                                  : "pointer",
                               }}
                             >
                               <Add fontSize="small" />
                             </IconButton>
                           </motion.div>
                         </div>
-                        {cartItems.length > 1 && (
-                          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
+                        {allCartItems?.length > 1 && (
+                          <motion.div
+                            whileHover={{ scale: 1.1 }}
+                            whileTap={{ scale: 0.9 }}
+                          >
                             <IconButton
                               size="small"
-                              onClick={() => handleRemoveItem(item.id)}
+                              onClick={() => removeItemInCart(item?.id)}
                               sx={{
                                 color: "#ef4444",
                                 "&:hover": {
@@ -546,6 +961,42 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                         )}
                       </div>
                     </div>
+
+                    {/* Bulk Order Info Message */}
+                    {item?.isBulkOrder && (
+                      <motion.div
+                        initial={{ opacity: 0, y: -5 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        className="mt-3 p-2.5 rounded-lg"
+                        style={{
+                          backgroundColor: "rgba(234, 88, 12, 0.1)",
+                          border: "1px solid rgba(234, 88, 12, 0.3)",
+                        }}
+                      >
+                        <div className="flex items-start gap-2">
+                          <LocalOffer
+                            sx={{
+                              fontSize: "1rem",
+                              color: "#ea580c",
+                              marginTop: "2px",
+                            }}
+                          />
+                          <Typography
+                            variant="caption"
+                            sx={{
+                              color: "#c2410c",
+                              fontWeight: 600,
+                              fontSize: "0.8rem",
+                              lineHeight: 1.4,
+                            }}
+                          >
+                            This is a bulk order with fixed quantity. To modify,
+                            remove this item and select a different price tier
+                            from the product page.
+                          </Typography>
+                        </div>
+                      </motion.div>
+                    )}
                   </motion.div>
                 ))}
               </AnimatePresence>
@@ -553,7 +1004,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
           </motion.div>
 
           {/* Shipping Section - Enhanced */}
-          <motion.div
+          {/* <motion.div
             initial={{ y: 20, opacity: 0 }}
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.6 }}
@@ -608,7 +1059,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                 Change →
               </motion.button>
             </div>
-          </motion.div>
+          </motion.div> */}
         </div>
 
         {/* Footer - Sticky - Enhanced */}
@@ -661,9 +1112,9 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                     >
                       Item subtotal
                     </Typography>
+
                     <Typography variant="caption" className="text-gray-500">
-                      ({getTotalVariationsAndItems().totalVariations} variation{" "}
-                      {getTotalVariationsAndItems().totalItems} items)
+                      {allCartItems?.length} items
                     </Typography>
                   </div>
                   <Typography
@@ -673,11 +1124,12 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                       color: "#111827",
                     }}
                   >
-                    ₦
-                    {calculateItemSubtotal().toLocaleString(undefined, {
+                    {/* ₦
+                    {totalAmount.toLocaleString(undefined, {
                       minimumFractionDigits: 2,
                       maximumFractionDigits: 2,
-                    })}
+                    })} */}
+                    ₦{formatCurrency(totalAmount)}
                   </Typography>
                 </div>
 
@@ -702,6 +1154,28 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                     }}
                   >
                     ₦{shippingTotal.toLocaleString()}
+                  </Typography>
+                </div>
+
+                {/* Tax Total */}
+                <div className="flex items-center justify-between">
+                  <Typography
+                    sx={{
+                      fontSize: "0.95rem",
+                      color: "#6b7280",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Tax total
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontSize: "1.05rem",
+                      fontWeight: 800,
+                      color: "#111827",
+                    }}
+                  >
+                    ₦{vat?.toLocaleString()}
                   </Typography>
                 </div>
               </div>
@@ -730,40 +1204,25 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                     WebkitTextFillColor: "transparent",
                   }}
                 >
-                  ₦
-                  {calculateGrandTotal().toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                </Typography>
-                <Typography
-                  variant="caption"
-                  className="text-gray-600 font-semibold"
-                >
-                  (₦
-                  {calculatePerSetPrice().toLocaleString(undefined, {
-                    minimumFractionDigits: 2,
-                    maximumFractionDigits: 2,
-                  })}
-                  /set)
+                  ₦{formatCurrency(grandTotal)}
                 </Typography>
               </div>
             </div>
           </div>
 
           {/* Start Order Button - Enhanced */}
-          <motion.div
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-          >
+          <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
             <Button
               variant="contained"
+              component={NavLinkAdapter}
+              to={`/marketplace/review-cart`}
               fullWidth
               startIcon={<ShoppingCart />}
               sx={{
                 background: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
                 "&:hover": {
-                  background: "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
+                  background:
+                    "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
                 },
                 textTransform: "none",
                 fontSize: "1.125rem",
@@ -773,7 +1232,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                 boxShadow: "0 4px 20px rgba(234, 88, 12, 0.4)",
               }}
             >
-              Complete Order • {getTotalVariationsAndItems().totalItems} Items
+              Complete Order • {allCartItems?.length} Items
             </Button>
           </motion.div>
 

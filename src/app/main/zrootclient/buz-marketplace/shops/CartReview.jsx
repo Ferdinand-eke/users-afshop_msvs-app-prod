@@ -71,6 +71,7 @@ const item = {
 /**
  * Form Validation Schema
  */
+
 const schema = z.object({
   name: z
     .string()
@@ -1015,13 +1016,14 @@ function CartReview() {
                               key={cartItem?.id}
                               id={cartItem?.id}
                               title={cartItem?.product?.name}
-                              image={cartItem?.product?.images[0]?.url}
+                              image={cartItem?.product?.imageLinks[0]?.url}
                               seller="Apple Authorized Reseller"
                               unitsLeft={cartItem?.product?.quantityInStock}
                               cartQuantity={cartItem?.quantity}
                               price={cartItem?.product?.price}
                               oldPrice={cartItem?.product?.listprice}
                               discount="-70%"
+                              cartItem={cartItem}
                             />
                           ))
                         ) : (
@@ -1385,6 +1387,7 @@ function CartReview() {
                         selectedMarketData={selectedMarketData}
                         dirtyFields={dirtyFields}
                         isValid={isValid}
+                        setIsProcessingPayment={setIsProcessingPayment}
                       />
                     </div>
 
@@ -1915,6 +1918,7 @@ const ReviewCartItem = ({
   oldPrice,
   discount,
   cartQuantity,
+  cartItem, // full cart item object to check for bulk order
 }) => {
   return (
     <motion.div
@@ -1940,7 +1944,22 @@ const ReviewCartItem = ({
         <p className="text-sm text-gray-600 mt-1">Quantity: {cartQuantity}</p>
       </div>
       <div className="text-left sm:text-right w-full sm:w-auto">
-        <p className="text-lg font-bold text-gray-800">{formatCurrency(price)}</p>
+        <p className="text-lg font-bold text-gray-800"> ₦ {(() => {
+            let itemPrice = price;
+
+            if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
+              // Find the matching price tier from product's priceTiers array
+              const matchingTier = cartItem?.product?.priceTiers?.find(
+                (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+              );
+
+              if (matchingTier) {
+                itemPrice = matchingTier?.price;
+              }
+            }
+
+            return formatCurrency(parseInt(itemPrice) );
+          })()}</p>
         {oldPrice && !(oldPrice === undefined) && (
           <>
             <p className="text-sm text-gray-500 line-through">
@@ -1950,7 +1969,22 @@ const ReviewCartItem = ({
           </>
         )}
         <p className="text-base text-orange-600 font-bold mt-2">
-          Total: {formatCurrency(parseInt(price) * parseInt(cartQuantity))}
+          Total: ₦ {(() => {
+            let itemPrice = price;
+
+            if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
+              // Find the matching price tier from product's priceTiers array
+              const matchingTier = cartItem?.product?.priceTiers?.find(
+                (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+              );
+
+              if (matchingTier) {
+                itemPrice = matchingTier?.price;
+              }
+            }
+
+            return formatCurrency(parseInt(itemPrice) * parseInt(cartQuantity));
+          })()}
         </p>
       </div>
     </motion.div>

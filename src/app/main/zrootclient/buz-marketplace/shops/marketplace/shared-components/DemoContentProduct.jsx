@@ -28,6 +28,7 @@ function ProductCard({ product, index }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
+
   const hasDiscount = product?.listprice && product?.listprice > product?.price;
   const discountPercent = hasDiscount
     ? Math.round(((product.listprice - product.price) / product.listprice) * 100)
@@ -45,7 +46,7 @@ function ProductCard({ product, index }) {
       {/* Image Section */}
       <div className="relative overflow-hidden bg-gray-100" style={{ height: '250px' }}>
         <img
-          src={product?.image || "https://via.placeholder.com/400x300?text=No+Image"}
+          src={product?.imageLinks[0]?.url || "https://via.placeholder.com/400x300?text=No+Image"}
           alt={product?.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
           style={{ minHeight: '250px', maxHeight: '250px', objectFit: 'cover' }}
@@ -235,6 +236,7 @@ function DemoContentProduct(props) {
   if (isLoading) {
     return <ContentLoadingPlaceholder />;
   }
+
 
   if (isError) {
     return (

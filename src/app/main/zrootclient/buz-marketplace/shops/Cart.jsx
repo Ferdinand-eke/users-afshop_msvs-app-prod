@@ -34,6 +34,7 @@ import {
   Login,
 } from "@mui/icons-material";
 
+
 /****
  * MARKETPLACE CART ITEM
  */
@@ -47,6 +48,7 @@ const CartItem = ({
   oldPrice,
   discount,
   cartQuantity,
+  cartItem, // full cart item object to check for bulk order
 }) => {
   const { mutate: updateCartQty } = useUpdateCartItemQty();
 
@@ -132,16 +134,34 @@ const CartItem = ({
             <Typography variant="body2" className="text-gray-600 mb-2">
               Seller: <span className="font-semibold">{seller}</span>
             </Typography>
-            <Chip
-              label={`${unitsLeft} units left`}
-              size="small"
-              sx={{
-                backgroundColor: unitsLeft < 10 ? "#fee2e2" : "#dcfce7",
-                color: unitsLeft < 10 ? "#dc2626" : "#166534",
-                fontWeight: 600,
-                fontSize: "0.75rem",
-              }}
-            />
+            <div className="flex items-center gap-2 flex-wrap">
+              <Chip
+                label={`${unitsLeft} units left`}
+                size="small"
+                sx={{
+                  backgroundColor: unitsLeft < 10 ? "#fee2e2" : "#dcfce7",
+                  color: unitsLeft < 10 ? "#dc2626" : "#166534",
+                  fontWeight: 600,
+                  fontSize: "0.75rem",
+                }}
+              />
+              {cartItem?.isBulkOrder && (
+                <Chip
+                  icon={<LocalOffer />}
+                  label="Bulk Order"
+                  size="small"
+                  sx={{
+                    backgroundColor: "#ea580c",
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: "0.75rem",
+                    "& .MuiChip-icon": {
+                      color: "white",
+                    },
+                  }}
+                />
+              )}
+            </div>
           </div>
 
           {/* Price Section */}
@@ -156,7 +176,22 @@ const CartItem = ({
                   WebkitTextFillColor: "transparent",
                 }}
               >
-                ₦{formatCurrency(price)}
+                ₦{(() => {
+                let itemPrice = price;
+
+                if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
+                  // Find the matching price tier from product's priceTiers array
+                  const matchingTier = cartItem?.product?.priceTiers?.find(
+                    (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+                  );
+
+                  if (matchingTier) {
+                    itemPrice = matchingTier?.price;
+                  }
+                }
+
+                return formatCurrency(parseInt(itemPrice));
+              })()}
               </Typography>
               {hasDiscount && (
                 <Typography
@@ -174,7 +209,22 @@ const CartItem = ({
                 fontWeight: 700,
               }}
             >
-              Subtotal: ₦{formatCurrency(parseInt(price) * parseInt(cartQuantity))}
+              Subtotal: ₦{(() => {
+                let itemPrice = price;
+
+                if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
+                  // Find the matching price tier from product's priceTiers array
+                  const matchingTier = cartItem?.product?.priceTiers?.find(
+                    (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+                  );
+
+                  if (matchingTier) {
+                    itemPrice = matchingTier?.price;
+                  }
+                }
+
+                return formatCurrency(parseInt(itemPrice) * parseInt(cartQuantity));
+              })()}
             </Typography>
           </div>
         </div>
@@ -197,16 +247,19 @@ const CartItem = ({
           </motion.div>
 
           <div className="flex items-center gap-2 bg-gray-50 border-2 border-gray-300 rounded-xl p-2">
-            <motion.div whileTap={{ scale: 0.9 }}>
+            <motion.div whileTap={{ scale: cartItem?.isBulkOrder ? 1 : 0.9 }}>
               <IconButton
                 size="small"
                 onClick={() => decreaseCart(id)}
+                disabled={cartItem?.isBulkOrder}
                 sx={{
                   backgroundColor: "white",
                   "&:hover": {
-                    backgroundColor: "#fee2e2",
-                    color: "#dc2626",
+                    backgroundColor: cartItem?.isBulkOrder ? "white" : "#fee2e2",
+                    color: cartItem?.isBulkOrder ? "inherit" : "#dc2626",
                   },
+                  opacity: cartItem?.isBulkOrder ? 0.5 : 1,
+                  cursor: cartItem?.isBulkOrder ? "not-allowed" : "pointer",
                 }}
               >
                 <Remove fontSize="small" />
@@ -223,7 +276,7 @@ const CartItem = ({
             >
               {cartQuantity}
             </Typography>
-            {parseInt(cartQuantity) < parseInt(unitsLeft) && (
+            {parseInt(cartQuantity) < parseInt(unitsLeft) && !cartItem?.isBulkOrder && (
               <motion.div whileTap={{ scale: 0.9 }}>
                 <IconButton
                   size="small"
@@ -240,7 +293,48 @@ const CartItem = ({
                 </IconButton>
               </motion.div>
             )}
+            {cartItem?.isBulkOrder && (
+              <motion.div whileTap={{ scale: 1 }}>
+                <IconButton
+                  size="small"
+                  disabled={true}
+                  sx={{
+                    backgroundColor: "white",
+                    opacity: 0.5,
+                    cursor: "not-allowed",
+                  }}
+                >
+                  <Add fontSize="small" />
+                </IconButton>
+              </motion.div>
+            )}
           </div>
+
+          {/* Bulk Order Info Message */}
+          {cartItem?.isBulkOrder && (
+            <motion.div
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              className="mt-3 p-2 rounded-lg"
+              style={{
+                backgroundColor: "rgba(234, 88, 12, 0.1)",
+                border: "1px solid rgba(234, 88, 12, 0.3)",
+              }}
+            >
+              <Typography
+                variant="caption"
+                sx={{
+                  color: "#c2410c",
+                  fontWeight: 600,
+                  fontSize: "0.75rem",
+                  display: "block",
+                  textAlign: "center",
+                }}
+              >
+                Bulk order quantities are fixed. Remove and reorder to change quantity.
+              </Typography>
+            </motion.div>
+          )}
         </div>
       </div>
     </motion.div>
@@ -251,11 +345,26 @@ const CartItem = ({
  * MARKETPLACE CART SUMMARY
  */
 const CartSummary = ({ intemsInCart }) => {
+
   let checkItemsArrayForTotal = [];
   intemsInCart?.forEach((element) => {
+    // Check if item is bulk order and use appropriate price
+    let itemPrice = element?.product?.price;
+
+    if (element?.isBulkOrder && element?.bulkPriceTierId) {
+      // Find the matching price tier from product's priceTiers array
+      const matchingTier = element?.product?.priceTiers?.find(
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+      );
+
+      if (matchingTier) {
+        itemPrice = matchingTier?.price;
+      }
+    }
+
     checkItemsArrayForTotal?.push({
       quantity: element?.quantity,
-      price: element?.product?.price,
+      price: itemPrice,
     });
   });
 
@@ -845,13 +954,15 @@ function Cart() {
     return localStorage.getItem("cartActiveTab") || "marketplace";
   });
 
-  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
+  const { data: foodCart , isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
   const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
 
   // Save active tab to localStorage whenever it changes
   useEffect(() => {
     localStorage.setItem("cartActiveTab", activeTab);
   }, [activeTab]);
+
+  console.log("Marketplace Cart:", cart?.data?.cartSession?.cartProducts);
 
   const marketplaceCartCount = cart?.data?.cartSession?.cartProducts?.length || 0;
   const foodmartCartCount = foodCart?.data?.userFoodCartSession?.cartProducts?.length || 0;
@@ -1013,17 +1124,18 @@ function Cart() {
                           <CartLoadingPlaceholder />
                         ) : cart?.data?.cartSession?.cartProducts?.length > 0 ? (
                           <AnimatePresence>
-                            {cart.data.cartSession.cartProducts.map((cartItem) => (
+                            {cart?.data?.cartSession?.cartProducts?.map((cartItem) => (
                               <CartItem
                                 key={cartItem?.id}
                                 id={cartItem?.id}
                                 title={cartItem?.product?.name}
-                                image={cartItem?.product?.images[0]?.url}
+                                image={cartItem?.product?.imageLinks[0]?.url}
                                 seller="Verified Seller"
                                 unitsLeft={cartItem?.product?.quantityInStock}
                                 cartQuantity={cartItem?.quantity}
                                 price={cartItem?.product?.price}
                                 oldPrice={cartItem?.product?.listprice}
+                                cartItem={cartItem}
                               />
                             ))}
                           </AnimatePresence>
@@ -1082,7 +1194,7 @@ function Cart() {
                           <CartLoadingPlaceholder />
                         ) : foodCart?.data?.userFoodCartSession?.cartProducts?.length > 0 ? (
                           <AnimatePresence>
-                            {foodCart.data.userFoodCartSession.cartProducts.map((cartItem) => (
+                            {foodCart?.data?.userFoodCartSession?.cartProducts?.map((cartItem) => (
                               <FoodCartItem
                                 key={cartItem?.id}
                                 id={cartItem?.id}
@@ -1130,9 +1242,9 @@ function Cart() {
                       </div>
                       {/* Right side - Fixed cart summary (30% width) */}
                       <div className="w-full lg:w-[30%] lg:flex-shrink-0">
-                        <FoodCartSummary
+                        {/* <FoodCartSummary
                           intemsInFoodCart={foodCart?.data?.userFoodCartSession?.cartProducts || []}
-                        />
+                        /> */}
                       </div>
                     </motion.div>
                   )}

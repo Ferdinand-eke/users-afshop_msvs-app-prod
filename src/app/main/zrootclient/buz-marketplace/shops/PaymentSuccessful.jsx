@@ -15,6 +15,7 @@ function PaymentSuccessful({
   itemCount,
   userEmail,
 }) {
+
   // Animation variants
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -269,7 +270,7 @@ function PaymentSuccessful({
               <Button
                 variant="contained"
                 component={NavLinkAdapter}
-                to="/marketplace/orders"
+                to="/marketplace/user/orders"
                 sx={{
                   background:
                     "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",

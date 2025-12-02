@@ -9,6 +9,7 @@ import AdsSlider from "./AdsSlider";
  * Completely redesigned with compelling, engaging, and professional UI
  * Features minimum order dialogue and beautiful ads slider
  */
+
 function DemoSidebarRight(props) {
   const { productInfo } = props;
 
@@ -46,6 +47,7 @@ function DemoSidebarRight(props) {
             </Typography>
           </div>
         </motion.div>
+
 
         {/* MinimumOrderDialogue Component */}
         <motion.div

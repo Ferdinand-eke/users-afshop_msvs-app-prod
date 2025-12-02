@@ -68,6 +68,7 @@ function MarketplaceOrdersWithSidebarsContentScrollPage() {
 					}}
 				/>
 			}
+			
 			content={<DemoContent
 				userCreatedOrders={userOrders?.data?.orders}
 				isLoading={isLoading}

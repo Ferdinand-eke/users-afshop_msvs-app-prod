@@ -72,6 +72,7 @@ const PLACEHOLDER_TAX_RATES = {
   // Add more countries as needed
 };
 
+
 const CartSummaryAndPay = ({
   cartSessionPayload,
   methodOfPay,
@@ -85,6 +86,7 @@ const CartSummaryAndPay = ({
   selectedMarketData, // Add this prop to receive selected market data
   dirtyFields,
   isValid,
+  setIsProcessingPayment,
 }) => {
   const user = useAppSelector(selectUser);
 
@@ -161,6 +163,13 @@ const CartSummaryAndPay = ({
 
   const { mutate: verifyPaymentAndCreateOrder, isLoading: loadingWhilePaying } =
     usePayAndPlaceOrder();
+
+  // Update the processing payment state when mutation is loading
+  useEffect(() => {
+    if (setIsProcessingPayment) {
+      setIsProcessingPayment(loadingWhilePaying);
+    }
+  }, [loadingWhilePaying, setIsProcessingPayment]);
 
   const onSuccess = async (paystackResponse) => {
     try {

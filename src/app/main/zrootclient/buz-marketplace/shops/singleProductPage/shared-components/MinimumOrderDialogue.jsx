@@ -11,47 +11,19 @@ import {
 } from "@mui/icons-material";
 import { motion } from "framer-motion";
 import UseMinimumOrder from "./UseMinimumOrder";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 /**
  * MinimumOrderDialogue Component
  * Completely redesigned with compelling, engaging, and professional UI
  * Displays wholesale and customization pricing with bulk order options
  */
+
+
 function MinimumOrderDialogue({ productData }) {
   const [activeTab, setActiveTab] = useState("wholesale");
   const [selectedColor, setSelectedColor] = useState(null);
   const [sliderOpen, setSliderOpen] = useState(false);
-
-  // Sample data - replace with actual product data
-  const pricingTiers = [
-    {
-      id: 1,
-      productId: productData?.id || productData?._id || "default-product-id",
-      range: "100 - 999",
-      unit: "sets",
-      price: "2,804.76",
-      savings: "15%",
-      popular: false,
-    },
-    {
-      id: 2,
-      productId: productData?.id || productData?._id || "default-product-id",
-      range: "1000 - 9999",
-      unit: "sets",
-      price: "2,493.12",
-      savings: "25%",
-      popular: true,
-    },
-    {
-      id: 3,
-      productId: productData?.id || productData?._id || "default-product-id",
-      range: "≥ 10000",
-      unit: "sets",
-      price: "2,181.48",
-      savings: "35%",
-      popular: false,
-    },
-  ];
 
   // Check if slider should be open on mount
   useEffect(() => {
@@ -68,15 +40,10 @@ function MinimumOrderDialogue({ productData }) {
     setSliderOpen(true);
   };
 
+
   const handleCloseSlider = () => {
     setSliderOpen(false);
   };
-
-  const colors = [
-    { id: 1, name: "Purple", hex: "#9333ea", image: "https://placehold.co/50x50/9333ea/white" },
-    { id: 2, name: "Blue", hex: "#3b82f6", image: "https://placehold.co/50x50/3b82f6/white" },
-    { id: 3, name: "Red", hex: "#ef4444", image: "https://placehold.co/50x50/ef4444/white" },
-  ];
 
   return (
     <div className="bg-gradient-to-br from-white to-gray-50 rounded-2xl shadow-2xl border-2 border-gray-100 overflow-hidden">
@@ -150,7 +117,7 @@ function MinimumOrderDialogue({ productData }) {
           />
           <Chip
             icon={<Speed />}
-            label="5-day dispatch"
+            label={`${productData?.processingTime} dispatch`}
             sx={{
               backgroundColor: "#ffedd5",
               color: "#9a3412",
@@ -196,7 +163,8 @@ function MinimumOrderDialogue({ productData }) {
             </Typography>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-            {pricingTiers.map((tier, index) => (
+            {/* productData?.priceTiers */}
+            {productData?.priceTiers.map((tier, index) => (
               <motion.div
                 key={tier.id}
                 initial={{ opacity: 0, y: 20 }}
@@ -225,35 +193,35 @@ function MinimumOrderDialogue({ productData }) {
                 )}
                 <Typography
                   sx={{
-                    fontSize: "0.875rem",
+                    fontSize: "0.975rem",
                     color: tier.popular ? "#c2410c" : "#6b7280",
                     fontWeight: 600,
                     marginBottom: "8px",
                     textAlign: "center",
                   }}
                 >
-                  {tier.range} {tier.unit}
+                  {`${tier.minQuantity} - ${tier.maxQuantity}`} {productData?.unitweight?.unitname}
                 </Typography>
                 <Typography
                   sx={{
-                    fontSize: "2rem",
+                    fontSize: "1.45rem",
                     fontWeight: 900,
                     color: tier.popular ? "#ea580c" : "#111827",
                     textAlign: "center",
                     marginBottom: "8px",
                   }}
                 >
-                  ₦{tier.price}
+                  ₦{formatCurrency(tier.price)}
                 </Typography>
                 <div className="flex items-center justify-center">
                   <Chip
-                    label={`Save ${tier.savings}`}
+                    label={`Save ${Math.round(((productData?.price - tier.price) / productData?.price) * 100)}%`}
                     size="small"
                     sx={{
                       backgroundColor: tier.popular ? "#10b981" : "#f3f4f6",
                       color: tier.popular ? "white" : "#065f46",
                       fontWeight: 700,
-                      fontSize: "0.75rem",
+                      fontSize: "1rem",
                     }}
                   />
                 </div>
@@ -262,71 +230,8 @@ function MinimumOrderDialogue({ productData }) {
           </div>
         </div>
 
-        <Divider sx={{ marginY: 4 }} />
-
-        {/* Variations Section - Enhanced */}
-        <div className="mb-8">
-          <div className="flex items-center justify-between mb-6">
-            <Typography
-              sx={{
-                fontSize: "1.125rem",
-                fontWeight: 800,
-                color: "#111827",
-              }}
-            >
-              Product Variations
-            </Typography>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="text-orange-600 hover:text-orange-700 font-semibold text-sm flex items-center gap-1"
-            >
-              Edit selections →
-            </motion.button>
-          </div>
-
-          {/* Color Selection */}
-          <Typography
-            sx={{
-              fontSize: "0.95rem",
-              fontWeight: 600,
-              color: "#6b7280",
-              marginBottom: "12px",
-            }}
-          >
-            Available Colors
-          </Typography>
-          <div className="flex gap-3 mb-6">
-            {colors.map((color) => (
-              <motion.button
-                key={color.id}
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => setSelectedColor(color.id)}
-                className={`relative w-16 h-16 rounded-xl border-3 overflow-hidden transition-all ${
-                  selectedColor === color.id
-                    ? "border-orange-600 ring-4 ring-orange-200 shadow-lg"
-                    : "border-gray-300 hover:border-gray-400"
-                }`}
-              >
-                <div
-                  className="w-full h-full"
-                  style={{ backgroundColor: color.hex }}
-                />
-                {selectedColor === color.id && (
-                  <div className="absolute inset-0 flex items-center justify-center bg-black/20">
-                    <CheckCircle sx={{ color: "white", fontSize: "1.5rem" }} />
-                  </div>
-                )}
-              </motion.button>
-            ))}
-          </div>
-        </div>
-
-        <Divider sx={{ marginY: 4 }} />
-
         {/* Shipping Section - Enhanced */}
-        <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 mb-8 border-2 border-blue-200">
+        {/* <div className="bg-gradient-to-br from-blue-50 to-indigo-50 rounded-xl p-6 mb-8 border-2 border-blue-200">
           <div className="flex items-start justify-between mb-3">
             <div className="flex items-center gap-2">
               <LocalShipping sx={{ color: "#3b82f6", fontSize: "1.5rem" }} />
@@ -357,10 +262,10 @@ function MinimumOrderDialogue({ productData }) {
             Shipping fee:{" "}
             <span className="font-bold text-blue-900">₦62,328</span> for 50 sets
           </Typography>
-        </div>
+        </div> */}
 
         {/* Action Buttons - Enhanced */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Button
               variant="contained"
@@ -383,7 +288,7 @@ function MinimumOrderDialogue({ productData }) {
               Start Order
             </Button>
           </motion.div>
-          <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
+          {/* <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Button
               variant="outlined"
               fullWidth
@@ -408,7 +313,7 @@ function MinimumOrderDialogue({ productData }) {
             >
               Add to Cart
             </Button>
-          </motion.div>
+          </motion.div> */}
           <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.97 }}>
             <Button
               variant="outlined"
@@ -460,12 +365,14 @@ function MinimumOrderDialogue({ productData }) {
         </motion.div>
       </div>
 
+
       {/* Minimum Order Slider */}
       <UseMinimumOrder
         open={sliderOpen}
         onClose={handleCloseSlider}
         productData={productData}
-        pricingTiers={pricingTiers}
+        pricingTiers={productData?.priceTiers}
+        // productUnit={productData?.unitweight?.unitname}
       />
     </div>
   );

@@ -10,6 +10,7 @@ const MarketplacePaymenSuccess = lazy(() => import('./shops/MarketplacePaymenSuc
 
 
 
+
 /***Marketplace Orders Listed */
 // const MarketplaceOrders = lazy(() => import('./shops/MarketplaceOrders'));
 const MarketplaceOrdersWithSidebarsContentScrollPage = lazy(() => import('./shops/marketplaceOrdersPage/MarketplaceOrdersWithSidebarsContentScrollPage'));
@@ -23,6 +24,7 @@ const MarketplaceOrderDetailWithSidebarsContentScrollPage = lazy(() => import('.
 /**
  * The reset password pages config.
  */
+
 
 
 const userMarketPlacePagesConfig = {
@@ -62,7 +64,7 @@ const userMarketPlacePagesConfig = {
 		}, //(Msvs => Done)
 
 		{
-			path: 'marketplace/order/:marketplaceOrderId/payment-success',
+			path: 'marketplace/order/:orderId/payment-success',
 			element: <MarketplacePaymenSuccess />
 		}, //(Msvs => Done)
 

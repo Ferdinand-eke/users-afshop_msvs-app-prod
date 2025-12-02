@@ -52,6 +52,7 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 /**
  * The SimpleWithSidebarsContentScroll page.
  */
+
 function SingleProductWithContentScrollPage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
@@ -61,6 +62,7 @@ function SingleProductWithContentScrollPage() {
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);
 
+  
   const routeParams = useParams();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
@@ -181,6 +183,7 @@ function SingleProductWithContentScrollPage() {
       scroll="content"
     />
   );
+  
 }
 
 export default SingleProductWithContentScrollPage;

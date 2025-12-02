@@ -31,10 +31,12 @@ import ProductDetailsWithReviews from "./ProductDetailsWithReviews";
 import ProductImageGalleryView from "./ProductImageGalleryView";
 import SingleProductLoadingPlaceholder from "./SingleProductLoadingPlaceholder";
 
+
 /**
  * Demo Content - Single Product Page
  * Completely redesigned with compelling, engaging, and professional UI
  */
+
 function DemoContentSingleProduct(props) {
   const {
     isLoading,
@@ -47,6 +49,9 @@ function DemoContentSingleProduct(props) {
     select,
     setSelect,
   } = props;
+
+  // console.log("Single Product Data:", productData);
+
 
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -122,7 +127,7 @@ function DemoContentSingleProduct(props) {
                 transition={{ duration: 0.3 }}
               >
                 <img
-                  src={productData?.images[select]?.url || "https://via.placeholder.com/500"}
+                  src={productData?.imageLinks[select]?.url || "https://via.placeholder.com/500"}
                   alt={productData?.name}
                   className="w-full h-full object-cover cursor-pointer"
                   style={{ objectFit: "cover" }}
@@ -185,7 +190,7 @@ function DemoContentSingleProduct(props) {
 
               {/* Thumbnail Gallery */}
               <div className="flex mt-6 space-x-4 overflow-x-auto pb-2">
-                {productData?.images?.map((img, index) => (
+                {productData?.imageLinks?.map((img, index) => (
                   <motion.div
                     key={img?.public_id || index}
                     whileHover={{ y: -5 }}
@@ -353,6 +358,7 @@ function DemoContentSingleProduct(props) {
                 </div>
               </div>
 
+
               {/* Add to Cart Button */}
               <div className="mb-6">
                 <AddToProductCartButton
@@ -446,7 +452,7 @@ function DemoContentSingleProduct(props) {
       <ProductImageGalleryView
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
-        images={productData?.images || []}
+        images={productData?.imageLinks || []}
         productData={{
           name: productData?.name,
           shortDescription: productData?.shortDescription,
