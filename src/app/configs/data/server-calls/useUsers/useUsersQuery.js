@@ -1,4 +1,4 @@
-import { useMutation, useQuery } from "react-query";
+import { useMutation, useQuery, useQueryClient } from "react-query";
 import { toast } from "react-toastify";
 import {
   newShopSignup,
@@ -9,7 +9,7 @@ import {
 import { removeUserSignUpToken, removeResendMerchantSignUpOtp, setMerchantSignUpStorage, setShopForgotPasswordPAYLOAD, remove_SHOP_FORGOTPASS_TOKEN } from "app/configs/utils/authUtils";
 import { useNavigate } from "react-router";
 import { clientForgotPasswordWithOtp, clientResetPasswordFromOtp, preSignUpWithOtp, preUserRegistrationWithOtp,  } from "../../client/RepositoryClient";
-import { clientLoggedInResetPassword, getApiAuthUser, getApiMinimizedAuthUser } from "../../client/RepositoryAuthClient";
+import { clientLoggedInResetEmail, clientLoggedInResetPassword, clientUpdateUser, getApiAuthUser, getApiMinimizedAuthUser, clientComfirmActivateNewEmail, closeUserAccount, userLogOutCall } from "../../client/RepositoryAuthClient";
 
 /**
  * Handles NestJS and generic API errors and displays appropriate toast messages
@@ -30,7 +30,7 @@ const handleApiError = (error, options = {}) => {
     fallbackMessage = "An unexpected error occurred. Please try again."
   } = options;
 
-  // Log error for debugging
+  // Log error for debugging (always log to console for developers)
   if (logError) {
     console.error("API Error:", error);
     console.error("Error Response:", error?.response?.data);
@@ -41,10 +41,48 @@ const handleApiError = (error, options = {}) => {
   const errorMessage = errorData?.message;
   const statusCode = errorData?.statusCode || error?.response?.status;
 
+  // Database connection error patterns to detect
+  const isDatabaseError = (message) => {
+    if (!message) return false;
+    const dbErrorPatterns = [
+      /database.*connection/i,
+      /connect.*ECONNREFUSED/i,
+      /connection.*refused/i,
+      /ETIMEDOUT.*database/i,
+      /database.*timeout/i,
+      /cannot connect to.*database/i,
+      /db.*connection.*failed/i,
+      /sequelize.*connection/i,
+      /typeorm.*connection/i,
+      /prisma.*connection/i,
+      /mongodb.*connection/i,
+      /mysql.*connection/i,
+      /postgres.*connection/i,
+      /Connection terminated unexpectedly/i,
+      /sorry, too many clients already/i,
+    ];
+
+    return dbErrorPatterns.some(pattern => pattern.test(message));
+  };
+
+  // Check for database connection errors in error message or error object
+  const fullErrorString = JSON.stringify(error);
+  if (isDatabaseError(errorMessage) || isDatabaseError(fullErrorString) || isDatabaseError(error?.message)) {
+    toast.error("Database connection lost. Please try again in a moment.");
+    return;
+  }
+
   // Handle different error message formats
   if (errorMessage) {
     // Case 1: Array of error messages (NestJS validation errors)
     if (Array.isArray(errorMessage)) {
+      // Check if any message is a database error
+      const hasDatabaseError = errorMessage.some(msg => isDatabaseError(msg));
+      if (hasDatabaseError) {
+        toast.error("Database connection lost. Please try again in a moment.");
+        return;
+      }
+
       errorMessage.forEach((msg) => {
         toast.error(msg);
       });
@@ -93,7 +131,7 @@ export function useShopForgotPassWithOtp() { //(Msvs => Done)
     onSuccess: (data) => {
 
       console.log("useShopForgotPassWithOtp", data);
-      if (data?.data?.token && data?.data?.success && data?.data?.message) {
+      if (data?.data?.token && data?.data?.success) {
 
         setShopForgotPasswordPAYLOAD(data?.data?.token);
         toast.success(data?.data?.message);
@@ -243,7 +281,7 @@ export function useStoreUserPreSignUpFromOtp() {
 
   /****
    * #######################################################################
-   * GET AUTHENTICATED USER DATA  starts
+   * GET AUTHENTICATED USER/PROFILE ---SETTINGs DATA  starts
    * ############################################################################
    */
 
@@ -254,9 +292,33 @@ export function useStoreUserPreSignUpFromOtp() {
   export function useGetMinimizedAuthUserDetails() {
     return useQuery(['__minimizedAuthUserData'], getApiMinimizedAuthUser);
   }
+
+  export function useUserUpdateMutation() {
+    const queryClient = useQueryClient();
+  
+    return useMutation(clientUpdateUser, {
+      onSuccess: (data) => {
+        // console.log('Updated shop clientController', data);
+  
+        if (data?.data?.success) {
+          toast.success(`${data?.data?.message ? data?.data?.message : 'User details updated successfully!!'}`);
+  
+        /**Set/update users client data to have newly updated user details */
+  
+          queryClient.invalidateQueries('__authUserData');
+        }
+      },
+      onError: (error) => {
+        toast.error(error.response && error.response.data.message
+          ? error.response.data.message
+          : error.message)
+  
+      },
+    });
+  }
    /****
    * #######################################################################
-   * GET AUTHENTICATED USER DATA  ends here
+   * GET AUTHENTICATED USER/PROFILE ---SETTINGs DATA  ends here
    * ############################################################################
    * ============================================================================================
    */
@@ -267,9 +329,9 @@ export function useStoreUserPreSignUpFromOtp() {
 export function useUserSettingsResetPass() {
   return useMutation(clientLoggedInResetPassword, {
     onSuccess: (data) => {
-      if(data?.data?.updatedPass && data?.data?.success){
+      if(data?.data?.success){
 
-        toast.success(data?.data?.message);
+        toast.success(data?.data?.message ? data?.data?.message : 'Password updated successfully!!');
       }
     },
 
@@ -281,6 +343,85 @@ export function useUserSettingsResetPass() {
   });
 }
 
+export function useInitiateUserSettingsChangeMail() {
+  return useMutation(clientLoggedInResetEmail, {
+    onSuccess: (data) => {
+      if(data?.data?.success){
+
+        toast.success(data?.data?.message ? data?.data?.message : 'Email Change Initiated!!');
+      }
+    },
+
+    onError: (error) => {
+      handleApiError(error, {
+        fallbackMessage: "Failed to initiate email change."
+      });
+    },
+  });
+}
+
+/**
+ * Confirm email change with OTP
+ * Used to verify the new email address with the OTP sent to the user
+ */
+export function useConfirmUserSettingsChangeMail() {
+  const queryClient = useQueryClient();
+
+  return useMutation(clientComfirmActivateNewEmail, {
+    onSuccess: (data) => {
+      if(data?.data?.success){
+        toast.success(data?.data?.message ? data?.data?.message : 'Email changed successfully!');
+
+        // Invalidate and refetch user data to get updated email
+        queryClient.invalidateQueries('__authUserData');
+        queryClient.invalidateQueries('__minimizedAuthUserData');
+      }
+    },
+
+    onError: (error) => {
+      handleApiError(error, {
+        fallbackMessage: "Failed to verify OTP. Please check the code and try again."
+      });
+    },
+  });
+}
+
+/***Close User ACCOUNT */
+
+/**
+ * Close/Delete user account permanently
+ * Used to permanently delete the user's account and all associated data
+ * This action is irreversible
+ */
+export function useCloseUserAccount() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  return useMutation(closeUserAccount, {
+    onSuccess: (data) => {
+      if(data?.data?.success){
+        toast.success(data?.data?.message ? data?.data?.message : 'Account closed successfully!');
+
+        // Clear all user data and redirect to home
+        queryClient.clear();
+
+        // Logout and redirect
+        setTimeout(() => {
+          userLogOutCall()
+          // This will trigger the logout flow
+          navigate('/sign-in');
+          window.location.reload();
+        }, 1500);
+      }
+    },
+
+    onError: (error) => {
+      handleApiError(error, {
+        fallbackMessage: "Failed to close account. Please try again or contact support."
+      });
+    },
+  });
+}
 
      /****
    * #######################################################################

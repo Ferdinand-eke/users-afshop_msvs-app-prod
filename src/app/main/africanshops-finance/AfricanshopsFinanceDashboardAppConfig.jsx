@@ -6,6 +6,7 @@ const FinanceDashboardAppWithdarwals = lazy(() => import('./FinanceDashboardAppW
  * The finance dashboard app config.
  */
 
+
 const AfricanshopsFinanceDashboardAppConfig = {
 	settings: {
 		layout: {

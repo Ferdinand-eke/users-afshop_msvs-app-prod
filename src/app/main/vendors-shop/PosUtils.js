@@ -50,10 +50,12 @@ export function calculateTax(obj) {
 
 /***Cart Totalling */
 export function calculateCartTotalAmount(obj) {
+  console.log("Calculating cart total amount util", obj);
   return Object.values(obj)
     .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
     .toFixed(2);
 }
+
 
 //   export function calculateAmount(obj) {
 //     return Object.values(obj)

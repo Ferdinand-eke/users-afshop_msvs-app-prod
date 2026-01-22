@@ -38,10 +38,11 @@ export const serializeQuery = (query) => {
     .join("&");
 };
 
-//## ========================================Client login==================================
-/***
- * CLIENT USSERS AUTHENTICATION STARTS HERE
- */
+  /************************************************************************************************
+   * START: USER AUTHENTICATION OPERATIONS
+   * Gateway endpoints for User authentications functionality
+   ************************************************************************************************/
+
 export const preSignUp = (formData) =>
   Api().post("/authuser/pre-signup", formData);
 
@@ -75,10 +76,10 @@ export const clientSigin = (formData) =>
 
 export const clientRegister = (formData) =>
   Api().post("/authuser/register", formData);
+  /************************************************************************************************
+   * END: USER AUTHENTICATION OPERATIONS
+   ************************************************************************************************/
 
-/***
- * CLIENT USSERS AUTHENTICATION ENDS HERE
- */
 
 //GET AUTHENTICATE USER WITH TOKEN REQUES
 

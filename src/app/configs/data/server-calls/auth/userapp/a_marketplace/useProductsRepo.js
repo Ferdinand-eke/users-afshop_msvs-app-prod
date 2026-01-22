@@ -307,7 +307,7 @@ export function usePayAndPlaceOrder() {
           queryClient.invalidateQueries(["__cart"]);
           queryClient.refetchQueries("__cart", { force: true });
           navigate(
-            `/marketplace/order/${data?.data?.data?.order?.id}/payment-success`
+            `/marketplace/order/${data?.data?.data?.order?.id || data?.data?.data?.order?._id}/payment-success`
           );
         } else if (data?.data?.error) {
           toast.error(data?.data?.error?.message);

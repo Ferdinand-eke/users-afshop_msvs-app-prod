@@ -56,11 +56,12 @@ export function AuthApi() {
       if (error?.response?.status === 403) {
         console.log("responseSTATS", error?.response?.status);
         // merchantLogOutCall();
-        // toast.error(
-        //   error.response && error.response.data.message
-        //     ? error.response.data.message
-        //     : error.message
-        // );
+        userLogOutCall()
+        toast.error(
+          error.response && error.response.data.message
+            ? error.response.data.message
+            : error.message
+        );
 
         return Promise.reject({ status: 401, errors: ["Unauthorized"] });
       }
@@ -79,24 +80,40 @@ export function AuthApi() {
   return Api;
 }
 
-//User authenticated? Routes getApiAuthUser export const getAuthUserWithToken = () => authApi().get('/users/authuser');
-export const getApiAuthUser = () => AuthApi().get(`/users/authuser`);
+/************************************************************************************************
+   * START: USER ACCOUNT/PROFILE SETTINGS OPERATIONS
+   * Gateway endpoints for User account/profile settings functionality
+   ************************************************************************************************/
+
+export const getApiAuthUser = () => AuthApi().get(`/auth-user/profile/get-details`); //Msvs => (Done)
 export const getApiMinimizedAuthUser = () =>
   AuthApi().get(`/users/minimized/authuser`);
 
-export const clientUpdateUser = (formData) =>
-  AuthApi().post(`/users/update-authuser`, formData);
+export const clientUpdateUser = (formData) => {
+  console.log("UPDATE_USER_FORMDATA", formData);
+  return AuthApi().put(`/auth-user/profile/update`, formData); 
+}//Msvs => (Done)
+   
+
 
 export const clientLoggedInResetPassword = (formData) => {
   console.log("resetUserPass_DATA".formData);
-  return AuthApi().post("/authuser/loggedin/reset-password ", formData);
-};
+  return AuthApi().put("/auth-user/loggedin/settings/change-password ", formData);
+}; //Msvs => (Done)
 
 export const clientLoggedInResetEmail = (formData) =>
-  AuthApi().post("/authuser/loggedin/change-email ", formData);
+  AuthApi().put("/auth-user/loggedin/settings/change-email/initiate ", formData);
 
-export const clientActivateNewEmail = (formData) =>
-  AuthApi().post("/authuser/loggedin/activate-newemail ", formData);
+export const clientComfirmActivateNewEmail = (formData) =>
+  AuthApi().put("/auth-user/loggedin/settings/change-email/confirm ", formData);
+
+export const closeUserAccount = (formData) =>
+  AuthApi().put("/auth-user/loggedin/settings/close-account ", formData);
+
+ /************************************************************************************************
+   * END: USER ACCOUNT/PROFILE SETTINGS OPERATIONS
+   ************************************************************************************************/
+
 
 //SHopPlans Routes
 export const updateShopPlanById = (id, planFormData) =>
@@ -105,18 +122,6 @@ export const updateShopPlanById = (id, planFormData) =>
 export const createApiShopPlan = (planFormData) =>
   AuthApi().post("/shopplans", planFormData);
 
-/***
- * SHops Routes starts
- */
-// export const updateShopById = (id, shopFormData) =>
-//   AuthApi().put(`/shops/${id}`, shopFormData);
-
-// export const createApiShop = (shopFormData) =>
-//   AuthApi().post("/shops", shopFormData);
-
-/***
- * SHops Routes starts
- */
 
 /**
  * ############################################################
@@ -338,7 +343,6 @@ export const removeCommodityFromCartApi = (formData) => {
  */
 
 export const payAndPlaceOrderApi = (formData) => {
-  // console.log("food cart", formData);
   return AuthApi().post(`${API_ENDPOINTS.PAY_AND_PLACE_ORDER}`, formData);
 };
 

@@ -73,6 +73,7 @@ const PLACEHOLDER_TAX_RATES = {
 };
 
 
+
 const CartSummaryAndPay = ({
   cartSessionPayload,
   methodOfPay,
@@ -88,6 +89,7 @@ const CartSummaryAndPay = ({
   isValid,
   setIsProcessingPayment,
 }) => {
+  console.log("CartSummaryAndPay render with cartSessionPayload:", cartSessionPayload);
   const user = useAppSelector(selectUser);
 
   
@@ -99,13 +101,28 @@ const CartSummaryAndPay = ({
   // Calculate cart subtotal
   let checkItemsArrayForTotal = [];
   cartSessionPayload?.cartProducts?.forEach((element) => {
+    // Check if this is a bulk order and use the bulk price tier
+    let itemPrice = element?.product?.price;
+
+    if (element?.isBulkOrder && element?.bulkPriceTierId) {
+      // Find the matching price tier from product's priceTiers array
+      const matchingTier = element?.product?.priceTiers?.find(
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+      );
+
+      if (matchingTier) {
+        itemPrice = matchingTier?.price;
+      }
+    }
+
     checkItemsArrayForTotal?.push({
       quantity: element?.quantity,
-      price: element?.product?.price,
+      price: itemPrice,
     });
   });
 
   const subtotal = calculateCartTotalAmount(checkItemsArrayForTotal);
+
 
   // Calculate delivery fee based on distance
   useEffect(() => {
