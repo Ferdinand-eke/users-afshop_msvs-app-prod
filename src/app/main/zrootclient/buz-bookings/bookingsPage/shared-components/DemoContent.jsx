@@ -42,17 +42,92 @@ function DemoContent(props) {
       </motion.div>
     );
   }
+  /***No listings found */
 
-  if (!listings) {
+  if (!listings?.length > 0 ) {
     return (
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }}
+        className="flex flex-col flex-1 items-center justify-center min-h-screen"
+        style={{
+          background: 'linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)',
+        }}
       >
-        <Typography color="text.secondary" variant="h5">
-          No listings listings
-        </Typography>
+        <div className="flex flex-col items-center justify-center max-w-2xl px-8 text-center">
+          {/* Icon/Visual Element */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
+            className="mb-8"
+          >
+            <svg
+              width="160"
+              height="160"
+              viewBox="0 0 160 160"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-gray-500"
+            >
+              <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="3" strokeDasharray="8 8" opacity="0.3" />
+              <path
+                d="M80 35L95 55H65L80 35Z"
+                fill="currentColor"
+                opacity="0.2"
+              />
+              <rect x="50" y="55" width="60" height="50" rx="4" fill="currentColor" opacity="0.15" />
+              <rect x="60" y="70" width="15" height="20" rx="2" fill="currentColor" opacity="0.25" />
+              <rect x="85" y="70" width="15" height="20" rx="2" fill="currentColor" opacity="0.25" />
+              <circle cx="80" cy="115" r="15" fill="currentColor" opacity="0.2" />
+            </svg>
+          </motion.div>
+
+          {/* Heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.5 } }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                color: '#1f2937',
+                marginBottom: '16px',
+                fontSize: { xs: '1.875rem', sm: '2.25rem' },
+              }}
+            >
+              No Listings Available
+            </Typography>
+          </motion.div>
+
+          {/* Description */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.4, duration: 0.5 } }}
+          >
+            <Typography
+              variant="body1"
+              sx={{
+                color: '#6b7280',
+                fontSize: { xs: '1rem', sm: '1.125rem' },
+                lineHeight: 1.7,
+                marginBottom: '24px',
+              }}
+            >
+              There are currently no property listings available at this time.
+              Please check back later or adjust your search filters to discover new opportunities.
+            </Typography>
+          </motion.div>
+
+          {/* Decorative Element */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+            className="flex items-center gap-2 mt-4"
+          >
+            <div className="h-1 w-12 bg-gradient-to-r from-transparent via-gray-300 to-transparent rounded-full"></div>
+          </motion.div>
+        </div>
       </motion.div>
     );
   }
@@ -112,13 +187,15 @@ function DemoContent(props) {
         </div>
 
         {/* Pagination Bar */}
-        <PaginationBar
+
+        {listings?.length > 0 && <PaginationBar
           totalItems={estimatedTotal}
           currentPage={currentPage}
           itemsPerPage={itemsPerPage}
           onPageChange={onPageChange}
           onItemsPerPageChange={onItemsPerPageChange}
-        />
+        />}
+        
       </div>
     </div>
   );

@@ -25,12 +25,10 @@ import resetPasswordConfig from "../main/sign-reset-password/resetPasswordPagesC
 import blogAppConfig from "../main/newsblog/blogAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
 import LandingCenterHome from "../main/vendors-shop/home/home/LandingCenterHome";
-import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
+// import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
 import SingleProduct from "../main/zrootclient/buz-marketplace/shops/SingleProduct";
 import Cart from "../main/zrootclient/buz-marketplace/shops/Cart";
-import BookingsPage from "../main/zrootclient/buz-bookings/bookingsPage/BookingsPage";
 import RealEstatesPage from "../main/zrootclient/buz-realestates/RealEstatesPage";
-import BookingSinglePage from "../main/zrootclient/buz-bookings/bookingsSinglePage/BookingSinglePage";
 import MerchantShopPage from "../main/zrootclient/buz-marketplace/shops/merchanyShopPage/MerchantShopPage";
 import RealEstateSinglePage from "../main/zrootclient/buz-realestates/RealEstateSinglePage";
 import FoodMartsPage from "../main/zrootclient/buz-foodmart/foodMartPage/FoodMartsPage";
@@ -338,7 +336,6 @@ const routes = [
         },
       },
     },
-    // element: <BookingsPage />,
     element: <BookingsPageWithSidebarsContentScrollComponent />,
   }, //(Msvs => Done)
 
@@ -365,7 +362,6 @@ const routes = [
         },
       },
     },
-    // element: <BookingSinglePage />,
     element: <BookingsSinglePageWithSidebarsContentScroll />,
   }, //(Msvs => Done)
 

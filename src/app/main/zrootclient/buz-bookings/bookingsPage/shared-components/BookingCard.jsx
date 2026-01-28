@@ -21,6 +21,7 @@ function BookingCard({
   category,
   bookingPeriod
 }) {
+  
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 

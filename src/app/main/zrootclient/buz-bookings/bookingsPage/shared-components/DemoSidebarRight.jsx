@@ -8,6 +8,7 @@ import { MapOutlined } from '@mui/icons-material';
  * Enhanced with improved map and modern styling
  */
 function DemoSidebarRight(props) {
+	
 	const {bookingsData} = props;
 
 	// Show loading placeholder while data is being fetched

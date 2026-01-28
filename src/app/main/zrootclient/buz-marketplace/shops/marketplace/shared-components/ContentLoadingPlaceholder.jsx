@@ -6,6 +6,7 @@ import { ShoppingBagOutlined, LocalOfferOutlined } from "@mui/icons-material";
  * ContentLoadingPlaceholder Component
  * Beautiful loading state for the marketplace product grid
  */
+
 function ContentLoadingPlaceholder() {
   return (
     <div className="flex-auto p-8 sm:p-12 bg-gradient-to-b from-gray-50 to-white">

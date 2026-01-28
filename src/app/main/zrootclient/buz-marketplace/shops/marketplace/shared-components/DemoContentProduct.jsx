@@ -231,7 +231,6 @@ function DemoContentProduct(props) {
     onItemsPerPageChange,
   } = props;
 
-  console.log("Products in Demo Content Product", products);
 
   if (isLoading) {
     return <ContentLoadingPlaceholder />;
@@ -250,16 +249,121 @@ function DemoContentProduct(props) {
     );
   }
 
-  if (!products || products.length === 0) {
+  if (!products?.length > 0 ) {
     return (
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1, transition: { delay: 0.1 } }}
-        className="flex flex-col flex-1 items-center justify-center h-full"
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }}
+        className="flex flex-col flex-1 items-center justify-center min-h-screen"
+        style={{
+          background: 'linear-gradient(180deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%)',
+        }}
       >
-        <Typography color="text.secondary" variant="h5">
-          No products available
-        </Typography>
+        <div className="flex flex-col items-center justify-center max-w-2xl px-8 text-center">
+          {/* Icon/Visual Element - Shopping Bag/Cart */}
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1, transition: { delay: 0.2, duration: 0.5 } }}
+            className="mb-8"
+          >
+            <svg
+              width="180"
+              height="180"
+              viewBox="0 0 180 180"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="text-orange-300"
+            >
+              {/* Outer circle decoration */}
+              <circle cx="90" cy="90" r="75" stroke="currentColor" strokeWidth="3" strokeDasharray="10 10" opacity="0.25" />
+
+              {/* Shopping bag */}
+              <path
+                d="M50 70 L50 140 C50 145 52 150 57 150 L123 150 C128 150 130 145 130 140 L130 70 Z"
+                fill="currentColor"
+                opacity="0.15"
+                stroke="currentColor"
+                strokeWidth="2"
+                // opacity="0.3"
+              />
+
+              {/* Bag handles */}
+              <path
+                d="M65 70 C65 55 75 45 90 45 C105 45 115 55 115 70"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeLinecap="round"
+                opacity="0.3"
+                fill="none"
+              />
+
+              {/* Shopping cart icon overlay */}
+              <circle cx="75" cy="130" r="4" fill="currentColor" opacity="0.35" />
+              <circle cx="105" cy="130" r="4" fill="currentColor" opacity="0.35" />
+
+              {/* Decorative product boxes in bag */}
+              <rect x="65" y="85" width="20" height="20" rx="3" fill="currentColor" opacity="0.2" />
+              <rect x="95" y="85" width="20" height="20" rx="3" fill="currentColor" opacity="0.2" />
+              <rect x="65" y="110" width="20" height="15" rx="3" fill="currentColor" opacity="0.2" />
+              <rect x="95" y="110" width="20" height="15" rx="3" fill="currentColor" opacity="0.2" />
+
+              {/* Tag icon */}
+              <circle cx="140" cy="60" r="12" fill="currentColor" opacity="0.15" />
+              <path
+                d="M135 57 L145 57 L145 63 L140 68 L135 63 Z"
+                fill="currentColor"
+                opacity="0.25"
+              />
+            </svg>
+          </motion.div>
+
+          {/* Heading */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.3, duration: 0.5 } }}
+          >
+            <Typography
+              variant="h3"
+              sx={{
+                fontWeight: 700,
+                color: '#9a3412',
+                marginBottom: '16px',
+                fontSize: { xs: '1.875rem', sm: '2.25rem' },
+              }}
+            >
+              No Products Available
+            </Typography>
+          </motion.div>
+
+          {/* Description */}
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0, transition: { delay: 0.4, duration: 0.5 } }}
+          >
+            <Typography
+              variant="body1"
+              sx={{
+                color: '#7c2d12',
+                fontSize: { xs: '1rem', sm: '1.125rem' },
+                lineHeight: 1.7,
+                marginBottom: '24px',
+              }}
+            >
+              The marketplace is currently empty. No products are available at this moment.
+              Please check back soon as new items are added regularly, or adjust your filters to explore more options.
+            </Typography>
+          </motion.div>
+
+          {/* Decorative Element */}
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
+            className="flex items-center gap-3 mt-4"
+          >
+            <ShoppingCart sx={{ color: '#ea580c', opacity: 0.4 }} />
+            <div className="h-1 w-16 bg-gradient-to-r from-orange-400 via-orange-300 to-transparent rounded-full"></div>
+          </motion.div>
+        </div>
       </motion.div>
     );
   }

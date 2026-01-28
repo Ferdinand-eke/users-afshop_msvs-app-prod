@@ -26,6 +26,7 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
  * The SimpleWithSidebarsContentScroll page.
  */
 
+
 function BookingsPageWithSidebarsContentScrollComponent() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
