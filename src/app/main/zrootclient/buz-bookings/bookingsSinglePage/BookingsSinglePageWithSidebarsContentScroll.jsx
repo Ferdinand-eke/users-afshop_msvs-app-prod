@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, memo } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoContent from './shared-components/DemoContent';
@@ -29,6 +29,8 @@ import {
 
 } from "date-fns";
 import { toDate } from "date-fns-tz";
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../aapp-settings-from-admin/ServiceStatusLandingPage";
 
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
@@ -78,11 +80,10 @@ const parseDateString = (dateString) => {
   return new Date(dateString)
 }
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * Active Bookings Single Page Component
+ * This component renders when the bookings service is ACTIVE
  */
-
-
-function BookingsSinglePageWithSidebarsContentScroll() {
+function ActiveBookingsSinglePage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
 	const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
@@ -192,64 +193,160 @@ function BookingsSinglePageWithSidebarsContentScroll() {
   }, [dateRange, booking?.data?.listing?.price]);
 
 
-  
+
+  // Memoize sidebar toggle handlers to prevent re-renders
+  const handleLeftSidebarToggle = useCallback(() => {
+    setLeftSidebarOpen(!leftSidebarOpen);
+  }, [leftSidebarOpen]);
+
+  const handleRightSidebarToggle = useCallback(() => {
+    setRightSidebarOpen(!rightSidebarOpen);
+  }, [rightSidebarOpen]);
+
+  const handleLeftSidebarClose = useCallback(() => {
+    setLeftSidebarOpen(false);
+  }, []);
+
+  const handleRightSidebarClose = useCallback(() => {
+    setRightSidebarOpen(false);
+  }, []);
+
+  // Memoize derived data to avoid recalculation on every render
+  const bookingData = useMemo(() => booking?.data?.listing, [booking?.data?.listing]);
+  const merchantInfo = useMemo(() => merchantData?.data?.merchant, [merchantData?.data?.merchant]);
+  const propertyTitle = useMemo(() => booking?.data?.listing?.title, [booking?.data?.listing?.title]);
+  const propertyAddress = useMemo(() => booking?.data?.listing?.address, [booking?.data?.listing?.address]);
+  const locationValue = useMemo(() => booking?.data?.listing?.locationValue, [booking?.data?.listing?.locationValue]);
+  const propertyPrice = useMemo(() => booking?.data?.listing?.price, [booking?.data?.listing?.price]);
+  const listingId = useMemo(() => booking?.data?.listing?.id, [booking?.data?.listing?.id]);
+
+  // Memoize date change handler
+  const handleDateChange = useCallback((value) => {
+    setDateRange(value);
+  }, []);
+
+  // Memoize header component
+  const headerComponent = useMemo(
+    () => (
+      <DemoHeader
+        leftSidebarToggle={handleLeftSidebarToggle}
+        rightSidebarToggle={handleRightSidebarToggle}
+      />
+    ),
+    [handleLeftSidebarToggle, handleRightSidebarToggle]
+  );
+
+  // Memoize content component
+  const contentComponent = useMemo(
+    () => (
+      <DemoContent
+        bookingData={bookingData}
+        isLoading={isLoading}
+        isError={isError}
+      />
+    ),
+    [bookingData, isLoading, isError]
+  );
+
+  // Memoize left sidebar content
+  const leftSidebarContentComponent = useMemo(
+    () => (
+      <DemoSidebar
+        merchantData={merchantInfo}
+        coordinates={coordinates}
+        propertyName={propertyTitle}
+        propertyAddress={propertyAddress}
+      />
+    ),
+    [merchantInfo, coordinates, propertyTitle, propertyAddress]
+  );
+
+  // Memoize right sidebar content
+  const rightSidebarContentComponent = useMemo(
+    () =>
+      listingId ? (
+        <DemoSidebarRight
+          isLoading={isLoading}
+          listing={bookingData}
+          locationValue={locationValue}
+          coordinates={coordinates}
+          price={propertyPrice}
+          totalPrice={totalPrice}
+          onChangeDate={handleDateChange}
+          dateRange={dateRange}
+          onSubmit={onCreateReservation}
+          disabled={reservationLoading}
+          disabledDates={disabledDates}
+        />
+      ) : null,
+    [
+      listingId,
+      isLoading,
+      bookingData,
+      locationValue,
+      coordinates,
+      propertyPrice,
+      totalPrice,
+      handleDateChange,
+      dateRange,
+      onCreateReservation,
+      reservationLoading,
+      disabledDates,
+    ]
+  );
+
 	return (
 		<Root
-	
-			header={
-				<DemoHeader
-				// countries={countries?.data?.data}
-				// stateData={stateData}
-				// blgas={blgas}
-				// methods={methods}
-
-					leftSidebarToggle={() => {
-						setLeftSidebarOpen(!leftSidebarOpen);
-					}}
-					rightSidebarToggle={() => {
-						setRightSidebarOpen(!rightSidebarOpen);
-					}}
-				/>
-			}
-			content={<DemoContent
-				bookingData={ booking?.data?.listing}
-				isLoading={isLoading}
-				isError={isError}
-				/>}
+			header={headerComponent}
+			content={contentComponent}
 			leftSidebarOpen={leftSidebarOpen}
-			leftSidebarOnClose={() => {
-				setLeftSidebarOpen(false);
-			}}
-			leftSidebarContent={<DemoSidebar
-				merchantData={merchantData?.data?.merchant}
-				coordinates={coordinates}
-				propertyName={booking?.data?.listing?.title}
-				propertyAddress={booking?.data?.listing?.address}
-			/>}
+			leftSidebarOnClose={handleLeftSidebarClose}
+			leftSidebarContent={leftSidebarContentComponent}
 			rightSidebarOpen={rightSidebarOpen}
-			rightSidebarOnClose={() => {
-				setRightSidebarOpen(false);
-			}}
-
-
-			rightSidebarContent={booking?.data?.listing?.id && <DemoSidebarRight 
-        isLoading={isLoading}
-        listing={booking?.data?.listing}
-        locationValue={booking?.data?.listing?.locationValue}
-        coordinates={coordinates}
-        price={booking?.data?.listing?.price}
-        totalPrice={totalPrice}
-        onChangeDate={(value) => setDateRange(value)}
-        dateRange={dateRange}
-        onSubmit={onCreateReservation}
-        disabled={reservationLoading}
-        disabledDates={disabledDates}
-      />}
+			rightSidebarOnClose={handleRightSidebarClose}
+			rightSidebarContent={rightSidebarContentComponent}
 			scroll="content"
 		/>
 	);
 }
 
+// Memoize ActiveBookingsSinglePage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveBookingsSinglePage = memo(ActiveBookingsSinglePage);
 
+/**
+ * Main Bookings Single Page Component with Service Status Check
+ * Wraps the active bookings single page with service status landing pages
+ */
+function BookingsSinglePageWithSidebarsContentScroll() {
+  // Fetch user app settings
+  const {
+    data: appSettings,
+    isLoading: isLoadingSettings,
+    isError: isErrorSettings,
+  } = useGetUserAppSetting();
+
+  // Extract the bookings service status - memoized to prevent unnecessary re-renders
+  const bookingsServiceStatus = useMemo(
+    () => appSettings?.data?.payload?.bookingsServiceStatus,
+    [appSettings?.data?.payload?.bookingsServiceStatus]
+  );
+
+  // Log service status only when it changes (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && bookingsServiceStatus !== undefined) {
+      console.log("Bookings Service Status (Single Page):", bookingsServiceStatus);
+    }
+  }, [bookingsServiceStatus]);
+
+  return (
+    <ServiceStatusLandingPage
+      serviceStatus={bookingsServiceStatus}
+      ActiveComponent={MemoizedActiveBookingsSinglePage}
+      isLoading={isLoadingSettings}
+      isError={isErrorSettings}
+      serviceName="Bookings"
+    />
+  );
+}
 
 export default BookingsSinglePageWithSidebarsContentScroll;

@@ -39,7 +39,9 @@ import DescriptionIcon from "@mui/icons-material/Description";
  * MODERN LANDING PAGE - Completely New Design
  * A fresh, contemporary approach with unique layout and interactions
  */
+
 function ModernLandingPage() {
+  const merchantUrl = import.meta.env.VITE_AFSHO_MERCHNATPORTAL_URL;
   const [activeService, setActiveService] = useState("marketplace");
 
   // Animation variants
@@ -97,8 +99,8 @@ function ModernLandingPage() {
           <div className="absolute bottom-0 right-0 w-96 h-96 bg-yellow-500 rounded-full filter blur-3xl animate-pulse delay-1000"></div>
         </div>
 
-        <div className="container mx-auto px-8 md:px-16 py-20 relative z-10">
-          <div className="grid md:grid-cols-2 gap-16 items-center">
+        <div className="container mx-auto px-4 sm:px-6 md:px-16 py-12 sm:py-16 md:py-20 relative z-10">
+          <div className="grid md:grid-cols-2 gap-8 md:gap-16 items-center">
             {/* Left: Content */}
             <motion.div
               initial={{ opacity: 0, x: -80 }}
@@ -112,17 +114,14 @@ function ModernLandingPage() {
                 transition={{ delay: 0.3 }}
               >
                 <Chip
-                  // label="Africa's #1 Digital Marketplace"
-                  // label="Explore. Discover. Thrive in Africa."
-                  // label="Nurturing African Commerce"
                   label="Discover Africa — Its Markets, Stays, and Stories."
                   sx={{
                     backgroundColor: "rgba(255, 255, 255, 0.25)",
                     color: "white",
                     fontWeight: "bold",
-                    fontSize: "1.875rem",
-                    padding: "8px 16px",
-                    marginBottom: "24px",
+                    fontSize: { xs: "0.95rem", sm: "1.1rem", md: "1.25rem", lg: "1.875rem" },
+                    padding: { xs: "4px 8px", sm: "6px 12px", md: "8px 16px" },
+                    marginBottom: { xs: "12px", sm: "16px", md: "24px" },
                     backdropFilter: "blur(10px)",
                     border: "1px solid rgba(255, 255, 255, 0.3)",
                   }}
@@ -135,27 +134,12 @@ function ModernLandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                {/* <Typography
-                  component="h1"
-                  sx={{
-                    fontSize: { xs: "3rem", md: "4.5rem" },
-                    fontWeight: 900,
-                    marginBottom: "24px",
-                    lineHeight: 1.1,
-                    color: "white",
-                  }}
-                >
-                  Your Gateway to
-                  <span style={{ display: "block", color: "#fde047" }}>
-                    African Commerce
-                  </span>
-                </Typography> */}
                   <Typography
                   component="h1"
                   sx={{
-                    fontSize: { xs: "3rem", md: "4.5rem" },
+                    fontSize: { xs: "1.85rem", sm: "2.25rem", md: "3.5rem", lg: "4.5rem" },
                     fontWeight: 900,
-                    marginBottom: "24px",
+                    marginBottom: { xs: "12px", sm: "16px", md: "24px" },
                     lineHeight: 1.1,
                     color: "white",
                   }}
@@ -176,23 +160,23 @@ function ModernLandingPage() {
               >
                 <Typography
                   sx={{
-                    padding: "12px 14px",
-                    fontSize: { xs: "1.4rem", md: "1.6rem" },
-                    marginBottom: "32px",
+                    padding: { xs: "8px 0", sm: "10px 8px", md: "12px 14px" },
+                    fontSize: { xs: "0.975rem", sm: "1rem", md: "1.25rem", lg: "1.6rem" },
+                    marginBottom: { xs: "20px", sm: "24px", md: "32px" },
                     color: "rgba(255, 255, 255, 0.95)",
-                    lineHeight: 2.4,
+                    lineHeight: { xs: 1.6, sm: 1.8, md: 2.4 },
                     fontWeight: 400,
                     letterSpacing: "0.015em",
                     maxWidth: "600px",
                   }}
                 >
-                  Shop authentic products, book premium stays, discover amazing restaurants,
-                  and explore investment opportunities — <span style={{ fontWeight: 500, color: '#fde047' }}>all in one ecosystem</span>.
+                  Shop authentic products, book premium stays,<br/> discover amazing restaurants,
+                  and explore investment <br/> opportunities — <span style={{ fontWeight: 500, color: '#fde047' }}>all in one ecosystem</span>.
                 </Typography>
               </motion.div>
 
               <motion.div
-                className="flex flex-wrap gap-4"
+                className="flex flex-col sm:flex-row flex-wrap gap-3 sm:gap-4"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.8 }}
@@ -207,11 +191,12 @@ function ModernLandingPage() {
                     backgroundColor: "white",
                     color: "#ea580c",
                     fontWeight: "bold",
-                    fontSize: "1.125rem",
-                    padding: "14px 40px",
+                    fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+                    padding: { xs: "12px 24px", sm: "13px 32px", md: "14px 40px" },
                     borderRadius: "9999px",
                     boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
                     textTransform: "none",
+                    width: { xs: "100%", sm: "auto" },
                     "&:hover": {
                       backgroundColor: "#f3f4f6",
                     },
@@ -230,11 +215,12 @@ function ModernLandingPage() {
                     borderWidth: "2px",
                     color: "white",
                     fontWeight: "bold",
-                    fontSize: "1.125rem",
-                    padding: "14px 40px",
+                    fontSize: { xs: "0.875rem", sm: "1rem", md: "1.125rem" },
+                    padding: { xs: "12px 24px", sm: "13px 32px", md: "14px 40px" },
                     borderRadius: "9999px",
                     backdropFilter: "blur(4px)",
                     textTransform: "none",
+                    width: { xs: "100%", sm: "auto" },
                     "&:hover": {
                       backgroundColor: "rgba(255, 255, 255, 0.1)",
                       borderColor: "white",
@@ -248,7 +234,7 @@ function ModernLandingPage() {
 
               {/* Stats */}
               <motion.div
-                className="grid grid-cols-3 gap-8 mt-16 p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20"
+                className="grid grid-cols-3 gap-2 sm:gap-4 md:gap-8 mt-8 sm:mt-12 md:mt-16 p-3 sm:p-4 md:p-6 bg-white/10 rounded-2xl backdrop-blur-sm border border-white/20"
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 1 }}
@@ -261,7 +247,7 @@ function ModernLandingPage() {
                   <div key={i} className="text-center">
                     <Typography
                       sx={{
-                        fontSize: "2.5rem",
+                        fontSize: { xs: "1.25rem", sm: "1.75rem", md: "2.5rem" },
                         fontWeight: 900,
                         color: "#fde047",
                       }}
@@ -270,7 +256,7 @@ function ModernLandingPage() {
                     </Typography>
                     <Typography
                       sx={{
-                        fontSize: "1.475rem",
+                        fontSize: { xs: "0.625rem", sm: "0.875rem", md: "1.475rem" },
                         color: "rgba(255, 255, 255, 0.9)",
                         marginTop: "4px",
                       }}
@@ -290,18 +276,18 @@ function ModernLandingPage() {
               className="relative mt-8 md:mt-0"
             >
               {/* Main Illustration Card */}
-              <div className="relative bg-white/10 backdrop-blur-md rounded-[40px] p-8 border border-white/20"
+              <div className="relative bg-white/10 backdrop-blur-md rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-4 sm:p-6 md:p-8 border border-white/20"
                 style={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}>
 
                 {/* Category Tags */}
-                <div className="px-10 py-10 flex gap-3 mb-6">
-                  <span className="px-4 py-2 bg-white/90 rounded-full text-sm font-semibold text-gray-800">
+                <div className="px-2 py-3 sm:px-6 sm:py-6 md:px-10 md:py-10 flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-white/90 rounded-full text-xs sm:text-sm font-semibold text-gray-800">
                     Marketplace
                   </span>
-                  <span className="px-4 py-2 bg-white/90 rounded-full text-sm font-semibold text-gray-800">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-white/90 rounded-full text-xs sm:text-sm font-semibold text-gray-800">
                     Travel
                   </span>
-                  <span className="px-4 py-2 bg-black/80 text-white rounded-full text-sm font-semibold">
+                  <span className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-black/80 text-white rounded-full text-xs sm:text-sm font-semibold">
                     Featured
                   </span>
                 </div>
@@ -309,10 +295,10 @@ function ModernLandingPage() {
                 {/* Main Feature Title */}
                 <Typography
                   sx={{
-                    fontSize: { xs: "1.5rem", md: "1.875rem" },
+                    fontSize: { xs: "1.125rem", sm: "1.375rem", md: "1.875rem" },
                     fontWeight: 700,
                     color: "white",
-                    marginBottom: "16px",
+                    marginBottom: { xs: "12px", sm: "14px", md: "16px" },
                     lineHeight: 1.3,
                   }}
                 >
@@ -322,9 +308,9 @@ function ModernLandingPage() {
 
                 <Typography
                   sx={{
-                    fontSize: "1.4rem",
+                    fontSize: { xs: "0.875rem", sm: "1rem", md: "1.4rem" },
                     color: "rgba(255, 255, 255, 0.8)",
-                    marginBottom: "24px",
+                    marginBottom: { xs: "16px", sm: "20px", md: "24px" },
                   }}
                 >
                   From marketplace to reservations.
@@ -338,8 +324,11 @@ function ModernLandingPage() {
                     duration: 6,
                     ease: "easeInOut",
                   }}
-                  className="relative rounded-3xl overflow-hidden"
-                  style={{ height: "400px" }}
+                  className="relative rounded-2xl sm:rounded-3xl overflow-hidden"
+                  style={{ height: "240px", maxHeight: "240px" }}
+                  sx={{
+                    height: { xs: "240px", sm: "300px", md: "400px" },
+                  }}
                 >
                   <Carousel
                     autoPlay={true}
@@ -350,65 +339,65 @@ function ModernLandingPage() {
                     showIndicators={true}
                     transitionTime={800}
                   >
-                    <div className="h-[400px]">
+                    <div className="h-[240px] sm:h-[300px] md:h-[400px]">
                       <img
                         src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?w=800&auto=format&fit=crop&q=85"
                         alt="Electronics"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                        <Typography className="text-white font-bold text-xl">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 sm:p-4 md:p-6">
+                        <Typography className="text-white font-bold text-sm sm:text-lg md:text-xl">
                           Premium Electronics
                         </Typography>
-                        <Typography className="text-white/90 text-sm">
+                        <Typography className="text-white/90 text-xs sm:text-sm">
                           Exclusive deals on top brands
                         </Typography>
                       </div>
                     </div>
 
-                    <div className="h-[400px]">
+                    <div className="h-[240px] sm:h-[300px] md:h-[400px]">
                       <img
                         src="https://images.unsplash.com/photo-1566073771259-6a8506099945?w=800&auto=format&fit=crop&q=85"
                         alt="Hotels"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                        <Typography className="text-white font-bold text-xl">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 sm:p-4 md:p-6">
+                        <Typography className="text-white font-bold text-sm sm:text-lg md:text-xl">
                           Luxury Accommodations
                         </Typography>
-                        <Typography className="text-white/90 text-sm">
+                        <Typography className="text-white/90 text-xs sm:text-sm">
                           Book your perfect stay across Africa
                         </Typography>
                       </div>
                     </div>
 
-                    <div className="h-[400px]">
+                    <div className="h-[240px] sm:h-[300px] md:h-[400px]">
                       <img
                         src="https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?w=800&auto=format&fit=crop&q=85"
                         alt="Dining"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                        <Typography className="text-white font-bold text-xl">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 sm:p-4 md:p-6">
+                        <Typography className="text-white font-bold text-sm sm:text-lg md:text-xl">
                           Fine Dining Experience
                         </Typography>
-                        <Typography className="text-white/90 text-sm">
+                        <Typography className="text-white/90 text-xs sm:text-sm">
                           Discover Africa's best restaurants
                         </Typography>
                       </div>
                     </div>
 
-                    <div className="h-[400px]">
+                    <div className="h-[240px] sm:h-[300px] md:h-[400px]">
                       <img
                         src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=800&auto=format&fit=crop&q=85"
                         alt="Fashion"
                         className="w-full h-full object-cover"
                       />
-                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-                        <Typography className="text-white font-bold text-xl">
+                      <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-3 sm:p-4 md:p-6">
+                        <Typography className="text-white font-bold text-sm sm:text-lg md:text-xl">
                           Fashion & Style
                         </Typography>
-                        <Typography className="text-white/90 text-sm">
+                        <Typography className="text-white/90 text-xs sm:text-sm">
                           Trending styles and new arrivals
                         </Typography>
                       </div>
@@ -416,24 +405,24 @@ function ModernLandingPage() {
                   </Carousel>
 
                   {/* Play Button Overlay */}
-                  <div className="absolute top-4 right-4 w-12 h-12 bg-orange-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
-                    <div className="w-0 h-0 border-l-8 border-l-white border-t-4 border-t-transparent border-b-4 border-b-transparent ml-1"></div>
+                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3 md:top-4 md:right-4 w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 bg-orange-600 rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform">
+                    <div className="w-0 h-0 border-l-4 sm:border-l-6 md:border-l-8 border-l-white border-t-2 sm:border-t-3 md:border-t-4 border-t-transparent border-b-2 sm:border-b-3 md:border-b-4 border-b-transparent ml-0.5 sm:ml-0.5 md:ml-1"></div>
                   </div>
                 </motion.div>
 
                 {/* Bottom Stats */}
-                <div className="flex items-center justify-between mt-6 pt-6 border-t border-white/20">
-                  <div className="flex items-center space-x-3">
+                <div className="flex flex-col sm:flex-row items-center justify-between gap-3 sm:gap-0 mt-4 sm:mt-6 pt-4 sm:pt-6 border-t border-white/20">
+                  <div className="flex items-center space-x-2 sm:space-x-3">
                     <div className="flex -space-x-2">
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-500 border-2 border-white"></div>
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-white"></div>
-                      <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-teal-500 border-2 border-white"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-orange-400 to-red-500 border-2 border-white"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-blue-400 to-purple-500 border-2 border-white"></div>
+                      <div className="w-6 h-6 sm:w-8 sm:h-8 rounded-full bg-gradient-to-br from-green-400 to-teal-500 border-2 border-white"></div>
                     </div>
                     <div>
-                      <Typography className="text-white font-bold text-2xl">
+                      <Typography className="text-white font-bold text-lg sm:text-xl md:text-2xl">
                         100K+
                       </Typography>
-                      <Typography className="text-white/70 text-xs">
+                      <Typography className="text-white/70 text-[10px] sm:text-xs">
                         Happy Customers
                       </Typography>
                     </div>
@@ -445,7 +434,8 @@ function ModernLandingPage() {
                       backgroundColor: "white",
                       color: "#ea580c",
                       fontWeight: "bold",
-                      padding: "10px 24px",
+                      padding: { xs: "8px 16px", sm: "9px 20px", md: "10px 24px" },
+                      fontSize: { xs: "0.75rem", sm: "0.875rem", md: "1rem" },
                       borderRadius: "12px",
                       textTransform: "none",
                       "&:hover": {
@@ -458,7 +448,7 @@ function ModernLandingPage() {
                 </div>
               </div>
 
-              {/* Floating Mini Card - Top Right */}
+              {/* Floating Mini Card - Top Right - Hidden on mobile/tablet, shown on large screens */}
               <motion.div
                 animate={{ y: [0, -10, 0], rotate: [0, 2, 0] }}
                 transition={{
@@ -466,7 +456,7 @@ function ModernLandingPage() {
                   duration: 5,
                   ease: "easeInOut",
                 }}
-                className="absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-2xl"
+                className="hidden lg:block absolute -top-4 -right-4 bg-white rounded-2xl p-4 shadow-2xl"
                 style={{ width: "140px" }}
               >
                 <img
@@ -487,14 +477,14 @@ function ModernLandingPage() {
 
         {/* Scroll Indicator */}
         <motion.div
-          className="absolute bottom-10 left-1/2 transform -translate-x-1/2"
+          className="absolute bottom-6 sm:bottom-8 md:bottom-10 left-1/2 transform -translate-x-1/2"
           animate={{ y: [0, 10, 0] }}
           transition={{ repeat: Infinity, duration: 1.5 }}
         >
           <KeyboardArrowDownIcon
             sx={{
-              fontSize: "3rem",
-              color: "gray.200",
+              fontSize: { xs: "2rem", sm: "2.5rem", md: "3rem" },
+              color: "rgba(229, 231, 235, 0.8)",
               animation: "bounce 1s infinite",
             }}
           />
@@ -635,7 +625,9 @@ function ModernLandingPage() {
                   </Link>
 
                   <Link
-                    to="/merchant/register"
+                    to={`${merchantUrl}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className="bg-white p-6 rounded-2xl shadow transition ease-in-out delay-150 hover:scale-105 cursor-pointer block"
                     style={{ textDecoration: 'none' }}
                   >

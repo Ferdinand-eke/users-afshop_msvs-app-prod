@@ -197,9 +197,11 @@ function ProductCard({ product, index }) {
         {/* Action Buttons */}
         <div className="flex gap-2 mt-auto pt-4">
           <Button
+          component={NavLinkAdapter}
+            to={`/marketplace/product/${product?.slug}/view`}
             fullWidth
             variant="contained"
-            startIcon={<ShoppingCart />}
+            startIcon={<Visibility />}
             className="bg-gradient-to-r from-orange-600 to-red-600 hover:from-orange-700 hover:to-red-700 text-white font-semibold py-2.5 rounded-xl shadow-md hover:shadow-lg transition-all duration-300"
             sx={{
               background: "linear-gradient(to right, #ea580c, #dc2626)",
@@ -208,7 +210,7 @@ function ProductCard({ product, index }) {
               },
             }}
           >
-            Add to Cart
+            View more
           </Button>
         </div>
       </div>

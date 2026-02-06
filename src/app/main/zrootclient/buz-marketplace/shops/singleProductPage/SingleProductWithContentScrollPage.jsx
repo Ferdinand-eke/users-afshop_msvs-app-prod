@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import FusePageSimple from "@fuse/core/FusePageSimple";
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useMemo, memo } from "react";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import DemoHeader from "./shared-components/DemoHeader";
 import DemoContentSingleProduct from "./shared-components/DemoContentSingleProduct";
@@ -13,6 +13,8 @@ import useGetAllProducts, {
   useGetSingleProduct,
   useMyCart,
 } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../../aapp-settings-from-admin/ServiceStatusLandingPage";
 // import { useForm } from "react-hook-form";
 // import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
 // import {
@@ -50,10 +52,10 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 
 
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * Active Single Product Page Component
+ * This component renders when the marketplace service is ACTIVE
  */
-
-function SingleProductWithContentScrollPage() {
+function ActiveSingleProductPage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
@@ -66,7 +68,7 @@ function SingleProductWithContentScrollPage() {
   const routeParams = useParams();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
-  const { productId, productSlug } = routeParams;
+  const { productId: productIdFromRoute, productSlug } = routeParams;
 
   const {
     data: product,
@@ -138,52 +140,119 @@ function SingleProductWithContentScrollPage() {
     userCartData?.data?.cartSession?.cartProducts?.length,
   ]);
 
+  // Memoize sidebar toggle handlers to prevent re-renders
+  const handleLeftSidebarToggle = useCallback(() => {
+    setLeftSidebarOpen(!leftSidebarOpen);
+  }, [leftSidebarOpen]);
+
+  const handleRightSidebarToggle = useCallback(() => {
+    setRightSidebarOpen(!rightSidebarOpen);
+  }, [rightSidebarOpen]);
+
+  const handleLeftSidebarClose = useCallback(() => {
+    setLeftSidebarOpen(false);
+  }, []);
+
+  const handleRightSidebarClose = useCallback(() => {
+    setRightSidebarOpen(false);
+  }, []);
+
+  // Memoize derived data to avoid recalculation on every render
+  const productData = useMemo(() => product?.data?.product, [product?.data?.product]);
+  const productId = useMemo(() => product?.data?.product?.id, [product?.data?.product?.id]);
+  const cartItems = useMemo(() => userCartData?.data?.cartSession?.cartProducts, [userCartData?.data?.cartSession?.cartProducts]);
+
+  // Memoize header component
+  const headerComponent = useMemo(
+    () => (
+      <DemoHeader
+        leftSidebarToggle={handleLeftSidebarToggle}
+        rightSidebarToggle={handleRightSidebarToggle}
+      />
+    ),
+    [handleLeftSidebarToggle, handleRightSidebarToggle]
+  );
+
+  // Memoize content component
+  const contentComponent = useMemo(
+    () => (
+      <DemoContentSingleProduct
+        productData={productData}
+        isLoading={isLoading}
+        isError={isError}
+        select={select}
+        setSelect={setSelect}
+        onSubmit={onAddToUserCart}
+        loading={cartLoading}
+        productId={productId}
+        cartItems={cartItems}
+      />
+    ),
+    [productData, isLoading, isError, select, onAddToUserCart, cartLoading, productId, cartItems]
+  );
+
+  // Memoize left sidebar content
+  const leftSidebarContentComponent = useMemo(() => <DemoSidebar />, []);
+
+  // Memoize right sidebar content
+  const rightSidebarContentComponent = useMemo(
+    () => <DemoSidebarRight productInfo={productData} />,
+    [productData]
+  );
+
   return (
     <Root
-      header={
-        <DemoHeader
-
-          leftSidebarToggle={() => {
-            setLeftSidebarOpen(!leftSidebarOpen);
-          }}
-          rightSidebarToggle={() => {
-            setRightSidebarOpen(!rightSidebarOpen);
-          }}
-        />
-      }
-      content={
-        <DemoContentSingleProduct
-          productData={product?.data?.product}
-          isLoading={isLoading}
-          isError={isError}
-          select={select}
-          setSelect={setSelect}
-
-          onSubmit={onAddToUserCart}
-          loading={cartLoading}
-          productId={product?.data?.product.id}
-          cartItems={userCartData?.data?.cartSession?.cartProducts}
-        />
-      }
+      header={headerComponent}
+      content={contentComponent}
       leftSidebarOpen={leftSidebarOpen}
-      leftSidebarOnClose={() => {
-        setLeftSidebarOpen(false);
-      }}
-      leftSidebarContent={<DemoSidebar />}
+      leftSidebarOnClose={handleLeftSidebarClose}
+      leftSidebarContent={leftSidebarContentComponent}
       rightSidebarOpen={rightSidebarOpen}
-      rightSidebarOnClose={() => {
-        setRightSidebarOpen(false);
-      }}
-      rightSidebarContent={
-        <DemoSidebarRight
-          // methods={methods}
-          productInfo={product?.data?.product}
-        />
-      }
+      rightSidebarOnClose={handleRightSidebarClose}
+      rightSidebarContent={rightSidebarContentComponent}
       scroll="content"
     />
   );
-  
+}
+
+// Memoize ActiveSingleProductPage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveSingleProductPage = memo(ActiveSingleProductPage);
+
+/**
+ * Main Single Product Page Component with Service Status Check
+ * Wraps the active single product page with service status landing pages
+ */
+
+function SingleProductWithContentScrollPage() {
+  // Fetch user app settings
+  const {
+    data: appSettings,
+    isLoading: isLoadingSettings,
+    isError: isErrorSettings,
+  } = useGetUserAppSetting();
+
+  // Extract the marketplace service status - memoized to prevent unnecessary re-renders
+  const marketplaceServiceStatus = useMemo(
+    () => appSettings?.data?.payload?.marketplaceServiceStatus,
+    [appSettings?.data?.payload?.marketplaceServiceStatus]
+  );
+
+  // Log service status only when it changes (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && marketplaceServiceStatus !== undefined) {
+      console.log("Marketplace Service Status (Single Product):", marketplaceServiceStatus);
+    }
+  }, [marketplaceServiceStatus]);
+
+  return (
+    <ServiceStatusLandingPage
+      serviceStatus={marketplaceServiceStatus}
+      ActiveComponent={MemoizedActiveSingleProductPage}
+      isLoading={isLoadingSettings}
+      isError={isErrorSettings}
+      serviceName="Marketplace"
+    />
+  );
 }
 
 export default SingleProductWithContentScrollPage;

@@ -67,7 +67,9 @@ const PRODUCT_FEATURES = [
  * A comprehensive filter panel for marketplace product listings with location filters,
  * price range, shop plans, and product features
  */
-function ProductFilter({ onFilterChange, initialFilters = {} }) {
+
+function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
+  
   const { data: COUNTRIES } = useSellerCountries();
 
   // Use ref to store the latest onFilterChange callback
@@ -202,6 +204,11 @@ function ProductFilter({ onFilterChange, initialFilters = {} }) {
     setMarket("");
     setPriceRange([0, 1000000]);
     setSelectedFeatures([]);
+
+    // Trigger clear action in parent (DemoSidebar) to also reset category
+    if (onClearAll) {
+      onClearAll();
+    }
   };
 
   // Format price display

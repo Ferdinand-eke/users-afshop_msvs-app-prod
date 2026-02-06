@@ -14,18 +14,24 @@ import DocumentationConfig from "../main/documentation/DocumentationConfig";
 import authRoleExamplesConfigs from "../main/auth/authRoleExamplesConfigs";
 import UsersAppConfig from "../main/users/user/UsersAppConfig";
 import StaffAppConfig from "../main/users/admin/StaffAppConfig";
-import SignAcceptInviteConfig from "../main/sign-accept-invite/SignAcceptInviteConfig";
 
-// import SupportHelpCenterAppConfig from "../main/vendors-shop/support-center/SupportHelpCenterAppConfig";
-import AfricanshopsFinanceDashboardAppConfig from "../main/africanshops-finance/AfricanshopsFinanceDashboardAppConfig";
-import AfricanshopsMessengerAppConfig from "../main/africanshops-messenger/AfricanshopsMessengerAppConfig";
+
+/***Authentication-based-config starts*/
+import SignAcceptInviteConfig from "../main/sign-accept-invite/SignAcceptInviteConfig";
 import forgotPasswordConfig from "../main/sign-forgot-password/forgotPasswordPagesConfig";
 import resetPasswordConfig from "../main/sign-reset-password/resetPasswordPagesConfig";
+/***##########################Authentication-based-config ends#########################*/
+
+/***Bookings & Reservations-based-config  starts*/
+import userReservationPagesConfig from "../main/zrootclient/buz-bookings/user-reservations/userReservationPagesConfig";
+/***#######################################Bookings & Reservations-based-config  ends########################*/
+import AfricanshopsFinanceDashboardAppConfig from "../main/africanshops-finance/AfricanshopsFinanceDashboardAppConfig";
+import AfricanshopsMessengerAppConfig from "../main/africanshops-messenger/AfricanshopsMessengerAppConfig";
+
 
 import blogAppConfig from "../main/newsblog/blogAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
 import LandingCenterHome from "../main/vendors-shop/home/home/LandingCenterHome";
-// import MarketplaceShops from "../main/zrootclient/buz-marketplace/shops/MarketplaceShops";
 import SingleProduct from "../main/zrootclient/buz-marketplace/shops/SingleProduct";
 import Cart from "../main/zrootclient/buz-marketplace/shops/Cart";
 import RealEstatesPage from "../main/zrootclient/buz-realestates/RealEstatesPage";
@@ -35,7 +41,7 @@ import FoodMartsPage from "../main/zrootclient/buz-foodmart/foodMartPage/FoodMar
 import VisitFoodMartPage from "../main/zrootclient/buz-foodmart/visitFoodMartPage/VisitFoodMartPage";
 import FoodMartsPageSecond from "../main/zrootclient/buz-foodmart/FoodMartsPageSecond";
 import FoodMartsPageSecondResponsive from "../main/zrootclient/buz-foodmart/FoodMartsPageSecondResponsive";
-import userReservationPagesConfig from "../main/zrootclient/buz-bookings/user-reservations/userReservationPagesConfig";
+
 import FoodMartSingleMenu from "../main/zrootclient/buz-foodmart/FoodMartSingleMenu";
 import userMarketPlacePagesConfig from "../main/zrootclient/buz-marketplace/userMarketPlacePagesConfig";
 import userFoodMartPagesConfig from "../main/zrootclient/buz-foodmart/userFoodMartPagesConfig";
@@ -61,6 +67,7 @@ import AboutUs from "../main/vendors-shop/home/home/AboutUs";
 import ContactUs from "../main/vendors-shop/home/home/ContactUs";
 import MerchantSubdomainConfig from "../main/merchant-subdomain/MerchantSubdomainConfig";
 import { isSubdomainRoute } from "app/utils/subdomainUtils";
+import MarketplaceDealsWithSidebarsContentScrollComponent from "../main/zrootclient/buz-marketplace/shops/marketplace/MarketplaceDealsWithSidebarsContentScrollComponent";
 
 // Check if we're on a merchant subdomain
 // DISABLED FOR VERCEL STAGING DEPLOYMENT
@@ -288,6 +295,31 @@ const routes = [
       },
     },
     element: <ContactUs />,
+  },
+  {
+    path: "/deals",
+    settings: {
+      layout: {
+        config: {
+          navbar: {
+            display: false,
+          },
+          toolbar: {
+            display: true,
+          },
+          footer: {
+            display: false,
+          },
+          leftSidePanel: {
+            display: false,
+          },
+          rightSidePanel: {
+            display: false,
+          },
+        },
+      },
+    },
+    element: <MarketplaceDealsWithSidebarsContentScrollComponent />,
   },
   {
     path: "loading",

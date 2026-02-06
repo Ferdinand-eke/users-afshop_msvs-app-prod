@@ -96,7 +96,7 @@ const handleNestJSError = (error, rollback) => {
 
 export default function useGetAllProducts(filters = {}) {
   // return useQuery(["__marketplace_products"], getAllProducts);
-  console.log("Filtes in Get-All-Producst", filters)
+  // console.log("Filtes in Get-All-Producst", filters)
   return useQuery(
           ['__marketplace_products', filters],
           () => getAllProducts(filters),

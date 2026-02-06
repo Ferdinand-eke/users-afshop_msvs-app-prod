@@ -3,18 +3,29 @@ import { Typography } from '@mui/material';
 import { ShoppingCartOutlined } from '@mui/icons-material';
 import MarketplaceMapLoadingPlaceholder from './MarketplaceMapLoadingPlaceholder';
 import MarketplaceMap from '../../../components/maps/MarketplaceMap';
+import { useAppSelector } from 'app/store/hooks';
+import { selectUser } from 'src/app/auth/user/store/userSlice';
+import { useMyCart } from 'app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo';
+import { useMemo } from 'react';
+
 
 /**
- * The DemoSidebarRight component.
+ * The MarketplaceDemoSidebarRight component.
  * Enhanced with marketplace map showing active shopping cart state
  */
-function DemoSidebarRight(props) {
-	const { cartData, isLoading } = props;
+function MarketplaceDemoSidebarRight(props) {
+	 const user = useAppSelector(selectUser);
+	 const { data: userCartData, isLoading: cartLoading } = useMyCart(user?.id);
+
+	  const cartItems = useMemo(() => userCartData?.data?.cartSession, [userCartData?.data?.cartSession]);
+
+	// const { cartData, isLoading } = props;
 
 	// Show loading placeholder while data is being fetched
 	// For now, we'll always show the map with dummy data
 	// This will be replaced with actual cart state data from API
-	const showLoading = isLoading || false;
+	const showLoading = cartLoading || false;
+
 
 	if (showLoading) {
 		return <MarketplaceMapLoadingPlaceholder />;
@@ -49,7 +60,10 @@ function DemoSidebarRight(props) {
 
 			{/* Map Container */}
 			<div className="flex-1 rounded-2xl overflow-hidden shadow-2xl">
-				<MarketplaceMap cartData={cartData} />
+				<MarketplaceMap 
+				cartData={cartItems}
+				
+				/>
 			</div>
 
 			{/* Info Footer */}
@@ -68,4 +82,4 @@ function DemoSidebarRight(props) {
 	);
 }
 
-export default DemoSidebarRight;
+export default MarketplaceDemoSidebarRight;

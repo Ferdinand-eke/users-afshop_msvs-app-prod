@@ -242,7 +242,7 @@ const MemoizedActiveMarketplacePage = memo(ActiveMarketplacePage);
  * Main Marketplace Component with Service Status Check
  * Wraps the active marketplace page with service status landing pages
  */
-function MarketplaceWithSidebarsContentScrollComponent() {
+function MarketplaceDealsWithSidebarsContentScrollComponent() {
 	// Fetch user app settings
 	const {
 		data: appSettings,
@@ -274,4 +274,4 @@ function MarketplaceWithSidebarsContentScrollComponent() {
 	);
 }
 
-export default MarketplaceWithSidebarsContentScrollComponent;
+export default MarketplaceDealsWithSidebarsContentScrollComponent;

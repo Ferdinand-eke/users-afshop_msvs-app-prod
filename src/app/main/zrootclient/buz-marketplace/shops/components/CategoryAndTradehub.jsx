@@ -1,10 +1,36 @@
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { Typography } from "@mui/material";
 import useProductCats from "app/configs/data/server-calls/product-categories/useProductCategories";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useRef } from "react";
 import { useParams } from "react-router";
 
-const CategoryAndTradehub = () => {
+const CategoryAndTradehub = ({ onFilterChange, initialFilters = {}, resetRef }) => {
+    const onFilterChangeRef = useRef(onFilterChange);
+
+    // Update ref when onFilterChange changes
+    useEffect(() => {
+      onFilterChangeRef.current = onFilterChange;
+    }, [onFilterChange]);
+
+    // Filter state
+    const [category, setCategory] = useState(initialFilters.category || "");
+
+    // Expose reset function through ref
+    useEffect(() => {
+      if (resetRef) {
+        resetRef.current = () => {
+          setCategory("");
+          // Notify parent about the category reset
+          if (onFilterChangeRef.current) {
+            onFilterChangeRef.current({ category: "" });
+          }
+        };
+      }
+    }, [resetRef]);
+
+    console.log("Product by cat-filter CAT", category)
+
   const routeParams = useParams();
   const { id } = routeParams;
 
@@ -24,12 +50,18 @@ const CategoryAndTradehub = () => {
           }
         >
           <Typography
-            component={NavLinkAdapter}
-            to={`/marketplace/products/${item?.id}/by-category`}
+            // component={NavLinkAdapter}
+            // to={`/marketplace/products/${item?.id}/by-category`}
+            onClick={() => {
+              setCategory(item.id);
+              if (onFilterChangeRef.current) {
+                onFilterChangeRef.current({ category: item.id });
+              }
+            }}
             sx={{
               fontSize: '1.125rem',
-              fontWeight: item.id === id ? 700 : 500,
-              color: item.id === id ? '#ea580c' : '#374151',
+              fontWeight: item.id === category ? 700 : 500,
+              color: item.id === category ? '#ea580c' : '#374151',
               textDecoration: 'none',
               display: 'block',
               width: '100%',

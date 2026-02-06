@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useState, useMemo, memo } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoContent from './shared-components/DemoContent';
@@ -20,6 +20,8 @@ import { useNavigate, useParams } from 'react-router';
 import { useAppSelector } from 'app/store/hooks';
 import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { getFoodVendorSession, storeFoodVendorSession } from 'src/app/main/vendors-shop/PosUtils';
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../aapp-settings-from-admin/ServiceStatusLandingPage";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	
@@ -44,9 +46,10 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 }));
 
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * Active Food Mart Single Menu Page Component
+ * This component renders when the restaurants/clubs/spots service is ACTIVE
  */
-function FoodMartSingleMenuWithContentScrollPage() {
+function ActiveFoodMartSingleMenuPage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
 	const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
@@ -76,7 +79,7 @@ function FoodMartSingleMenuWithContentScrollPage() {
         navigate("/sign-in");
         return;
       }
-  
+
       const formData = {
         user: user?.id,
         quantity: 1,
@@ -90,14 +93,14 @@ function FoodMartSingleMenuWithContentScrollPage() {
         // shoppingSession:''
       };
       if (foodCart?.data?.userFoodCartSession?.cartProducts?.length === 0) {
-   
+
         if (foodCart?.data?.userFoodCartSession?.lgaId) {
           addToFoodMenuToCart(formData);
           // getCartWhenAuth()
           return;
         }
       } else {
-  
+
         if (
           foodCart?.data?.userFoodCartSession?.lgaId ===
           menu?.data?.menu?.foodMartMenuLga  || !foodCart?.data?.userFoodCartSession?.lgaId
@@ -118,45 +121,114 @@ function FoodMartSingleMenuWithContentScrollPage() {
       foodCart?.data?.userFoodCartSession?.cartProducts?.length,
     ]);
 
+  // Memoize sidebar toggle handlers to prevent re-renders
+  const handleLeftSidebarToggle = useCallback(() => {
+    setLeftSidebarOpen(!leftSidebarOpen);
+  }, [leftSidebarOpen]);
+
+  const handleRightSidebarToggle = useCallback(() => {
+    setRightSidebarOpen(!rightSidebarOpen);
+  }, [rightSidebarOpen]);
+
+  const handleLeftSidebarClose = useCallback(() => {
+    setLeftSidebarOpen(false);
+  }, []);
+
+  const handleRightSidebarClose = useCallback(() => {
+    setRightSidebarOpen(false);
+  }, []);
+
+  // Memoize derived data to avoid recalculation on every render
+  const menuData = useMemo(() => menu?.data?.menu, [menu?.data?.menu]);
+  const userFoodCartSession = useMemo(() => foodCart?.data?.userFoodCartSession, [foodCart?.data?.userFoodCartSession]);
+
+  // Memoize header component
+  const headerComponent = useMemo(
+    () => (
+      <DemoHeader
+        leftSidebarToggle={handleLeftSidebarToggle}
+        rightSidebarToggle={handleRightSidebarToggle}
+      />
+    ),
+    [handleLeftSidebarToggle, handleRightSidebarToggle]
+  );
+
+  // Memoize content component
+  const contentComponent = useMemo(
+    () => (
+      <DemoContent
+        menuData={menuData}
+        isLoading={isLoading}
+        isError={isError}
+        onAddToFoodCart={onAddToFoodCart}
+        addFoodCartLoading={addFoodCartLoading}
+        foodCart={userFoodCartSession}
+      />
+    ),
+    [menuData, isLoading, isError, onAddToFoodCart, addFoodCartLoading, userFoodCartSession]
+  );
+
+  // Memoize left sidebar content
+  const leftSidebarContentComponent = useMemo(() => <DemoSidebar />, []);
+
+  // Memoize right sidebar content
+  const rightSidebarContentComponent = useMemo(
+    () => <DemoSidebarRight menu={menuData} />,
+    [menuData]
+  );
 
 	return (
 		<Root
-	
-			header={
-				<DemoHeader
-
-					leftSidebarToggle={() => {
-						setLeftSidebarOpen(!leftSidebarOpen);
-					}}
-					rightSidebarToggle={() => {
-						setRightSidebarOpen(!rightSidebarOpen);
-					}}
-				/>
-			}
-			content={<DemoContent
-				menuData={menu?.data?.menu}
-				isLoading={isLoading}
-				isError={isError}
-        onAddToFoodCart={onAddToFoodCart}
-        addFoodCartLoading={addFoodCartLoading}
-        foodCart={foodCart?.data?.userFoodCartSession}
-				/>}
+			header={headerComponent}
+			content={contentComponent}
 			leftSidebarOpen={leftSidebarOpen}
-			leftSidebarOnClose={() => {
-				setLeftSidebarOpen(false);
-			}}
-			leftSidebarContent={<DemoSidebar />}
+			leftSidebarOnClose={handleLeftSidebarClose}
+			leftSidebarContent={leftSidebarContentComponent}
 			rightSidebarOpen={rightSidebarOpen}
-			rightSidebarOnClose={() => {
-				setRightSidebarOpen(false);
-			}}
-			rightSidebarContent={<DemoSidebarRight 
-
-      	menu={menu?.data?.menu}
-      />}
+			rightSidebarOnClose={handleRightSidebarClose}
+			rightSidebarContent={rightSidebarContentComponent}
 			scroll="content"
 		/>
 	);
+}
+
+// Memoize ActiveFoodMartSingleMenuPage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveFoodMartSingleMenuPage = memo(ActiveFoodMartSingleMenuPage);
+
+/**
+ * Main Food Mart Single Menu Page Component with Service Status Check
+ * Wraps the active single menu page with service status landing pages
+ */
+function FoodMartSingleMenuWithContentScrollPage() {
+  // Fetch user app settings
+  const {
+    data: appSettings,
+    isLoading: isLoadingSettings,
+    isError: isErrorSettings,
+  } = useGetUserAppSetting();
+
+  // Extract the restaurants/clubs/spots service status - memoized to prevent unnecessary re-renders
+  const restaurantsClubsSpotsServiceStatus = useMemo(
+    () => appSettings?.data?.payload?.restaurantsClubsSpotsServiceStatus,
+    [appSettings?.data?.payload?.restaurantsClubsSpotsServiceStatus]
+  );
+
+  // Log service status only when it changes (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && restaurantsClubsSpotsServiceStatus !== undefined) {
+      console.log("Restaurants/Clubs/Spots Service Status (Single Menu):", restaurantsClubsSpotsServiceStatus);
+    }
+  }, [restaurantsClubsSpotsServiceStatus]);
+
+  return (
+    <ServiceStatusLandingPage
+      serviceStatus={restaurantsClubsSpotsServiceStatus}
+      ActiveComponent={MemoizedActiveFoodMartSingleMenuPage}
+      isLoading={isLoadingSettings}
+      isError={isErrorSettings}
+      serviceName="Restaurants/Clubs/Spots"
+    />
+  );
 }
 
 export default FoodMartSingleMenuWithContentScrollPage;

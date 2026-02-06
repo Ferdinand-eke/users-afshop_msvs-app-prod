@@ -1,3 +1,4 @@
+import { useCallback, useRef } from "react";
 import CategoryAndTradehub from "../../components/CategoryAndTradehub";
 import ProductFilter from "./ProductFilter";
 
@@ -5,8 +6,20 @@ import ProductFilter from "./ProductFilter";
  * The DemoSidebar component.
  * Split layout: 40% categories, 60% filters
  * Responsive design preventing horizontal overflow
+ * Coordinates clear filter action between CategoryAndTradehub and ProductFilter
  */
 function DemoSidebar({ onFilterChange }) {
+  // Ref to trigger category reset
+  const categoryResetRef = useRef(null);
+
+  // Handler to clear filters including category
+  const handleClearAllFilters = useCallback(() => {
+    // Trigger category reset in CategoryAndTradehub
+    if (categoryResetRef.current) {
+      categoryResetRef.current();
+    }
+  }, []);
+
   return (
     <div
       className="flex flex-col h-screen p-6"
@@ -24,13 +37,19 @@ function DemoSidebar({ onFilterChange }) {
         }}
       >
         <div className="h-full rounded-xl overflow-hidden bg-white">
-          <CategoryAndTradehub />
+          <CategoryAndTradehub
+            onFilterChange={onFilterChange}
+            resetRef={categoryResetRef}
+          />
         </div>
       </div>
 
       {/* Filter Section - 60% */}
       <div className="flex-[6] overflow-y-auto overflow-x-hidden">
-        <ProductFilter onFilterChange={onFilterChange} />
+        <ProductFilter
+          onFilterChange={onFilterChange}
+          onClearAll={handleClearAllFilters}
+        />
       </div>
     </div>
   );

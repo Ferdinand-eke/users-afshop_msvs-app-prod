@@ -91,13 +91,6 @@ useEffect(() =>{
           {myshopData?.data?.shopplan?.plankey === 'LOGISTICS' && <><LogisticsNavigation layout="vertical"/></>}
           
 
-   
-          {/* {  
-          ( myshopData?.data?.shopplan?.plankey !== 'RETAIL' || 
-           myshopData?.data?.shopplan?.plankey !== 'WHOLESALEANDRETAILERS' ||
-           myshopData?.data?.shopplan?.plankey !== 'MANUFACTURERS' ||
-           myshopData?.data?.shopplan?.plankey !== 'REALESTATES') &&
-           <><Typography>Merchant has no account plan</Typography></>} */}
           {/* <Navigation layout="vertical" /> */}
           </>
         }

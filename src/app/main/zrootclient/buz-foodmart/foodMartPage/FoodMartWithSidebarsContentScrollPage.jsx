@@ -1,5 +1,5 @@
 import { styled } from '@mui/material/styles';
-import { useEffect, useState, useCallback } from 'react';
+import { useEffect, useState, useCallback, useMemo, memo } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoContent from './shared-components/DemoContent';
@@ -7,6 +7,8 @@ import DemoSidebar from './shared-components/DemoSidebar';
 import DemoSidebarRight from './shared-components/DemoSidebarRight';
 import FusePageSimpleWithMargin from '@fuse/core/FusePageSimple/FusePageSimpleWithMargin';
 import useGetAllFoodMarts from 'app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo';
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../aapp-settings-from-admin/ServiceStatusLandingPage";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 	
@@ -31,9 +33,10 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 }));
 
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * Active Food Mart Page Component
+ * This component renders when the restaurants/clubs/spots service is ACTIVE
  */
-function FoodMartWithSidebarsContentScrollPage() {
+function ActiveFoodMartPage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
 	const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
@@ -118,52 +121,128 @@ function FoodMartWithSidebarsContentScrollPage() {
 		setCurrentPage(1); // Reset to first page when changing items per page
 	}, []);
 
-	// Trigger filter change when pagination changes
+	// Sync pagination changes with filters
 	useEffect(() => {
 		if (Object.keys(filters).length > 0) {
-			handleFilterChange(filters);
+			setFilters((prevFilters) => ({
+				...prevFilters,
+				limit: itemsPerPage,
+				offset: (currentPage - 1) * itemsPerPage,
+			}));
 		}
 	}, [currentPage, itemsPerPage]);
 
+	// Memoize sidebar toggle handlers to prevent re-renders
+	const handleLeftSidebarToggle = useCallback(() => {
+		setLeftSidebarOpen(!leftSidebarOpen);
+	}, [leftSidebarOpen]);
+
+	const handleRightSidebarToggle = useCallback(() => {
+		setRightSidebarOpen(!rightSidebarOpen);
+	}, [rightSidebarOpen]);
+
+	const handleLeftSidebarClose = useCallback(() => {
+		setLeftSidebarOpen(false);
+	}, []);
+
+	const handleRightSidebarClose = useCallback(() => {
+		setRightSidebarOpen(false);
+	}, []);
+
+	// Memoize derived data to avoid recalculation on every render
+	const foodMarts = useMemo(() => AllFoodMarts?.data?.foodmarts, [AllFoodMarts?.data?.foodmarts]);
+	const totalItems = useMemo(() => AllFoodMarts?.data?.pagination?.total || 0, [AllFoodMarts?.data?.pagination?.total]);
+
+	// Memoize header component
+	const headerComponent = useMemo(
+		() => (
+			<DemoHeader
+				leftSidebarToggle={handleLeftSidebarToggle}
+				rightSidebarToggle={handleRightSidebarToggle}
+			/>
+		),
+		[handleLeftSidebarToggle, handleRightSidebarToggle]
+	);
+
+	// Memoize content component
+	const contentComponent = useMemo(
+		() => (
+			<DemoContent
+				foodMarts={foodMarts}
+				isLoading={isLoading}
+				isError={isError}
+				totalItems={totalItems}
+				currentPage={currentPage}
+				itemsPerPage={itemsPerPage}
+				onPageChange={handlePageChange}
+				onItemsPerPageChange={handleItemsPerPageChange}
+			/>
+		),
+		[foodMarts, isLoading, isError, totalItems, currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange]
+	);
+
+	// Memoize left sidebar content
+	const leftSidebarContentComponent = useMemo(
+		() => <DemoSidebar onFilterChange={handleFilterChange} />,
+		[handleFilterChange]
+	);
+
+	// Memoize right sidebar content
+	const rightSidebarContentComponent = useMemo(
+		() => <DemoSidebarRight listingsData={foodMarts} />,
+		[foodMarts]
+	);
+
 	return (
 		<Root
-			header={
-				<DemoHeader
-					leftSidebarToggle={() => {
-						setLeftSidebarOpen(!leftSidebarOpen);
-					}}
-					rightSidebarToggle={() => {
-						setRightSidebarOpen(!rightSidebarOpen);
-					}}
-				/>
-			}
-			content={
-				<DemoContent
-					foodMarts={AllFoodMarts?.data?.foodmarts}
-					isLoading={isLoading}
-					isError={isError}
-					totalItems={AllFoodMarts?.data?.pagination?.total || 0}
-					currentPage={currentPage}
-					itemsPerPage={itemsPerPage}
-					onPageChange={handlePageChange}
-					onItemsPerPageChange={handleItemsPerPageChange}
-				/>
-			}
+			header={headerComponent}
+			content={contentComponent}
 			leftSidebarOpen={leftSidebarOpen}
-			leftSidebarOnClose={() => {
-				setLeftSidebarOpen(false);
-			}}
-			leftSidebarContent={<DemoSidebar onFilterChange={handleFilterChange} />}
+			leftSidebarOnClose={handleLeftSidebarClose}
+			leftSidebarContent={leftSidebarContentComponent}
 			rightSidebarOpen={rightSidebarOpen}
-			rightSidebarOnClose={() => {
-				setRightSidebarOpen(false);
-			}}
-			rightSidebarContent={
-				<DemoSidebarRight 
-        
-        listingsData={AllFoodMarts?.data?.foodmarts} />
-			}
+			rightSidebarOnClose={handleRightSidebarClose}
+			rightSidebarContent={rightSidebarContentComponent}
 			scroll="content"
+		/>
+	);
+}
+
+// Memoize ActiveFoodMartPage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveFoodMartPage = memo(ActiveFoodMartPage);
+
+/**
+ * Main Food Mart Page Component with Service Status Check
+ * Wraps the active food mart page with service status landing pages
+ */
+function FoodMartWithSidebarsContentScrollPage() {
+	// Fetch user app settings
+	const {
+		data: appSettings,
+		isLoading: isLoadingSettings,
+		isError: isErrorSettings,
+	} = useGetUserAppSetting();
+
+	// Extract the restaurants/clubs/spots service status - memoized to prevent unnecessary re-renders
+	const restaurantsClubsSpotsServiceStatus = useMemo(
+		() => appSettings?.data?.payload?.restaurantsClubsSpotsServiceStatus,
+		[appSettings?.data?.payload?.restaurantsClubsSpotsServiceStatus]
+	);
+
+	// Log service status only when it changes (development only)
+	useEffect(() => {
+		if (process.env.NODE_ENV === 'development' && restaurantsClubsSpotsServiceStatus !== undefined) {
+			console.log("Restaurants/Clubs/Spots Service Status:", restaurantsClubsSpotsServiceStatus);
+		}
+	}, [restaurantsClubsSpotsServiceStatus]);
+
+	return (
+		<ServiceStatusLandingPage
+			serviceStatus={restaurantsClubsSpotsServiceStatus}
+			ActiveComponent={MemoizedActiveFoodMartPage}
+			isLoading={isLoadingSettings}
+			isError={isErrorSettings}
+			serviceName="Restaurants/Clubs/Spots"
 		/>
 	);
 }

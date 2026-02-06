@@ -4,6 +4,8 @@ import { MapContainer, TileLayer, Marker, Popup, useMap, Polygon } from "react-l
 import L from "leaflet";
 import { Typography, Chip } from "@mui/material";
 import { LocationOnOutlined, ShoppingCartOutlined } from "@mui/icons-material";
+import { useGetSingleState } from "app/configs/data/server-calls/states/useStates";
+import { calculateCartTotalAmount, formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 // Fix for default marker icons in Leaflet
 delete L.Icon.Default.prototype._getIconUrl;
@@ -42,14 +44,41 @@ function MapBounds({ center, zoom }) {
  * Shows the active shopping cart state with highlighting
  * Uses dummy data for demonstration - will be replaced with API data
  */
-function MarketplaceMap() {
+function MarketplaceMap({cartData}) {
+  const {data:stateData} = useGetSingleState(cartData?.stateId)
+  const stateCenter = useMemo(() =>stateData?.data?.state ? [stateData.data.state.latitude, stateData.data.state.longitude]: [6.5244, 3.3792], [stateData?.data?.state]);
+let checkItemsArrayForTotal = [];
+  cartData?.cartProducts?.forEach((element) => {
+    // Check if item is bulk order and use appropriate price
+    let itemPrice = element?.product?.price;
+
+    if (element?.isBulkOrder && element?.bulkPriceTierId) {
+      // Find the matching price tier from product's priceTiers array
+      const matchingTier = element?.product?.priceTiers?.find(
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+      );
+
+      if (matchingTier) {
+        itemPrice = matchingTier?.price;
+      }
+    }
+
+    checkItemsArrayForTotal?.push({
+      quantity: element?.quantity,
+      price: itemPrice,
+    });
+  });
+
+  const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
+
+
   // Dummy data for active shopping state
   // This will be replaced with API data from the user's active cart session
   const activeState = useMemo(() => {
     return {
-      id: "lagos-state",
-      name: "Lagos State",
-      center: [6.5244, 3.3792], // Lagos coordinates
+      id: stateData?.data?.state?.name || "Lagos", // Fallback to Lagos if state data is not available
+      name: stateData?.data?.state?.name || "None currently",
+      center: stateCenter, // Lagos coordinates
       zoom: 10,
       // Approximate boundary coordinates for Lagos (simplified polygon)
       boundary: [
@@ -60,8 +89,8 @@ function MarketplaceMap() {
         [6.7027, 3.2019],
       ],
       cartInfo: {
-        itemCount: 5,
-        totalValue: 125000,
+        itemCount: cartData?.cartProducts?.length || 0,
+        totalValue: formatCurrency(totalAmount)  || 0,
       },
     };
   }, []);
@@ -76,7 +105,7 @@ function MarketplaceMap() {
         }}
       >
         <div className="flex flex-col gap-2">
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-end">
             <ShoppingCartOutlined sx={{ color: "white", fontSize: "1.5rem" }} />
             <Typography
               sx={{
@@ -88,18 +117,20 @@ function MarketplaceMap() {
             >
               Active Shopping Region
             </Typography>
-          </div>
-          <Chip
+            <Chip
             label={activeState.name}
             sx={{
               backgroundColor: "rgba(16, 185, 129, 0.95)",
               color: "white",
               fontWeight: "bold",
-              fontSize: "0.875rem",
+              fontSize: "0.975rem",
               backdropFilter: "blur(10px)",
               maxWidth: "fit-content",
+              textAlign: "end",
             }}
           />
+          </div>
+          
         </div>
       </div>
 
@@ -158,8 +189,8 @@ function MarketplaceMap() {
         </div>
         <Typography
           sx={{
-            fontSize: "0.75rem",
-            color: "#9ca3af",
+            fontSize: "0.95rem",
+            color: "#6b7280",
             marginTop: "8px",
             textAlign: "center",
           }}

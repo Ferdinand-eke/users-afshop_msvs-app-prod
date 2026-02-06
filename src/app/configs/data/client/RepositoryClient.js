@@ -117,7 +117,7 @@ export const getLgasByStateId = (sid) =>
 //###############################################################################
 //========================================States Toutes
 export const getBStates = () => Api().get("/buzstates");
-export const getStateById = (id) => Api().get(`/buzstates/${id}`);
+export const getStateById = (id) => Api().get(`/buzstates/${id}/operational`);
 export const getStateByCountryId = (cid) =>
   Api().get(`/buzstates/in-country/${cid}/operational`); //(Mcsvs => Done)
 //=========================================States Toutes end===========================================================//
@@ -341,3 +341,13 @@ export const getMerchantPreviewApi = (merchantId) =>
 /**====================================================================================================
  * MERCHANT ROUTES LISTED ENDS HERE
  ======================================================================================================*/
+
+ /**=====================================================================================================
+ * APPLICATION SETTINGS ROUTES LISTED BELOW STARTS
+ =====================================================================================================*/
+export const getUserAppSettingApi = () =>
+  Api().get(`/application-settings/public/get-user-app-setting`); // (Done => Mcsvs)
+
+  /**=====================================================================================================
+ * APPLICATION SETTINGS ROUTES LISTED BELOW ENDS
+ =====================================================================================================*/

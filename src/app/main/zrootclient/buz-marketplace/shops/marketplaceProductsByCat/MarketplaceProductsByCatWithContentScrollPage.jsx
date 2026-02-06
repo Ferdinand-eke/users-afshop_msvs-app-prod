@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback, useMemo, memo } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoContent from './shared-components/DemoContent';
@@ -16,6 +16,8 @@ import {
   } from "app/configs/data/client/RepositoryClient";
 import { useParams } from 'react-router';
 import { useGetProductByCategory } from 'app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo';
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../../aapp-settings-from-admin/ServiceStatusLandingPage";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 
@@ -46,9 +48,10 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 }));
 
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * Active Marketplace Products By Category Component
+ * This component renders when the marketplace service is ACTIVE
  */
-function MarketplaceProductsByCatWithContentScrollPage() {
+function ActiveMarketplaceProductsByCategoryPage() {
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
 	const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
@@ -165,46 +168,111 @@ function MarketplaceProductsByCatWithContentScrollPage() {
     }
   }
 
+  // Memoize sidebar toggle handlers to prevent re-renders
+  const handleLeftSidebarToggle = useCallback(() => {
+    setLeftSidebarOpen(!leftSidebarOpen);
+  }, [leftSidebarOpen]);
 
+  const handleRightSidebarToggle = useCallback(() => {
+    setRightSidebarOpen(!rightSidebarOpen);
+  }, [rightSidebarOpen]);
 
+  const handleLeftSidebarClose = useCallback(() => {
+    setLeftSidebarOpen(false);
+  }, []);
+
+  const handleRightSidebarClose = useCallback(() => {
+    setRightSidebarOpen(false);
+  }, []);
+
+  // Memoize derived data
+  const countriesData = useMemo(() => countries?.data?.data, [countries?.data?.data]);
+
+  // Memoize header component
+  const headerComponent = useMemo(
+    () => (
+      <DemoHeader
+        countries={countriesData}
+        stateData={stateData}
+        blgas={blgas}
+        methods={methods}
+        leftSidebarToggle={handleLeftSidebarToggle}
+        rightSidebarToggle={handleRightSidebarToggle}
+      />
+    ),
+    [countriesData, stateData, blgas, methods, handleLeftSidebarToggle, handleRightSidebarToggle]
+  );
+
+  // Memoize content component
+  const contentComponent = useMemo(
+    () => (
+      <DemoContent
+        products={products}
+        isLoading={isLoading}
+        isError={isError}
+      />
+    ),
+    [products, isLoading, isError]
+  );
+
+  // Memoize left sidebar content
+  const leftSidebarContentComponent = useMemo(() => <DemoSidebar />, []);
+
+  // Memoize right sidebar content
+  const rightSidebarContentComponent = useMemo(() => <DemoSidebarRight />, []);
 
 	return (
 		<Root
-	
-			header={
-				<DemoHeader
-				countries={countries?.data?.data}
-				stateData={stateData}
-				blgas={blgas}
-				methods={methods}
-
-					leftSidebarToggle={() => {
-						setLeftSidebarOpen(!leftSidebarOpen);
-					}}
-					rightSidebarToggle={() => {
-						setRightSidebarOpen(!rightSidebarOpen);
-					}}
-				/>
-			}
-			content={<DemoContent
-				products={products}
-				isLoading={isLoading}
-				isError={isError}
-				/>}
+			header={headerComponent}
+			content={contentComponent}
 			leftSidebarOpen={leftSidebarOpen}
-			leftSidebarOnClose={() => {
-				setLeftSidebarOpen(false);
-			}}
-			leftSidebarContent={<DemoSidebar />}
+			leftSidebarOnClose={handleLeftSidebarClose}
+			leftSidebarContent={leftSidebarContentComponent}
 			rightSidebarOpen={rightSidebarOpen}
-			rightSidebarOnClose={() => {
-				setRightSidebarOpen(false);
-			}}
-			rightSidebarContent={<DemoSidebarRight />}
-			// rightSidebarContent={<DemoSidebar />}
+			rightSidebarOnClose={handleRightSidebarClose}
+			rightSidebarContent={rightSidebarContentComponent}
 			scroll="content"
 		/>
 	);
+}
+
+// Memoize ActiveMarketplaceProductsByCategoryPage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveMarketplaceProductsByCategoryPage = memo(ActiveMarketplaceProductsByCategoryPage);
+
+/**
+ * Main Marketplace Products By Category Component with Service Status Check
+ * Wraps the active products by category page with service status landing pages
+ */
+function MarketplaceProductsByCatWithContentScrollPage() {
+  // Fetch user app settings
+  const {
+    data: appSettings,
+    isLoading: isLoadingSettings,
+    isError: isErrorSettings,
+  } = useGetUserAppSetting();
+
+  // Extract the marketplace service status - memoized to prevent unnecessary re-renders
+  const marketplaceServiceStatus = useMemo(
+    () => appSettings?.data?.payload?.marketplaceServiceStatus,
+    [appSettings?.data?.payload?.marketplaceServiceStatus]
+  );
+
+  // Log service status only when it changes (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && marketplaceServiceStatus !== undefined) {
+      console.log("Marketplace Service Status (Products by Category):", marketplaceServiceStatus);
+    }
+  }, [marketplaceServiceStatus]);
+
+  return (
+    <ServiceStatusLandingPage
+      serviceStatus={marketplaceServiceStatus}
+      ActiveComponent={MemoizedActiveMarketplaceProductsByCategoryPage}
+      isLoading={isLoadingSettings}
+      isError={isErrorSettings}
+      serviceName="Marketplace"
+    />
+  );
 }
 
 export default MarketplaceProductsByCatWithContentScrollPage;

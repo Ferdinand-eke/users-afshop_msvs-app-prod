@@ -1,6 +1,6 @@
 import { styled } from "@mui/material/styles";
 import FusePageSimple from "@fuse/core/FusePageSimple";
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState, useCallback, useMemo, memo } from "react";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import DemoHeader from "./shared-components/DemoHeader";
 import DemoContent from "./shared-components/DemoContent";
@@ -8,6 +8,9 @@ import DemoSidebar from "./shared-components/DemoSidebar";
 import DemoSidebarRight from "./shared-components/DemoSidebarRight";
 import FusePageSimpleWithMargin from "@fuse/core/FusePageSimple/FusePageSimpleWithMargin";
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../aapp-settings-from-admin/ServiceStatusLandingPage";
+// import ServiceStatusLandingPage from "app/main/zrootclient/aapp-settings-from-admin/ServiceStatusLandingPage";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
   "& .FusePageSimple-header": {
@@ -23,11 +26,10 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
 }));
 
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * The SimpleWithSidebarsContentScroll page - Active Component
+ * This component renders when the bookings service is ACTIVE
  */
-
-
-function BookingsPageWithSidebarsContentScrollComponent() {
+function ActiveBookingsPage() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
   const [rightSidebarOpen, setRightSidebarOpen] = useState(!isMobile);
@@ -109,7 +111,18 @@ function BookingsPageWithSidebarsContentScrollComponent() {
     [itemsPerPage, currentPage]
   );
 
-  
+  // Sync pagination changes with filters
+  useEffect(() => {
+    if (Object.keys(filters).length > 0) {
+      setFilters((prevFilters) => ({
+        ...prevFilters,
+        limit: itemsPerPage,
+        offset: (currentPage - 1) * itemsPerPage,
+      }));
+    }
+  }, [currentPage, itemsPerPage]);
+
+
   // Handle page change
   const handlePageChange = useCallback((newPage) => {
     setCurrentPage(newPage);
@@ -121,44 +134,117 @@ function BookingsPageWithSidebarsContentScrollComponent() {
     setCurrentPage(1); // Reset to first page when changing items per page
   }, []);
 
+  // Memoize sidebar toggle handlers to prevent re-renders
+  const handleLeftSidebarToggle = useCallback(() => {
+    setLeftSidebarOpen(!leftSidebarOpen);
+  }, [leftSidebarOpen]);
+
+  const handleRightSidebarToggle = useCallback(() => {
+    setRightSidebarOpen(!rightSidebarOpen);
+  }, [rightSidebarOpen]);
+
+  const handleLeftSidebarClose = useCallback(() => {
+    setLeftSidebarOpen(false);
+  }, []);
+
+  const handleRightSidebarClose = useCallback(() => {
+    setRightSidebarOpen(false);
+  }, []);
+
+  // Memoize derived data to avoid recalculation on every render
+  const bookingLists = useMemo(() => bookingprops?.data?.bookingLists, [bookingprops?.data?.bookingLists]);
+  const totalItems = useMemo(() => bookingprops?.data?.pagination?.total || 0, [bookingprops?.data?.pagination?.total]);
+
+  // Memoize header component
+  const headerComponent = useMemo(
+    () => (
+      <DemoHeader
+        leftSidebarToggle={handleLeftSidebarToggle}
+        rightSidebarToggle={handleRightSidebarToggle}
+      />
+    ),
+    [handleLeftSidebarToggle, handleRightSidebarToggle]
+  );
+
+  // Memoize content component
+  const contentComponent = useMemo(
+    () => (
+      <DemoContent
+        listings={bookingLists}
+        isLoading={isLoading}
+        isError={isError}
+        totalItems={totalItems}
+        currentPage={currentPage}
+        itemsPerPage={itemsPerPage}
+        onPageChange={handlePageChange}
+        onItemsPerPageChange={handleItemsPerPageChange}
+      />
+    ),
+    [bookingLists, isLoading, isError, totalItems, currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange]
+  );
+
+  // Memoize left sidebar content
+  const leftSidebarContentComponent = useMemo(
+    () => <DemoSidebar onFilterChange={handleFilterChange} />,
+    [handleFilterChange]
+  );
+
+  // Memoize right sidebar content
+  const rightSidebarContentComponent = useMemo(
+    () => <DemoSidebarRight bookingsData={bookingLists} />,
+    [bookingLists]
+  );
+
   return (
     <Root
-      header={
-        <DemoHeader
-          leftSidebarToggle={() => {
-            setLeftSidebarOpen(!leftSidebarOpen);
-          }}
-          rightSidebarToggle={() => {
-            setRightSidebarOpen(!rightSidebarOpen);
-          }}
-        />
-      }
-      
-      content={
-        <DemoContent
-          listings={bookingprops?.data?.bookingLists}
-          isLoading={isLoading}
-          isError={isError}
-          totalItems={bookingprops?.data?.pagination?.total || 0}
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          onPageChange={handlePageChange}
-          onItemsPerPageChange={handleItemsPerPageChange}
-        />
-      }
+      header={headerComponent}
+      content={contentComponent}
       leftSidebarOpen={leftSidebarOpen}
-      leftSidebarOnClose={() => {
-        setLeftSidebarOpen(false);
-      }}
-      leftSidebarContent={<DemoSidebar onFilterChange={handleFilterChange} />}
+      leftSidebarOnClose={handleLeftSidebarClose}
+      leftSidebarContent={leftSidebarContentComponent}
       rightSidebarOpen={rightSidebarOpen}
-      rightSidebarOnClose={() => {
-        setRightSidebarOpen(false);
-      }}
-      rightSidebarContent={
-        <DemoSidebarRight bookingsData={bookingprops?.data?.bookingLists} />
-      }
+      rightSidebarOnClose={handleRightSidebarClose}
+      rightSidebarContent={rightSidebarContentComponent}
       scroll="content"
+    />
+  );
+}
+
+// Memoize ActiveBookingsPage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveBookingsPage = memo(ActiveBookingsPage);
+
+/**
+ * Main Bookings Page Component with Service Status Check
+ * Wraps the active bookings page with service status landing pages
+ */
+function BookingsPageWithSidebarsContentScrollComponent() {
+  // Fetch user app settings
+  const {
+    data: appSettings,
+    isLoading: isLoadingSettings,
+    isError: isErrorSettings,
+  } = useGetUserAppSetting();
+
+  // Extract the bookings service status - memoized to prevent unnecessary re-renders
+  const bookingsServiceStatus = useMemo(
+    () => appSettings?.data?.payload?.bookingsServiceStatus,
+    [appSettings?.data?.payload?.bookingsServiceStatus]
+  );
+
+  // Log app settings to console only when bookingsServiceStatus changes (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && bookingsServiceStatus !== undefined) {
+      console.log("Bookings Service Status:", bookingsServiceStatus);
+    }
+  }, [bookingsServiceStatus]);
+
+  return (
+    <ServiceStatusLandingPage
+      serviceStatus={bookingsServiceStatus}
+      ActiveComponent={MemoizedActiveBookingsPage}
+      isLoading={isLoadingSettings}
+      isError={isErrorSettings}
+      serviceName="Bookings"
     />
   );
 }

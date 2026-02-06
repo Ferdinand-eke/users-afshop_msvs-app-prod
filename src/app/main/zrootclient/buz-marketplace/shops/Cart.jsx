@@ -76,6 +76,7 @@ const CartItem = ({
     return updateCartQty(formData);
   };
 
+
   const hasDiscount = oldPrice && oldPrice !== undefined && oldPrice > price;
   const discountPercent = hasDiscount
     ? Math.round(((oldPrice - price) / oldPrice) * 100)
@@ -962,7 +963,8 @@ function Cart() {
     localStorage.setItem("cartActiveTab", activeTab);
   }, [activeTab]);
 
-  console.log("Marketplace Cart:", cart?.data?.cartSession?.cartProducts);
+  // console.log("Marketplace Cart:", cart?.data?.cartSession?.cartProducts);
+  console.log("Marketplace CartSession:", cart?.data?.cartSession);
 
   const marketplaceCartCount = cart?.data?.cartSession?.cartProducts?.length || 0;
   const foodmartCartCount = foodCart?.data?.userFoodCartSession?.cartProducts?.length || 0;

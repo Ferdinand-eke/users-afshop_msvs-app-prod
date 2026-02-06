@@ -14,6 +14,7 @@ export default function useGetAllBookingProperties(filters = {}) {
 
 
 
+
 /***get menu of single booking property */
 export function useGetBookingProperty(propertyId) {
   // if(!propertyId || propertyId === 'new'){

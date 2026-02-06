@@ -1,6 +1,6 @@
 import { styled } from '@mui/material/styles';
 import FusePageSimple from '@fuse/core/FusePageSimple';
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState, memo } from 'react';
 import useThemeMediaQuery from '@fuse/hooks/useThemeMediaQuery';
 import DemoHeader from './shared-components/DemoHeader';
 import DemoContent from './shared-components/DemoContent';
@@ -30,6 +30,8 @@ import { selectUser } from 'src/app/auth/user/store/userSlice';
 import { toDate } from "date-fns-tz";
 import { useGetEstateProperty } from 'app/configs/data/server-calls/auth/userapp/a_estates/useEstatePropertiesRepo';
 import GlobalChat from '../realestate-components/GlobalChat';
+import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
+import ServiceStatusLandingPage from "../../aapp-settings-from-admin/ServiceStatusLandingPage";
 
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
@@ -79,10 +81,10 @@ const parseDateString = (dateString) => {
   return new Date(dateString)
 }
 /**
- * The SimpleWithSidebarsContentScroll page.
+ * Active Real Estate Single Page Component
+ * This component renders when the real estate service is ACTIVE
  */
-
-function RealestateSinglePageWithSidebarsContentScroll() {
+function ActiveRealEstateSinglePage() {
   const [isChatOpen, setIsChatOpen] = useState(false);
 	const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down('lg'));
 	const [leftSidebarOpen, setLeftSidebarOpen] = useState(!isMobile);
@@ -107,67 +109,139 @@ function RealestateSinglePageWithSidebarsContentScroll() {
   } = useGetEstateProperty(slug);
 
   const currentUser = useAppSelector(selectUser)
-  
+
+  // Memoize sidebar toggle handlers to prevent re-renders
+  const handleLeftSidebarToggle = useCallback(() => {
+    setLeftSidebarOpen(!leftSidebarOpen);
+  }, [leftSidebarOpen]);
+
+  const handleRightSidebarToggle = useCallback(() => {
+    setRightSidebarOpen(!rightSidebarOpen);
+  }, [rightSidebarOpen]);
+
+  const handleLeftSidebarClose = useCallback(() => {
+    setLeftSidebarOpen(false);
+  }, []);
+
+  const handleRightSidebarClose = useCallback(() => {
+    setRightSidebarOpen(false);
+  }, []);
+
+  const handleChatToggle = useCallback(() => {
+    setIsChatOpen(!isChatOpen);
+  }, [isChatOpen]);
+
+  // Memoize derived data to avoid recalculation on every render
+  const propertyListing = useMemo(() => estateList?.data?.propertyListing, [estateList?.data?.propertyListing]);
+  const propertyListingId = useMemo(() => estateList?.data?.propertyListing?.id, [estateList?.data?.propertyListing?.id]);
+  const realtorName = useMemo(() => estateList?.data?.propertyListing?.realtor?.name || 'Realtor', [estateList?.data?.propertyListing?.realtor?.name]);
+
+  // Memoize header component
+  const headerComponent = useMemo(
+    () => (
+      <DemoHeader
+        leftSidebarToggle={handleLeftSidebarToggle}
+        rightSidebarToggle={handleRightSidebarToggle}
+      />
+    ),
+    [handleLeftSidebarToggle, handleRightSidebarToggle]
+  );
+
+  // Memoize content component
+  const contentComponent = useMemo(
+    () => (
+      <DemoContent
+        estatePropertyData={propertyListing}
+        isLoading={isLoading}
+        isError={isError}
+      />
+    ),
+    [propertyListing, isLoading, isError]
+  );
+
+  // Memoize left sidebar content
+  const leftSidebarContentComponent = useMemo(() => <DemoSidebar />, []);
+
+  // Memoize right sidebar content
+  const rightSidebarContentComponent = useMemo(
+    () =>
+      propertyListingId ? (
+        <DemoSidebarRight isLoading={isLoading} listing={propertyListing} />
+      ) : null,
+    [propertyListingId, isLoading, propertyListing]
+  );
+
+  // Memoize chat component
+  const chatComponent = useMemo(
+    () =>
+      currentUser?.id ? (
+        <GlobalChat
+          isOpen={isChatOpen}
+          onToggle={handleChatToggle}
+          realtorName={realtorName}
+        />
+      ) : null,
+    [currentUser?.id, isChatOpen, handleChatToggle, realtorName]
+  );
+
 	return (
 		<>
     <Root
-	
-			header={
-				<DemoHeader
-
-					leftSidebarToggle={() => {
-						setLeftSidebarOpen(!leftSidebarOpen);
-					}}
-					rightSidebarToggle={() => {
-						setRightSidebarOpen(!rightSidebarOpen);
-					}}
-				/>
-			}
-			content={<DemoContent
-				estatePropertyData={ estateList?.data?.propertyListing}
-				isLoading={isLoading}
-				isError={isError}
-				/>}
+			header={headerComponent}
+			content={contentComponent}
 			leftSidebarOpen={leftSidebarOpen}
-			leftSidebarOnClose={() => {
-				setLeftSidebarOpen(false);
-			}}
-			leftSidebarContent={<DemoSidebar />}
+			leftSidebarOnClose={handleLeftSidebarClose}
+			leftSidebarContent={leftSidebarContentComponent}
 			rightSidebarOpen={rightSidebarOpen}
-			rightSidebarOnClose={() => {
-				setRightSidebarOpen(false);
-			}}
-
-
-			rightSidebarContent=
-      
-      {estateList?.data?.propertyListing?.id && <DemoSidebarRight 
-        isLoading={isLoading}
-        listing={estateList?.data?.propertyListing}
-        // locationValue={estateList?.data?.propertyListing?.locationValue}
-        // coordinates={coordinates}
-        // price={estateList?.data?.propertyListing?.price}
-        // totalPrice={totalPrice}
-        // onChangeDate={(value) => setDateRange(value)}
-        // dateRange={dateRange}
-        // onSubmit={onCreateReservation}
-        // disabled={reservationLoading}
-        // disabledDates={disabledDates}
-      />}
+			rightSidebarOnClose={handleRightSidebarClose}
+			rightSidebarContent={rightSidebarContentComponent}
 			scroll="content"
 		/>
 
      {/* Chat Component - Fixed at the bottom */}
-     {currentUser?.id &&  <GlobalChat
-          isOpen={isChatOpen}
-          onToggle={() => setIsChatOpen(!isChatOpen)}
-          realtorName={estateList?.data?.propertyListing?.realtor?.name || 'Realtor'}
-        />}
-       
+     {chatComponent}
+
     </>
 	);
 }
 
+// Memoize ActiveRealEstateSinglePage to prevent unnecessary re-renders when parent re-renders
+const MemoizedActiveRealEstateSinglePage = memo(ActiveRealEstateSinglePage);
 
+/**
+ * Main Real Estate Single Page Component with Service Status Check
+ * Wraps the active real estate single page with service status landing pages
+ */
+function RealestateSinglePageWithSidebarsContentScroll() {
+  // Fetch user app settings
+  const {
+    data: appSettings,
+    isLoading: isLoadingSettings,
+    isError: isErrorSettings,
+  } = useGetUserAppSetting();
+
+  // Extract the real estate service status - memoized to prevent unnecessary re-renders
+  const realEstateServiceStatus = useMemo(
+    () => appSettings?.data?.payload?.realEstateServiceStatus,
+    [appSettings?.data?.payload?.realEstateServiceStatus]
+  );
+
+  // Log service status only when it changes (development only)
+  useEffect(() => {
+    if (process.env.NODE_ENV === 'development' && realEstateServiceStatus !== undefined) {
+      console.log("Real Estate Service Status (Single Page):", realEstateServiceStatus);
+    }
+  }, [realEstateServiceStatus]);
+
+  return (
+    <ServiceStatusLandingPage
+      serviceStatus={realEstateServiceStatus}
+      ActiveComponent={MemoizedActiveRealEstateSinglePage}
+      isLoading={isLoadingSettings}
+      isError={isErrorSettings}
+      serviceName="Real Estate"
+    />
+  );
+}
 
 export default RealestateSinglePageWithSidebarsContentScroll;

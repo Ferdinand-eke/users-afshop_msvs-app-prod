@@ -156,7 +156,7 @@ export const getCountryDataById = (id) => Api().get(`/buzcountries/${id}`);
 
 //State Routes
 export const getBStates = () => Api().get("/buzstates");
-export const getStateById = (id) => Api().get(`/buzstates/${id}`);
+export const getStateById = (id) => Api().get(`/buzstates/${id}/operational`);// (Msvs => done)
 
 export const getStateByCountryId = (cid) =>
   Api().get(`/buzstates/in-country/${cid}/operational`); // (Msvs => done)
