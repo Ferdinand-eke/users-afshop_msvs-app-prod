@@ -5,6 +5,7 @@
 This implementation uses **Option 1: Merchant Subdomains ONLY for Profile Pages**.
 
 ### Key Concept
+
 - **Merchant Profile Pages**: Accessed via subdomain (e.g., `cindy-fabrics.localhost:3000/merchant-profile`)
 - **All Booking Flows**: Happen on main domain (e.g., `localhost:3000/bookings/listings/123`)
 
@@ -15,11 +16,12 @@ This keeps things simple and avoids authentication/localStorage issues across su
 ## How It Works
 
 ### 1. Viewing Merchant Profile
+
 When users click "View Full Profile" on a property listing:
 
 ```javascript
 // Button in MerchantProfile component
-<Button onClick={() => navigateToMerchantSubdomain(merchantData?.slug, '/merchant-profile')}>
+<Button onClick={() => navigateToMerchantSubdomain(merchantData?.slug, "/merchant-profile")}>
   View Full Profile
 </Button>
 ```
@@ -29,6 +31,7 @@ When users click "View Full Profile" on a property listing:
 ---
 
 ### 2. Returning to Main Site
+
 From the merchant subdomain, all navigation goes BACK to main domain:
 
 ```javascript
@@ -47,12 +50,15 @@ From the merchant subdomain, all navigation goes BACK to main domain:
 ---
 
 ### 3. Booking Flow
+
 **Always happens on main domain:**
+
 - Browse properties: `localhost:3000/bookings/listings`
 - View property details: `localhost:3000/bookings/listings/123`
 - Complete booking: `localhost:3000/bookings/checkout`
 
 **Benefits:**
+
 - ✅ User stays logged in (no localStorage issues)
 - ✅ No subdomain cascading (no `merchant2.merchant1.localhost` URLs)
 - ✅ Simple and maintainable
@@ -63,6 +69,7 @@ From the merchant subdomain, all navigation goes BACK to main domain:
 ## URL Structure
 
 ### Development
+
 ```
 Main Domain:
 - http://localhost:3000/                          → Homepage
@@ -76,6 +83,7 @@ Merchant Subdomains (Profile Only):
 ```
 
 ### Production
+
 ```
 Main Domain:
 - https://africanshops.org/                       → Homepage
@@ -93,38 +101,47 @@ Merchant Subdomains (Profile Only):
 ### Utility Functions
 
 #### `getSubdomain()`
+
 Detects if user is on a merchant subdomain:
+
 ```javascript
 // Returns: 'cindy-fabrics' or null
 const slug = getSubdomain();
 ```
 
 **Handles:**
+
 - `cindy-fabrics.localhost` → Returns `'cindy-fabrics'`
 - `localhost` → Returns `null`
 - `merchant.africanshops.org` → Returns `'merchant'`
 
 #### `navigateToMerchantSubdomain(merchantSlug, path)`
+
 Navigates to merchant subdomain:
+
 ```javascript
-navigateToMerchantSubdomain('cindy-fabrics', '/merchant-profile');
+navigateToMerchantSubdomain("cindy-fabrics", "/merchant-profile");
 // Takes user to: http://cindy-fabrics.localhost:3000/merchant-profile
 ```
 
 **Smart handling:**
+
 - If already on subdomain, creates correct URL
 - Works from main domain or any subdomain
 - No subdomain cascading
 
 #### `navigateToMainDomain(path)`
+
 Returns to main domain:
+
 ```javascript
-navigateToMainDomain('/bookings/listings');
+navigateToMainDomain("/bookings/listings");
 // From: http://cindy-fabrics.localhost:3000/merchant-profile
 // To:   http://localhost:3000/bookings/listings
 ```
 
 **Smart handling:**
+
 - Strips subdomain completely
 - Always returns to base domain
 - Works from any subdomain level
@@ -152,21 +169,25 @@ navigateToMainDomain('/bookings/listings');
 ## Benefits of This Approach
 
 ### ✅ Authentication Works Seamlessly
+
 - LocalStorage/cookies shared across main domain
 - Users stay logged in when browsing
 - No need for complex cross-domain auth
 
 ### ✅ No Subdomain Cascading
+
 - `navigateToMainDomain()` always strips ALL subdomains
 - Clean URLs every time
 - No `merchant2.merchant1.localhost` issues
 
 ### ✅ Simple to Maintain
+
 - Only 2 subdomain pages (profile + hospitality)
 - All complex flows (booking, checkout, payments) on main domain
 - Easy to debug and test
 
 ### ✅ Production Ready
+
 - Requires simple wildcard DNS: `*.africanshops.org → your-server`
 - Wildcard SSL certificate covers all merchant subdomains
 - No complex infrastructure needed
@@ -176,18 +197,22 @@ navigateToMainDomain('/bookings/listings');
 ## Files Modified
 
 ### Core Utilities
+
 - `src/app/utils/subdomainUtils.js` - Subdomain detection and navigation
 
 ### Merchant Subdomain Pages
+
 - `src/app/main/merchant-subdomain/MerchantSubdomainLayout.jsx` - Layout wrapper
 - `src/app/main/merchant-subdomain/MerchantSubdomainConfig.jsx` - Routes config
 - `src/app/main/merchant-subdomain/MerchantHospitalityPage.jsx` - Profile page
 - `src/app/main/merchant-subdomain/MerchantNotFoundPage.jsx` - 404 page
 
 ### Integration Points
+
 - `src/app/main/zrootclient/buz-bookings/bookingsSinglePage/shared-components/MerchantProfile.jsx` - Profile button
 
 ### Route Configuration
+
 - `src/app/configs/routesConfig.jsx` - Added MerchantSubdomainConfig (line 204)
 
 ---
@@ -195,6 +220,7 @@ navigateToMainDomain('/bookings/listings');
 ## Testing
 
 ### Test Subdomain Detection
+
 1. Visit `http://localhost:3000/`
    - Should show main site (no subdomain)
 2. Visit `http://cindy-fabrics.localhost:3000/merchant-profile`
@@ -203,6 +229,7 @@ navigateToMainDomain('/bookings/listings');
    - Should show "Merchant Not Found" page
 
 ### Test Navigation
+
 1. From main domain, click "View Full Profile" on property
    - Should navigate to merchant subdomain
 2. From merchant subdomain, click "Browse All Properties"
@@ -211,6 +238,7 @@ navigateToMainDomain('/bookings/listings');
    - Should return to `localhost:3000/`
 
 ### Test Authentication
+
 1. Login on main domain: `localhost:3000/sign-in`
 2. Browse to property and view merchant profile
 3. Return to main domain
@@ -221,13 +249,17 @@ navigateToMainDomain('/bookings/listings');
 ## Production Deployment
 
 ### DNS Configuration
+
 Add wildcard DNS record:
+
 ```
 *.africanshops.org  →  A  →  your-server-ip
 ```
 
 ### SSL Certificate
+
 Get wildcard SSL certificate:
+
 ```
 *.africanshops.org
 ```
@@ -235,6 +267,7 @@ Get wildcard SSL certificate:
 This covers all merchant subdomains automatically.
 
 ### No Backend Changes Needed
+
 All subdomain detection happens in the frontend. Backend API remains unchanged.
 
 ---

@@ -10,7 +10,6 @@ import { Box, Typography } from "@mui/material";
  * The DemoSidebarRight component.
  */
 function DemoSidebarRight(props) {
-  
   const {
     isLoading,
 
@@ -26,13 +25,10 @@ function DemoSidebarRight(props) {
     disabledDates,
   } = props;
 
-  
   return (
     <div className="px-12 py-24 h-screen">
       {/* min-h-6xl  */}
-      <div className="mx-12 text-3xl font-bold tracking-tighter">
-        Booking Data Views
-      </div>
+      <div className="mx-12 text-3xl font-bold tracking-tighter">Booking Data Views</div>
 
       <div>
         <div className="bg-white p-4 shadow-md">
@@ -57,7 +53,6 @@ function DemoSidebarRight(props) {
                 </Box>
               </>
             ) : listing ? (
-
               <>
                 <Box>
                   <DetailsRight
@@ -79,12 +74,8 @@ function DemoSidebarRight(props) {
                 <Typography>Data Not Found</Typography>
               </Box>
             )}
-
-            
           </div>
         </div>
-
-        
       </div>
     </div>
   );

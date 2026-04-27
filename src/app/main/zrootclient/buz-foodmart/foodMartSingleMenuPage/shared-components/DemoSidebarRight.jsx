@@ -38,10 +38,7 @@ function DemoSidebarRight(props) {
                     />
                     <h3 className="font-bold">Pickup Station</h3>
                   </div>
-                  <span
-                    href="#"
-                    className="text-orange-500 inline cursor-pointer"
-                  >
+                  <span href="#" className="text-orange-500 inline cursor-pointer">
                     Details
                   </span>
                 </div>
@@ -64,18 +61,15 @@ function DemoSidebarRight(props) {
                     />
                     <h3 className="font-bold">Door Delivery</h3>
                   </div>
-                  <span
-                    href="#"
-                    className="text-orange-500 inline cursor-pointer"
-                  >
+                  <span href="#" className="text-orange-500 inline cursor-pointer">
                     Details
                   </span>
                 </div>
 
                 <p className="text-gray-500 text-sm">Delivery Fees ₦ 1,790</p>
                 <p className="text-gray-500 text-sm">
-                  Ready for delivery between 21 November & 22 November when you
-                  order within next 3mins
+                  Ready for delivery between 21 November & 22 November when you order within next
+                  3mins
                 </p>
               </div>
             </div>
@@ -91,17 +85,13 @@ function DemoSidebarRight(props) {
                     /> */}
                     <h3 className="font-bold">Return Policy</h3>
                   </div>
-                  <span
-                    href="#"
-                    className="text-orange-500 inline cursor-pointer"
-                  >
+                  <span href="#" className="text-orange-500 inline cursor-pointer">
                     Details
                   </span>
                 </div>
 
                 <p className="text-gray-500 text-sm">
-                  Free return within 7 days for ALL eligible items and items in
-                  food cart
+                  Free return within 7 days for ALL eligible items and items in food cart
                 </p>
               </div>
             </div>

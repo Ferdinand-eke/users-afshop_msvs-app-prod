@@ -262,145 +262,145 @@ function FinanceDashboardApp() {
   return (
     <>
       <FusePageSimple
-        header={
-          <FinanceDashboardAppHeader
-            shopAccount={shopAccount}
-          />
-        }
+        header={<FinanceDashboardAppHeader shopAccount={shopAccount} />}
         content={
           <div className="w-full px-12 md:px-24 lg:px-32 pb-24">
-            <motion.div
-              className="w-full"
-              variants={container}
-              initial="hidden"
-              animate="show"
-            >
+            <motion.div className="w-full" variants={container} initial="hidden" animate="show">
               {/* No Account State - Show Placeholder with Generate Account Dialog */}
               {!hasAccount && (
-              <motion.div
-                variants={item}
-                initial={{ opacity: 0, scale: 0.95 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="w-full mt-32"
-              >
-                <Paper
-                  elevation={0}
-                  className="rounded-3xl p-12 md:p-16 text-center"
-                  style={{
-                    background: "linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.02) 100%)",
-                    border: "2px solid rgba(234, 88, 12, 0.15)",
-                  }}
+                <motion.div
+                  variants={item}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="w-full mt-32"
                 >
-                  <motion.div
-                    initial={{ scale: 0 }}
-                    animate={{ scale: 1 }}
-                    transition={{ duration: 0.5, delay: 0.2 }}
-                    className="w-32 h-32 rounded-3xl flex items-center justify-center mx-auto mb-8"
+                  <Paper
+                    elevation={0}
+                    className="rounded-3xl p-12 md:p-16 text-center"
                     style={{
-                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
-                      boxShadow: "0 12px 32px rgba(234, 88, 12, 0.3)",
+                      background:
+                        "linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.02) 100%)",
+                      border: "2px solid rgba(234, 88, 12, 0.15)",
                     }}
                   >
-                    <FuseSvgIcon size={64} className="text-white">
-                      heroicons-outline:currency-dollar
-                    </FuseSvgIcon>
-                  </motion.div>
+                    <motion.div
+                      initial={{ scale: 0 }}
+                      animate={{ scale: 1 }}
+                      transition={{ duration: 0.5, delay: 0.2 }}
+                      className="w-32 h-32 rounded-3xl flex items-center justify-center mx-auto mb-8"
+                      style={{
+                        background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                        boxShadow: "0 12px 32px rgba(234, 88, 12, 0.3)",
+                      }}
+                    >
+                      <FuseSvgIcon size={64} className="text-white">
+                        heroicons-outline:currency-dollar
+                      </FuseSvgIcon>
+                    </motion.div>
 
-                  <Typography className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
-                    Welcome to Your Finance Dashboard
-                  </Typography>
+                    <Typography className="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4">
+                      Welcome to Your Finance Dashboard
+                    </Typography>
 
-                  <Typography className="text-base text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
-                    You haven't set up your financial account yet. Create your account to start
-                    tracking transactions, managing budgets, and monitoring your business finances.
-                  </Typography>
+                    <Typography className="text-base text-gray-600 mb-8 max-w-2xl mx-auto leading-relaxed">
+                      You haven't set up your financial account yet. Create your account to start
+                      tracking transactions, managing budgets, and monitoring your business
+                      finances.
+                    </Typography>
 
-                  <div
-                    className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto"
-                  >
-                    {[
-                      {
-                        icon: "heroicons-outline:chart-bar",
-                        title: "Track Finances",
-                        description: "Monitor income and expenses in real-time",
-                      },
-                      {
-                        icon: "heroicons-outline:credit-card",
-                        title: "Manage Payments",
-                        description: "Process transactions securely and efficiently",
-                      },
-                      {
-                        icon: "heroicons-outline:document-report",
-                        title: "View Reports",
-                        description: "Generate detailed financial statements",
-                      },
-                    ].map((feature, index) => (
-                      <motion.div
-                        key={index}
-                        initial={{ opacity: 0, y: 20 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
-                        className="p-6 rounded-2xl"
-                        style={{
-                          background: "white",
-                          border: "2px solid rgba(229, 231, 235, 1)",
-                        }}
-                      >
-                        <div
-                          className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4"
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10 max-w-4xl mx-auto">
+                      {[
+                        {
+                          icon: "heroicons-outline:chart-bar",
+                          title: "Track Finances",
+                          description: "Monitor income and expenses in real-time",
+                        },
+                        {
+                          icon: "heroicons-outline:credit-card",
+                          title: "Manage Payments",
+                          description: "Process transactions securely and efficiently",
+                        },
+                        {
+                          icon: "heroicons-outline:document-report",
+                          title: "View Reports",
+                          description: "Generate detailed financial statements",
+                        },
+                      ].map((feature, index) => (
+                        <motion.div
+                          key={index}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.4, delay: 0.3 + index * 0.1 }}
+                          className="p-6 rounded-2xl"
                           style={{
-                            background: "rgba(249, 115, 22, 0.1)",
+                            background: "white",
+                            border: "2px solid rgba(229, 231, 235, 1)",
                           }}
                         >
-                          <FuseSvgIcon size={28} className="text-orange-600">
-                            {feature.icon}
-                          </FuseSvgIcon>
-                        </div>
-                        <Typography className="text-base font-bold text-gray-800 mb-2">
-                          {feature.title}
-                        </Typography>
-                        <Typography className="text-sm text-gray-600">
-                          {feature.description}
-                        </Typography>
+                          <div
+                            className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4"
+                            style={{
+                              background: "rgba(249, 115, 22, 0.1)",
+                            }}
+                          >
+                            <FuseSvgIcon size={28} className="text-orange-600">
+                              {feature.icon}
+                            </FuseSvgIcon>
+                          </div>
+                          <Typography className="text-base font-bold text-gray-800 mb-2">
+                            {feature.title}
+                          </Typography>
+                          <Typography className="text-sm text-gray-600">
+                            {feature.description}
+                          </Typography>
+                        </motion.div>
+                      ))}
+                    </div>
+
+                    <Button
+                      variant="contained"
+                      size="large"
+                      onClick={() => setOpenAccountDialog(true)}
+                      startIcon={<FuseSvgIcon>heroicons-outline:plus-circle</FuseSvgIcon>}
+                      sx={{
+                        background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "16px",
+                        padding: "14px 36px",
+                        borderRadius: "12px",
+                        textTransform: "none",
+                        boxShadow: "0 8px 24px rgba(234, 88, 12, 0.35)",
+                        "&:hover": {
+                          background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                          boxShadow: "0 12px 32px rgba(234, 88, 12, 0.45)",
+                          transform: "translateY(-2px)",
+                        },
+                        transition: "all 0.3s ease",
+                      }}
+                    >
+                      Create Financial Account
+                    </Button>
+                  </Paper>
+                </motion.div>
+              )}
+
+              {/* Has Account - Show Dashboard Widgets */}
+              {hasAccount && (
+                <>
+                  <div className="grid grid-cols-1 xl:grid-cols-2 gap-24 md:gap-32 w-full mt-32">
+                    <div className="grid gap-24 md:gap-32 sm:grid-flow-col xl:grid-flow-row">
+                      <motion.div variants={item} className="flex flex-col flex-auto">
+                        <PreviousStatementWidget
+                          account={shopAccount?.data}
+                          accountLoading={accountLoading}
+                          accountError={accountError}
+                        />
                       </motion.div>
-                    ))}
-                  </div>
+                    </div>
 
-                  <Button
-                    variant="contained"
-                    size="large"
-                    onClick={() => setOpenAccountDialog(true)}
-                    startIcon={<FuseSvgIcon>heroicons-outline:plus-circle</FuseSvgIcon>}
-                    sx={{
-                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
-                      color: "white",
-                      fontWeight: "bold",
-                      fontSize: "16px",
-                      padding: "14px 36px",
-                      borderRadius: "12px",
-                      textTransform: "none",
-                      boxShadow: "0 8px 24px rgba(234, 88, 12, 0.35)",
-                      "&:hover": {
-                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
-                        boxShadow: "0 12px 32px rgba(234, 88, 12, 0.45)",
-                        transform: "translateY(-2px)",
-                      },
-                      transition: "all 0.3s ease",
-                    }}
-                  >
-                    Create Financial Account
-                  </Button>
-                </Paper>
-              </motion.div>
-            )}
-
-            {/* Has Account - Show Dashboard Widgets */}
-            {hasAccount && (
-              <>
-                <div className="grid grid-cols-1 xl:grid-cols-2 gap-24 md:gap-32 w-full mt-32">
-                  <div className="grid gap-24 md:gap-32 sm:grid-flow-col xl:grid-flow-row">
                     <motion.div variants={item} className="flex flex-col flex-auto">
-                      <PreviousStatementWidget
+                      <AccountBalanceWidget
                         account={shopAccount?.data}
                         accountLoading={accountLoading}
                         accountError={accountError}
@@ -408,30 +408,18 @@ function FinanceDashboardApp() {
                     </motion.div>
                   </div>
 
-                  <motion.div variants={item} className="flex flex-col flex-auto">
-                    <AccountBalanceWidget
-                      account={shopAccount?.data}
-                      accountLoading={accountLoading}
-                      accountError={accountError}
-                    />
-                  </motion.div>
-                </div>
-
-                <div className="grid grid-cols-1 xl:grid-cols-3 gap-24 md:gap-32 w-full mt-24 md:mt-32">
-                  <motion.div
-                    variants={item}
-                    className="xl:col-span-2 flex flex-col flex-auto"
-                  >
-                    {/* Additional widgets can be added here */}
-                  </motion.div>
-                </div>
-              </>
-            )}
-          </motion.div>
-        </div>
-      }
-    />
-    <AccountGenerationDialog />
+                  <div className="grid grid-cols-1 xl:grid-cols-3 gap-24 md:gap-32 w-full mt-24 md:mt-32">
+                    <motion.div variants={item} className="xl:col-span-2 flex flex-col flex-auto">
+                      {/* Additional widgets can be added here */}
+                    </motion.div>
+                  </div>
+                </>
+              )}
+            </motion.div>
+          </div>
+        }
+      />
+      <AccountGenerationDialog />
     </>
   );
 }

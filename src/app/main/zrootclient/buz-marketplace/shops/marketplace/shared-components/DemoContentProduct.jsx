@@ -1,12 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  Button,
-  Typography,
-  IconButton,
-  Chip,
-  Rating,
-} from "@mui/material";
+import { Button, Typography, IconButton, Chip, Rating } from "@mui/material";
 import {
   Favorite,
   FavoriteBorder,
@@ -28,7 +22,6 @@ function ProductCard({ product, index }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
 
-
   const hasDiscount = product?.listprice && product?.listprice > product?.price;
   const discountPercent = hasDiscount
     ? Math.round(((product.listprice - product.price) / product.listprice) * 100)
@@ -44,12 +37,12 @@ function ProductCard({ product, index }) {
       className="group bg-white rounded-2xl shadow-md hover:shadow-2xl transition-all duration-300 overflow-hidden cursor-pointer flex flex-col"
     >
       {/* Image Section */}
-      <div className="relative overflow-hidden bg-gray-100" style={{ height: '250px' }}>
+      <div className="relative overflow-hidden bg-gray-100" style={{ height: "250px" }}>
         <img
           src={product?.imageLinks[0]?.url || "https://via.placeholder.com/400x300?text=No+Image"}
           alt={product?.name}
           className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-          style={{ minHeight: '250px', maxHeight: '250px', objectFit: 'cover' }}
+          style={{ minHeight: "250px", maxHeight: "250px", objectFit: "cover" }}
         />
 
         {/* Overlay gradient */}
@@ -89,11 +82,7 @@ function ProductCard({ product, index }) {
           className="absolute bottom-3 right-3 bg-white/90 hover:bg-white shadow-lg"
           size="small"
         >
-          {isFavorite ? (
-            <Favorite sx={{ color: "#ef4444" }} />
-          ) : (
-            <FavoriteBorder />
-          )}
+          {isFavorite ? <Favorite sx={{ color: "#ef4444" }} /> : <FavoriteBorder />}
         </IconButton>
 
         {/* Quick View Button - Shows on hover */}
@@ -142,10 +131,7 @@ function ProductCard({ product, index }) {
 
         {/* Address */}
         {product?.shop?.shopaddress && (
-          <Typography
-            variant="body2"
-            className="text-gray-600 mb-3 line-clamp-1 text-sm"
-          >
+          <Typography variant="body2" className="text-gray-600 mb-3 line-clamp-1 text-sm">
             📍 {product.shop.shopaddress}
           </Typography>
         )}
@@ -180,10 +166,7 @@ function ProductCard({ product, index }) {
                 ₦{formatCurrency(product?.price)}
               </Typography>
               {hasDiscount && (
-                <Typography
-                  variant="body2"
-                  className="line-through text-gray-400"
-                >
+                <Typography variant="body2" className="line-through text-gray-400">
                   ₦{formatCurrency(product?.listprice)}
                 </Typography>
               )}
@@ -197,7 +180,7 @@ function ProductCard({ product, index }) {
         {/* Action Buttons */}
         <div className="flex gap-2 mt-auto pt-4">
           <Button
-          component={NavLinkAdapter}
+            component={NavLinkAdapter}
             to={`/marketplace/product/${product?.slug}/view`}
             fullWidth
             variant="contained"
@@ -233,11 +216,9 @@ function DemoContentProduct(props) {
     onItemsPerPageChange,
   } = props;
 
-
   if (isLoading) {
     return <ContentLoadingPlaceholder />;
   }
-
 
   if (isError) {
     return (
@@ -251,14 +232,14 @@ function DemoContentProduct(props) {
     );
   }
 
-  if (!products?.length > 0 ) {
+  if (!products?.length > 0) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }}
         className="flex flex-col flex-1 items-center justify-center min-h-screen"
         style={{
-          background: 'linear-gradient(180deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%)',
+          background: "linear-gradient(180deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%)",
         }}
       >
         <div className="flex flex-col items-center justify-center max-w-2xl px-8 text-center">
@@ -277,7 +258,15 @@ function DemoContentProduct(props) {
               className="text-orange-300"
             >
               {/* Outer circle decoration */}
-              <circle cx="90" cy="90" r="75" stroke="currentColor" strokeWidth="3" strokeDasharray="10 10" opacity="0.25" />
+              <circle
+                cx="90"
+                cy="90"
+                r="75"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeDasharray="10 10"
+                opacity="0.25"
+              />
 
               {/* Shopping bag */}
               <path
@@ -306,8 +295,24 @@ function DemoContentProduct(props) {
               {/* Decorative product boxes in bag */}
               <rect x="65" y="85" width="20" height="20" rx="3" fill="currentColor" opacity="0.2" />
               <rect x="95" y="85" width="20" height="20" rx="3" fill="currentColor" opacity="0.2" />
-              <rect x="65" y="110" width="20" height="15" rx="3" fill="currentColor" opacity="0.2" />
-              <rect x="95" y="110" width="20" height="15" rx="3" fill="currentColor" opacity="0.2" />
+              <rect
+                x="65"
+                y="110"
+                width="20"
+                height="15"
+                rx="3"
+                fill="currentColor"
+                opacity="0.2"
+              />
+              <rect
+                x="95"
+                y="110"
+                width="20"
+                height="15"
+                rx="3"
+                fill="currentColor"
+                opacity="0.2"
+              />
 
               {/* Tag icon */}
               <circle cx="140" cy="60" r="12" fill="currentColor" opacity="0.15" />
@@ -328,9 +333,9 @@ function DemoContentProduct(props) {
               variant="h3"
               sx={{
                 fontWeight: 700,
-                color: '#9a3412',
-                marginBottom: '16px',
-                fontSize: { xs: '1.875rem', sm: '2.25rem' },
+                color: "#9a3412",
+                marginBottom: "16px",
+                fontSize: { xs: "1.875rem", sm: "2.25rem" },
               }}
             >
               No Products Available
@@ -345,14 +350,15 @@ function DemoContentProduct(props) {
             <Typography
               variant="body1"
               sx={{
-                color: '#7c2d12',
-                fontSize: { xs: '1rem', sm: '1.125rem' },
+                color: "#7c2d12",
+                fontSize: { xs: "1rem", sm: "1.125rem" },
                 lineHeight: 1.7,
-                marginBottom: '24px',
+                marginBottom: "24px",
               }}
             >
-              The marketplace is currently empty. No products are available at this moment.
-              Please check back soon as new items are added regularly, or adjust your filters to explore more options.
+              The marketplace is currently empty. No products are available at this moment. Please
+              check back soon as new items are added regularly, or adjust your filters to explore
+              more options.
             </Typography>
           </motion.div>
 
@@ -362,7 +368,7 @@ function DemoContentProduct(props) {
             animate={{ opacity: 1, transition: { delay: 0.5, duration: 0.5 } }}
             className="flex items-center gap-3 mt-4"
           >
-            <ShoppingCart sx={{ color: '#ea580c', opacity: 0.4 }} />
+            <ShoppingCart sx={{ color: "#ea580c", opacity: 0.4 }} />
             <div className="h-1 w-16 bg-gradient-to-r from-orange-400 via-orange-300 to-transparent rounded-full"></div>
           </motion.div>
         </div>
@@ -402,11 +408,7 @@ function DemoContentProduct(props) {
       <div className="p-8">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {products.map((product, index) => (
-            <ProductCard
-              key={product?.id || product?._id}
-              product={product}
-              index={index}
-            />
+            <ProductCard key={product?.id || product?._id} product={product} index={index} />
           ))}
         </div>
       </div>

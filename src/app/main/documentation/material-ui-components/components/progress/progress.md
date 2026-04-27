@@ -2,7 +2,7 @@
 productId: material-ui
 title: Circular, Linear progress React components
 components: CircularProgress, LinearProgress
-githubLabel: 'component: progress'
+githubLabel: "component: progress"
 materialDesign: https://m2.material.io/components/progress-indicators
 ---
 

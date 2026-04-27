@@ -5,13 +5,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { useEffect, useState } from "react";
 import { useAppDispatch } from "app/store/hooks";
 import { motion, useAnimation } from "framer-motion";
-import {
-  IconButton,
-  InputAdornment,
-  Paper,
-  TextField,
-  useTheme,
-} from "@mui/material";
+import { IconButton, InputAdornment, Paper, TextField, useTheme } from "@mui/material";
 import { toggleNotificationPanel } from "../apps/notifications/notificationPanelSlice";
 import { toggleAccountsPanel } from "../apps/notifications/accountPanelSlice";
 
@@ -52,9 +46,9 @@ function FinanceDashboardAppHeader(props) {
     // resolver: zodResolver(schema)
   });
   // const methods = useFormContext();
-  
+
   // const { control, formState, watch, getValues } = methods;
-  const generateUserWalletAcount = useGenerateUserWalletAccountMutation()
+  const generateUserWalletAcount = useGenerateUserWalletAccountMutation();
 
   const { shopAccount } = props;
   const [open, setOpen] = React.useState(false);
@@ -68,8 +62,7 @@ function FinanceDashboardAppHeader(props) {
     setWithdrawOpen(newOpen);
   };
 
-  const { children = <FuseSvgIcon>heroicons-outline:bell</FuseSvgIcon> } =
-    props;
+  const { children = <FuseSvgIcon>heroicons-outline:bell</FuseSvgIcon> } = props;
   const [animate, setAnimate] = useState(false);
   const dispatch = useAppDispatch();
   const controls = useAnimation();
@@ -105,27 +98,20 @@ function FinanceDashboardAppHeader(props) {
   //   </Box>
   // );
 
-
   const DrawerWithdraw = (
-    <Box
-    sx={{ width: 350 }}
-    sm={{ width: 250 }}
-      role="presentation"
-    >
+    <Box sx={{ width: 350 }} sm={{ width: 250 }} role="presentation">
       {/* <Typography>Withdraw Funds</Typography> */}
 
       <FundsWithdrawalPage />
     </Box>
   );
- 
-  const handleAccountGeneration = () =>{
-    if (window.confirm('Generate a wallet account?')) {
-      console.log("User Account Wallet Generating...")
-      generateUserWalletAcount.mutate()
-    }
 
- 
-  }
+  const handleAccountGeneration = () => {
+    if (window.confirm("Generate a wallet account?")) {
+      console.log("User Account Wallet Generating...");
+      generateUserWalletAcount.mutate();
+    }
+  };
 
   return (
     <div className="flex w-full container">
@@ -134,45 +120,37 @@ function FinanceDashboardAppHeader(props) {
           <Typography className="text-3xl font-semibold tracking-tight leading-8">
             Finance dashboard
           </Typography>
-          <Typography
-            className="font-medium tracking-tight"
-            color="text.secondary"
-          >
+          <Typography className="font-medium tracking-tight" color="text.secondary">
             Keep track of your financial status
           </Typography>
         </div>
         <div className="flex items-center mt-24 sm:mt-0 sm:mx-8 space-x-12">
           <Button
             className="whitespace-nowrap"
-            startIcon={
-              <FuseSvgIcon size={20}>
-                heroicons-solid:document-report
-              </FuseSvgIcon>
-            }
+            startIcon={<FuseSvgIcon size={20}>heroicons-solid:document-report</FuseSvgIcon>}
           >
             Reports
           </Button>
 
+          {!shopAccount?.data?._id && (
+            <Button
+              className="bg-orange-500 hover:bg-orange-800 whitespace-nowrap"
+              startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
+              onClick={handleAccountGeneration}
+            >
+              Generate Acoount
+            </Button>
+          )}
 
-          {!shopAccount?.data?._id  &&  <Button
-            className="bg-orange-500 hover:bg-orange-800 whitespace-nowrap"
-            startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
-            onClick={handleAccountGeneration}
-          >
-            Generate Acoount
-          </Button>}
-
-            {shopAccount?.data?._id  && <Button
-            className="bg-orange-500 hover:bg-orange-800 whitespace-nowrap"
-            startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
-            onClick={toggleWithdrawDrawer(true)}
-          >
-            Withdraw
-          </Button>}
-
-          
-
-         
+          {shopAccount?.data?._id && (
+            <Button
+              className="bg-orange-500 hover:bg-orange-800 whitespace-nowrap"
+              startIcon={<FuseSvgIcon size={20}>heroicons-solid:cog</FuseSvgIcon>}
+              onClick={toggleWithdrawDrawer(true)}
+            >
+              Withdraw
+            </Button>
+          )}
 
           {/* <Button
             className="bg-orange-500 whitespace-nowrap"
@@ -183,8 +161,6 @@ function FinanceDashboardAppHeader(props) {
             <motion.div animate={controls}>{children}</motion.div>
             Cashout To Wallet
           </Button> */}
-
-       
         </div>
 
         {/* <Drawer open={open} onClose={toggleDrawer(false)}>

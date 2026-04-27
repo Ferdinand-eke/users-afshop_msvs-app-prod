@@ -1,6 +1,7 @@
 # Merchant Subdomain - Final Simple Implementation
 
 ## Overview
+
 **Dead simple approach**: Merchant subdomains show ONLY the merchant profile page. All booking flows happen on main domain.
 
 ---
@@ -8,17 +9,22 @@
 ## How It Works
 
 ### 1. View Merchant Profile (on subdomain)
+
 From any property listing, click "View Full Profile":
+
 - Goes to: `http://merchant-slug.localhost:3000/`
 - Shows: Merchant profile page with stats, bio, contact info
 - **No authentication required** - Anyone can view
 
 ### 2. Return to Main Site
+
 All buttons on merchant profile navigate back to main domain:
+
 - "Back to AfricanShops" → `http://localhost:3000/`
 - "Browse All Properties" → `http://localhost:3000/bookings/listings`
 
 ### 3. Booking Flow (stays on main domain)
+
 - Browse properties: `localhost:3000/bookings/listings`
 - View details: `localhost:3000/bookings/listings/123`
 - Book property: All on main domain
@@ -29,6 +35,7 @@ All buttons on merchant profile navigate back to main domain:
 ## URL Structure
 
 ### Development
+
 ```
 Main Domain:
 http://localhost:3000/                          → Homepage
@@ -42,6 +49,7 @@ http://kwame-shops.localhost:3000/              → Kwame Shops profile
 ```
 
 ### Production
+
 ```
 Main Domain:
 https://africanshops.org/                       → Homepage
@@ -57,22 +65,28 @@ https://reens-apartments.africanshops.org/      → Reens Apartments profile
 ## What Was Fixed
 
 ### 1. Route Simplified
+
 **Before**: `/hospitality`, `/hospitality/profile`, etc.
 **After**: Just `/` (root path on subdomain)
 
 ### 2. No Authentication Required
+
 Placed in **unauthenticated section** of routesConfig.jsx (line 204)
 Anyone can view merchant profiles without logging in.
 
 ### 3. Fixed URL Cascading
+
 Updated `getBaseDomainUrl()` to properly strip subdomains:
+
 ```javascript
 // Before: reens-apartments.cindy-fabrics.localhost ❌
 // After:  localhost → reens-apartments.localhost ✅
 ```
 
 ### 4. Fixed Subdomain Detection
+
 All merchants now correctly detected:
+
 ```javascript
 // cindy-fabrics.localhost → detects 'cindy-fabrics' ✅
 // reens-apartments.localhost → detects 'reens-apartments' ✅
@@ -101,6 +115,7 @@ All merchants now correctly detected:
 ## Testing
 
 ### Test Different Merchants
+
 1. View property from **Cindy Fabrics** → Click "View Full Profile"
    - Should go to: `http://cindy-fabrics.localhost:3000/`
    - Shows Cindy Fabrics profile ✅
@@ -115,7 +130,9 @@ All merchants now correctly detected:
    - User still logged in ✅
 
 ### Test Invalid Merchant
+
 Visit: `http://invalid-merchant.localhost:3000/`
+
 - Should show "Merchant Not Found" page ✅
 
 ---
@@ -133,16 +150,19 @@ Visit: `http://invalid-merchant.localhost:3000/`
 ## Production Deployment
 
 ### DNS Setup
+
 ```
 *.africanshops.org → A → your-server-ip
 ```
 
 ### SSL Certificate
+
 ```
 *.africanshops.org (wildcard certificate)
 ```
 
 ### That's It!
+
 No backend changes needed. Everything works frontend-only.
 
 ---
@@ -150,12 +170,14 @@ No backend changes needed. Everything works frontend-only.
 ## Summary
 
 **You now have a clean, simple merchant subdomain system:**
+
 - Each merchant gets their own subdomain for their profile
 - All booking/checkout flows stay on main domain
 - No authentication complications
 - Each merchant's subdomain shows their unique profile
 
 **Example Flow:**
+
 1. User browses properties on `localhost:3000/bookings/listings`
 2. Sees Cindy Fabrics property → Clicks "View Full Profile"
 3. Taken to `cindy-fabrics.localhost:3000/` → Sees Cindy's full profile

@@ -26,9 +26,7 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={"Error occurred while retriving reservations"}
-        />
+        <ClienttErrorPage message={"Error occurred while retriving reservations"} />
       </motion.div>
     );
   }
@@ -58,25 +56,14 @@ function DemoContent(props) {
             <main className="w-4/4 p-4 overflow-y-scroll">
               <div className="border-b pb-4 mb-4">
                 <div className="flex">
-                  <Typography
-                    component={NavLinkAdapter}
-                    to={`/foodmarts/user/food-orders`}
-                  >
+                  <Typography component={NavLinkAdapter} to={`/foodmarts/user/food-orders`}>
                     {"<=="}
                   </Typography>
                   <h1 className="text-xl font-bold">Food Order Details</h1>
                 </div>
-                <p>
-                  Reservation ID:{" "}
-                  {orderData?.paymentResult?.reference}
-                </p>
-                <p>
-                  Placed on:{" "}
-                  {new Date(orderData?.createdAt)?.toDateString()}
-                </p>
-                <p>
-                  Total: N {formatCurrency(orderData?.totalPrice)}
-                </p>
+                <p>Reservation ID: {orderData?.paymentResult?.reference}</p>
+                <p>Placed on: {new Date(orderData?.createdAt)?.toDateString()}</p>
+                <p>Total: N {formatCurrency(orderData?.totalPrice)}</p>
               </div>
               <div className="space-y-4">
                 {orderData?.foodOrderItems?.map((order) => (
@@ -120,18 +107,17 @@ function DemoContent(props) {
                       </div>
                     </div>
 
-                    {!order?.orderId?.isShipped &&
-                      !order?.orderId?.isDelivered && (
-                        <>
-                          {/* <p>{JSON.stringify(order?.orderId?.isDelivered)}</p> */}
-                          <Button
-                            size="small"
-                            className="mt-4 bg-orange-300 hover:bg-orange-500 text-black text-sm px-2 py-1 rounded w-full"
-                          >
-                            Cancel This Order
-                          </Button>
-                        </>
-                      )}
+                    {!order?.orderId?.isShipped && !order?.orderId?.isDelivered && (
+                      <>
+                        {/* <p>{JSON.stringify(order?.orderId?.isDelivered)}</p> */}
+                        <Button
+                          size="small"
+                          className="mt-4 bg-orange-300 hover:bg-orange-500 text-black text-sm px-2 py-1 rounded w-full"
+                        >
+                          Cancel This Order
+                        </Button>
+                      </>
+                    )}
                   </div>
                 ))}
               </div>
@@ -141,14 +127,12 @@ function DemoContent(props) {
                   <h3 className="font-bold">PAYMENT INFORMATION</h3>
                   {orderData?.paymentResult?.paymentMethod && (
                     <p className="text-sm font-bold">
-                      Payment Method:{" "}
-                      {orderData?.paymentResult?.paymentMethod}
+                      Payment Method: {orderData?.paymentResult?.paymentMethod}
                     </p>
                   )}
 
                   <p className="text-sm font-bold">
-                    Total Amount: N{" "}
-                    {formatCurrency(orderData?.totalPrice)}
+                    Total Amount: N {formatCurrency(orderData?.totalPrice)}
                   </p>
                 </div>
                 <div className="border p-4">

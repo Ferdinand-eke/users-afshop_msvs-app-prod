@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Autocomplete component
 components: TextField, Popper, Autocomplete
-githubLabel: 'component: autocomplete'
+githubLabel: "component: autocomplete"
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/combobox/
 ---
 
@@ -41,11 +41,11 @@ for instance:
 
 ```js
 const options = [
-  { label: 'The Godfather', id: 1 },
-  { label: 'Pulp Fiction', id: 2 },
+  { label: "The Godfather", id: 1 },
+  { label: "Pulp Fiction", id: 2 },
 ];
 // or
-const options = ['The Godfather', 'Pulp Fiction'];
+const options = ["The Godfather", "Pulp Fiction"];
 ```
 
 However, you can use different structures by providing a `getOptionLabel` prop.
@@ -91,10 +91,7 @@ In other words, the reference to the value shouldn't change if the value itself 
 return <Autocomplete multiple value={allValues.filter((v) => v.selected)} />;
 
 // 👍 GOOD
-const selectedValues = React.useMemo(
-  () => allValues.filter((v) => v.selected),
-  [allValues],
-);
+const selectedValues = React.useMemo(() => allValues.filter((v) => v.selected), [allValues]);
 return <Autocomplete multiple value={selectedValues} />;
 ```
 
@@ -163,13 +160,13 @@ related to the rendering of JSX.
 The Autocomplete component is built on this hook.
 
 ```tsx
-import { useAutocomplete } from '@mui/base/useAutocomplete';
+import { useAutocomplete } from "@mui/base/useAutocomplete";
 ```
 
 The `useAutocomplete` hook is also reexported from @mui/material for convenience and backward compatibility.
 
 ```tsx
-import useAutocomplete from '@mui/material/useAutocomplete';
+import useAutocomplete from "@mui/material/useAutocomplete";
 ```
 
 {{"demo": "UseAutocomplete.js", "defaultCodeOpen": false}}
@@ -294,7 +291,7 @@ The component exposes a factory to create a filter method that can be provided t
 You can use it to change the default option filter behavior.
 
 ```js
-import { createFilterOptions } from '@mui/material/Autocomplete';
+import { createFilterOptions } from "@mui/material/Autocomplete";
 ```
 
 ### `createFilterOptions(config) => filterOptions`
@@ -318,7 +315,7 @@ In the following demo, the options need to start with the query prefix:
 
 ```jsx
 const filterOptions = createFilterOptions({
-  matchFrom: 'start',
+  matchFrom: "start",
   stringify: (option) => option.title,
 });
 
@@ -332,7 +329,7 @@ const filterOptions = createFilterOptions({
 For richer filtering mechanisms, like fuzzy matching, it's recommended to look at [match-sorter](https://github.com/kentcdodds/match-sorter). For instance:
 
 ```jsx
-import { matchSorter } from 'match-sorter';
+import { matchSorter } from "match-sorter";
 
 const filterOptions = (options, { inputValue }) => matchSorter(options, inputValue);
 
@@ -352,7 +349,7 @@ If you would like to prevent the default key handler behavior, you can set the e
 ```jsx
 <Autocomplete
   onKeyDown={(event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       // Prevent's default 'Enter' behavior.
       event.defaultMuiPrevented = true;
       // your handler code
@@ -383,7 +380,7 @@ In the event you want the avoid autofill, you can try the following:
     {...params}
     inputProps={{
       ...params.inputProps,
-      autoComplete: 'new-password',
+      autoComplete: "new-password",
     }}
   />
   ```

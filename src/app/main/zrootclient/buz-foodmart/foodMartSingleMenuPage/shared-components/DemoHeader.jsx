@@ -74,10 +74,7 @@ function DemoHeader(props) {
         </div>
         {rightSidebarToggle && (
           <div className="flex shrink-0 items-center">
-            <IconButton
-              onClick={rightSidebarToggle}
-              aria-label="toggle sidebar"
-            >
+            <IconButton onClick={rightSidebarToggle} aria-label="toggle sidebar">
               <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
             </IconButton>
           </div>

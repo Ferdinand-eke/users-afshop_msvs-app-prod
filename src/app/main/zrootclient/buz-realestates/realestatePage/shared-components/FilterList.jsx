@@ -25,13 +25,7 @@ import {
   FilterList as FilterListIcon,
 } from "@mui/icons-material";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-import {
-  getLgasByStateId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
-
-
-
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 
 const PROPERTY_TYPES = [
   "Apartment",
@@ -80,23 +74,15 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
 
   // Filter state
   const [keyword, setKeyword] = useState(initialFilters.keyword || "");
-  const [propertyType, setPropertyType] = useState(
-    initialFilters.propertyType || ""
-  );
+  const [propertyType, setPropertyType] = useState(initialFilters.propertyType || "");
   const [country, setCountry] = useState(initialFilters.country || "");
   const [state, setState] = useState(initialFilters.state || "");
   const [lga, setLga] = useState(initialFilters.lga || "");
   const [district, setDistrict] = useState(initialFilters.district || "");
-  const [priceRange, setPriceRange] = useState(
-    initialFilters.priceRange || [0, 1000000000]
-  );
+  const [priceRange, setPriceRange] = useState(initialFilters.priceRange || [0, 1000000000]);
   const [roomCount, setRoomCount] = useState(initialFilters.roomCount || "");
-  const [bathroomCount, setBathroomCount] = useState(
-    initialFilters.bathroomCount || ""
-  );
-  const [selectedAmenities, setSelectedAmenities] = useState(
-    initialFilters.amenities || []
-  );
+  const [bathroomCount, setBathroomCount] = useState(initialFilters.bathroomCount || "");
+  const [selectedAmenities, setSelectedAmenities] = useState(initialFilters.amenities || []);
 
   // UI state
   const [showAdvancedFeatures, setShowAdvancedFeatures] = useState(false);
@@ -133,23 +119,26 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
   // Emit filter changes to parent component with debounce for keyword
   useEffect(() => {
     // Debounce keyword search to prevent excessive API calls
-    const timeoutId = setTimeout(() => {
-      if (onFilterChangeRef.current) {
-        const filters = {
-          keyword,
-          propertyType,
-          country,
-          state,
-          lga,
-          district,
-          priceRange,
-          roomCount,
-          bathroomCount,
-          amenities: selectedAmenities,
-        };
-        onFilterChangeRef.current(filters);
-      }
-    }, keyword ? 500 : 0); // 500ms debounce for keyword, immediate for others
+    const timeoutId = setTimeout(
+      () => {
+        if (onFilterChangeRef.current) {
+          const filters = {
+            keyword,
+            propertyType,
+            country,
+            state,
+            lga,
+            district,
+            priceRange,
+            roomCount,
+            bathroomCount,
+            amenities: selectedAmenities,
+          };
+          onFilterChangeRef.current(filters);
+        }
+      },
+      keyword ? 500 : 0,
+    ); // 500ms debounce for keyword, immediate for others
 
     return () => clearTimeout(timeoutId);
   }, [
@@ -180,7 +169,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         function () {
           setStatesLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -200,7 +189,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -208,9 +197,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
   // Handle amenity toggle
   const handleAmenityToggle = (amenityId) => {
     setSelectedAmenities((prev) =>
-      prev.includes(amenityId)
-        ? prev.filter((id) => id !== amenityId)
-        : [...prev, amenityId]
+      prev.includes(amenityId) ? prev.filter((id) => id !== amenityId) : [...prev, amenityId],
     );
   };
 
@@ -268,10 +255,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         />
 
         {/* Location Section */}
-        <Typography
-          variant="subtitle2"
-          className="font-medium text-gray-700 pt-2"
-        >
+        <Typography variant="subtitle2" className="font-medium text-gray-700 pt-2">
           Location
         </Typography>
 
@@ -381,10 +365,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
 
         {/* Price Range */}
         <div className="pt-2">
-          <Typography
-            variant="subtitle2"
-            className="font-medium text-gray-700 mb-2"
-          >
+          <Typography variant="subtitle2" className="font-medium text-gray-700 mb-2">
             Price Range
           </Typography>
           <Box className="px-2">
@@ -426,12 +407,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
             </MenuItem>
             {[1, 2, 3, 4, 5, "6+"].map((count) => (
               <MenuItem key={count} value={count}>
-                {count}{" "}
-                {count === "6+"
-                  ? "Bedrooms"
-                  : count === 1
-                    ? "Bedroom"
-                    : "Bedrooms"}
+                {count} {count === "6+" ? "Bedrooms" : count === 1 ? "Bedroom" : "Bedrooms"}
               </MenuItem>
             ))}
           </Select>
@@ -451,12 +427,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
             </MenuItem>
             {[1, 2, 3, 4, "5+"].map((count) => (
               <MenuItem key={count} value={count}>
-                {count}{" "}
-                {count === "5+"
-                  ? "Bathrooms"
-                  : count === 1
-                    ? "Bathroom"
-                    : "Bathrooms"}
+                {count} {count === "5+" ? "Bathrooms" : count === 1 ? "Bathroom" : "Bathrooms"}
               </MenuItem>
             ))}
           </Select>

@@ -26,9 +26,7 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={"Error occurred while retriving rcs-orders"}
-        />
+        <ClienttErrorPage message={"Error occurred while retriving rcs-orders"} />
       </motion.div>
     );
   }
@@ -56,18 +54,13 @@ function DemoContent(props) {
             <button className="border-b-2 text-[11px] border-orange-500 pb-2">
               ONGOING/FULLFILED ORDERS {userCreatedOrders?.length}
             </button>
-            <button className="text-[11px] pb-2">
-              CANCELED ORDERS (0)
-            </button>
+            <button className="text-[11px] pb-2">CANCELED ORDERS (0)</button>
           </div>
 
           <div className="space-y-4">
             {userCreatedOrders?.map((order) => (
-              <div
-                className="bg-white p-4 rounded shadow mb-8"
-                key={order?.id}
-              >
-               <FoodOrderCard orderData={order} />
+              <div className="bg-white p-4 rounded shadow mb-8" key={order?.id}>
+                <FoodOrderCard orderData={order} />
               </div>
             ))}
           </div>

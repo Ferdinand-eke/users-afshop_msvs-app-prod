@@ -44,10 +44,7 @@ import MerchantModernReversedActivatePage from "./UserModernReversedActivatePage
 const schema = z
   .object({
     name: z.string().nonempty("You must enter your business/shop name"),
-    email: z
-      .string()
-      .email("You must enter a valid email")
-      .nonempty("You must enter an email"),
+    email: z.string().email("You must enter a valid email").nonempty("You must enter an email"),
     password: z
       .string()
       .nonempty("Please enter your password.")
@@ -55,10 +52,7 @@ const schema = z
     passwordConfirm: z.string().nonempty("Password confirmation is required"),
     acceptTermsConditions: z
       .boolean()
-      .refine(
-        (val) => val === true,
-        "The terms and conditions must be accepted."
-      ),
+      .refine((val) => val === true, "The terms and conditions must be accepted."),
   })
   .refine((data) => data.password === data.passwordConfirm, {
     message: "Passwords must match",
@@ -137,15 +131,7 @@ function UserModernReversedSignUpPage() {
   const remoteResponseToken = getMerchantSignUpToken();
   const routeParams = useParams();
   const sigupClientUsers = useShopSignUpWithOtp();
-  const {
-    control,
-    formState,
-    handleSubmit,
-    reset,
-    setValue,
-    watch,
-    getValues,
-  } = useForm({
+  const { control, formState, handleSubmit, reset, setValue, watch, getValues } = useForm({
     mode: "onChange",
     defaultValues,
     resolver: zodResolver(schema),
@@ -167,19 +153,14 @@ function UserModernReversedSignUpPage() {
     market: getValues()?.market?.id,
   };
 
-
   function onSubmit() {
-
     sigupClientUsers.mutate(shopregistry);
   }
 
   /****Resend OTP on expiration of OTP */
   const resendOTP = () => {
-
     if (!clientSignUpData?.email) {
-      if (
-        window.confirm("Some hitch occured, restart the unboarding process?")
-      ) {
+      if (window.confirm("Some hitch occured, restart the unboarding process?")) {
         removeUserSignUpToken();
         removeResendMerchantSignUpOtp();
       }
@@ -240,12 +221,7 @@ function UserModernReversedSignUpPage() {
     if (getValues()?.businezLga?.id?.length > 0) {
       getMarketsFromLgaId(getValues()?.businezLga?.id);
     }
-  }, [
-    location?.id,
-    businezState?.id,
-    businezLga?.id,
-    sigupClientUsers?.isSuccess,
-  ]);
+  }, [location?.id, businezState?.id, businezLga?.id, sigupClientUsers?.isSuccess]);
 
   useEffect(() => {
     if (sigupClientUsers?.isSuccess) {
@@ -253,17 +229,12 @@ function UserModernReversedSignUpPage() {
         setResendMerchantSignUpOtp(shopregistry);
       }
     }
-  }, [
-    sigupClientUsers?.isSuccess,
-     remoteResponseToken,
-
-    ]);
+  }, [sigupClientUsers?.isSuccess, remoteResponseToken]);
 
   async function findStatesByCountry(countryId) {
     setLoading(true);
     const stateResponseData = await getStateByCountryId(countryId);
-     console.log("States", stateResponseData?.data)
-
+    console.log("States", stateResponseData?.data);
 
     if (stateResponseData) {
       setStateData(stateResponseData?.data?.states);
@@ -272,7 +243,7 @@ function UserModernReversedSignUpPage() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -288,11 +259,10 @@ function UserModernReversedSignUpPage() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
-
 
   //**Get Marketss from lga_ID data */ getShopById
   async function getMarketsFromLgaId(lid) {
@@ -305,18 +275,15 @@ function UserModernReversedSignUpPage() {
           function () {
             setLoading(false);
           }.bind(this),
-          250
+          250,
         );
       }
     }
   }
 
-
   let bodyContent = (
     <div className="flex flex-col gap-8">
-      <Typography
-        className="text-lg font-semibold text-gray-900 mb-4"
-      >
+      <Typography className="text-lg font-semibold text-gray-900 mb-4">
         Email Details{" "}
         <span className="block mt-2 text-sm font-medium text-gray-600">
           What e-mail are you looking to use as your primary contact email
@@ -340,16 +307,16 @@ function UserModernReversedSignUpPage() {
                 required
                 fullWidth
                 sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover fieldset': {
-                      borderColor: '#ea580c',
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: "#ea580c",
                     },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#ea580c',
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#ea580c",
                     },
                   },
-                  '& .MuiInputLabel-root.Mui-focused': {
-                    color: '#ea580c',
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#ea580c",
                   },
                 }}
               />
@@ -371,16 +338,16 @@ function UserModernReversedSignUpPage() {
                 required
                 fullWidth
                 sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover fieldset': {
-                      borderColor: '#ea580c',
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: "#ea580c",
                     },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#ea580c',
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#ea580c",
                     },
                   },
-                  '& .MuiInputLabel-root.Mui-focused': {
-                    color: '#ea580c',
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#ea580c",
                   },
                 }}
               />
@@ -402,16 +369,16 @@ function UserModernReversedSignUpPage() {
                 required
                 fullWidth
                 sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover fieldset': {
-                      borderColor: '#ea580c',
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: "#ea580c",
                     },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#ea580c',
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#ea580c",
                     },
                   },
-                  '& .MuiInputLabel-root.Mui-focused': {
-                    color: '#ea580c',
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#ea580c",
                   },
                 }}
               />
@@ -433,16 +400,16 @@ function UserModernReversedSignUpPage() {
                 required
                 fullWidth
                 sx={{
-                  '& .MuiOutlinedInput-root': {
-                    '&:hover fieldset': {
-                      borderColor: '#ea580c',
+                  "& .MuiOutlinedInput-root": {
+                    "&:hover fieldset": {
+                      borderColor: "#ea580c",
                     },
-                    '&.Mui-focused fieldset': {
-                      borderColor: '#ea580c',
+                    "&.Mui-focused fieldset": {
+                      borderColor: "#ea580c",
                     },
                   },
-                  '& .MuiInputLabel-root.Mui-focused': {
-                    color: '#ea580c',
+                  "& .MuiInputLabel-root.Mui-focused": {
+                    color: "#ea580c",
                   },
                 }}
               />
@@ -452,7 +419,6 @@ function UserModernReversedSignUpPage() {
       </>
     </div>
   );
-
 
   if (step == STEPS.LOCATION) {
     bodyContent = (
@@ -464,10 +430,7 @@ function UserModernReversedSignUpPage() {
           </span>
         </Typography>
         <>
-          <CountrySelect
-            value={location}
-            onChange={(value) => setCustomValue("location", value)}
-          />
+          <CountrySelect value={location} onChange={(value) => setCustomValue("location", value)} />
 
           {location?.id && (
             <StateSelect
@@ -492,7 +455,6 @@ function UserModernReversedSignUpPage() {
               onChange={(value) => setCustomValue("market", value)}
             />
           )}
-
         </>
       </div>
     );
@@ -582,16 +544,11 @@ function UserModernReversedSignUpPage() {
           Terms & Conditions : Accept our terms and conditions and proceed
         </Typography>
         <>
-
-
           <Controller
             name="acceptTermsConditions"
             control={control}
             render={({ field }) => (
-              <FormControl
-                className="items-center"
-                error={!!errors.acceptTermsConditions}
-              >
+              <FormControl className="items-center" error={!!errors.acceptTermsConditions}>
                 <FormControlLabel
                   label="I agree to the Terms of Service and Privacy Policy"
                   control={
@@ -599,16 +556,14 @@ function UserModernReversedSignUpPage() {
                       size="small"
                       {...field}
                       sx={{
-                        '&.Mui-checked': {
-                          color: '#ea580c',
+                        "&.Mui-checked": {
+                          color: "#ea580c",
                         },
                       }}
                     />
                   }
                 />
-                <FormHelperText>
-                  {errors?.acceptTermsConditions?.message}
-                </FormHelperText>
+                <FormHelperText>{errors?.acceptTermsConditions?.message}</FormHelperText>
               </FormControl>
             )}
           />
@@ -660,11 +615,7 @@ function UserModernReversedSignUpPage() {
                 <rect x="0" y="0" width="4" height="4" fill="white" />
               </pattern>
             </defs>
-            <rect
-              width="220"
-              height="192"
-              fill="url(#signup-pattern)"
-            />
+            <rect width="220" height="192" fill="url(#signup-pattern)" />
           </Box>
 
           <div className="relative z-10 w-full max-w-2xl">
@@ -673,7 +624,8 @@ function UserModernReversedSignUpPage() {
               <div>Community</div>
             </div>
             <div className="mt-24 text-lg leading-6 tracking-tight text-white/90">
-              Start your journey with AfricanShops and connect with thousands of merchants across Africa.
+              Start your journey with AfricanShops and connect with thousands of merchants across
+              Africa.
             </div>
 
             {/* Features Grid */}
@@ -738,11 +690,7 @@ function UserModernReversedSignUpPage() {
                   boxShadow: "0 4px 20px rgba(234, 88, 12, 0.3)",
                 }}
               >
-                <img
-                  className="w-40"
-                  src="assets/images/afslogo/afslogo.png"
-                  alt="logo"
-                />
+                <img className="w-40" src="assets/images/afslogo/afslogo.png" alt="logo" />
               </div>
 
               <Typography className="text-4xl font-extrabold leading-tight tracking-tight">
@@ -767,13 +715,11 @@ function UserModernReversedSignUpPage() {
               {/* Progress Indicator */}
               <div className="mt-32 mb-24">
                 <div className="flex items-center justify-between relative">
-                  {['Email', 'Location', 'Terms'].map((label, idx) => (
+                  {["Email", "Location", "Terms"].map((label, idx) => (
                     <div key={idx} className="flex flex-col items-center flex-1 relative">
                       <div
                         className={`w-32 h-32 rounded-full flex items-center justify-center z-10 ${
-                          step >= idx
-                            ? 'text-white'
-                            : 'bg-gray-200 text-gray-400'
+                          step >= idx ? "text-white" : "bg-gray-200 text-gray-400"
                         }`}
                         style={
                           step >= idx
@@ -789,7 +735,10 @@ function UserModernReversedSignUpPage() {
                     </div>
                   ))}
                   {/* Progress Line */}
-                  <div className="absolute top-16 left-0 right-0 h-2 bg-gray-200" style={{ zIndex: 0 }}>
+                  <div
+                    className="absolute top-16 left-0 right-0 h-2 bg-gray-200"
+                    style={{ zIndex: 0 }}
+                  >
                     <div
                       className="h-full transition-all duration-300"
                       style={{
@@ -807,7 +756,10 @@ function UserModernReversedSignUpPage() {
                 className="mt-32 flex w-full flex-col justify-center"
                 onSubmit={handleSubmit(onSubmit)}
               >
-                <div className="max-h-[50vh] overflow-y-auto pr-8" style={{ scrollbarWidth: 'thin', scrollbarColor: '#ea580c #f5f5f4' }}>
+                <div
+                  className="max-h-[50vh] overflow-y-auto pr-8"
+                  style={{ scrollbarWidth: "thin", scrollbarColor: "#ea580c #f5f5f4" }}
+                >
                   {bodyContent}
                 </div>
 
@@ -820,16 +772,16 @@ function UserModernReversedSignUpPage() {
                     disabled={step === STEPS.CATEGORY}
                     sx={{
                       flex: 1,
-                      borderColor: '#ea580c',
-                      color: '#ea580c',
+                      borderColor: "#ea580c",
+                      color: "#ea580c",
                       fontWeight: 600,
-                      '&:hover': {
-                        borderColor: '#c2410c',
-                        backgroundColor: 'rgba(234, 88, 12, 0.05)',
+                      "&:hover": {
+                        borderColor: "#c2410c",
+                        backgroundColor: "rgba(234, 88, 12, 0.05)",
                       },
-                      '&:disabled': {
-                        borderColor: '#e5e7eb',
-                        color: '#9ca3af',
+                      "&:disabled": {
+                        borderColor: "#e5e7eb",
+                        color: "#9ca3af",
                       },
                     }}
                   >
@@ -843,11 +795,11 @@ function UserModernReversedSignUpPage() {
                       disabled={step === STEPS.DESCRIPTION}
                       sx={{
                         flex: 1,
-                        background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                        color: 'white',
+                        background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                        color: "white",
                         fontWeight: 600,
-                        '&:hover': {
-                          background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                        "&:hover": {
+                          background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
                         },
                       }}
                     >
@@ -858,27 +810,25 @@ function UserModernReversedSignUpPage() {
                       variant="contained"
                       size="large"
                       aria-label="Register"
-                      disabled={
-                        _.isEmpty(dirtyFields) ||
-                        !isValid ||
-                        sigupClientUsers?.isLoading
-                      }
+                      disabled={_.isEmpty(dirtyFields) || !isValid || sigupClientUsers?.isLoading}
                       type="submit"
                       sx={{
                         flex: 1,
-                        background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                        color: 'white',
+                        background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                        color: "white",
                         fontWeight: 600,
-                        '&:hover': {
-                          background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+                        "&:hover": {
+                          background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
                         },
-                        '&:disabled': {
-                          background: '#e5e7eb',
-                          color: '#9ca3af',
+                        "&:disabled": {
+                          background: "#e5e7eb",
+                          color: "#9ca3af",
                         },
                       }}
                     >
-                      {sigupClientUsers?.isLoading ? 'Creating Account...' : 'Create Your Free Account'}
+                      {sigupClientUsers?.isLoading
+                        ? "Creating Account..."
+                        : "Create Your Free Account"}
                     </Button>
                   )}
                 </div>

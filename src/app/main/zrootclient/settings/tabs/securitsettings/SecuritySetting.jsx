@@ -12,7 +12,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import { toast } from "react-toastify";
 import {
   useUserUpdateMutation,
-  useGetAuthUserDetails
+  useGetAuthUserDetails,
 } from "app/configs/data/server-calls/useUsers/useUsersQuery";
 import { useEffect } from "react";
 
@@ -42,7 +42,7 @@ function SecuritySetting() {
   const updateUserDetails = useUserUpdateMutation();
 
   console.log("Full userProfileData in SecuritySetting:", userProfileData);
-  console.log("Security Setting Form State:", {twoStepVerification, askPasswordChange});
+  console.log("Security Setting Form State:", { twoStepVerification, askPasswordChange });
   console.log("user details in Security Settings:", watch());
 
   // Populate form with user data from API
@@ -77,7 +77,7 @@ function SecuritySetting() {
     if (updateUserDetails?.isError) {
       toast.error(
         updateUserDetails?.error?.response?.data?.message ||
-        "Failed to update security preferences. Please try again."
+          "Failed to update security preferences. Please try again.",
       );
     }
   }, [updateUserDetails?.isError]);
@@ -90,7 +90,7 @@ function SecuritySetting() {
     const postData = {
       twoStepVerification: formData.twoStepVerification,
       askPasswordChange: formData.askPasswordChange,
-    }
+    };
     console.log("Post Data to be sent:", postData);
     updateUserDetails.mutate(postData);
   }
@@ -118,9 +118,7 @@ function SecuritySetting() {
           </FuseSvgIcon>
         </div>
         <div>
-          <Typography className="text-xl font-bold text-gray-800">
-            Security Preferences
-          </Typography>
+          <Typography className="text-xl font-bold text-gray-800">Security Preferences</Typography>
           <Typography className="text-sm text-gray-600">
             Keep your account more secure with following preferences
           </Typography>
@@ -165,8 +163,8 @@ function SecuritySetting() {
                           Enable 2-Step Authentication
                         </Typography>
                         <FormHelperText className="mt-1">
-                          Protects you against password theft by requesting an
-                          authentication code via SMS on every login
+                          Protects you against password theft by requesting an authentication code
+                          via SMS on every login
                         </FormHelperText>
                       </div>
                     </div>
@@ -199,8 +197,8 @@ function SecuritySetting() {
                           heroicons-solid:check-circle
                         </FuseSvgIcon>
                         <Typography className="text-xs text-green-700">
-                          You'll receive a verification code via SMS whenever you sign
-                          in from a new device
+                          You'll receive a verification code via SMS whenever you sign in from a new
+                          device
                         </Typography>
                       </div>
                     </motion.div>
@@ -246,8 +244,8 @@ function SecuritySetting() {
                           Ask to Change Password Every 6 Months
                         </Typography>
                         <FormHelperText className="mt-1">
-                          A simple but effective way to be protected against data leaks
-                          and password theft
+                          A simple but effective way to be protected against data leaks and password
+                          theft
                         </FormHelperText>
                       </div>
                     </div>
@@ -280,8 +278,8 @@ function SecuritySetting() {
                           heroicons-solid:check-circle
                         </FuseSvgIcon>
                         <Typography className="text-xs text-green-700">
-                          You'll receive a reminder notification to update your password
-                          every 6 months
+                          You'll receive a reminder notification to update your password every 6
+                          months
                         </Typography>
                       </div>
                     </motion.div>
@@ -311,8 +309,8 @@ function SecuritySetting() {
                     Security Recommendation
                   </Typography>
                   <Typography className="text-xs text-gray-600">
-                    We highly recommend enabling all security features to protect your
-                    account from unauthorized access
+                    We highly recommend enabling all security features to protect your account from
+                    unauthorized access
                   </Typography>
                 </div>
               </div>

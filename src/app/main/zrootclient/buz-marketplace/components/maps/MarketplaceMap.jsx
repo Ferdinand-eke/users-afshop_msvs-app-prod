@@ -17,7 +17,8 @@ L.Icon.Default.mergeOptions({
 
 // Custom shopping cart marker icon
 const cartIcon = new L.Icon({
-  iconUrl: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAzMiA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDQ4QzE2IDQ4IDMyIDI5LjMzMzMgMzIgMTZDMzIgNy4xNjM0NCAyNC44MzY2IDAgMTYgMEM3LjE2MzQ0IDAgMCA3LjE2MzQ0IDAgMTZDMCAyOS4zMzMzIDE2IDQ4IDE2IDQ4WiIgZmlsbD0iIzEwYjk4MSIvPgo8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
+  iconUrl:
+    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAzMiA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDQ4QzE2IDQ4IDMyIDI5LjMzMzMgMzIgMTZDMzIgNy4xNjM0NCAyNC44MzY2IDAgMTYgMEM3LjE2MzQ0IDAgMCA3LjE2MzQ0IDAgMTZDMCAyOS4zMzMzIDE2IDQ4IDE2IDQ4WiIgZmlsbD0iIzEwYjk4MSIvPgo8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
   iconSize: [32, 48],
   iconAnchor: [16, 48],
   popupAnchor: [0, -48],
@@ -44,10 +45,16 @@ function MapBounds({ center, zoom }) {
  * Shows the active shopping cart state with highlighting
  * Uses dummy data for demonstration - will be replaced with API data
  */
-function MarketplaceMap({cartData}) {
-  const {data:stateData} = useGetSingleState(cartData?.stateId)
-  const stateCenter = useMemo(() =>stateData?.data?.state ? [stateData.data.state.latitude, stateData.data.state.longitude]: [6.5244, 3.3792], [stateData?.data?.state]);
-let checkItemsArrayForTotal = [];
+function MarketplaceMap({ cartData }) {
+  const { data: stateData } = useGetSingleState(cartData?.stateId);
+  const stateCenter = useMemo(
+    () =>
+      stateData?.data?.state
+        ? [stateData.data.state.latitude, stateData.data.state.longitude]
+        : [6.5244, 3.3792],
+    [stateData?.data?.state],
+  );
+  let checkItemsArrayForTotal = [];
   cartData?.cartProducts?.forEach((element) => {
     // Check if item is bulk order and use appropriate price
     let itemPrice = element?.product?.price;
@@ -55,7 +62,7 @@ let checkItemsArrayForTotal = [];
     if (element?.isBulkOrder && element?.bulkPriceTierId) {
       // Find the matching price tier from product's priceTiers array
       const matchingTier = element?.product?.priceTiers?.find(
-        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId,
       );
 
       if (matchingTier) {
@@ -71,7 +78,6 @@ let checkItemsArrayForTotal = [];
 
   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
 
-
   // Dummy data for active shopping state
   // This will be replaced with API data from the user's active cart session
   const activeState = useMemo(() => {
@@ -85,12 +91,12 @@ let checkItemsArrayForTotal = [];
         [6.7027, 3.2019],
         [6.6989, 3.5869],
         [6.4281, 3.5869],
-        [6.3880, 3.2019],
+        [6.388, 3.2019],
         [6.7027, 3.2019],
       ],
       cartInfo: {
         itemCount: cartData?.cartProducts?.length || 0,
-        totalValue: formatCurrency(totalAmount)  || 0,
+        totalValue: formatCurrency(totalAmount) || 0,
       },
     };
   }, []);
@@ -118,19 +124,18 @@ let checkItemsArrayForTotal = [];
               Active Shopping Region
             </Typography>
             <Chip
-            label={activeState.name}
-            sx={{
-              backgroundColor: "rgba(16, 185, 129, 0.95)",
-              color: "white",
-              fontWeight: "bold",
-              fontSize: "0.975rem",
-              backdropFilter: "blur(10px)",
-              maxWidth: "fit-content",
-              textAlign: "end",
-            }}
-          />
+              label={activeState.name}
+              sx={{
+                backgroundColor: "rgba(16, 185, 129, 0.95)",
+                color: "white",
+                fontWeight: "bold",
+                fontSize: "0.975rem",
+                backdropFilter: "blur(10px)",
+                maxWidth: "fit-content",
+                textAlign: "end",
+              }}
+            />
           </div>
-          
         </div>
       </div>
 
@@ -232,10 +237,7 @@ let checkItemsArrayForTotal = [];
 
         {/* Center Marker for the state */}
         <Marker position={activeState.center} icon={cartIcon}>
-          <Popup
-            maxWidth={300}
-            className="custom-popup"
-          >
+          <Popup maxWidth={300} className="custom-popup">
             <div className="flex flex-col gap-3 p-3">
               <div className="flex items-center gap-2">
                 <ShoppingCartOutlined sx={{ color: "#10b981", fontSize: "1.75rem" }} />

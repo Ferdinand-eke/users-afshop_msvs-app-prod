@@ -155,17 +155,17 @@ function AddUserForm() {
       // if (id === 'new') {
       // 	reset(ContactModel({}));
       // }
-	//   if(recruitNewUserAccount.isSuccess){
-	// 	reset(ContactModel({}));
-	//   }
+      //   if(recruitNewUserAccount.isSuccess){
+      // 	reset(ContactModel({}));
+      //   }
       reset(ContactModel({}));
     },
     // [contactId, reset]
     [
       // id,
       reset,
-	//   recruitNewUserAccount?.isSuccess,
-    ]
+      //   recruitNewUserAccount?.isSuccess,
+    ],
   );
 
   // useEffect(() => {
@@ -183,8 +183,7 @@ function AddUserForm() {
     console.log("Crete User-FORMDATA", form);
 
     recruitNewUserAccount.mutate(form);
-	// reset(ContactModel({}));
-   
+    // reset(ContactModel({}));
   }, [form]);
 
   function handleRemoveContact() {
@@ -212,7 +211,6 @@ function AddUserForm() {
   // 	return <FuseLoading className="min-h-screen" />;
   // }
 
- 
   return (
     <>
       <Box
@@ -248,10 +246,7 @@ function AddUserForm() {
                   <div className="absolute inset-0 bg-black bg-opacity-50 z-10" />
                   <div className="absolute inset-0 flex items-center justify-center z-20">
                     <div>
-                      <label
-                        htmlFor="button-avatar"
-                        className="flex p-8 cursor-pointer"
-                      >
+                      <label htmlFor="button-avatar" className="flex p-8 cursor-pointer">
                         <input
                           accept="image/*"
                           className="hidden"
@@ -269,15 +264,9 @@ function AddUserForm() {
                                 const reader = new FileReader();
                                 reader.onload = () => {
                                   if (typeof reader.result === "string") {
-                                    resolve(
-                                      `data:${file.type};base64,${btoa(reader.result)}`
-                                    );
+                                    resolve(`data:${file.type};base64,${btoa(reader.result)}`);
                                   } else {
-                                    reject(
-                                      new Error(
-                                        "File reading did not result in a string."
-                                      )
-                                    );
+                                    reject(new Error("File reading did not result in a string."));
                                   }
                                 };
                                 reader.onerror = reject;
@@ -289,9 +278,7 @@ function AddUserForm() {
                             onChange(newImage);
                           }}
                         />
-                        <FuseSvgIcon className="text-white">
-                          heroicons-outline:camera
-                        </FuseSvgIcon>
+                        <FuseSvgIcon className="text-white">heroicons-outline:camera</FuseSvgIcon>
                       </label>
                     </div>
                     <div>
@@ -300,9 +287,7 @@ function AddUserForm() {
                           onChange("");
                         }}
                       >
-                        <FuseSvgIcon className="text-white">
-                          heroicons-solid:trash
-                        </FuseSvgIcon>
+                        <FuseSvgIcon className="text-white">heroicons-solid:trash</FuseSvgIcon>
                       </IconButton>
                     </div>
                   </div>
@@ -364,9 +349,7 @@ function AddUserForm() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <FuseSvgIcon size={20}>
-                      heroicons-solid:user-circle
-                    </FuseSvgIcon>
+                    <FuseSvgIcon size={20}>heroicons-solid:user-circle</FuseSvgIcon>
                   </InputAdornment>
                 ),
               }}
@@ -415,9 +398,7 @@ function AddUserForm() {
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <FuseSvgIcon size={20}>
-                      heroicons-solid:location-marker
-                    </FuseSvgIcon>
+                    <FuseSvgIcon size={20}>heroicons-solid:location-marker</FuseSvgIcon>
                   </InputAdornment>
                 ),
               }}
@@ -499,9 +480,7 @@ function AddUserForm() {
                 className: "max-h-min h-min items-start",
                 startAdornment: (
                   <InputAdornment className="mt-16" position="start">
-                    <FuseSvgIcon size={20}>
-                      heroicons-solid:menu-alt-2
-                    </FuseSvgIcon>
+                    <FuseSvgIcon size={20}>heroicons-solid:menu-alt-2</FuseSvgIcon>
                   </InputAdornment>
                 ),
               }}

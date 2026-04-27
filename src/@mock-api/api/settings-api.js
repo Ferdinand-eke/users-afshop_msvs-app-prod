@@ -93,7 +93,11 @@ export const settingsApiMocks = (mock) => {
 			newVal?.newPassword !== '' &&
 			newVal?.currentPassword === securitySettings.currentPassword
 		) {
-			_.assign(securitySettings, { ...newVal, currentPassword: newVal.newPassword, newPassword: '' });
+			_.assign(securitySettings, {
+				...newVal,
+				currentPassword: newVal.newPassword,
+				newPassword: ''
+			});
 		} else {
 			_.assign(securitySettings, _.omit(newVal, ['currentPassword']));
 		}

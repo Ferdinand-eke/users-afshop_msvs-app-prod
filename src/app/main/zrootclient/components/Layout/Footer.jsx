@@ -1,16 +1,7 @@
-import React from 'react';
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillYoutube,
-  AiOutlineTwitter,
-} from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import {
-  footercompanyLinks,
-  footerProductLinks,
-  footerSupportLinks,
-} from '../../static/data';
+import React from "react";
+import { AiFillFacebook, AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { footercompanyLinks, footerProductLinks, footerSupportLinks } from "../../static/data";
 
 const Footer = () => {
   return (
@@ -18,8 +9,7 @@ const Footer = () => {
       {/* [#342ac8] */}
       <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-green-700 py-7">
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
-          <span className="text-[#56d879]">Subscribe</span> us for get news{' '}
-          <br />
+          <span className="text-[#56d879]">Subscribe</span> us for get news <br />
           events and offers
         </h1>
         <div>
@@ -40,24 +30,15 @@ const Footer = () => {
           <img
             src="https://shopo.quomodothemes.website/assets/images/logo.svg"
             alt=""
-            style={{ filter: 'brightness(0) invert(1)' }}
+            style={{ filter: "brightness(0) invert(1)" }}
           />
           <br />
           <p>The home and elements needeed to create beatiful products.</p>
           <div className="flex items-center mt-[15px]">
             <AiFillFacebook size={25} className="cursor-pointer" />
-            <AiOutlineTwitter
-              size={25}
-              style={{ marginLeft: '15px', cursor: 'pointer' }}
-            />
-            <AiFillInstagram
-              size={25}
-              style={{ marginLeft: '15px', cursor: 'pointer' }}
-            />
-            <AiFillYoutube
-              size={25}
-              style={{ marginLeft: '15px', cursor: 'pointer' }}
-            />
+            <AiOutlineTwitter size={25} style={{ marginLeft: "15px", cursor: "pointer" }} />
+            <AiFillInstagram size={25} style={{ marginLeft: "15px", cursor: "pointer" }} />
+            <AiFillYoutube size={25} style={{ marginLeft: "15px", cursor: "pointer" }} />
           </div>
         </ul>
 

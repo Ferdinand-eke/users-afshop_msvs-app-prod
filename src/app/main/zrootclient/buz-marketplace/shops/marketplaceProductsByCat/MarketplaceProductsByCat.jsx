@@ -21,7 +21,6 @@ import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "../../../components/ClienttErrorPage";
 import CategoryAndTradehub from "../components/CategoryAndTradehub";
 
-
 const container = {
   show: {
     transition: {
@@ -48,11 +47,7 @@ function MarketplaceProductsByCat() {
   const routeParams = useParams();
   const { id } = routeParams;
 
-  const {
-    data: allProductsByCategory,
-    isLoading,
-    isError,
-  } = useGetProductByCategory(id);
+  const { data: allProductsByCategory, isLoading, isError } = useGetProductByCategory(id);
 
   if (isError) {
     return (
@@ -66,16 +61,12 @@ function MarketplaceProductsByCat() {
     );
   }
 
-
   let productItemsView;
 
   if (!isLoading) {
     if (allProductsByCategory?.data && allProductsByCategory?.data.length > 0) {
       productItemsView = allProductsByCategory?.data.map((product, index) => (
-        <div
-          key={index}
-          className="bg-white p-4 rounded shadow flex flex-col relative"
-        >
+        <div key={index} className="bg-white p-4 rounded shadow flex flex-col relative">
           <div className="relative">
             <img
               src={product?.image}
@@ -106,16 +97,11 @@ function MarketplaceProductsByCat() {
             </Typography>
             <p className="text-orange-500 font-bold mt-2">
               {formatCurrency(product?.price)}{" "}
-              <span className="text-[10px]">
-                {" "}
-                per {product?.quantityunitweight?.unitname}
-              </span>
+              <span className="text-[10px]"> per {product?.quantityunitweight?.unitname}</span>
             </p>
 
             {product?.listprice && (
-              <p className="text-gray-500 line-through">
-                {formatCurrency(product?.listprice)}
-              </p>
+              <p className="text-gray-500 line-through">{formatCurrency(product?.listprice)}</p>
             )}
 
             <p className="text-green-500">-70%</p>
@@ -169,20 +155,10 @@ function MarketplaceProductsByCat() {
                 </div>
                 <h2 className="font-bold mt-6 mb-4">PRICE (₦)</h2>
                 <div className="flex items-center space-x-2">
-                  <input
-                    type="number"
-                    className="border rounded p-2 w-20"
-                    placeholder="6090"
-                  />
+                  <input type="number" className="border rounded p-2 w-20" placeholder="6090" />
                   <span>-</span>
-                  <input
-                    type="number"
-                    className="border rounded p-2 w-20"
-                    placeholder="9999999"
-                  />
-                  <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                    APPLY
-                  </button>
+                  <input type="number" className="border rounded p-2 w-20" placeholder="9999999" />
+                  <button className="bg-orange-500 text-white px-4 py-2 rounded">APPLY</button>
                 </div>
                 <h2 className="font-bold mt-6 mb-4">DISCOUNT PERCENTAGE</h2>
                 <div className="space-y-2">

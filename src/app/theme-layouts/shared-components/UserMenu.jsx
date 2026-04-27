@@ -45,9 +45,7 @@ function UserMenu({ user }) {
             color="text.secondary"
           >
             {user.role?.toString()}
-            {(!user.role ||
-              (Array.isArray(user.role) && user.role.length === 0)) &&
-              "Guest"}
+            {(!user.role || (Array.isArray(user.role) && user.role.length === 0)) && "Guest"}
           </Typography>
         </div>
 
@@ -64,8 +62,7 @@ function UserMenu({ user }) {
         ) : (
           <Avatar
             sx={{
-              background: (theme) =>
-                darken(theme.palette.background.default, 0.05),
+              background: (theme) => darken(theme.palette.background.default, 0.05),
               color: (theme) => theme.palette.text.secondary,
             }}
             className="md:mx-4"
@@ -108,12 +105,7 @@ function UserMenu({ user }) {
           </>
         ) : (
           <>
-            <MenuItem
-              component={Link}
-              to="/user/profile"
-              onClick={userMenuClose}
-              role="button"
-            >
+            <MenuItem component={Link} to="/user/profile" onClick={userMenuClose} role="button">
               <ListItemIcon className="min-w-40">
                 <FuseSvgIcon>heroicons-outline:user-circle</FuseSvgIcon>
               </ListItemIcon>

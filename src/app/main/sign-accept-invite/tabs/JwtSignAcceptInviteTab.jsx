@@ -1,17 +1,15 @@
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-import FuseSvgIcon from '@fuse/core/FuseSvgIcon';
+import Button from "@mui/material/Button";
+import Typography from "@mui/material/Typography";
+import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 // import JwtSignInForm from '../../../auth/services/jwt/components/JwtSignInForm';
-import JwtSignAcceptInviteForm from 'src/app/auth/services/jwt/components/JwtSignAcceptInviteForm';
+import JwtSignAcceptInviteForm from "src/app/auth/services/jwt/components/JwtSignAcceptInviteForm";
 
 function jwtSignInTab() {
+  return (
+    <div className="w-full">
+      <JwtSignAcceptInviteForm />
 
-	return (
-		<div className="w-full">
-			<JwtSignAcceptInviteForm />
-			
-
-			{/* <div className="mt-32 flex items-center">
+      {/* <div className="mt-32 flex items-center">
 				<div className="mt-px flex-auto border-t" />
 				<Typography
 					className="mx-8"
@@ -22,7 +20,7 @@ function jwtSignInTab() {
 				<div className="mt-px flex-auto border-t" />
 			</div> */}
 
-			{/* <div className="mt-32 flex items-center space-x-16">
+      {/* <div className="mt-32 flex items-center space-x-16">
 				<Button
 					variant="outlined"
 					className="flex-auto"
@@ -57,8 +55,8 @@ function jwtSignInTab() {
 					</FuseSvgIcon>
 				</Button>
 			</div> */}
-		</div>
-	);
+    </div>
+  );
 }
 
 export default jwtSignInTab;

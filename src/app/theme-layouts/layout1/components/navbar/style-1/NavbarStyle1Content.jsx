@@ -13,7 +13,6 @@ import HotelsApartmentsNavigation from "app/theme-layouts/shared-components/navi
 import LogisticsNavigation from "app/theme-layouts/shared-components/navigation/logisticsnavigation/LogisticsNavigation";
 import FoodMartNavigation from "app/theme-layouts/shared-components/navigation/foodmartnavigation/FoodMartNavigation";
 
-
 const Root = styled("div")(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   color: theme.palette.text.primary,
@@ -38,24 +37,14 @@ const StyledContent = styled(FuseScrollbars)(() => ({
  * The navbar style 1 content.
  */
 function NavbarStyle1Content(props) {
-  const {data:myshopData, isLoading} = useGetMyShopAndPlan()
+  const { data: myshopData, isLoading } = useGetMyShopAndPlan();
   const { className = "" } = props;
 
-
-useEffect(() =>{
-
-},[
-  myshopData?.data?.shopplan?.plankey
-])
+  useEffect(() => {}, [myshopData?.data?.shopplan?.plankey]);
 
   // console.log("navigationSliceUser", myshopData?.data?.shopplan?.plankey)
   return (
-    <Root
-      className={clsx(
-        "flex h-full flex-auto flex-col overflow-hidden",
-        className
-      )}
-    >
+    <Root className={clsx("flex h-full flex-auto flex-col overflow-hidden", className)}>
       <div className="flex h-48 shrink-0 flex-row items-center px-20 md:h-72">
         <div className="mx-4 flex flex-1">
           <Logo />
@@ -69,32 +58,57 @@ useEffect(() =>{
         option={{ suppressScrollX: true, wheelPropagation: false }}
       >
         <UserNavbarHeader />
-        
 
-        {
-          isLoading ? <>
-          <Typography>loading...</Typography>
-          </> :
+        {isLoading ? (
           <>
-          {myshopData?.data?.shopplan?.plankey === 'RETAIL' && <><Navigation layout="vertical" /></> } 
-          
-          {myshopData?.data?.shopplan?.plankey === 'WHOLESALEANDRETAILERS' && <><Navigation layout="vertical" /></>} 
-          {myshopData?.data?.shopplan?.plankey === 'MANUFACTURERS' && <><Navigation layout="vertical" /></> }
-
-
-          {myshopData?.data?.shopplan?.plankey === 'REALESTATES' && <><RealEstateNavigation layout="vertical"/></>}
-
-          {myshopData?.data?.shopplan?.plankey === 'HOTELSANDAPARTMENTS' && <><HotelsApartmentsNavigation layout="vertical"/></>}
-          
-          {myshopData?.data?.shopplan?.plankey === 'FOODVENDORS' && <><FoodMartNavigation layout="vertical"/></>}
-
-          {myshopData?.data?.shopplan?.plankey === 'LOGISTICS' && <><LogisticsNavigation layout="vertical"/></>}
-          
-
-          {/* <Navigation layout="vertical" /> */}
+            <Typography>loading...</Typography>
           </>
-        }
-       
+        ) : (
+          <>
+            {myshopData?.data?.shopplan?.plankey === "RETAIL" && (
+              <>
+                <Navigation layout="vertical" />
+              </>
+            )}
+
+            {myshopData?.data?.shopplan?.plankey === "WHOLESALEANDRETAILERS" && (
+              <>
+                <Navigation layout="vertical" />
+              </>
+            )}
+            {myshopData?.data?.shopplan?.plankey === "MANUFACTURERS" && (
+              <>
+                <Navigation layout="vertical" />
+              </>
+            )}
+
+            {myshopData?.data?.shopplan?.plankey === "REALESTATES" && (
+              <>
+                <RealEstateNavigation layout="vertical" />
+              </>
+            )}
+
+            {myshopData?.data?.shopplan?.plankey === "HOTELSANDAPARTMENTS" && (
+              <>
+                <HotelsApartmentsNavigation layout="vertical" />
+              </>
+            )}
+
+            {myshopData?.data?.shopplan?.plankey === "FOODVENDORS" && (
+              <>
+                <FoodMartNavigation layout="vertical" />
+              </>
+            )}
+
+            {myshopData?.data?.shopplan?.plankey === "LOGISTICS" && (
+              <>
+                <LogisticsNavigation layout="vertical" />
+              </>
+            )}
+
+            {/* <Navigation layout="vertical" /> */}
+          </>
+        )}
 
         <div className="flex-0 flex items-center justify-center py-48 opacity-20">
           <img
@@ -104,7 +118,7 @@ useEffect(() =>{
             src="assets/images/afslogo/afslogo.png"
             alt="footer logo"
             width={45}
-				height={45}
+            height={45}
           />
         </div>
       </StyledContent>

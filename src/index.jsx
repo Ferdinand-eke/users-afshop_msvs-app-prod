@@ -1,19 +1,19 @@
-import './i18n';
-import './styles/app-base.css';
-import './styles/app-components.css';
-import './styles/app-utilities.css';
+import "./i18n";
+import "./styles/app-base.css";
+import "./styles/app-components.css";
+import "./styles/app-utilities.css";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { createRoot } from 'react-dom/client';
-import App from './app/App';
+import { createRoot } from "react-dom/client";
+import App from "./app/App";
 // import * as serviceWorker from './serviceWorker';
 // import reportWebVitals from './reportWebVitals';
 /**
  * The root element of the application.
  */
-const container = document.getElementById('root');
+const container = document.getElementById("root");
 
 if (!container) {
-	throw new Error('Failed to find the root element');
+  throw new Error("Failed to find the root element");
 }
 
 /**

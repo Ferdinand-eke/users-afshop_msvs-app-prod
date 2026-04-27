@@ -266,9 +266,7 @@ function AdsSlider() {
             whileHover={{ scale: 1.2 }}
             whileTap={{ scale: 0.9 }}
             className={`rounded-full transition-all duration-300 ${
-              index === currentSlide
-                ? "w-8 h-3 bg-white"
-                : "w-3 h-3 bg-white/50 hover:bg-white/80"
+              index === currentSlide ? "w-8 h-3 bg-white" : "w-3 h-3 bg-white/50 hover:bg-white/80"
             }`}
             style={{
               boxShadow: "0 2px 8px rgba(0,0,0,0.3)",

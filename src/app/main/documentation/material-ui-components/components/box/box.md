@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Box
 components: Box
-githubLabel: 'component: Box'
+githubLabel: "component: Box"
 ---
 
 # Box
@@ -24,7 +24,7 @@ Components like [Container](/material-ui/react-container/), [Stack](/material-ui
 ## Basics
 
 ```jsx
-import Box from '@mui/material/Box';
+import Box from "@mui/material/Box";
 ```
 
 The Box component renders as a `<div>` by default, but you can swap in any other valid HTML tag or React component using the `component` prop.

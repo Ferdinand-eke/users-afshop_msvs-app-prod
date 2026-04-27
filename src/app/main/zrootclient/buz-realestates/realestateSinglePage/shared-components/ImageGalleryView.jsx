@@ -12,14 +12,7 @@ import {
   useMediaQuery,
   useTheme,
 } from "@mui/material";
-import {
-  Close,
-  NavigateBefore,
-  NavigateNext,
-  Send,
-  ThumbUp,
-  Reply,
-} from "@mui/icons-material";
+import { Close, NavigateBefore, NavigateNext, Send, ThumbUp, Reply } from "@mui/icons-material";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 
@@ -150,17 +143,13 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
 
         <div className={`flex ${isMobile ? "flex-col" : ""} h-full`}>
           {/* Left Side - Image Viewer */}
-          <div
-            className={`${isMobile ? "w-full" : "w-1/2"} flex flex-col bg-black`}
-          >
+          <div className={`${isMobile ? "w-full" : "w-1/2"} flex flex-col bg-black`}>
             {/* Main Image Display */}
             <div
               className={`${isMobile ? "h-[40vh]" : "flex-1"} relative flex items-center justify-center ${isMobile ? "p-2" : "p-4"}`}
             >
               <img
-                src={
-                  images[currentImageIndex]?.url || images[currentImageIndex]
-                }
+                src={images[currentImageIndex]?.url || images[currentImageIndex]}
                 alt={`Property image ${currentImageIndex + 1}`}
                 className={`${isMobile ? "max-h-full" : "h-full"} w-full object-contain rounded-lg`}
               />
@@ -215,9 +204,7 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
             </div>
 
             {/* Thumbnail Strip */}
-            <div
-              className={`bg-gray-900 ${isMobile ? "p-2" : "p-4"} overflow-x-auto`}
-            >
+            <div className={`bg-gray-900 ${isMobile ? "p-2" : "p-4"} overflow-x-auto`}>
               <div
                 className={`flex ${isMobile ? "gap-1" : "gap-2"} justify-start ${isMobile ? "" : "justify-center"}`}
               >
@@ -263,31 +250,23 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                     variant={isMobile ? "caption" : "body2"}
                     className="text-gray-600 mb-2"
                   >
-                    {propertyData?.shortDescription ||
-                      "Share your thoughts about this property"}
+                    {propertyData?.shortDescription || "Share your thoughts about this property"}
                   </Typography>
                   {propertyData?.rating && (
                     <div className="flex items-center gap-2">
-                      <Rating
-                        value={propertyData.rating}
-                        readOnly
-                        size="small"
-                      />
+                      <Rating value={propertyData.rating} readOnly size="small" />
                       <Typography
                         variant={isMobile ? "caption" : "body2"}
                         className="text-gray-600"
                       >
-                        {propertyData.rating} ({propertyData.reviewCount || 0}{" "}
-                        reviews)
+                        {propertyData.rating} ({propertyData.reviewCount || 0} reviews)
                       </Typography>
                     </div>
                   )}
                 </div>
 
                 {/* Add Comment Section */}
-                <div
-                  className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}
-                >
+                <div className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}>
                   <Typography
                     variant={isMobile ? "caption" : "subtitle2"}
                     className="font-semibold mb-2"
@@ -367,9 +346,7 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                 </div>
 
                 {/* Reviews/Comments List */}
-                <div
-                  className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}
-                >
+                <div className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}>
                   <div
                     className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"}`}
                   >
@@ -390,10 +367,7 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
 
                   <div className={`${isMobile ? "space-y-2" : "space-y-4"}`}>
                     {reviews.map((review) => (
-                      <div
-                        key={review.id}
-                        className={`${isMobile ? "space-y-1" : "space-y-2"}`}
-                      >
+                      <div key={review.id} className={`${isMobile ? "space-y-1" : "space-y-2"}`}>
                         <div className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                           <Avatar
                             src={review.authorImage}
@@ -448,21 +422,13 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                               <button
                                 className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
                               >
-                                <ThumbUp
-                                  fontSize="small"
-                                  sx={{ fontSize: isMobile ? 14 : 16 }}
-                                />
-                                <span>
-                                  {review.likes > 0 ? review.likes : "Like"}
-                                </span>
+                                <ThumbUp fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
+                                <span>{review.likes > 0 ? review.likes : "Like"}</span>
                               </button>
                               <button
                                 className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
                               >
-                                <Reply
-                                  fontSize="small"
-                                  sx={{ fontSize: isMobile ? 14 : 16 }}
-                                />
+                                <Reply fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
                                 <span>Reply</span>
                               </button>
                             </div>
@@ -495,9 +461,7 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                                       variant={isMobile ? "caption" : "body2"}
                                       className="font-semibold"
                                       sx={{
-                                        fontSize: isMobile
-                                          ? "0.75rem"
-                                          : "0.875rem",
+                                        fontSize: isMobile ? "0.75rem" : "0.875rem",
                                       }}
                                     >
                                       {reply.author}
@@ -506,9 +470,7 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                                       variant="caption"
                                       className="text-gray-500"
                                       sx={{
-                                        fontSize: isMobile
-                                          ? "0.65rem"
-                                          : "0.75rem",
+                                        fontSize: isMobile ? "0.65rem" : "0.75rem",
                                       }}
                                     >
                                       • {reply.timeAgo}
@@ -525,9 +487,7 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                                     variant={isMobile ? "caption" : "body2"}
                                     className="text-gray-700"
                                     sx={{
-                                      fontSize: isMobile
-                                        ? "0.75rem"
-                                        : "0.875rem",
+                                      fontSize: isMobile ? "0.75rem" : "0.875rem",
                                     }}
                                   >
                                     {reply.content}
@@ -574,30 +534,23 @@ function ImageGalleryView({ open, onClose, images = [], propertyData = {} }) {
                     variant={isMobile ? "caption" : "body2"}
                     className="text-gray-600 mb-2"
                   >
-                    {propertyData?.shortDescription ||
-                      "Share your thoughts about this property"}
+                    {propertyData?.shortDescription || "Share your thoughts about this property"}
                   </Typography>
                   {propertyData?.rating && (
                     <div className="flex items-center gap-2">
-                      <Rating
-                        value={propertyData.rating}
-                        readOnly
-                        size="small"
-                      />
+                      <Rating value={propertyData.rating} readOnly size="small" />
                       <Typography
                         variant={isMobile ? "caption" : "body2"}
                         className="text-gray-600"
                       >
-                        {propertyData.rating} ({propertyData.reviewCount || 0}{" "}
-                        reviews)
+                        {propertyData.rating} ({propertyData.reviewCount || 0} reviews)
                       </Typography>
                     </div>
                   )}
 
-                   <Typography variant="body2" className="text-gray-600">
-                 Please sign in to leave a comment.
-               </Typography>
-                
+                  <Typography variant="body2" className="text-gray-600">
+                    Please sign in to leave a comment.
+                  </Typography>
                 </div>
               </>
             )}

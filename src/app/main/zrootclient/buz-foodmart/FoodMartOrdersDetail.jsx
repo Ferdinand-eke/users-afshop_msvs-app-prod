@@ -44,7 +44,6 @@ const item = {
 function FoodMartOrdersDetail() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
-
   const routeParams = useParams();
   const { foodOrderId } = routeParams;
 
@@ -53,7 +52,6 @@ function FoodMartOrdersDetail() {
     isLoading: orderLoading,
     isError: orderError,
   } = useGetAuthUserFoodOrdersAndItems(foodOrderId);
-
 
   if (orderLoading) {
     return <FuseLoading />;
@@ -66,13 +64,10 @@ function FoodMartOrdersDetail() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={" Error occurred while retriving your reservations"}
-        />
+        <ClienttErrorPage message={" Error occurred while retriving your reservations"} />
       </motion.div>
     );
   }
-  
 
   if (!orderData?.data?.MFoodOrder) {
     return (
@@ -106,35 +101,19 @@ function FoodMartOrdersDetail() {
                     <main className="w-4/4 p-4 overflow-y-scroll">
                       <div className="border-b pb-4 mb-4">
                         <div className="flex">
-                          <Typography
-                            component={NavLinkAdapter}
-                            to={`/foodmarts/user/food-orders`}
-                          >
+                          <Typography component={NavLinkAdapter} to={`/foodmarts/user/food-orders`}>
                             {"<=="}
                           </Typography>
-                          <h1 className="text-xl font-bold">
-                            Food Order Details
-                          </h1>
+                          <h1 className="text-xl font-bold">Food Order Details</h1>
                         </div>
                         <p>
-                          Reservation ID:{" "}
-                          {
-                            orderData?.data?.MFoodOrder?.paymentResult
-                              ?.reference
-                          }
+                          Reservation ID: {orderData?.data?.MFoodOrder?.paymentResult?.reference}
                         </p>
                         <p>
                           Placed on:{" "}
-                          {new Date(
-                            orderData?.data?.MFoodOrder?.createdAt
-                          )?.toDateString()}
+                          {new Date(orderData?.data?.MFoodOrder?.createdAt)?.toDateString()}
                         </p>
-                        <p>
-                          Total: N{" "}
-                          {formatCurrency(
-                            orderData?.data?.MFoodOrder?.totalPrice
-                          )}
-                        </p>
+                        <p>Total: N {formatCurrency(orderData?.data?.MFoodOrder?.totalPrice)}</p>
                       </div>
                       <div className="space-y-4">
                         {orderData?.data?.paidFoodOrderItems?.map((order) => (
@@ -158,11 +137,8 @@ function FoodMartOrdersDetail() {
                                     {order?.quantity}
                                   </p>
                                   <p className="text-sm font-bold ml-4">
-                                    <span className="text-[10px]">Total:</span>{" "}
-                                    N
-                                    {formatCurrency(
-                                      order.price * order.quantity
-                                    )}
+                                    <span className="text-[10px]">Total:</span> N
+                                    {formatCurrency(order.price * order.quantity)}
                                   </p>
                                 </div>
 
@@ -195,17 +171,12 @@ function FoodMartOrdersDetail() {
 
                           <p className="text-sm font-bold">
                             Payment Method:{" "}
-                            {
-                              orderData?.data?.MFoodOrder?.paymentResult
-                                ?.paymentMethod
-                            }
+                            {orderData?.data?.MFoodOrder?.paymentResult?.paymentMethod}
                           </p>
 
                           <p className="text-sm font-bold">
                             Total Amount: N{" "}
-                            {formatCurrency(
-                              orderData?.data?.MFoodOrder?.totalPrice
-                            )}
+                            {formatCurrency(orderData?.data?.MFoodOrder?.totalPrice)}
                           </p>
                         </div>
                         <div className="border p-4">
@@ -216,29 +187,22 @@ function FoodMartOrdersDetail() {
                             {orderData?.data?.MFoodOrder?.isCheckIn ? (
                               <span className="text-green-500">Checked-In</span>
                             ) : (
-                              <span className="text-red-500">
-                                Check-In Pending...
-                              </span>
+                              <span className="text-red-500">Check-In Pending...</span>
                             )}
                           </p>
                           <p className="text-sm font-bold">
                             CHECK OUT:{" "}
                             {orderData?.data?.MFoodOrder?.isCheckOut ? (
-                              <span className="text-green-500">
-                                Checked-Out
-                              </span>
+                              <span className="text-green-500">Checked-Out</span>
                             ) : (
-                              <span className="text-red-500">
-                                Check-Out Pending...
-                              </span>
+                              <span className="text-red-500">Check-Out Pending...</span>
                             )}
                           </p>
 
                           <br />
                           <p>
-                            Reservation is eligible for refund if reservation is
-                            cancelled prior to 48hrs befor check-in. Access our
-                            cancellation and Refund Policy.
+                            Reservation is eligible for refund if reservation is cancelled prior to
+                            48hrs befor check-in. Access our cancellation and Refund Policy.
                           </p>
                         </div>
                       </div>

@@ -4,9 +4,7 @@
 function DemoSidebarRight(props) {
   return (
     <div className="px-12 py-24 h-screen">
-      <div className="mx-12 text-xl font-bold tracking-tighter">
-        Inspection Tips
-      </div>
+      <div className="mx-12 text-xl font-bold tracking-tighter">Inspection Tips</div>
       <div className="mx-12 mt-4 text-sm text-gray-600">
         <ul className="space-y-2">
           <li>• Arrive on time for your scheduled inspection</li>

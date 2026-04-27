@@ -1,7 +1,7 @@
 ---
 productId: material-ui
 components: Link
-githubLabel: 'component: link'
+githubLabel: "component: link"
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/link/
 ---
 

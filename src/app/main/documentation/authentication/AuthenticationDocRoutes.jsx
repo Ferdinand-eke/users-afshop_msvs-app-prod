@@ -1,13 +1,13 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
-const AuthenticationDoc = lazy(() => import('./AuthenticationDoc'));
+const AuthenticationDoc = lazy(() => import("./AuthenticationDoc"));
 /**
  * The authentication doc routes.
  */
 const AuthenticationDocRoutes = [
-	{
-		path: 'authentication',
-		element: <AuthenticationDoc />
-	}
+  {
+    path: "authentication",
+    element: <AuthenticationDoc />,
+  },
 ];
 export default AuthenticationDocRoutes;

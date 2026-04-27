@@ -1,18 +1,18 @@
-import * as React from 'react';
-import FormControl from '@mui/material/FormControl';
-import FormLabel from '@mui/material/FormLabel';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
-import Grid from '@mui/material/Grid';
-import { green } from '@mui/material/colors';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Popover from '@mui/material/Popover';
-import Input from '@mui/material/Input';
-import InputLabel from '@mui/material/InputLabel';
-import HighlightedCode from '../../utils/HighlightedCode';
+import * as React from "react";
+import FormControl from "@mui/material/FormControl";
+import FormLabel from "@mui/material/FormLabel";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
+import Grid from "@mui/material/Grid";
+import { green } from "@mui/material/colors";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import Popover from "@mui/material/Popover";
+import Input from "@mui/material/Input";
+import InputLabel from "@mui/material/InputLabel";
+import HighlightedCode from "../../utils/HighlightedCode";
 
 const inlineStyles = {
   anchorVertical: {
@@ -20,7 +20,7 @@ const inlineStyles = {
       top: -5,
     },
     center: {
-      top: 'calc(50% - 5px)',
+      top: "calc(50% - 5px)",
     },
     bottom: {
       bottom: -5,
@@ -31,7 +31,7 @@ const inlineStyles = {
       left: -5,
     },
     center: {
-      left: 'calc(50% - 5px)',
+      left: "calc(50% - 5px)",
     },
     right: {
       right: -5,
@@ -44,13 +44,13 @@ function AnchorPlayground() {
 
   const [state, setState] = React.useState({
     open: false,
-    anchorOriginVertical: 'top',
-    anchorOriginHorizontal: 'left',
-    transformOriginVertical: 'top',
-    transformOriginHorizontal: 'left',
+    anchorOriginVertical: "top",
+    anchorOriginHorizontal: "left",
+    transformOriginVertical: "top",
+    transformOriginHorizontal: "left",
     positionTop: 200, // Just so the popover can be spotted more easily
     positionLeft: 400, // Same as above
-    anchorReference: 'anchorEl',
+    anchorReference: "anchorEl",
   });
 
   const {
@@ -92,9 +92,9 @@ function AnchorPlayground() {
     });
   };
 
-  let mode = '';
+  let mode = "";
 
-  if (anchorReference === 'anchorPosition') {
+  if (anchorReference === "anchorPosition") {
     mode = `
   anchorReference="${anchorReference}"
   anchorPosition={{ top: ${positionTop}, left: ${positionLeft} }}`;
@@ -117,7 +117,7 @@ function AnchorPlayground() {
 
   const radioAnchorClasses = {
     color: green[600],
-    '&.Mui-checked': {
+    "&.Mui-checked": {
       color: green[500],
     },
   };
@@ -125,18 +125,18 @@ function AnchorPlayground() {
   return (
     <div>
       <Grid container justifyContent="center">
-        <Grid item sx={{ position: 'relative', mb: 4 }}>
+        <Grid item sx={{ position: "relative", mb: 4 }}>
           <Button ref={anchorRef} variant="contained" onClick={handleClickButton}>
             Open Popover
           </Button>
-          {anchorReference === 'anchorEl' && (
+          {anchorReference === "anchorEl" && (
             <Box
               sx={{
                 bgcolor: green[500],
                 width: 10,
                 height: 10,
-                borderRadius: '50%',
-                position: 'absolute',
+                borderRadius: "50%",
+                position: "absolute",
               }}
               style={{
                 ...inlineStyles.anchorVertical[anchorOriginVertical],
@@ -177,16 +177,8 @@ function AnchorPlayground() {
               value={anchorReference}
               onChange={handleChange}
             >
-              <FormControlLabel
-                value="anchorEl"
-                control={<Radio />}
-                label="anchorEl"
-              />
-              <FormControlLabel
-                value="anchorPosition"
-                control={<Radio />}
-                label="anchorPosition"
-              />
+              <FormControlLabel value="anchorEl" control={<Radio />} label="anchorEl" />
+              <FormControlLabel value="anchorPosition" control={<Radio />} label="anchorPosition" />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -197,7 +189,7 @@ function AnchorPlayground() {
               id="position-top"
               type="number"
               value={positionTop}
-              onChange={handleNumberInputChange('positionTop')}
+              onChange={handleNumberInputChange("positionTop")}
             />
           </FormControl>
           &nbsp;
@@ -207,7 +199,7 @@ function AnchorPlayground() {
               id="position-left"
               type="number"
               value={positionLeft}
-              onChange={handleNumberInputChange('positionLeft')}
+              onChange={handleNumberInputChange("positionLeft")}
             />
           </FormControl>
         </Grid>
@@ -248,16 +240,8 @@ function AnchorPlayground() {
               onChange={handleChange}
             >
               <FormControlLabel value="top" control={<Radio />} label="Top" />
-              <FormControlLabel
-                value="center"
-                control={<Radio color="primary" />}
-                label="Center"
-              />
-              <FormControlLabel
-                value="bottom"
-                control={<Radio color="primary" />}
-                label="Bottom"
-              />
+              <FormControlLabel value="center" control={<Radio color="primary" />} label="Center" />
+              <FormControlLabel value="bottom" control={<Radio color="primary" />} label="Bottom" />
             </RadioGroup>
           </FormControl>
         </Grid>
@@ -299,21 +283,9 @@ function AnchorPlayground() {
               value={transformOriginHorizontal}
               onChange={handleChange}
             >
-              <FormControlLabel
-                value="left"
-                control={<Radio color="primary" />}
-                label="Left"
-              />
-              <FormControlLabel
-                value="center"
-                control={<Radio color="primary" />}
-                label="Center"
-              />
-              <FormControlLabel
-                value="right"
-                control={<Radio color="primary" />}
-                label="Right"
-              />
+              <FormControlLabel value="left" control={<Radio color="primary" />} label="Left" />
+              <FormControlLabel value="center" control={<Radio color="primary" />} label="Center" />
+              <FormControlLabel value="right" control={<Radio color="primary" />} label="Right" />
             </RadioGroup>
           </FormControl>
         </Grid>

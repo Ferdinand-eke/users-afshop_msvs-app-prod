@@ -1,9 +1,10 @@
-import * as React from 'react';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
-import Stack from '@mui/material/Stack';
+import * as React from "react";
+import Alert from "@mui/material/Alert";
+import AlertTitle from "@mui/material/AlertTitle";
+import Stack from "@mui/material/Stack";
 export default function DescriptionAlerts() {
-    return (<Stack sx={{ width: '100%' }} spacing={2}>
+  return (
+    <Stack sx={{ width: "100%" }} spacing={2}>
       <Alert severity="success">
         <AlertTitle>Success</AlertTitle>
         This is a success Alert with an encouraging title.
@@ -20,5 +21,6 @@ export default function DescriptionAlerts() {
         <AlertTitle>Error</AlertTitle>
         This is an error Alert with a scary title.
       </Alert>
-    </Stack>);
+    </Stack>
+  );
 }

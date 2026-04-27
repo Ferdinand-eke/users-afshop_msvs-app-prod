@@ -1,15 +1,13 @@
 import { lazy } from "react";
 // import EstateOffersPage from "./real-estate-offers/EstateOffersPage";
 const InspectionSchedulesPage = lazy(
-  () => import("./real-estate-inspection-schedules/InspectionSchedulesPage")
+  () => import("./real-estate-inspection-schedules/InspectionSchedulesPage"),
 );
 
-const EstateOffersPage = lazy(
-  () => import("./real-estate-offers/EstateOffersPage")
-);
+const EstateOffersPage = lazy(() => import("./real-estate-offers/EstateOffersPage"));
 
 const PropertyAcquisitionPage = lazy(
-  () => import("./property-acquisition/PropertyAcquisitionPage")
+  () => import("./property-acquisition/PropertyAcquisitionPage"),
 );
 
 /**
@@ -38,9 +36,6 @@ const userRealEstatePagesConfig = {
     },
   },
 
-  
-  
-  
   routes: [
     {
       path: "realestate/my-inspection-schedules",
@@ -56,7 +51,6 @@ const userRealEstatePagesConfig = {
       path: "realestate/property-acquisition/:offerId",
       element: <PropertyAcquisitionPage />, // Property Payment & Documentation Portal
     },
-
   ],
 };
 

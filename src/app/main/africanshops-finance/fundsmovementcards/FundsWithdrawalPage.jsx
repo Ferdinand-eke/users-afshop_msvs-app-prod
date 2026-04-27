@@ -29,7 +29,9 @@ import {
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
 import UpdateAccounWithdrawalDetails from "./sumarycard/UpdateAccounWithdrawalDetails";
-import useGetUsersAccountBalance, { useUserWithdrawalRequestMutation } from "app/configs/data/server-calls/userwalletaccountdetails/useUserWalletAccountDetails";
+import useGetUsersAccountBalance, {
+  useUserWithdrawalRequestMutation,
+} from "app/configs/data/server-calls/userwalletaccountdetails/useUserWalletAccountDetails";
 /**
  * The activities page.
  */
@@ -70,7 +72,6 @@ function FundsWithdrawalPage(props) {
     isError: accountError,
   } = useGetUsersAccountBalance();
 
-
   function handleWithdrawFunds() {
     if (parseInt(getValues()?.amount) < 1) {
       return toast.error("Amount is required");
@@ -106,13 +107,13 @@ function FundsWithdrawalPage(props) {
       setDrawerError("");
       reset();
       // toast.success("withdrawal placed");
-      toggleWithdrawalFormState()
+      toggleWithdrawalFormState();
     }
   }, [
     // tranferFunds?.isSuccess,
-     placeWithdrawal.isSuccess,
-     shopAccount?.data?.accountBalance
-    ]);
+    placeWithdrawal.isSuccess,
+    shopAccount?.data?.accountBalance,
+  ]);
 
   const initiateWithdrawal = () => {
     // setVisibleWithdrawal((current) => !current);
@@ -157,85 +158,78 @@ function FundsWithdrawalPage(props) {
             !shopAccount?.data?.bankAccountNumber ||
             !shopAccount?.data?.afshopAccountPin ? (
               <>
-              <>
-                <Typography className="text-2xl font-extrabold leading-none tracking-tight">
-                  Update your account details.
-                </Typography>
-                <Typography className="mt-6 text-lg" color="text.secondary">
-                  You are required to provide details fo your local bank and a 4 digit pin
-                  that should be kept personal for authorization .
-                </Typography>
-                <Timeline
-                  className="py-32"
-                  position="right"
-                  sx={{
-                    "& .MuiTimelineItem-root:before": {
-                      display: "none",
-                    },
-                  }}
-                >
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot
-                        color="primary"
-                        className="mt-0 flex h-40  w-40 items-center justify-center p-0"
-                      >
-                        {<FuseSvgIcon>{"heroicons-solid:star"}</FuseSvgIcon>}
-                      </TimelineDot>
+                <>
+                  <Typography className="text-2xl font-extrabold leading-none tracking-tight">
+                    Update your account details.
+                  </Typography>
+                  <Typography className="mt-6 text-lg" color="text.secondary">
+                    You are required to provide details fo your local bank and a 4 digit pin that
+                    should be kept personal for authorization .
+                  </Typography>
+                  <Timeline
+                    className="py-32"
+                    position="right"
+                    sx={{
+                      "& .MuiTimelineItem-root:before": {
+                        display: "none",
+                      },
+                    }}
+                  >
+                    <TimelineItem>
+                      <TimelineSeparator>
+                        <TimelineDot
+                          color="primary"
+                          className="mt-0 flex h-40  w-40 items-center justify-center p-0"
+                        >
+                          {<FuseSvgIcon>{"heroicons-solid:star"}</FuseSvgIcon>}
+                        </TimelineDot>
 
-                      {<TimelineConnector />}
-                    </TimelineSeparator>
+                        {<TimelineConnector />}
+                      </TimelineSeparator>
 
-                    <TimelineContent className="flex flex-col items-start pb-48 pt-0">
-                      {/* eslint-disable-next-line react/no-danger */}
-                      {
-                        <div
-                          dangerouslySetInnerHTML={{
-                            __html: "User Wallet",
-                          }}
-                        />
-                      }
+                      <TimelineContent className="flex flex-col items-start pb-48 pt-0">
+                        {/* eslint-disable-next-line react/no-danger */}
+                        {
+                          <div
+                            dangerouslySetInnerHTML={{
+                              __html: "User Wallet",
+                            }}
+                          />
+                        }
 
-                      <div className="mt-8 flex flex-col text-md leading-5 sm:mt-4 sm:flex-row sm:items-center sm:space-x-8">
-                        <Typography className="text-13" color="text.secondary">
-                          {format(new Date(Date.now()), "MMM dd, h:mm a")}
-                        </Typography>
-                      </div>
+                        <div className="mt-8 flex flex-col text-md leading-5 sm:mt-4 sm:flex-row sm:items-center sm:space-x-8">
+                          <Typography className="text-13" color="text.secondary">
+                            {format(new Date(Date.now()), "MMM dd, h:mm a")}
+                          </Typography>
+                        </div>
 
-                      <motion.div
-                        variants={item}
-                        className="flex flex-col flex-auto"
-                      >
-                        <PreviousStatementWidget
-                          account={shopAccount?.data}
-                          accountLoading={accountLoading}
-                          accountError={accountError}
-                        />
-                      </motion.div>
-                    </TimelineContent>
-                  </TimelineItem>
+                        <motion.div variants={item} className="flex flex-col flex-auto">
+                          <PreviousStatementWidget
+                            account={shopAccount?.data}
+                            accountLoading={accountLoading}
+                            accountError={accountError}
+                          />
+                        </motion.div>
+                      </TimelineContent>
+                    </TimelineItem>
 
-                  <TimelineItem>
-                    <TimelineSeparator>
-                      <TimelineDot
-                        color="primary"
-                        className="mt-0 flex h-40  w-40 items-center justify-center p-0"
-                      >
-                        {<FuseSvgIcon>{"heroicons-solid:star"}</FuseSvgIcon>}
-                      </TimelineDot>
+                    <TimelineItem>
+                      <TimelineSeparator>
+                        <TimelineDot
+                          color="primary"
+                          className="mt-0 flex h-40  w-40 items-center justify-center p-0"
+                        >
+                          {<FuseSvgIcon>{"heroicons-solid:star"}</FuseSvgIcon>}
+                        </TimelineDot>
 
-                      {<TimelineConnector />}
-                    </TimelineSeparator>
-                    <TimelineContent className="flex flex-col items-start pb-48 pt-0">
-
-                      <UpdateAccounWithdrawalDetails />
-
-                    </TimelineContent>
-                  </TimelineItem>
-                </Timeline>
-
-              
-              </>
+                        {<TimelineConnector />}
+                      </TimelineSeparator>
+                      <TimelineContent className="flex flex-col items-start pb-48 pt-0">
+                        <UpdateAccounWithdrawalDetails />
+                      </TimelineContent>
+                    </TimelineItem>
+                  </Timeline>
+                </>
               </>
             ) : (
               <>
@@ -243,8 +237,7 @@ function FundsWithdrawalPage(props) {
                   Withdraw from your wallet here.
                 </Typography>
                 <Typography className="mt-6 text-lg" color="text.secondary">
-                  You can withraw your funds from wallet to 
-                  your local bank accounts.
+                  You can withraw your funds from wallet to your local bank accounts.
                 </Typography>
                 <Timeline
                   className="py-32"
@@ -283,10 +276,7 @@ function FundsWithdrawalPage(props) {
                         </Typography>
                       </div>
 
-                      <motion.div
-                        variants={item}
-                        className="flex flex-col flex-auto"
-                      >
+                      <motion.div variants={item} className="flex flex-col flex-auto">
                         <PreviousStatementWidget
                           account={shopAccount?.data}
                           accountLoading={accountLoading}
@@ -321,9 +311,7 @@ function FundsWithdrawalPage(props) {
                                 id="amount"
                                 InputProps={{
                                   startAdornment: (
-                                    <InputAdornment position="start">
-                                      NGN
-                                    </InputAdornment>
+                                    <InputAdornment position="start">NGN</InputAdornment>
                                   ),
                                 }}
                                 type="number"
@@ -338,9 +326,10 @@ function FundsWithdrawalPage(props) {
                             className="whitespace-nowrap mx-4"
                             variant="contained"
                             color="secondary"
-                            disabled={!getValues()?.amount || shopAccount?.data?.accountBalance === 0}
+                            disabled={
+                              !getValues()?.amount || shopAccount?.data?.accountBalance === 0
+                            }
                             onClick={() => onEnterAmount(getValues()?.amount)}
-                            
                           >
                             Enter amount
                           </Button>
@@ -360,9 +349,7 @@ function FundsWithdrawalPage(props) {
                                 id="accountpin"
                                 InputProps={{
                                   startAdornment: (
-                                    <InputAdornment position="start">
-                                      Pin
-                                    </InputAdornment>
+                                    <InputAdornment position="start">Pin</InputAdornment>
                                   ),
                                 }}
                                 type="number"
@@ -385,9 +372,7 @@ function FundsWithdrawalPage(props) {
                             variant="contained"
                             color="secondary"
                             disabled={
-                              _.isEmpty(dirtyFields) ||
-                              !isValid ||
-                              placeWithdrawal?.isLoading
+                              _.isEmpty(dirtyFields) || !isValid || placeWithdrawal?.isLoading
                             }
                             onClick={handleWithdrawFunds}
                           >
@@ -398,8 +383,6 @@ function FundsWithdrawalPage(props) {
                     </TimelineContent>
                   </TimelineItem>
                 </Timeline>
-
-             
               </>
             )}
           </div>

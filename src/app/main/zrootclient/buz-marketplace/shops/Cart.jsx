@@ -11,10 +11,7 @@ import {
   useGetMyFoodCart,
   useUpdateFoodCartItemQty,
 } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
-import {
-  calculateCartTotalAmount,
-  formatCurrency,
-} from "src/app/main/vendors-shop/PosUtils";
+import { calculateCartTotalAmount, formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import {
   useMyCart,
   useUpdateCartItemQty,
@@ -33,7 +30,6 @@ import {
   ArrowForward,
   Login,
 } from "@mui/icons-material";
-
 
 /****
  * MARKETPLACE CART ITEM
@@ -76,11 +72,8 @@ const CartItem = ({
     return updateCartQty(formData);
   };
 
-
   const hasDiscount = oldPrice && oldPrice !== undefined && oldPrice > price;
-  const discountPercent = hasDiscount
-    ? Math.round(((oldPrice - price) / oldPrice) * 100)
-    : 0;
+  const discountPercent = hasDiscount ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
 
   return (
     <motion.div
@@ -93,11 +86,7 @@ const CartItem = ({
       <div className="flex flex-col md:flex-row gap-6">
         {/* Product Image */}
         <div className="relative w-full md:w-48 h-48 flex-shrink-0 rounded-xl overflow-hidden border-2 border-gray-200">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
+          <img src={image} alt={title} className="w-full h-full object-cover" />
           {hasDiscount && (
             <div className="absolute top-2 right-2">
               <Chip
@@ -177,28 +166,26 @@ const CartItem = ({
                   WebkitTextFillColor: "transparent",
                 }}
               >
-                ₦{(() => {
-                let itemPrice = price;
+                ₦
+                {(() => {
+                  let itemPrice = price;
 
-                if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
-                  // Find the matching price tier from product's priceTiers array
-                  const matchingTier = cartItem?.product?.priceTiers?.find(
-                    (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
-                  );
+                  if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
+                    // Find the matching price tier from product's priceTiers array
+                    const matchingTier = cartItem?.product?.priceTiers?.find(
+                      (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId,
+                    );
 
-                  if (matchingTier) {
-                    itemPrice = matchingTier?.price;
+                    if (matchingTier) {
+                      itemPrice = matchingTier?.price;
+                    }
                   }
-                }
 
-                return formatCurrency(parseInt(itemPrice));
-              })()}
+                  return formatCurrency(parseInt(itemPrice));
+                })()}
               </Typography>
               {hasDiscount && (
-                <Typography
-                  variant="body1"
-                  className="text-gray-500 line-through"
-                >
+                <Typography variant="body1" className="text-gray-500 line-through">
                   ₦{formatCurrency(oldPrice)}
                 </Typography>
               )}
@@ -210,13 +197,14 @@ const CartItem = ({
                 fontWeight: 700,
               }}
             >
-              Subtotal: ₦{(() => {
+              Subtotal: ₦
+              {(() => {
                 let itemPrice = price;
 
                 if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
                   // Find the matching price tier from product's priceTiers array
                   const matchingTier = cartItem?.product?.priceTiers?.find(
-                    (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+                    (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId,
                   );
 
                   if (matchingTier) {
@@ -346,7 +334,6 @@ const CartItem = ({
  * MARKETPLACE CART SUMMARY
  */
 const CartSummary = ({ intemsInCart }) => {
-
   let checkItemsArrayForTotal = [];
   intemsInCart?.forEach((element) => {
     // Check if item is bulk order and use appropriate price
@@ -355,7 +342,7 @@ const CartSummary = ({ intemsInCart }) => {
     if (element?.isBulkOrder && element?.bulkPriceTierId) {
       // Find the matching price tier from product's priceTiers array
       const matchingTier = element?.product?.priceTiers?.find(
-        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId,
       );
 
       if (matchingTier) {
@@ -400,10 +387,7 @@ const CartSummary = ({ intemsInCart }) => {
           <Typography variant="body1" className="text-gray-700 font-semibold">
             Subtotal
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontWeight: 800, color: "#111827" }}
-          >
+          <Typography variant="body1" sx={{ fontWeight: 800, color: "#111827" }}>
             ₦{formatCurrency(totalAmount)}
           </Typography>
         </div>
@@ -573,9 +557,7 @@ const FoodCartItem = ({
   };
 
   const hasDiscount = oldPrice && oldPrice !== undefined && oldPrice > price;
-  const discountPercent = hasDiscount
-    ? Math.round(((oldPrice - price) / oldPrice) * 100)
-    : 0;
+  const discountPercent = hasDiscount ? Math.round(((oldPrice - price) / oldPrice) * 100) : 0;
 
   return (
     <motion.div
@@ -588,11 +570,7 @@ const FoodCartItem = ({
       <div className="flex flex-col md:flex-row gap-6">
         {/* Food Image */}
         <div className="relative w-full md:w-48 h-48 flex-shrink-0 rounded-xl overflow-hidden border-2 border-gray-200">
-          <img
-            src={image}
-            alt={title}
-            className="w-full h-full object-cover"
-          />
+          <img src={image} alt={title} className="w-full h-full object-cover" />
           {hasDiscount && (
             <div className="absolute top-2 right-2">
               <Chip
@@ -654,10 +632,7 @@ const FoodCartItem = ({
                 ₦{formatCurrency(price)}
               </Typography>
               {hasDiscount && (
-                <Typography
-                  variant="body1"
-                  className="text-gray-500 line-through"
-                >
+                <Typography variant="body1" className="text-gray-500 line-through">
                   ₦{formatCurrency(oldPrice)}
                 </Typography>
               )}
@@ -783,10 +758,7 @@ const FoodCartSummary = ({ intemsInFoodCart }) => {
           <Typography variant="body1" className="text-gray-700 font-semibold">
             Subtotal
           </Typography>
-          <Typography
-            variant="body1"
-            sx={{ fontWeight: 800, color: "#111827" }}
-          >
+          <Typography variant="body1" sx={{ fontWeight: 800, color: "#111827" }}>
             ₦{formatCurrency(totalAmount)}
           </Typography>
         </div>
@@ -955,7 +927,7 @@ function Cart() {
     return localStorage.getItem("cartActiveTab") || "marketplace";
   });
 
-  const { data: foodCart , isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
+  const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
   const { data: cart, isLoading: cartLoading } = useMyCart(user?.id);
 
   // Save active tab to localStorage whenever it changes
@@ -1043,7 +1015,8 @@ function Cart() {
                         <Typography
                           variant="caption"
                           sx={{
-                            color: activeTab === "marketplace" ? "rgba(255,255,255,0.9)" : "#6b7280",
+                            color:
+                              activeTab === "marketplace" ? "rgba(255,255,255,0.9)" : "#6b7280",
                             fontWeight: 600,
                           }}
                         >
@@ -1147,8 +1120,14 @@ function Cart() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="bg-white rounded-2xl p-8 md:p-12 text-center border-2 border-gray-200"
                           >
-                            <ShoppingBag sx={{ fontSize: { xs: "3rem", md: "5rem" }, color: "#d1d5db", mb: 3 }} />
-                            <Typography variant="h5" sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }} className="font-bold text-gray-900 mb-2">
+                            <ShoppingBag
+                              sx={{ fontSize: { xs: "3rem", md: "5rem" }, color: "#d1d5db", mb: 3 }}
+                            />
+                            <Typography
+                              variant="h5"
+                              sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }}
+                              className="font-bold text-gray-900 mb-2"
+                            >
                               Your cart is empty
                             </Typography>
                             <Typography variant="body2" className="text-gray-600 mb-6">
@@ -1215,8 +1194,14 @@ function Cart() {
                             animate={{ opacity: 1, scale: 1 }}
                             className="bg-white rounded-2xl p-8 md:p-12 text-center border-2 border-gray-200"
                           >
-                            <Fastfood sx={{ fontSize: { xs: "3rem", md: "5rem" }, color: "#d1d5db", mb: 3 }} />
-                            <Typography variant="h5" sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }} className="font-bold text-gray-900 mb-2">
+                            <Fastfood
+                              sx={{ fontSize: { xs: "3rem", md: "5rem" }, color: "#d1d5db", mb: 3 }}
+                            />
+                            <Typography
+                              variant="h5"
+                              sx={{ fontSize: { xs: "1.25rem", md: "1.5rem" } }}
+                              className="font-bold text-gray-900 mb-2"
+                            >
                               Your food cart is empty
                             </Typography>
                             <Typography variant="body2" className="text-gray-600 mb-6">

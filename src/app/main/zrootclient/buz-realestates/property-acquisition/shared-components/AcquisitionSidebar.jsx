@@ -7,9 +7,9 @@ function AcquisitionSidebar(props) {
   const { offerDetails } = props;
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
     }).format(amount || 0);
   };
 
@@ -111,7 +111,7 @@ function AcquisitionSidebar(props) {
                 </Typography>
               </div>
 
-              <Divider sx={{ borderStyle: 'dashed' }} />
+              <Divider sx={{ borderStyle: "dashed" }} />
 
               {/* Total */}
               <div className="flex justify-between items-center p-3 bg-gradient-to-r from-orange-50 to-red-50 rounded-lg border border-orange-300">
@@ -137,7 +137,9 @@ function AcquisitionSidebar(props) {
           <div className="space-y-3">
             <div className="flex items-start gap-2">
               <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Typography variant="caption" className="text-white font-bold text-xs">1</Typography>
+                <Typography variant="caption" className="text-white font-bold text-xs">
+                  1
+                </Typography>
               </div>
               <Typography variant="caption" className="text-green-800">
                 Submit payment proof to company account
@@ -145,7 +147,9 @@ function AcquisitionSidebar(props) {
             </div>
             <div className="flex items-start gap-2">
               <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Typography variant="caption" className="text-white font-bold text-xs">2</Typography>
+                <Typography variant="caption" className="text-white font-bold text-xs">
+                  2
+                </Typography>
               </div>
               <Typography variant="caption" className="text-green-800">
                 Upload required property documents
@@ -153,7 +157,9 @@ function AcquisitionSidebar(props) {
             </div>
             <div className="flex items-start gap-2">
               <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Typography variant="caption" className="text-white font-bold text-xs">3</Typography>
+                <Typography variant="caption" className="text-white font-bold text-xs">
+                  3
+                </Typography>
               </div>
               <Typography variant="caption" className="text-gray-600">
                 Finance team verifies payment
@@ -161,7 +167,9 @@ function AcquisitionSidebar(props) {
             </div>
             <div className="flex items-start gap-2">
               <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Typography variant="caption" className="text-white font-bold text-xs">4</Typography>
+                <Typography variant="caption" className="text-white font-bold text-xs">
+                  4
+                </Typography>
               </div>
               <Typography variant="caption" className="text-gray-600">
                 Legal team processes documents
@@ -169,7 +177,9 @@ function AcquisitionSidebar(props) {
             </div>
             <div className="flex items-start gap-2">
               <div className="w-6 h-6 bg-gray-300 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
-                <Typography variant="caption" className="text-white font-bold text-xs">5</Typography>
+                <Typography variant="caption" className="text-white font-bold text-xs">
+                  5
+                </Typography>
               </div>
               <Typography variant="caption" className="text-gray-600">
                 Property transfer completed

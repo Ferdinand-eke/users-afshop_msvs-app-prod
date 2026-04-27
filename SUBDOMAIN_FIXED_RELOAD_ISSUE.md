@@ -3,6 +3,7 @@
 ## Problem
 
 **Infinite reload loop:** Page kept reloading between:
+
 ```
 http://cindy-fabrics.localhost:3000/hospitality
 ↓
@@ -15,12 +16,15 @@ http://cindy-fabrics.localhost:3000/hospitality
 ## Root Causes
 
 ### **1. Route Conflict**
+
 Routes `/` and `/hospitality` were both trying to render the same wrapper, causing navigation conflicts.
 
 ### **2. Redirect Logic**
+
 The wrapper was immediately redirecting when no subdomain was found, causing loops when the route system tried to match `/`.
 
 ### **3. Multiple Routes Problem**
+
 Only one page (hospitality) could be rendered since all routes used the same wrapper.
 
 ---
@@ -28,38 +32,43 @@ Only one page (hospitality) could be rendered since all routes used the same wra
 ## Solution
 
 ### **1. Changed Route Structure**
+
 **Before:**
+
 ```javascript
 routes: [
-  { path: '/', element: <MerchantSubdomainWrapper /> },
-  { path: '/hospitality', element: <MerchantSubdomainWrapper /> },
-]
+  { path: "/", element: <MerchantSubdomainWrapper /> },
+  { path: "/hospitality", element: <MerchantSubdomainWrapper /> },
+];
 ```
 
 **After:**
+
 ```javascript
 routes: [
-  { path: '/merchant-profile', element: <MerchantSubdomainWrapper /> },
-  { path: '/merchant-profile/hospitality', element: <MerchantSubdomainWrapper /> },
-]
+  { path: "/merchant-profile", element: <MerchantSubdomainWrapper /> },
+  { path: "/merchant-profile/hospitality", element: <MerchantSubdomainWrapper /> },
+];
 ```
 
 ### **2. Fixed Redirect Logic**
+
 Added sessionStorage flag to prevent multiple redirects:
 
 ```javascript
 useEffect(() => {
   if (shouldRedirect && !loading) {
-    const hasRedirected = sessionStorage.getItem('hasRedirected');
+    const hasRedirected = sessionStorage.getItem("hasRedirected");
     if (!hasRedirected) {
-      sessionStorage.setItem('hasRedirected', 'true');
-      navigateToMainDomain('/');
+      sessionStorage.setItem("hasRedirected", "true");
+      navigateToMainDomain("/");
     }
   }
 }, [shouldRedirect, loading]);
 ```
 
 ### **3. Updated Button Navigation**
+
 ```javascript
 // MerchantProfile.jsx
 onClick={() => navigateToMerchantSubdomain(
@@ -80,6 +89,7 @@ onClick={() => navigateToMerchantSubdomain(
 ```
 
 **Future routes (same pattern):**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile/products
 http://cindy-fabrics.localhost:3000/merchant-profile/about
@@ -104,7 +114,7 @@ http://localhost:3000/about
 Example: `MerchantProductsPage.jsx`
 
 ```javascript
-import { useGetMerchantPreview } from 'app/configs/data/server-calls/auth/userapp/a_merchants/useMerchantRepo';
+import { useGetMerchantPreview } from "app/configs/data/server-calls/auth/userapp/a_merchants/useMerchantRepo";
 
 function MerchantProductsPage({ merchantSlug }) {
   const { data: merchantData, isLoading } = useGetMerchantPreview(merchantSlug);
@@ -127,9 +137,9 @@ export default MerchantProductsPage;
 Example: `MerchantProductsWrapper.jsx`
 
 ```javascript
-import { useEffect, useState } from 'react';
-import { getSubdomain } from 'src/app/utils/subdomainUtils';
-import MerchantProductsPage from './MerchantProductsPage';
+import { useEffect, useState } from "react";
+import { getSubdomain } from "src/app/utils/subdomainUtils";
+import MerchantProductsPage from "./MerchantProductsPage";
 
 function MerchantProductsWrapper() {
   const [merchantSlug, setMerchantSlug] = useState(null);
@@ -152,24 +162,26 @@ export default MerchantProductsWrapper;
 In `MerchantSubdomainConfig.jsx`:
 
 ```javascript
-import { lazy } from 'react';
+import { lazy } from "react";
 
-const MerchantSubdomainWrapper = lazy(() => import('./MerchantSubdomainWrapper'));
-const MerchantProductsWrapper = lazy(() => import('./MerchantProductsWrapper'));
+const MerchantSubdomainWrapper = lazy(() => import("./MerchantSubdomainWrapper"));
+const MerchantProductsWrapper = lazy(() => import("./MerchantProductsWrapper"));
 
 const MerchantSubdomainConfig = {
-  settings: { /* ... */ },
+  settings: {
+    /* ... */
+  },
   routes: [
     {
-      path: '/merchant-profile',
+      path: "/merchant-profile",
       element: <MerchantSubdomainWrapper />,
     },
     {
-      path: '/merchant-profile/hospitality',
+      path: "/merchant-profile/hospitality",
       element: <MerchantSubdomainWrapper />,
     },
     {
-      path: '/merchant-profile/products',  // ✅ New route
+      path: "/merchant-profile/products", // ✅ New route
       element: <MerchantProductsWrapper />,
     },
   ],
@@ -181,41 +193,49 @@ const MerchantSubdomainConfig = {
 ## Testing
 
 ### **1. Test Main Route**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile
 ```
 
 **Expected:**
+
 - ✅ Loads without redirect
 - ✅ Shows merchant hospitality page
 - ✅ No infinite reload
 
 ### **2. Test Hospitality Route**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile/hospitality
 ```
 
 **Expected:**
+
 - ✅ Loads without redirect
 - ✅ Shows merchant hospitality page
 - ✅ No infinite reload
 
 ### **3. Test Button Click**
+
 1. Go to: `http://localhost:3000/bookings/listings/[id]/view`
 2. Click "View Full Profile" button
 3. Should redirect to: `http://[merchant-slug].localhost:3000/merchant-profile/hospitality`
 
 **Expected:**
+
 - ✅ Redirects correctly
 - ✅ Page loads
 - ✅ No reload loop
 
 ### **4. Test Non-Subdomain Access**
+
 ```
 http://localhost:3000/merchant-profile/hospitality
 ```
 
 **Expected:**
+
 - ✅ Detects no subdomain
 - ✅ Redirects to main domain once
 - ✅ No infinite loop (sessionStorage prevents it)
@@ -225,20 +245,23 @@ http://localhost:3000/merchant-profile/hospitality
 ## Why This Works
 
 ### **Route Separation**
+
 Using `/merchant-profile` prefix prevents conflicts with your existing routes (`/`, `/bookings`, etc.)
 
 ### **Redirect Guard**
+
 SessionStorage flag ensures redirect only happens once per session, preventing loops:
 
 ```javascript
-const hasRedirected = sessionStorage.getItem('hasRedirected');
+const hasRedirected = sessionStorage.getItem("hasRedirected");
 if (!hasRedirected) {
-  sessionStorage.setItem('hasRedirected', 'true');
-  navigateToMainDomain('/');
+  sessionStorage.setItem("hasRedirected", "true");
+  navigateToMainDomain("/");
 }
 ```
 
 ### **Clean URL Structure**
+
 All merchant pages are under `/merchant-profile/*`, making it easy to add more pages without conflicts.
 
 ---
@@ -246,11 +269,13 @@ All merchant pages are under `/merchant-profile/*`, making it easy to add more p
 ## Production URLs
 
 ### **Development:**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile/hospitality
 ```
 
 ### **Production:**
+
 ```
 https://cindy-fabrics.africanshops.org/merchant-profile/hospitality
 https://cindy-fabrics.africanshops.org/merchant-profile/products
@@ -262,16 +287,19 @@ https://cindy-fabrics.africanshops.org/merchant-profile/about
 ## Summary
 
 ✅ **Fixed Issues:**
+
 - Infinite reload loop resolved
 - Route conflicts eliminated
 - Redirect logic improved
 
 ✅ **New Structure:**
+
 - All merchant routes under `/merchant-profile/*`
 - Easy to add new pages
 - No conflicts with existing routes
 
 ✅ **Ready to Test:**
+
 ```
 http://[merchant-slug].localhost:3000/merchant-profile/hospitality
 ```

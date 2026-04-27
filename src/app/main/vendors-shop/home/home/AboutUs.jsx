@@ -51,7 +51,7 @@ function AboutUs() {
       <div
         className="relative min-h-[60vh] flex items-center overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)',
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)",
         }}
       >
         <div className="absolute inset-0 opacity-10">
@@ -99,7 +99,8 @@ function AboutUs() {
                 margin: "0 auto",
               }}
             >
-              Building Africa's Digital Future - Empowering businesses and consumers across the continent
+              Building Africa's Digital Future - Empowering businesses and consumers across the
+              continent
             </Typography>
           </motion.div>
         </div>
@@ -235,35 +236,29 @@ function AboutUs() {
                         <Typography className="font-bold text-lg text-gray-900">
                           Virtue Egerega
                         </Typography>
-                        <Typography className="text-orange-600 font-semibold">
-                          STO
-                        </Typography>
+                        <Typography className="text-orange-600 font-semibold">STO</Typography>
                       </div>
                       <div className="bg-gradient-to-r from-orange-50 to-white p-4 rounded-lg">
                         <Typography className="font-bold text-lg text-gray-900">
                           Eke Immaculata E.
                         </Typography>
-                        <Typography className="text-orange-600 font-semibold">
-                          HR
-                        </Typography>
+                        <Typography className="text-orange-600 font-semibold">HR</Typography>
                       </div>
                     </div>
 
                     <div
                       className="mt-8 p-6 rounded-xl text-white"
                       style={{
-                        background: 'linear-gradient(90deg, #f97316 0%, #dc2626 100%)',
+                        background: "linear-gradient(90deg, #f97316 0%, #dc2626 100%)",
                       }}
                     >
-                      <Typography className="font-bold text-xl mb-2">
-                        Join Our Community
-                      </Typography>
+                      <Typography className="font-bold text-xl mb-2">Join Our Community</Typography>
                       <Typography className="mb-4">
                         Millions of shoppers can't wait to see what you have in store. Become a part
                         of our community as we drive Africa's trade hub.
                       </Typography>
-                     
-                     <Typography className="text-lg font-bold">
+
+                      <Typography className="text-lg font-bold">
                         <EmailIcon className="mr-2" />
                         africanshops@africanshops.org
                       </Typography>
@@ -271,7 +266,6 @@ function AboutUs() {
                         <EmailIcon className="mr-2" />
                         info@africanshops.org
                       </Typography>
-                      
                     </div>
                   </div>
                 </CardContent>
@@ -374,9 +368,7 @@ function AboutUs() {
                           <service.IconComponent
                             sx={{ fontSize: "2rem", color: "#f97316", marginBottom: "8px" }}
                           />
-                          <Typography className="font-semibold text-sm">
-                            {service.label}
-                          </Typography>
+                          <Typography className="font-semibold text-sm">{service.label}</Typography>
                         </div>
                       ))}
                     </div>
@@ -401,7 +393,7 @@ function AboutUs() {
       <div
         className="py-20"
         style={{
-          background: 'linear-gradient(90deg, #111827 0%, #1f2937 50%, #000000 100%)',
+          background: "linear-gradient(90deg, #111827 0%, #1f2937 50%, #000000 100%)",
         }}
       >
         <div className="container mx-auto px-8 md:px-16 text-center">

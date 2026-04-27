@@ -26,8 +26,8 @@ function DemoHeader(props) {
 
   return (
     <div className="flex flex-col w-full sm:py-16 sm:px-20 ">
-		{/* p-24 */}
-     
+      {/* p-24 */}
+
       <div className="flex justify-between items-center w-full mt-8">
         {leftSidebarToggle && (
           <div className="flex shrink-0 items-center">
@@ -36,7 +36,7 @@ function DemoHeader(props) {
             </IconButton>
           </div>
         )}
-     
+
         <div className="flex space-x-4 mt-4 md:mt-0 text-[10px] items-start">
           {/* <Controller
             name="selectCountry"
@@ -133,10 +133,7 @@ function DemoHeader(props) {
         </div>
         {rightSidebarToggle && (
           <div className="flex shrink-0 items-center">
-            <IconButton
-              onClick={rightSidebarToggle}
-              aria-label="toggle sidebar"
-            >
+            <IconButton onClick={rightSidebarToggle} aria-label="toggle sidebar">
               <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
             </IconButton>
           </div>

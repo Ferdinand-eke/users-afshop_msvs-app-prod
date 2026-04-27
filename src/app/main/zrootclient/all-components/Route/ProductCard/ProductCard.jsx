@@ -42,7 +42,7 @@ const ProductCard = ({ data, isEvent }) => {
       }
     },
     //
-    [wishlist]
+    [wishlist],
   );
 
   const removeFromWishlistHandler = (data) => {
@@ -75,11 +75,7 @@ const ProductCard = ({ data, isEvent }) => {
       <div className="w-full h-[370px] bg-white rounded-lg shadow-sm p-3 relative cursor-pointer">
         <div className="flex justify-end"></div>
         <Link
-          to={`${
-            isEvent === true
-              ? `/product/${data.id}?isEvent=true`
-              : `/product/${data.id}`
-          }`}
+          to={`${isEvent === true ? `/product/${data.id}?isEvent=true` : `/product/${data.id}`}`}
         >
           {/* ${backend_url} */}
           <div className="w-[80%] mx-auto rounded-[10px]">
@@ -94,11 +90,7 @@ const ProductCard = ({ data, isEvent }) => {
           <h5 className={`${styles.shop_name}`}>{data.shop.name}</h5>
         </Link>
         <Link
-          to={`${
-            isEvent === true
-              ? `/product/${data.id}?isEvent=true`
-              : `/product/${data.id}`
-          }`}
+          to={`${isEvent === true ? `/product/${data.id}?isEvent=true` : `/product/${data.id}`}`}
         >
           <h4 className="pb-3 font-[500]">
             {data.name.length > 40 ? data.name.slice(0, 40) + "..." : data.name}
@@ -113,13 +105,9 @@ const ProductCard = ({ data, isEvent }) => {
               <h5 className={`${styles.productDiscountPrice}`}>
                 {data.price === 0 ? data.price : data.discount_price}$
               </h5>
-              <h4 className={`${styles.price}`}>
-                {data.price ? data.price + " $" : null}
-              </h4>
+              <h4 className={`${styles.price}`}>{data.price ? data.price + " $" : null}</h4>
             </div>
-            <span className="font-[400] text-[17px] text-[#68d284]">
-              {data?.total_sell} sold
-            </span>
+            <span className="font-[400] text-[17px] text-[#68d284]">{data?.total_sell} sold</span>
           </div>
         </Link>
 

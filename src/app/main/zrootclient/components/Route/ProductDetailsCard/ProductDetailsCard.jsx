@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import {
   AiFillHeart,
   AiOutlineHeart,
   AiOutlineMessage,
   AiOutlineShoppingCart,
-} from 'react-icons/ai';
-import { RxCross1 } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
-import styles from '../../../assets/styles/style';
-import { Typography } from '@mui/material';
+} from "react-icons/ai";
+import { RxCross1 } from "react-icons/rx";
+import { Link } from "react-router-dom";
+import styles from "../../../assets/styles/style";
+import { Typography } from "@mui/material";
 // import { backend_url } from "../../../server";
 // import styles from '../../../styles/style';
 // import { useDispatch, useSelector } from "react-redux";
@@ -63,7 +63,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
       // }
     },
     //   wishlist
-    []
+    [],
   );
 
   const removeFromWishlistHandler = (data) => {
@@ -104,9 +104,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                       className="w-[50px] h-[50px] rounded-full mr-2"
                     />
                     <div>
-                      <h3 className={`${styles.shop_name}`}>
-                        {data.shop.name}
-                      </h3>
+                      <h3 className={`${styles.shop_name}`}>{data.shop.name}</h3>
                       <h5 className="pb-3 text-[15px]">(4.5) Ratings</h5>
                     </div>
                   </Link>
@@ -129,12 +127,8 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                 <p>{data.description}</p>
 
                 <div className="flex pt-3">
-                  <h4 className={`${styles.productDiscountPrice}`}>
-                    {data.discount_price}$
-                  </h4>
-                  <h3 className={`${styles.price}`}>
-                    {data.price ? data.price + '$' : null}
-                  </h3>
+                  <h4 className={`${styles.productDiscountPrice}`}>{data.discount_price}$</h4>
+                  <h3 className={`${styles.price}`}>{data.price ? data.price + "$" : null}</h3>
                 </div>
                 <div className="flex items-center mt-12 justify-between pr-3">
                   <div>
@@ -160,7 +154,7 @@ const ProductDetailsCard = ({ setOpen, data }) => {
                         size={30}
                         className="cursor-pointer"
                         onClick={() => removeFromWishlistHandler(data)}
-                        color={click ? 'red' : '#333'}
+                        color={click ? "red" : "#333"}
                         title="Remove from wishlist"
                       />
                     ) : (

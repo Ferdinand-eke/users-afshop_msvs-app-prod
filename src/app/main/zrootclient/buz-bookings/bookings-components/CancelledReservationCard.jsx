@@ -23,16 +23,11 @@ const CancelledReservationCard = ({ placedReservation }) => {
 
         <div className="flex-1">
           <h3 className="font-bold">
-            {
-              placedReservation?.cancelledBookedReservation?.paymentResult
-                ?.transaction
-            }
+            {placedReservation?.cancelledBookedReservation?.paymentResult?.transaction}
           </h3>
           <p className="text-[12px]">
             Booking Fee: ₦{" "}
-            {formatCurrency(
-              placedReservation?.cancelledBookedReservation?.totalPrice
-            )}
+            {formatCurrency(placedReservation?.cancelledBookedReservation?.totalPrice)}
           </p>
           {placedReservation?.cancelledBookedReservation?.isPaid && (
             <span className="bg-green-500 text-white text-sm px-2 py-1 rounded">
@@ -46,15 +41,11 @@ const CancelledReservationCard = ({ placedReservation }) => {
           )}
           <p className="text-md font-mono font-bold">
             Your Check In:{" "}
-            {new Date(
-              placedReservation?.cancelledBookedReservation?.startDate
-            )?.toDateString()}
+            {new Date(placedReservation?.cancelledBookedReservation?.startDate)?.toDateString()}
           </p>
           <p className="text-md font-mono font-bold">
             Your Check Out:{" "}
-            {new Date(
-              placedReservation?.cancelledBookedReservation?.endDate
-            )?.toDateString()}
+            {new Date(placedReservation?.cancelledBookedReservation?.endDate)?.toDateString()}
           </p>
         </div>
         {placedReservation?.cancelledBookedReservation?.isPaid &&

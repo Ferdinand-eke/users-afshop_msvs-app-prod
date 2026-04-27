@@ -7,7 +7,7 @@ import BookinghubBookingCard from "./bookingshubcomponents/BookinghubBookingCard
 // import BookingCard from "app/main/zrootclient/buz-bookings/bookingsPage/shared-components/BookingCard";
 
 function BookingsHub() {
-    const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
+  const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties();
 
   // Filter for first 12 promoted/featured apartments
   const promotedApartments = useMemo(() => {
@@ -34,18 +34,18 @@ function BookingsHub() {
               <BookinghubBookingCard
                 // key={property?.id}
                 // property={property}
-                       key={property?.id || property?._id}
-              id={property?.id || property?._id}
-              slug={property?.slug}
-              images={property?.listingImages || []}
-              title={property?.title}
-              address={property?.address}
-              price={property?.price}
-              roomCount={property?.roomCount}
-              rating={property?.rating || 4.5}
-              reviewCount={property?.reviewCount || 9}
-              duration={property?.duration || "3 - 8 hours"}
-              host={property?.host || "Captain"}
+                key={property?.id || property?._id}
+                id={property?.id || property?._id}
+                slug={property?.slug}
+                images={property?.listingImages || []}
+                title={property?.title}
+                address={property?.address}
+                price={property?.price}
+                roomCount={property?.roomCount}
+                rating={property?.rating || 4.5}
+                reviewCount={property?.reviewCount || 9}
+                duration={property?.duration || "3 - 8 hours"}
+                host={property?.host || "Captain"}
               />
             ))}
 

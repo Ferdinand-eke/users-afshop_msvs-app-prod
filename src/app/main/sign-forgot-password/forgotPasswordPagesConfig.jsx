@@ -1,43 +1,40 @@
-import { lazy } from 'react';
-import { Navigate } from 'react-router-dom';
-import { authRoles } from 'src/app/auth';
+import { lazy } from "react";
+import { Navigate } from "react-router-dom";
+import { authRoles } from "src/app/auth";
 
-const ModernReversedForgotPasswordPage = lazy(() => import('./ModernReversedForgotPasswordPage'));
+const ModernReversedForgotPasswordPage = lazy(() => import("./ModernReversedForgotPasswordPage"));
 /**
  * Route Configuration for Forgot Password Pages.
  */
 const forgotPasswordConfig = {
-	settings: {
-		layout: {
-			config: {
-				navbar: {
-					display: false
-				},
-				toolbar: {
-					display: true
-				},
-				footer: {
-					display: false
-				},
-				leftSidePanel: {
-					display: false
-				},
-				rightSidePanel: {
-					display: false
-				}
-			}
-		}
-	},
-	
-	auth: authRoles.onlyGuest,
-	routes: [
+  settings: {
+    layout: {
+      config: {
+        navbar: {
+          display: false,
+        },
+        toolbar: {
+          display: true,
+        },
+        footer: {
+          display: false,
+        },
+        leftSidePanel: {
+          display: false,
+        },
+        rightSidePanel: {
+          display: false,
+        },
+      },
+    },
+  },
 
-		{
-			path: 'forgot-password',
-			element: <ModernReversedForgotPasswordPage />
-		},
-		
-
-	]
+  auth: authRoles.onlyGuest,
+  routes: [
+    {
+      path: "forgot-password",
+      element: <ModernReversedForgotPasswordPage />,
+    },
+  ],
 };
 export default forgotPasswordConfig;

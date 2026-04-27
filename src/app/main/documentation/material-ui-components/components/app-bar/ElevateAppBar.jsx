@@ -1,27 +1,28 @@
-import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Toolbar from '@mui/material/Toolbar';
-import Typography from '@mui/material/Typography';
-import CssBaseline from '@mui/material/CssBaseline';
-import useScrollTrigger from '@mui/material/useScrollTrigger';
-import Box from '@mui/material/Box';
-import Container from '@mui/material/Container';
+import * as React from "react";
+import AppBar from "@mui/material/AppBar";
+import Toolbar from "@mui/material/Toolbar";
+import Typography from "@mui/material/Typography";
+import CssBaseline from "@mui/material/CssBaseline";
+import useScrollTrigger from "@mui/material/useScrollTrigger";
+import Box from "@mui/material/Box";
+import Container from "@mui/material/Container";
 function ElevationScroll(props) {
-    const { children, window } = props;
-    // Note that you normally won't need to set the window ref as useScrollTrigger
-    // will default to window.
-    // This is only being set here because the demo is in an iframe.
-    const trigger = useScrollTrigger({
-        disableHysteresis: true,
-        threshold: 0,
-        target: window ? window() : undefined,
-    });
-    return React.cloneElement(children, {
-        elevation: trigger ? 4 : 0,
-    });
+  const { children, window } = props;
+  // Note that you normally won't need to set the window ref as useScrollTrigger
+  // will default to window.
+  // This is only being set here because the demo is in an iframe.
+  const trigger = useScrollTrigger({
+    disableHysteresis: true,
+    threshold: 0,
+    target: window ? window() : undefined,
+  });
+  return React.cloneElement(children, {
+    elevation: trigger ? 4 : 0,
+  });
 }
 export default function ElevateAppBar(props) {
-    return (<React.Fragment>
+  return (
+    <React.Fragment>
       <CssBaseline />
       <ElevationScroll {...props}>
         <AppBar>
@@ -36,12 +37,15 @@ export default function ElevateAppBar(props) {
       <Container>
         <Box sx={{ my: 2 }}>
           {[...new Array(12)]
-            .map(() => `Cras mattis consectetur purus sit amet fermentum.
+            .map(
+              () => `Cras mattis consectetur purus sit amet fermentum.
 Cras justo odio, dapibus ac facilisis in, egestas eget quam.
 Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`)
-            .join('\n')}
+Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`,
+            )
+            .join("\n")}
         </Box>
       </Container>
-    </React.Fragment>);
+    </React.Fragment>
+  );
 }

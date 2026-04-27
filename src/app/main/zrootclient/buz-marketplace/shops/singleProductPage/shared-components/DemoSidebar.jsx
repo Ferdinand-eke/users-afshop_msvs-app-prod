@@ -62,11 +62,7 @@ function DemoSidebar(props) {
 
       {/* Map Container */}
       <div className="flex-1 rounded-2xl overflow-hidden shadow-2xl mb-6">
-        {showLoading ? (
-          <ShopLocationMapLoadingPlaceholder />
-        ) : (
-          <ShopLocationMap shopData={shop} />
-        )}
+        {showLoading ? <ShopLocationMapLoadingPlaceholder /> : <ShopLocationMap shopData={shop} />}
       </div>
 
       {/* Shop Details Card */}
@@ -88,9 +84,7 @@ function DemoSidebar(props) {
             >
               {shop.shopName}
             </Typography>
-            {shop.isVerified && (
-              <Verified sx={{ color: "#10b981", fontSize: "1.25rem" }} />
-            )}
+            {shop.isVerified && <Verified sx={{ color: "#10b981", fontSize: "1.25rem" }} />}
           </div>
           {shop.isVerified && (
             <Chip

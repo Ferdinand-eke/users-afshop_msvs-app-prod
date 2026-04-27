@@ -1,104 +1,104 @@
-import * as React from 'react';
-import { styled } from '@mui/material/styles';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Grid from '@mui/material/Grid';
-import Typography from '@mui/material/Typography';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import MuiPopper from '@mui/material/Popper';
-import Paper from '@mui/material/Paper';
-import DialogActions from '@mui/material/DialogActions';
-import DialogContent from '@mui/material/DialogContent';
-import DialogContentText from '@mui/material/DialogContentText';
-import DialogTitle from '@mui/material/DialogTitle';
-import Switch from '@mui/material/Switch';
-import TextField from '@mui/material/TextField';
-import FormGroup from '@mui/material/FormGroup';
-import HighlightedCode from '../../utils/HighlightedCode';
+import * as React from "react";
+import { styled } from "@mui/material/styles";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Grid from "@mui/material/Grid";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
+import Button from "@mui/material/Button";
+import MuiPopper from "@mui/material/Popper";
+import Paper from "@mui/material/Paper";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogContentText from "@mui/material/DialogContentText";
+import DialogTitle from "@mui/material/DialogTitle";
+import Switch from "@mui/material/Switch";
+import TextField from "@mui/material/TextField";
+import FormGroup from "@mui/material/FormGroup";
+import HighlightedCode from "../../utils/HighlightedCode";
 
 const Popper = styled(MuiPopper, {
-  shouldForwardProp: (prop) => prop !== 'arrow',
+  shouldForwardProp: (prop) => prop !== "arrow",
 })(({ theme, arrow }) => ({
   zIndex: 1,
-  '& > div': {
-    position: 'relative',
+  "& > div": {
+    position: "relative",
   },
   '&[data-popper-placement*="bottom"]': {
-    '& > div': {
+    "& > div": {
       marginTop: arrow ? 2 : 0,
     },
-    '& .MuiPopper-arrow': {
+    "& .MuiPopper-arrow": {
       top: 0,
       left: 0,
-      marginTop: '-0.9em',
-      width: '3em',
-      height: '1em',
-      '&::before': {
-        borderWidth: '0 1em 1em 1em',
+      marginTop: "-0.9em",
+      width: "3em",
+      height: "1em",
+      "&::before": {
+        borderWidth: "0 1em 1em 1em",
         borderColor: `transparent transparent ${theme.palette.background.paper} transparent`,
       },
     },
   },
   '&[data-popper-placement*="top"]': {
-    '& > div': {
+    "& > div": {
       marginBottom: arrow ? 2 : 0,
     },
-    '& .MuiPopper-arrow': {
+    "& .MuiPopper-arrow": {
       bottom: 0,
       left: 0,
-      marginBottom: '-0.9em',
-      width: '3em',
-      height: '1em',
-      '&::before': {
-        borderWidth: '1em 1em 0 1em',
+      marginBottom: "-0.9em",
+      width: "3em",
+      height: "1em",
+      "&::before": {
+        borderWidth: "1em 1em 0 1em",
         borderColor: `${theme.palette.background.paper} transparent transparent transparent`,
       },
     },
   },
   '&[data-popper-placement*="right"]': {
-    '& > div': {
+    "& > div": {
       marginLeft: arrow ? 2 : 0,
     },
-    '& .MuiPopper-arrow': {
+    "& .MuiPopper-arrow": {
       left: 0,
-      marginLeft: '-0.9em',
-      height: '3em',
-      width: '1em',
-      '&::before': {
-        borderWidth: '1em 1em 1em 0',
+      marginLeft: "-0.9em",
+      height: "3em",
+      width: "1em",
+      "&::before": {
+        borderWidth: "1em 1em 1em 0",
         borderColor: `transparent ${theme.palette.background.paper} transparent transparent`,
       },
     },
   },
   '&[data-popper-placement*="left"]': {
-    '& > div': {
+    "& > div": {
       marginRight: arrow ? 2 : 0,
     },
-    '& .MuiPopper-arrow': {
+    "& .MuiPopper-arrow": {
       right: 0,
-      marginRight: '-0.9em',
-      height: '3em',
-      width: '1em',
-      '&::before': {
-        borderWidth: '1em 0 1em 1em',
+      marginRight: "-0.9em",
+      height: "3em",
+      width: "1em",
+      "&::before": {
+        borderWidth: "1em 0 1em 1em",
         borderColor: `transparent transparent transparent ${theme.palette.background.paper}`,
       },
     },
   },
 }));
 
-const Arrow = styled('div')({
-  position: 'absolute',
+const Arrow = styled("div")({
+  position: "absolute",
   fontSize: 7,
-  width: '3em',
-  height: '3em',
-  '&::before': {
+  width: "3em",
+  height: "3em",
+  "&::before": {
     content: '""',
-    margin: 'auto',
-    display: 'block',
+    margin: "auto",
+    display: "block",
     width: 0,
     height: 0,
-    borderStyle: 'solid',
+    borderStyle: "solid",
   },
 });
 
@@ -106,20 +106,20 @@ export default function ScrollPlayground() {
   const anchorRef = React.useRef(null);
   const [open, setOpen] = React.useState(false);
 
-  const [placement, setPlacement] = React.useState('bottom');
+  const [placement, setPlacement] = React.useState("bottom");
   const [disablePortal, setDisablePortal] = React.useState(false);
 
   const [flip, setFlip] = React.useState({
     enabled: true,
     altBoundary: true,
-    rootBoundary: 'document',
+    rootBoundary: "document",
   });
   const [preventOverflow, setPreventOverflow] = React.useState({
     enabled: true,
     altAxis: true,
     altBoundary: true,
     tether: true,
-    rootBoundary: 'document',
+    rootBoundary: "document",
   });
 
   const [arrow, setArrow] = React.useState(false);
@@ -174,17 +174,17 @@ export default function ScrollPlayground() {
   ]}
 >
   `;
-  const id = open ? 'scroll-playground' : null;
+  const id = open ? "scroll-playground" : null;
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <Box sx={{ height: 400, overflow: 'auto', mb: 3 }}>
+      <Box sx={{ height: 400, overflow: "auto", mb: 3 }}>
         <Grid
           sx={{
-            position: 'relative',
-            width: '230%',
-            bgcolor: 'background.paper',
-            height: '230%',
+            position: "relative",
+            width: "230%",
+            bgcolor: "background.paper",
+            height: "230%",
           }}
           container
           alignItems="center"
@@ -201,8 +201,7 @@ export default function ScrollPlayground() {
               Toggle Popper
             </Button>
             <Typography sx={{ mt: 2, maxWidth: 300 }}>
-              Scroll around this container to experiment with flip and
-              preventOverflow modifiers.
+              Scroll around this container to experiment with flip and preventOverflow modifiers.
             </Typography>
             <Popper
               id={id}
@@ -213,7 +212,7 @@ export default function ScrollPlayground() {
               disablePortal={disablePortal}
               modifiers={[
                 {
-                  name: 'flip',
+                  name: "flip",
                   enabled: flip.enabled,
                   options: {
                     altBoundary: flip.altBoundary,
@@ -222,7 +221,7 @@ export default function ScrollPlayground() {
                   },
                 },
                 {
-                  name: 'preventOverflow',
+                  name: "preventOverflow",
                   enabled: preventOverflow.enabled,
                   options: {
                     altAxis: preventOverflow.altAxis,
@@ -233,7 +232,7 @@ export default function ScrollPlayground() {
                   },
                 },
                 {
-                  name: 'arrow',
+                  name: "arrow",
                   enabled: arrow,
                   options: {
                     element: arrowRef,
@@ -242,15 +241,11 @@ export default function ScrollPlayground() {
               ]}
             >
               <div>
-                {arrow ? (
-                  <Arrow ref={setArrowRef} className="MuiPopper-arrow" />
-                ) : null}
-                <Paper sx={{ maxWidth: 400, overflow: 'auto' }}>
+                {arrow ? <Arrow ref={setArrowRef} className="MuiPopper-arrow" /> : null}
+                <Paper sx={{ maxWidth: 400, overflow: "auto" }}>
                   <DialogTitle>{"Use Google's location service?"}</DialogTitle>
                   <DialogContent>
-                    <DialogContentText>
-                      Let Google help apps determine location.
-                    </DialogContentText>
+                    <DialogContentText>Let Google help apps determine location.</DialogContentText>
                   </DialogContent>
                   <DialogActions>
                     <Button onClick={handleClickButton}>Disagree</Button>
@@ -276,12 +271,12 @@ export default function ScrollPlayground() {
               label="Placement"
               select
               InputLabelProps={{
-                id: 'scroll-playground-placement-label',
+                id: "scroll-playground-placement-label",
               }}
               SelectProps={{
                 native: true,
                 inputProps: {
-                  'aria-labelledby': 'scroll-playground-placement-label',
+                  "aria-labelledby": "scroll-playground-placement-label",
                 },
               }}
               value={placement}
@@ -397,13 +392,12 @@ export default function ScrollPlayground() {
                 label="Root Boundary"
                 select
                 InputLabelProps={{
-                  id: 'scroll-playground-prevent-overflow-root-boundary',
+                  id: "scroll-playground-prevent-overflow-root-boundary",
                 }}
                 SelectProps={{
                   native: true,
                   inputProps: {
-                    'aria-labelledby':
-                      'scroll-playground-prevent-overflow-root-boundary',
+                    "aria-labelledby": "scroll-playground-prevent-overflow-root-boundary",
                   },
                 }}
                 value={preventOverflow.rootBoundary}
@@ -459,12 +453,12 @@ export default function ScrollPlayground() {
                 label="Root Boundary"
                 select
                 InputLabelProps={{
-                  id: 'scroll-playground-flip-root-boundary',
+                  id: "scroll-playground-flip-root-boundary",
                 }}
                 SelectProps={{
                   native: true,
                   inputProps: {
-                    'aria-labelledby': 'scroll-playground-flip-root-boundary',
+                    "aria-labelledby": "scroll-playground-flip-root-boundary",
                   },
                 }}
                 value={flip.rootBoundary}

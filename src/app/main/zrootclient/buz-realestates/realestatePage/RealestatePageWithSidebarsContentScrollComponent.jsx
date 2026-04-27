@@ -50,11 +50,7 @@ function ActiveRealEstatePage() {
   const currentUser = useAppSelector(selectUser);
 
   // Fetch booking properties with filters
-  const {
-    data: estateLists,
-    isLoading,
-    isError,
-  } = useGetAllEstateProperties(filters);
+  const { data: estateLists, isLoading, isError } = useGetAllEstateProperties(filters);
 
   // Handle filter changes from FilterList component
   const handleFilterChange = useCallback(
@@ -111,7 +107,7 @@ function ActiveRealEstatePage() {
       // Update filters state (this will trigger useGetAllBookingProperties to refetch)
       setFilters(apiFilters);
     },
-    [itemsPerPage, currentPage]
+    [itemsPerPage, currentPage],
   );
 
   // Handle page change
@@ -154,8 +150,14 @@ function ActiveRealEstatePage() {
   }, []);
 
   // Memoize derived data to avoid recalculation on every render
-  const propertyListings = useMemo(() => estateLists?.data?.propertyListings, [estateLists?.data?.propertyListings]);
-  const totalItems = useMemo(() => estateLists?.data?.pagination?.total || 0, [estateLists?.data?.pagination?.total]);
+  const propertyListings = useMemo(
+    () => estateLists?.data?.propertyListings,
+    [estateLists?.data?.propertyListings],
+  );
+  const totalItems = useMemo(
+    () => estateLists?.data?.pagination?.total || 0,
+    [estateLists?.data?.pagination?.total],
+  );
 
   // Memoize header component
   const headerComponent = useMemo(
@@ -165,7 +167,7 @@ function ActiveRealEstatePage() {
         rightSidebarToggle={handleRightSidebarToggle}
       />
     ),
-    [handleLeftSidebarToggle, handleRightSidebarToggle]
+    [handleLeftSidebarToggle, handleRightSidebarToggle],
   );
 
   // Memoize content component
@@ -182,19 +184,28 @@ function ActiveRealEstatePage() {
         onItemsPerPageChange={handleItemsPerPageChange}
       />
     ),
-    [propertyListings, isLoading, isError, totalItems, currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange]
+    [
+      propertyListings,
+      isLoading,
+      isError,
+      totalItems,
+      currentPage,
+      itemsPerPage,
+      handlePageChange,
+      handleItemsPerPageChange,
+    ],
   );
 
   // Memoize left sidebar content
   const leftSidebarContentComponent = useMemo(
     () => <DemoSidebar onFilterChange={handleFilterChange} />,
-    [handleFilterChange]
+    [handleFilterChange],
   );
 
   // Memoize right sidebar content
   const rightSidebarContentComponent = useMemo(
-    () => currentUser?.id ? <DemoSidebarRight /> : null,
-    [currentUser?.id]
+    () => (currentUser?.id ? <DemoSidebarRight /> : null),
+    [currentUser?.id],
   );
 
   return (
@@ -230,12 +241,12 @@ function RealestatePageWithSidebarsContentScrollComponent() {
   // Extract the real estate service status - memoized to prevent unnecessary re-renders
   const realEstateServiceStatus = useMemo(
     () => appSettings?.data?.payload?.realEstateServiceStatus,
-    [appSettings?.data?.payload?.realEstateServiceStatus]
+    [appSettings?.data?.payload?.realEstateServiceStatus],
   );
 
   // Log service status only when it changes (development only)
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development' && realEstateServiceStatus !== undefined) {
+    if (process.env.NODE_ENV === "development" && realEstateServiceStatus !== undefined) {
       console.log("Real Estate Service Status:", realEstateServiceStatus);
     }
   }, [realEstateServiceStatus]);

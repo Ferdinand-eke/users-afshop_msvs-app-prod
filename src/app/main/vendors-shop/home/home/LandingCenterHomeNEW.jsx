@@ -66,8 +66,7 @@ function LandingCenterHomeNew() {
         <Box
           className="relative pt-32 pb-112 px-16 sm:pt-80 sm:pb-192 sm:px-64 overflow-hidden"
           sx={{
-            background:
-              "linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDB827 100%)",
+            background: "linear-gradient(135deg, #FF6B35 0%, #F7931E 50%, #FDB827 100%)",
             color: "white",
           }}
         >
@@ -102,9 +101,8 @@ function LandingCenterHomeNew() {
               className="mt-8"
             >
               <Typography className="text-18 sm:text-20 text-center max-w-4xl opacity-95 leading-relaxed">
-                Join thousands discovering authentic African products, premium
-                accommodations, vibrant dining experiences, and investment
-                opportunities
+                Join thousands discovering authentic African products, premium accommodations,
+                vibrant dining experiences, and investment opportunities
               </Typography>
             </motion.div>
           </div>
@@ -118,12 +116,7 @@ function LandingCenterHomeNew() {
             preserveAspectRatio="xMidYMax slice"
             xmlns="http://www.w3.org/2000/svg"
           >
-            <g
-              className="text-white"
-              fill="none"
-              stroke="currentColor"
-              strokeWidth="100"
-            >
+            <g className="text-white" fill="none" stroke="currentColor" strokeWidth="100">
               <circle r="234" cx="196" cy="23" />
               <circle r="234" cx="790" cy="491" />
             </g>
@@ -182,10 +175,7 @@ function LandingCenterHomeNew() {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8">
-                        <Typography
-                          variant="h3"
-                          className="text-white font-extrabold mb-3"
-                        >
+                        <Typography variant="h3" className="text-white font-extrabold mb-3">
                           Exclusive Shopping Deals
                         </Typography>
                         <Typography className="text-white/95 text-lg mb-4">
@@ -210,10 +200,7 @@ function LandingCenterHomeNew() {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8">
-                        <Typography
-                          variant="h3"
-                          className="text-white font-extrabold mb-3"
-                        >
+                        <Typography variant="h3" className="text-white font-extrabold mb-3">
                           Luxury Accommodations
                         </Typography>
                         <Typography className="text-white/95 text-lg mb-4">
@@ -238,10 +225,7 @@ function LandingCenterHomeNew() {
                         className="w-full h-full object-cover"
                       />
                       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent flex flex-col justify-end p-8">
-                        <Typography
-                          variant="h3"
-                          className="text-white font-extrabold mb-3"
-                        >
+                        <Typography variant="h3" className="text-white font-extrabold mb-3">
                           Explore Dining Experiences
                         </Typography>
                         <Typography className="text-white/95 text-lg mb-4">
@@ -337,10 +321,7 @@ function LandingCenterHomeNew() {
               transition={{ duration: 0.7 }}
             >
               <div className="text-center mb-12">
-                <Typography
-                  variant="h3"
-                  className="font-extrabold text-gray-800 mb-3"
-                >
+                <Typography variant="h3" className="font-extrabold text-gray-800 mb-3">
                   Browse by Category
                 </Typography>
                 <div className="w-24 h-1 bg-orange-500 mx-auto rounded-full"></div>
@@ -427,10 +408,7 @@ function LandingCenterHomeNew() {
                 <div className="w-16 h-16 bg-blue-600 rounded-full flex items-center justify-center mr-4">
                   <i className="fas fa-hotel text-white text-3xl"></i>
                 </div>
-                <Typography
-                  variant="h3"
-                  className="font-extrabold text-gray-800"
-                >
+                <Typography variant="h3" className="font-extrabold text-gray-800">
                   Hotels & Apartments
                 </Typography>
               </div>
@@ -438,9 +416,8 @@ function LandingCenterHomeNew() {
                 variant="body1"
                 className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed"
               >
-                Discover premium accommodations across Africa. From luxury
-                hotels to cozy apartments, find your perfect home away from
-                home.
+                Discover premium accommodations across Africa. From luxury hotels to cozy
+                apartments, find your perfect home away from home.
               </Typography>
               <div className="mt-6 w-32 h-1 bg-blue-600 mx-auto rounded-full"></div>
             </motion.div>
@@ -471,10 +448,7 @@ function LandingCenterHomeNew() {
                 <div className="w-16 h-16 bg-orange-600 rounded-full flex items-center justify-center mr-4">
                   <i className="fas fa-utensils text-white text-3xl"></i>
                 </div>
-                <Typography
-                  variant="h3"
-                  className="font-extrabold text-gray-800"
-                >
+                <Typography variant="h3" className="font-extrabold text-gray-800">
                   Restaurants, Clubs & Spots
                 </Typography>
               </div>
@@ -482,8 +456,8 @@ function LandingCenterHomeNew() {
                 variant="body1"
                 className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed"
               >
-                Experience Africa's vibrant culinary scene and nightlife. Explore
-                top-rated restaurants, trending clubs, and must-visit local spots.
+                Experience Africa's vibrant culinary scene and nightlife. Explore top-rated
+                restaurants, trending clubs, and must-visit local spots.
               </Typography>
               <div className="mt-6 w-32 h-1 bg-orange-600 mx-auto rounded-full"></div>
             </motion.div>
@@ -514,10 +488,7 @@ function LandingCenterHomeNew() {
                 <div className="w-16 h-16 bg-green-600 rounded-full flex items-center justify-center mr-4">
                   <i className="fas fa-building text-white text-3xl"></i>
                 </div>
-                <Typography
-                  variant="h3"
-                  className="font-extrabold text-gray-800"
-                >
+                <Typography variant="h3" className="font-extrabold text-gray-800">
                   Real Estate & Investments
                 </Typography>
               </div>
@@ -525,8 +496,8 @@ function LandingCenterHomeNew() {
                 variant="body1"
                 className="text-gray-600 text-lg max-w-3xl mx-auto leading-relaxed"
               >
-                Coming Soon! Invest in premium African properties. Residential,
-                commercial, and land opportunities across the continent.
+                Coming Soon! Invest in premium African properties. Residential, commercial, and land
+                opportunities across the continent.
               </Typography>
               <div className="mt-6 w-32 h-1 bg-green-600 mx-auto rounded-full"></div>
             </motion.div>
@@ -559,18 +530,11 @@ function LandingCenterHomeNew() {
                 viewport={{ once: true }}
                 transition={{ delay: index * 0.2, duration: 0.6 }}
               >
-                <i
-                  className={`fas ${item.icon} text-6xl text-green-600 mb-6`}
-                ></i>
-                <Typography
-                  variant="h5"
-                  className="font-bold text-gray-800 mb-3"
-                >
+                <i className={`fas ${item.icon} text-6xl text-green-600 mb-6`}></i>
+                <Typography variant="h5" className="font-bold text-gray-800 mb-3">
                   {item.title}
                 </Typography>
-                <Typography className="text-gray-600 leading-relaxed">
-                  {item.desc}
-                </Typography>
+                <Typography className="text-gray-600 leading-relaxed">{item.desc}</Typography>
               </motion.div>
             ))}
           </div>
@@ -619,9 +583,8 @@ function LandingCenterHomeNew() {
                 variant="body1"
                 className="text-gray-300 text-xl max-w-4xl mx-auto leading-relaxed"
               >
-                Discover our vision, mission, and roadmap for transforming
-                Africa's digital commerce landscape. Join us in building the
-                future of African trade.
+                Discover our vision, mission, and roadmap for transforming Africa's digital commerce
+                landscape. Join us in building the future of African trade.
               </Typography>
               <div className="mt-6 w-32 h-1 bg-orange-400 mx-auto rounded-full"></div>
             </motion.div>
@@ -641,10 +604,9 @@ function LandingCenterHomeNew() {
                 Our Vision
               </Typography>
               <Typography className="text-gray-300 leading-relaxed text-lg">
-                To become Africa's leading integrated digital ecosystem,
-                connecting buyers, sellers, travelers, and investors across the
-                continent. We envision a platform where African commerce thrives,
-                local businesses flourish, and opportunities are accessible to
+                To become Africa's leading integrated digital ecosystem, connecting buyers, sellers,
+                travelers, and investors across the continent. We envision a platform where African
+                commerce thrives, local businesses flourish, and opportunities are accessible to
                 all.
               </Typography>
             </motion.div>
@@ -661,11 +623,10 @@ function LandingCenterHomeNew() {
                 Our Mission
               </Typography>
               <Typography className="text-gray-300 leading-relaxed text-lg">
-                To empower African entrepreneurs and businesses with cutting-edge
-                digital tools, providing seamless access to markets,
-                accommodation booking systems, dining experiences, and investment
-                opportunities. We're committed to fostering economic growth and
-                digital inclusion.
+                To empower African entrepreneurs and businesses with cutting-edge digital tools,
+                providing seamless access to markets, accommodation booking systems, dining
+                experiences, and investment opportunities. We're committed to fostering economic
+                growth and digital inclusion.
               </Typography>
             </motion.div>
           </div>
@@ -678,10 +639,7 @@ function LandingCenterHomeNew() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <Typography
-              variant="h4"
-              className="font-extrabold text-center mb-16 text-white"
-            >
+            <Typography variant="h4" className="font-extrabold text-center mb-16 text-white">
               <i className="fas fa-cogs mr-3"></i>
               How AfricanShops Works
             </Typography>
@@ -696,10 +654,7 @@ function LandingCenterHomeNew() {
             viewport={{ once: true }}
             transition={{ duration: 0.7 }}
           >
-            <Typography
-              variant="h4"
-              className="font-extrabold text-center mb-12 text-white"
-            >
+            <Typography variant="h4" className="font-extrabold text-center mb-12 text-white">
               <i className="fas fa-road mr-3"></i>
               Future Services & Roadmap
             </Typography>
@@ -745,9 +700,7 @@ function LandingCenterHomeNew() {
                   viewport={{ once: true }}
                   transition={{ delay: index * 0.1, duration: 0.5 }}
                 >
-                  <i
-                    className={`fas ${service.icon} text-orange-400 text-4xl mb-4`}
-                  ></i>
+                  <i className={`fas ${service.icon} text-orange-400 text-4xl mb-4`}></i>
                   <Typography variant="h6" className="font-bold mb-3">
                     {service.title}
                   </Typography>
@@ -772,9 +725,8 @@ function LandingCenterHomeNew() {
               Interested in Partnering or Investing?
             </Typography>
             <Typography className="text-gray-300 text-lg mb-10 max-w-3xl mx-auto leading-relaxed">
-              Join us in revolutionizing African commerce. We're seeking
-              strategic partners and investors who share our vision of digital
-              transformation.
+              Join us in revolutionizing African commerce. We're seeking strategic partners and
+              investors who share our vision of digital transformation.
             </Typography>
             <div className="flex flex-col sm:flex-row gap-6 justify-center">
               <Button

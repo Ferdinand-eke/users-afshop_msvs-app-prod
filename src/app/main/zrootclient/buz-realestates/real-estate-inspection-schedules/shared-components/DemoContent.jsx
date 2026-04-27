@@ -21,9 +21,7 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={"Error occurred while retrieving inspection schedules"}
-        />
+        <ClienttErrorPage message={"Error occurred while retrieving inspection schedules"} />
       </motion.div>
     );
   }
@@ -140,9 +138,7 @@ function DemoContent(props) {
                       </Typography>
                       <div className="flex items-center gap-2">
                         <i className="fas fa-user text-orange-500"></i>
-                        <Typography variant="body2">
-                          {schedule?.userName || "N/A"}
-                        </Typography>
+                        <Typography variant="body2">{schedule?.userName || "N/A"}</Typography>
                       </div>
                     </div>
 
@@ -152,9 +148,7 @@ function DemoContent(props) {
                       </Typography>
                       <div className="flex items-center gap-2">
                         <i className="fas fa-phone text-orange-500"></i>
-                        <Typography variant="body2">
-                          {schedule?.userPhone || "N/A"}
-                        </Typography>
+                        <Typography variant="body2">{schedule?.userPhone || "N/A"}</Typography>
                       </div>
                     </div>
 
@@ -177,9 +171,7 @@ function DemoContent(props) {
                       <div className="flex items-center gap-2">
                         <i className="fas fa-calendar-plus text-orange-500"></i>
                         <Typography variant="body2">
-                          {schedule?.createdAt
-                            ? formatDate(schedule.createdAt)
-                            : "N/A"}
+                          {schedule?.createdAt ? formatDate(schedule.createdAt) : "N/A"}
                         </Typography>
                       </div>
                     </div>

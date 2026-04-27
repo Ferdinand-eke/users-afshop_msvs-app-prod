@@ -19,7 +19,6 @@ import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
  * Displays wholesale and customization pricing with bulk order options
  */
 
-
 function MinimumOrderDialogue({ productData }) {
   const [activeTab, setActiveTab] = useState("wholesale");
   const [selectedColor, setSelectedColor] = useState(null);
@@ -39,7 +38,6 @@ function MinimumOrderDialogue({ productData }) {
   const handleStartOrder = () => {
     setSliderOpen(true);
   };
-
 
   const handleCloseSlider = () => {
     setSliderOpen(false);
@@ -364,7 +362,6 @@ function MinimumOrderDialogue({ productData }) {
           </div>
         </motion.div>
       </div>
-
 
       {/* Minimum Order Slider */}
       <UseMinimumOrder

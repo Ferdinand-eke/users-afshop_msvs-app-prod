@@ -5,45 +5,41 @@ import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import RoomAvailableDatesPage from "./RoomAvailableDatesPage";
 
 export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
-    const [open, setOpen] = React.useState(false);
-    const [roomId, setRoomId] = React.useState('');
-    const [roomPrice, setRoomPrice] = React.useState('');
+  const [open, setOpen] = React.useState(false);
+  const [roomId, setRoomId] = React.useState("");
+  const [roomPrice, setRoomPrice] = React.useState("");
 
-    // State to track current image index for each room
-    const [currentImageIndexes, setCurrentImageIndexes] = React.useState({});
+  // State to track current image index for each room
+  const [currentImageIndexes, setCurrentImageIndexes] = React.useState({});
 
-    const toggleDrawer = (newOpen, idOfRoom, priceOfRoom) => () => {
-        setOpen(newOpen);
-        setRoomId(idOfRoom);
-        setRoomPrice(priceOfRoom);
-    };
+  const toggleDrawer = (newOpen, idOfRoom, priceOfRoom) => () => {
+    setOpen(newOpen);
+    setRoomId(idOfRoom);
+    setRoomPrice(priceOfRoom);
+  };
 
-    // Handle image navigation
-    const handlePrevImage = (roomId, images) => {
-        setCurrentImageIndexes(prev => ({
-            ...prev,
-            [roomId]: prev[roomId] > 0 ? prev[roomId] - 1 : images.length - 1
-        }));
-    };
+  // Handle image navigation
+  const handlePrevImage = (roomId, images) => {
+    setCurrentImageIndexes((prev) => ({
+      ...prev,
+      [roomId]: prev[roomId] > 0 ? prev[roomId] - 1 : images.length - 1,
+    }));
+  };
 
-    const handleNextImage = (roomId, images) => {
-        setCurrentImageIndexes(prev => ({
-            ...prev,
-            [roomId]: prev[roomId] < images.length - 1 ? prev[roomId] + 1 : 0
-        }));
-    };
+  const handleNextImage = (roomId, images) => {
+    setCurrentImageIndexes((prev) => ({
+      ...prev,
+      [roomId]: prev[roomId] < images.length - 1 ? prev[roomId] + 1 : 0,
+    }));
+  };
 
-    // Get current image index for a room (default to 0)
-    const getCurrentImageIndex = (roomId) => {
-        return currentImageIndexes[roomId] || 0;
-    };
+  // Get current image index for a room (default to 0)
+  const getCurrentImageIndex = (roomId) => {
+    return currentImageIndexes[roomId] || 0;
+  };
 
-   const AvailableDates = (
-    <Box
-      sx={{ width: 350 }}
-      sm={{ width: 250 }}
-      role="presentation"
-    >
+  const AvailableDates = (
+    <Box sx={{ width: 350 }} sm={{ width: 250 }} role="presentation">
       <RoomAvailableDatesPage
         roomId={roomId}
         roomPrice={roomPrice}
@@ -68,7 +64,9 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
         const roomImages = room.images || room.imageSrcs || [];
         const currentIndex = getCurrentImageIndex(room.id);
         const hasImages = roomImages.length > 0;
-        const currentImage = hasImages ? (roomImages[currentIndex]?.url || roomImages[currentIndex]) : 'https://placehold.co/400x300';
+        const currentImage = hasImages
+          ? roomImages[currentIndex]?.url || roomImages[currentIndex]
+          : "https://placehold.co/400x300";
 
         return (
           <div key={room.id}>
@@ -90,9 +88,7 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                     <span className="text-lg font-bold text-gray-900 dark:text-white">
                       {formatCurrency(room.price)}
                     </span>
-                    <span className="text-xs text-gray-500 dark:text-white/40">
-                      per night
-                    </span>
+                    <span className="text-xs text-gray-500 dark:text-white/40">per night</span>
                   </div>
                 </div>
               </div>
@@ -113,16 +109,16 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                       <IconButton
                         onClick={() => handlePrevImage(room.id, roomImages)}
                         sx={{
-                          position: 'absolute',
+                          position: "absolute",
                           left: 4,
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          backgroundColor: "rgba(255, 255, 255, 0.9)",
                           width: 28,
                           height: 28,
-                          '&:hover': {
-                            backgroundColor: 'rgba(255, 255, 255, 1)',
-                          }
+                          "&:hover": {
+                            backgroundColor: "rgba(255, 255, 255, 1)",
+                          },
                         }}
                       >
                         <ChevronLeft fontSize="small" />
@@ -131,16 +127,16 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                       <IconButton
                         onClick={() => handleNextImage(room.id, roomImages)}
                         sx={{
-                          position: 'absolute',
+                          position: "absolute",
                           right: 4,
-                          top: '50%',
-                          transform: 'translateY(-50%)',
-                          backgroundColor: 'rgba(255, 255, 255, 0.9)',
+                          top: "50%",
+                          transform: "translateY(-50%)",
+                          backgroundColor: "rgba(255, 255, 255, 0.9)",
                           width: 28,
                           height: 28,
-                          '&:hover': {
-                            backgroundColor: 'rgba(255, 255, 255, 1)',
-                          }
+                          "&:hover": {
+                            backgroundColor: "rgba(255, 255, 255, 1)",
+                          },
                         }}
                       >
                         <ChevronRight fontSize="small" />
@@ -172,15 +168,15 @@ export const ListingRooms = ({ rooms, propertyId, merchantId }) => {
                 className="w-full bg-orange-800 hover:bg-orange-500 text-white px-4 py-2 rounded-lg bottom-0 h-[30px]"
                 onClick={toggleDrawer(true, room?.id, room?.price)}
                 sx={{
-                  backgroundColor: '#9a3412',
-                  '&:hover': {
-                    backgroundColor: '#f97316',
-                  }
+                  backgroundColor: "#9a3412",
+                  "&:hover": {
+                    backgroundColor: "#f97316",
+                  },
                 }}
               >
                 View Available Dates
               </Button>
-              <hr className="mt-4"/>
+              <hr className="mt-4" />
             </div>
           </div>
         );

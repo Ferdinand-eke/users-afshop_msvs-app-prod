@@ -1,36 +1,36 @@
-import { styled } from '@mui/material/styles';
+import { styled } from "@mui/material/styles";
 
-const Root = styled('div')(({ theme }) => ({
-	'& > .logo-icon': {
-		transition: theme.transitions.create(['width', 'height'], {
-			duration: theme.transitions.duration.shortest,
-			easing: theme.transitions.easing.easeInOut
-		})
-	},
-	'& > .badge': {
-		transition: theme.transitions.create('opacity', {
-			duration: theme.transitions.duration.shortest,
-			easing: theme.transitions.easing.easeInOut
-		})
-	}
+const Root = styled("div")(({ theme }) => ({
+  "& > .logo-icon": {
+    transition: theme.transitions.create(["width", "height"], {
+      duration: theme.transitions.duration.shortest,
+      easing: theme.transitions.easing.easeInOut,
+    }),
+  },
+  "& > .badge": {
+    transition: theme.transitions.create("opacity", {
+      duration: theme.transitions.duration.shortest,
+      easing: theme.transitions.easing.easeInOut,
+    }),
+  },
 }));
 
 /**
  * The logo component. aflogo
  */
 function Logo() {
-	return (
-		<Root className="flex items-center">
-			{/* h-40 w-40 */}
-			<img
-				className="mt-14 logo-icon opacity-70"
-				src="assets/images/afslogo/afslogo.png"
-				width={45}
-				height={45}
-				alt="logo"
-			/>
-			<h1>Africanshops</h1>
-			{/* <div className="flex space-x-6 px-8 items-center">
+  return (
+    <Root className="flex items-center">
+      {/* h-40 w-40 */}
+      <img
+        className="mt-14 logo-icon opacity-70"
+        src="assets/images/afslogo/afslogo.png"
+        width={45}
+        height={45}
+        alt="logo"
+      />
+      <h1>Africanshops</h1>
+      {/* <div className="flex space-x-6 px-8 items-center">
 				<div
 					className="badge flex items-end justify-end rounded-4 w-24 h-24 px-3"
 					style={{
@@ -65,9 +65,8 @@ function Logo() {
 					<span className="react-text text-12 font-semibold">React</span>
 				</div>
 			</div> */}
-
-		</Root>
-	);
+    </Root>
+  );
 }
 
 export default Logo;

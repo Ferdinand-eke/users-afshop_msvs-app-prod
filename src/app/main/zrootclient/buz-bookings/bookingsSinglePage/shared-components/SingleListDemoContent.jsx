@@ -1,14 +1,6 @@
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { motion } from "framer-motion";
-import {
-  Typography,
-  Chip,
-  Divider,
-  Card,
-  CardContent,
-  Button,
-  Rating,
-} from "@mui/material";
+import { Typography, Chip, Divider, Card, CardContent, Button, Rating } from "@mui/material";
 import {
   Verified,
   Wifi,
@@ -25,25 +17,224 @@ import {
   BedroomParent,
   Bathtub,
   SquareFoot,
+  Kitchen,
+  LocalLaundryService,
+  Tv,
+  Balcony,
+  Pets,
+  SmokeFree,
+  SecurityOutlined,
+  ElevatorOutlined,
+  LocalFireDepartment,
+  Fireplace,
+  DeckOutlined,
+  YardOutlined,
+  WaterDrop,
+  ElectricBolt,
+  AirOutlined,
+  BeachAccessOutlined,
+  HotTub,
+  WheelchairPickup,
+  IronOutlined,
+  LocalCafe,
+  MicrowaveOutlined,
+  OutdoorGrill,
+  CheckroomOutlined,
+  DiningOutlined,
 } from "@mui/icons-material";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ImageGalleryView from "./ImageGalleryView";
 import ContentLoadingPlaceholder from "../../bookingsPage/shared-components/ContentLoadingPlaceholder";
 
+// Amenities icon mapping - maps amenity names/labels to their icons
+const AMENITIES_ICON_MAP = {
+  // Internet & Entertainment
+  wifi: <Wifi />,
+  "wi-fi": <Wifi />,
+  "free wifi": <Wifi />,
+  internet: <Wifi />,
+  tv: <Tv />,
+  television: <Tv />,
+  "cable tv": <Tv />,
+
+  // Climate Control
+  "air conditioning": <AcUnit />,
+  ac: <AcUnit />,
+  "air conditioner": <AcUnit />,
+  heating: <LocalFireDepartment />,
+  heater: <LocalFireDepartment />,
+  fireplace: <Fireplace />,
+
+  // Kitchen & Dining
+  kitchen: <Kitchen />,
+  "full kitchen": <Kitchen />,
+  kitchenette: <Kitchen />,
+  microwave: <MicrowaveOutlined />,
+  "coffee maker": <LocalCafe />,
+  "coffee machine": <LocalCafe />,
+  dining: <DiningOutlined />,
+  "dining area": <DiningOutlined />,
+
+  // Parking & Transportation
+  parking: <LocalParking />,
+  "free parking": <LocalParking />,
+  "private parking": <LocalParking />,
+  garage: <LocalParking />,
+
+  // Pool & Recreation
+  pool: <Pool />,
+  "swimming pool": <Pool />,
+  "swiming pool": <Pool />, // Common typo
+  "outdoor pool": <Pool />,
+  "hot tub": <HotTub />,
+  jacuzzi: <HotTub />,
+  gym: <FitnessCenter />,
+  "fitness center": <FitnessCenter />,
+  "fitness centre": <FitnessCenter />,
+  spa: <Spa />,
+
+  // Outdoor Spaces
+  balcony: <Balcony />,
+  patio: <DeckOutlined />,
+  deck: <DeckOutlined />,
+  terrace: <DeckOutlined />,
+  garden: <YardOutlined />,
+  yard: <YardOutlined />,
+  "outdoor area": <YardOutlined />,
+  "outdoor grill": <OutdoorGrill />,
+  bbq: <OutdoorGrill />,
+  barbecue: <OutdoorGrill />,
+  beach: <BeachAccessOutlined />,
+  "beach access": <BeachAccessOutlined />,
+  beachfront: <BeachAccessOutlined />,
+
+  // Laundry & Cleaning
+  washer: <LocalLaundryService />,
+  dryer: <LocalLaundryService />,
+  "washing machine": <LocalLaundryService />,
+  laundry: <LocalLaundryService />,
+  iron: <IronOutlined />,
+  "ironing board": <IronOutlined />,
+
+  // Safety & Security
+  security: <SecurityOutlined />,
+  "security system": <SecurityOutlined />,
+  "smoke detector": <SmokeFree />,
+  "fire extinguisher": <LocalFireDepartment />,
+  "first aid kit": <SecurityOutlined />,
+
+  // Building Features
+  elevator: <ElevatorOutlined />,
+  lift: <ElevatorOutlined />,
+
+  // Pet & Accessibility
+  pets: <Pets />,
+  "pet friendly": <Pets />,
+  "pets allowed": <Pets />,
+  wheelchair: <WheelchairPickup />,
+  "wheelchair accessible": <WheelchairPickup />,
+  accessible: <WheelchairPickup />,
+
+  // Utilities
+  water: <WaterDrop />,
+  electricity: <ElectricBolt />,
+  generator: <ElectricBolt />,
+
+  // Food & Beverage
+  restaurant: <Restaurant />,
+  "on-site restaurant": <Restaurant />,
+  bar: <LocalCafe />,
+
+  // Storage
+  closet: <CheckroomOutlined />,
+  wardrobe: <CheckroomOutlined />,
+  storage: <CheckroomOutlined />,
+
+  // Default
+  default: <AirOutlined />,
+};
+
 /**
- * DemoContent Component - REDESIGNED
+ * Get the appropriate icon for an amenity based on its name/label
+ * @param {string} amenityName - The name or label of the amenity
+ * @returns {JSX.Element} - The icon component
+ */
+const getAmenityIcon = (amenityName) => {
+  if (!amenityName) return AMENITIES_ICON_MAP.default;
+
+  const normalizedName = amenityName.toLowerCase().trim();
+
+  // Try exact match first
+  if (AMENITIES_ICON_MAP[normalizedName]) {
+    return AMENITIES_ICON_MAP[normalizedName];
+  }
+
+  // Try partial match (check if any key is contained in the amenity name)
+  const matchingKey = Object.keys(AMENITIES_ICON_MAP).find(
+    (key) => normalizedName.includes(key) || key.includes(normalizedName),
+  );
+
+  return matchingKey ? AMENITIES_ICON_MAP[matchingKey] : AMENITIES_ICON_MAP.default;
+};
+
+/**
+ * SingleListDemoContent Component - REDESIGNED
  * Compelling, production-ready property details page
  */
-function DemoContent(props) {
-  const { isLoading, isError, bookingData } = props;
+
+
+function SingleListDemoContent(props) {
+  const { isLoading, isError, bookingData, amenities } = props;
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
+  // Filter amenities based on bookingData.checkedAmenities
+  const propertyAmenities = useMemo(() => {
+    if (!amenities || !Array.isArray(amenities) || amenities.length === 0) {
+      console.log("No amenities available");
+      return [];
+    }
+
+    if (!bookingData?.checkedAmenities || bookingData.checkedAmenities.length === 0) {
+      console.log("No checked amenities for this property");
+      return [];
+    }
+
+    // checkedAmenities is an array of amenity IDs
+    const checkedAmenityIds = Array.isArray(bookingData.checkedAmenities)
+      ? bookingData.checkedAmenities
+      : [bookingData.checkedAmenities];
+
+    console.log("Checked Amenity IDs:", checkedAmenityIds);
+    console.log("All Amenities:", amenities);
+
+    // Filter amenities to only include those that are checked for this property
+    const filtered = amenities.filter((amenity) => {
+      const amenityId = amenity.id || amenity._id;
+      const isIncluded = checkedAmenityIds.includes(amenityId);
+      if (isIncluded) {
+        console.log(`Matched amenity: ${amenity.label} (${amenityId})`);
+      }
+      return isIncluded;
+    });
+
+    console.log("Filtered Amenities:", filtered);
+
+    // Map to include the appropriate icon based on the icon field or label
+    const result = filtered.map((amenity) => ({
+      ...amenity,
+      icon: getAmenityIcon(amenity.icon || amenity.label || amenity.name || amenity.title),
+    }));
+
+    console.log("Final Property Amenities with Icons:", result);
+
+    return result;
+  }, [amenities, bookingData?.checkedAmenities]);
 
   // Loading state
   if (isLoading) {
     return <ContentLoadingPlaceholder />;
   }
-
 
   // Error state
   if (isError) {
@@ -66,17 +257,6 @@ function DemoContent(props) {
       </div>
     );
   }
-
-  // Mock amenities data - replace with actual data
-  const amenities = [
-    { icon: <Wifi />, label: "Free WiFi" },
-    { icon: <AcUnit />, label: "Air Conditioning" },
-    { icon: <LocalParking />, label: "Free Parking" },
-    { icon: <Pool />, label: "Swimming Pool" },
-    { icon: <Restaurant />, label: "Restaurant" },
-    { icon: <FitnessCenter />, label: "Fitness Center" },
-    { icon: <Spa />, label: "Spa & Wellness" },
-  ];
 
   return (
     <div
@@ -316,9 +496,7 @@ function DemoContent(props) {
                   <Typography sx={{ fontSize: "1.75rem", fontWeight: 800, color: "#111827" }}>
                     {bookingData?.roomCount || 0}
                   </Typography>
-                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>
-                    Bedrooms
-                  </Typography>
+                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>Bedrooms</Typography>
                 </div>
               </div>
 
@@ -330,9 +508,7 @@ function DemoContent(props) {
                   <Typography sx={{ fontSize: "1.75rem", fontWeight: 800, color: "#111827" }}>
                     {bookingData?.bathroomCount || 0}
                   </Typography>
-                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>
-                    Bathrooms
-                  </Typography>
+                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>Bathrooms</Typography>
                 </div>
               </div>
 
@@ -344,9 +520,7 @@ function DemoContent(props) {
                   <Typography sx={{ fontSize: "1.75rem", fontWeight: 800, color: "#111827" }}>
                     2,400
                   </Typography>
-                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>
-                    Sq Ft
-                  </Typography>
+                  <Typography sx={{ fontSize: "1rem", color: "#6b7280" }}>Sq Ft</Typography>
                 </div>
               </div>
 
@@ -418,64 +592,106 @@ function DemoContent(props) {
       </motion.div>
 
       {/* Amenities Section */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5, delay: 0.3 }}
-      >
-        <Card
-          sx={{
-            borderRadius: "24px",
-            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
-            marginBottom: "24px",
-            background: "linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)",
-          }}
+      {propertyAmenities && propertyAmenities.length > 0 && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.3 }}
         >
-          {/* <CardContent sx={{ padding: "32px" }}>
-            <Typography
-              variant="h4"
-              sx={{
-                fontWeight: 800,
-                color: "#111827",
-                marginBottom: "24px",
-              }}
-            >
-              Amenities & Features
-            </Typography>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-              {amenities.map((amenity, index) => (
-                <div
-                  key={index}
-                  className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-shadow duration-300"
+          <Card
+            sx={{
+              borderRadius: "24px",
+              boxShadow: "0 10px 40px rgba(0, 0, 0, 0.1)",
+              marginBottom: "24px",
+              background: "linear-gradient(135deg, #fff7ed 0%, #ffffff 100%)",
+            }}
+          >
+            <CardContent sx={{ padding: "32px" }}>
+              <div className="flex items-center justify-between mb-6">
+                <Typography
+                  variant="h4"
+                  sx={{
+                    fontWeight: 800,
+                    color: "#111827",
+                  }}
                 >
-                  <div className="p-2 bg-orange-100 rounded-lg">
-                    {amenity.icon && (
-                      <span style={{ color: "#ea580c", fontSize: "1.5rem" }}>
-                        {amenity.icon}
-                      </span>
-                    )}
-                  </div>
+                  Amenities & Features
+                </Typography>
+                <Chip
+                  label={`${propertyAmenities.length} Available`}
+                  sx={{
+                    backgroundColor: "#f97316",
+                    color: "white",
+                    fontWeight: 700,
+                    fontSize: "0.875rem",
+                    padding: "4px 8px",
+                  }}
+                />
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+                {propertyAmenities.map((amenity, index) => (
+                  <motion.div
+                    key={amenity.id || amenity._id || index}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: index * 0.05 }}
+                  >
+                    <div className="flex items-center gap-3 p-4 bg-white rounded-xl shadow-sm hover:shadow-lg hover:scale-105 transition-all duration-300 cursor-pointer group">
+                      <div className="p-3 bg-orange-100 rounded-lg group-hover:bg-orange-200 transition-colors duration-300">
+                        <span
+                          style={{
+                            color: "#ea580c",
+                            fontSize: "1.75rem",
+                            display: "flex",
+                            alignItems: "center",
+                            justifyContent: "center",
+                          }}
+                        >
+                          {amenity.icon}
+                        </span>
+                      </div>
+                      <Typography
+                        sx={{
+                          fontSize: "1rem",
+                          fontWeight: 600,
+                          color: "#111827",
+                          lineHeight: 1.3,
+                          flex: 1,
+                        }}
+                      >
+                        {amenity.label || amenity.name || amenity.title}
+                      </Typography>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+
+              {/* Show a message if no amenities */}
+              {propertyAmenities.length === 0 && (
+                <div className="text-center py-8">
                   <Typography
                     sx={{
                       fontSize: "1.125rem",
-                      fontWeight: 600,
-                      color: "#111827",
+                      color: "#6b7280",
+                      fontStyle: "italic",
                     }}
                   >
-                    {amenity.label}
+                    No amenities information available for this property.
                   </Typography>
                 </div>
-              ))}
-            </div>
-          </CardContent> */}
-        </Card>
-      </motion.div>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
+      )}
+
 
       {/* Image Gallery Modal */}
       <ImageGalleryView
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}
-        images={bookingData?.imageSrcs || []}
+        images={bookingData?.listingImages || bookingData?.imageSrcs || []}
         propertyData={{
           title: bookingData?.title,
           shortDescription: bookingData?.shortDescription,
@@ -487,9 +703,9 @@ function DemoContent(props) {
   );
 }
 
-export default DemoContent;
+export default SingleListDemoContent;
 
 /*
  * OLD COMPONENT BACKUP (before redesign)
- * Located at: DemoContent_OLD_BACKUP.jsx
+ * Located at: SingleListDemoContent_OLD_BACKUP.jsx
  */

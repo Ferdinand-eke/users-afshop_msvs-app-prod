@@ -1,4 +1,13 @@
-import { Box, Container, Typography, Button, Paper, useTheme, useMediaQuery, LinearProgress } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Paper,
+  useTheme,
+  useMediaQuery,
+  LinearProgress,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import ConstructionIcon from "@mui/icons-material/Construction";
 import UpdateIcon from "@mui/icons-material/Update";
@@ -117,7 +126,8 @@ const MaintenanceModePage = ({ serviceName = "Service" }) => {
             color="text.secondary"
             sx={{ mb: 4, lineHeight: 1.7 }}
           >
-            Our {serviceName.toLowerCase()} service is currently undergoing scheduled maintenance to improve your experience.
+            Our {serviceName.toLowerCase()} service is currently undergoing scheduled maintenance to
+            improve your experience.
           </Typography>
 
           <Box sx={{ mb: 4 }}>
@@ -141,7 +151,8 @@ const MaintenanceModePage = ({ serviceName = "Service" }) => {
                 System Updates in Progress
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                We're performing important updates and improvements to enhance performance and add new features.
+                We're performing important updates and improvements to enhance performance and add
+                new features.
               </Typography>
             </Box>
           </InfoBox>
@@ -153,17 +164,14 @@ const MaintenanceModePage = ({ serviceName = "Service" }) => {
                 Minimal Downtime Expected
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                This maintenance window is brief. We appreciate your patience and will be back online soon.
+                This maintenance window is brief. We appreciate your patience and will be back
+                online soon.
               </Typography>
             </Box>
           </InfoBox>
 
           <Box sx={{ mt: 5 }}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ mb: 3, fontStyle: "italic" }}
-            >
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3, fontStyle: "italic" }}>
               Thank you for your patience while we make things better for you!
             </Typography>
 

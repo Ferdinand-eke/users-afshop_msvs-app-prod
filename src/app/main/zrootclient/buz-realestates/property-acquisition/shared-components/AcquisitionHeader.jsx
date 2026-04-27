@@ -11,11 +11,7 @@ function AcquisitionHeader(props) {
   return (
     <div className="flex flex-col sm:flex-row flex-1 w-full items-center justify-between p-24 md:p-32">
       <div className="flex items-center gap-4">
-        <IconButton
-          onClick={leftSidebarToggle}
-          aria-label="toggle sidebar"
-          size="large"
-        >
+        <IconButton onClick={leftSidebarToggle} aria-label="toggle sidebar" size="large">
           <i className="fas fa-bars text-gray-700"></i>
         </IconButton>
 
@@ -46,13 +42,13 @@ function AcquisitionHeader(props) {
         </div>
 
         <IconButton
-          onClick={() => navigate('/realestate/my-offers')}
+          onClick={() => navigate("/realestate/my-offers")}
           aria-label="back to offers"
           sx={{
-            backgroundColor: '#f3f4f6',
-            '&:hover': {
-              backgroundColor: '#e5e7eb',
-            }
+            backgroundColor: "#f3f4f6",
+            "&:hover": {
+              backgroundColor: "#e5e7eb",
+            },
           }}
         >
           <i className="fas fa-arrow-left text-gray-700"></i>

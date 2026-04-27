@@ -3,7 +3,7 @@ productId: material-ui
 title: React Button component
 components: Button, IconButton, ButtonBase, LoadingButton
 materialDesign: https://m2.material.io/components/buttons
-githubLabel: 'component: button'
+githubLabel: "component: button"
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/button/
 unstyled: /base-ui/react-button/
 ---
@@ -64,7 +64,7 @@ All components accept an `onClick` handler that is applied to the root DOM eleme
 ```jsx
 <Button
   onClick={() => {
-    alert('clicked');
+    alert("clicked");
   }}
 >
   Click me
@@ -165,7 +165,7 @@ However:
 2. **DOM change**. You can wrap the button:
 
 ```jsx
-<span style={{ cursor: 'not-allowed' }}>
+<span style={{ cursor: "not-allowed" }}>
   <Button component={Link} disabled>
     disabled
   </Button>
@@ -173,4 +173,3 @@ However:
 ```
 
 This has the advantage of supporting any element, for instance, a link `<a>` element.
-

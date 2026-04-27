@@ -102,12 +102,8 @@ function AdsSlider() {
               animate={{ y: 0, opacity: 1 }}
               transition={{ delay: 0.2 }}
             >
-              <h3 className="text-xl font-bold mb-2">
-                {ads[currentSlide].title}
-              </h3>
-              <p className="text-sm mb-4 line-clamp-2">
-                {ads[currentSlide].description}
-              </p>
+              <h3 className="text-xl font-bold mb-2">{ads[currentSlide].title}</h3>
+              <p className="text-sm mb-4 line-clamp-2">{ads[currentSlide].description}</p>
 
               <button
                 className="px-6 py-2 rounded-lg font-semibold text-sm transition-all hover:shadow-lg hover:scale-105"
@@ -162,9 +158,7 @@ function AdsSlider() {
             key={index}
             onClick={() => goToSlide(index)}
             className={`w-2 h-2 rounded-full transition-all ${
-              index === currentSlide
-                ? "bg-white w-6"
-                : "bg-white/50 hover:bg-white/75"
+              index === currentSlide ? "bg-white w-6" : "bg-white/50 hover:bg-white/75"
             }`}
           />
         ))}

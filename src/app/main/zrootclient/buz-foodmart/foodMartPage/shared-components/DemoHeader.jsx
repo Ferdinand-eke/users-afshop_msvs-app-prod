@@ -8,12 +8,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
  * The DemoHeader component.
  */
 function DemoHeader(props) {
-  const {
-    leftSidebarToggle,
-    rightSidebarToggle,
-  } = props;
-
-  
+  const { leftSidebarToggle, rightSidebarToggle } = props;
 
   return (
     <div className="flex flex-col w-full sm:py-16 sm:px-20 ">
@@ -28,13 +23,9 @@ function DemoHeader(props) {
           </div>
         )}
 
-        
         {rightSidebarToggle && (
           <div className="flex shrink-0 items-center">
-            <IconButton
-              onClick={rightSidebarToggle}
-              aria-label="toggle sidebar"
-            >
+            <IconButton onClick={rightSidebarToggle} aria-label="toggle sidebar">
               <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
             </IconButton>
           </div>

@@ -15,7 +15,6 @@ import authRoleExamplesConfigs from "../main/auth/authRoleExamplesConfigs";
 import UsersAppConfig from "../main/users/user/UsersAppConfig";
 import StaffAppConfig from "../main/users/admin/StaffAppConfig";
 
-
 /***Authentication-based-config starts*/
 import SignAcceptInviteConfig from "../main/sign-accept-invite/SignAcceptInviteConfig";
 import forgotPasswordConfig from "../main/sign-forgot-password/forgotPasswordPagesConfig";
@@ -27,7 +26,6 @@ import userReservationPagesConfig from "../main/zrootclient/buz-bookings/user-re
 /***#######################################Bookings & Reservations-based-config  ends########################*/
 import AfricanshopsFinanceDashboardAppConfig from "../main/africanshops-finance/AfricanshopsFinanceDashboardAppConfig";
 import AfricanshopsMessengerAppConfig from "../main/africanshops-messenger/AfricanshopsMessengerAppConfig";
-
 
 import blogAppConfig from "../main/newsblog/blogAppConfig";
 import HelpCenterHome from "../main/apps/help-center/home/HelpCenterHome";
@@ -80,7 +78,6 @@ const routeConfigs = [
    * MERCHANT SUBDOMAIN ROUTES (Conditional - only active on subdomains)
    * ############################################################################
    * */
-
 
   /***
    * ##########################################################################
@@ -178,7 +175,7 @@ const routeConfigs = [
    * -------------------------------------------------------------------------------------------------------
    * */
 
-   /****
+  /****
    * #########################################################################################
    * Africanshops REAL_ESTATE_ROUTES Configs starts Here
    * #########################################################################################
@@ -232,18 +229,15 @@ const routes = [
   //     )
   //   : []),
 
-  ...FuseUtils.generateRoutesFromConfigs(
-    routeConfigs,
-    settingsConfig.defaultAuth
-  ),
+  ...FuseUtils.generateRoutesFromConfigs(routeConfigs, settingsConfig.defaultAuth),
 
   // Main domain homepage (ALWAYS ACTIVE - subdomain routing disabled)
   // ...(!onMerchantSubdomain
   //   ? [
-        {
-          path: "/",
-          element: <ModernLandingPage />,
-        },
+  {
+    path: "/",
+    element: <ModernLandingPage />,
+  },
   //     ]
   //   : []),
   {
@@ -470,7 +464,6 @@ const routes = [
    */
   /**############################################################### */
 
-  
   /****
    * ##############################################################
    * Marketplace activiies starts
@@ -617,8 +610,6 @@ const routes = [
    * ##############################################################
    */
 
-
-  
   //
   /**############################################################### */
   /****

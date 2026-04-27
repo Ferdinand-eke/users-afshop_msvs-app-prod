@@ -51,13 +51,7 @@ function PropertyAcquisitionPage() {
           }}
         />
       }
-      content={
-        <AcquisitionContent
-          offerId={offerId}
-          offerDetails={offerDetails}
-        />
-      }
-      
+      content={<AcquisitionContent offerId={offerId} offerDetails={offerDetails} />}
       leftSidebarOpen={leftSidebarOpen}
       leftSidebarOnClose={() => {
         setLeftSidebarOpen(false);
@@ -67,6 +61,5 @@ function PropertyAcquisitionPage() {
     />
   );
 }
-
 
 export default PropertyAcquisitionPage;

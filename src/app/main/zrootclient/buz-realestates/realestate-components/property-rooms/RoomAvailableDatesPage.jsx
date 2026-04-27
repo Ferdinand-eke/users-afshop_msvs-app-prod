@@ -18,11 +18,7 @@ import {
   useGetReservations,
   useGetReservationsOnRoom,
 } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
-import {
-  differenceInCalendarDays,
-  differenceInDays,
-  eachDayOfInterval,
-} from "date-fns";
+import { differenceInCalendarDays, differenceInDays, eachDayOfInterval } from "date-fns";
 import { toDate } from "date-fns-tz";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
@@ -99,10 +95,7 @@ function RoomAvailableDatesPage(props) {
 
   useEffect(() => {
     if (dateRange?.startDate && dateRange?.endDate) {
-      const dayCount = differenceInCalendarDays(
-        dateRange?.endDate,
-        dateRange?.startDate
-      );
+      const dayCount = differenceInCalendarDays(dateRange?.endDate, dateRange?.startDate);
       if (dayCount && roomPrice) {
         setTotalPrice(dayCount * roomPrice);
       } else {
@@ -121,13 +114,13 @@ function RoomAvailableDatesPage(props) {
             <IconButton
               onClick={onClose}
               sx={{
-                position: 'absolute',
+                position: "absolute",
                 top: 16,
                 right: 16,
                 zIndex: 1000,
-                backgroundColor: 'rgba(255, 255, 255, 0.9)',
-                '&:hover': {
-                  backgroundColor: 'rgba(255, 255, 255, 1)',
+                backgroundColor: "rgba(255, 255, 255, 0.9)",
+                "&:hover": {
+                  backgroundColor: "rgba(255, 255, 255, 1)",
                 },
               }}
             >
@@ -158,9 +151,7 @@ function RoomAvailableDatesPage(props) {
                   className="text-dark dark:text-white/[.87] mt-[18px] mb-2 text-[22px] font-medium"
                   as="h3"
                 >
-                  <span className="text-sm text-light dark:text-white/60">
-                    ₦
-                  </span>
+                  <span className="text-sm text-light dark:text-white/60">₦</span>
 
                   <span>
                     {formatCurrency(roomPrice)}{" "}

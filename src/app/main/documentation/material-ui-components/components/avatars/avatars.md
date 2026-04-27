@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Avatar component
 components: Avatar, AvatarGroup, Badge
-githubLabel: 'component: avatar'
+githubLabel: "component: avatar"
 ---
 
 # Avatar

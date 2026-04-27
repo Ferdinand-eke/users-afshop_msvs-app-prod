@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Pagination component
 components: Pagination, PaginationItem, TablePagination
-githubLabel: 'component: pagination'
+githubLabel: "component: pagination"
 ---
 
 # Pagination
@@ -61,7 +61,7 @@ related to the rendering of JSX.
 The Pagination component is built on this hook.
 
 ```jsx
-import usePagination from '@mui/material/usePagination';
+import usePagination from "@mui/material/usePagination";
 ```
 
 {{"demo": "UsePagination.js"}}

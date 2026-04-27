@@ -6,7 +6,6 @@ import useGetAllFoodMarts from "app/configs/data/server-calls/auth/userapp/a_foo
 import FoodMartCard from "./rcshubcomponents/FoodMartCard";
 
 function RestaurantAndSpotsHub() {
-  
   const { data: AllFoodMarts, isLoading, isError } = useGetAllFoodMarts();
 
   // Filter for first 12 promoted restaurants
@@ -18,10 +17,7 @@ function RestaurantAndSpotsHub() {
 
   return (
     <div className="pt-5 w-full">
-      <RecommendedHead
-        title="Restaurants, Clubs and Spots"
-        color="bg-orange-800"
-      />
+      <RecommendedHead title="Restaurants, Clubs and Spots" color="bg-orange-800" />
 
       <div className="flex-auto mt-8">
         {isLoading ? (
@@ -39,11 +35,11 @@ function RestaurantAndSpotsHub() {
                 slug={foodmart?.slug}
                 images={foodmart?.imageSrcs || []}
                 title={foodmart?.title}
-                location={foodmart?.location || foodmart?.address || 'Location not specified'}
-                category={foodmart?.category || 'Restaurant'}
+                location={foodmart?.location || foodmart?.address || "Location not specified"}
+                category={foodmart?.category || "Restaurant"}
                 rating={foodmart?.rating || 4.5}
                 reviewCount={foodmart?.reviewCount || 10}
-                priceRange={foodmart?.priceRange || '$$'}
+                priceRange={foodmart?.priceRange || "$$"}
               />
             ))}
           </div>

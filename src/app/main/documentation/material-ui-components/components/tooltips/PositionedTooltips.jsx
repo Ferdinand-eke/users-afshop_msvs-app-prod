@@ -1,10 +1,11 @@
-import * as React from 'react';
-import Box from '@mui/material/Box';
-import Grid from '@mui/material/Grid';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
+import * as React from "react";
+import Box from "@mui/material/Box";
+import Grid from "@mui/material/Grid";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
 export default function PositionedTooltips() {
-    return (<Box sx={{ width: 500 }}>
+  return (
+    <Box sx={{ width: 500 }}>
       <Grid container justifyContent="center">
         <Grid item>
           <Tooltip title="Add" placement="top-start">
@@ -63,5 +64,6 @@ export default function PositionedTooltips() {
           </Tooltip>
         </Grid>
       </Grid>
-    </Box>);
+    </Box>
+  );
 }

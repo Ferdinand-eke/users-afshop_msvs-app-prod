@@ -48,7 +48,6 @@ function DemoSidebarRight(props) {
           </div>
         </motion.div>
 
-
         {/* MinimumOrderDialogue Component */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}

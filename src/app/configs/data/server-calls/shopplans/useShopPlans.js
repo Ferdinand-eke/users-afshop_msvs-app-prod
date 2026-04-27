@@ -1,9 +1,5 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
-import {
-  getShopPlanById,
-  getShopPlans,
-} from '../../client/clientToApiRoutes';
+import { useQuery } from 'react-query';
+import { getShopPlanById, getShopPlans } from '../../client/clientToApiRoutes';
 // import {
 //   createMarket,
 //   createShopPlan,
@@ -16,22 +12,18 @@ import {
 // } from '../../store-redux/api/apiRoutes';
 
 export default function useShopplans() {
-  return useQuery(['shopplans'], getShopPlans);
+	return useQuery(['shopplans'], getShopPlans);
 }
 
-//get single shop plan
+// get single shop plan
 export function useSingleShopplans(shopplanId) {
-  return useQuery(
-    ['__shopplan', shopplanId],
-    () => getShopPlanById(shopplanId),
-    {
-      enabled: Boolean(shopplanId),
-      // staleTime: 2000,
-    }
-  );
+	return useQuery(['__shopplan', shopplanId], () => getShopPlanById(shopplanId), {
+		enabled: Boolean(shopplanId)
+		// staleTime: 2000,
+	});
 }
 
-//create single shop plan
+// create single shop plan
 // export function useAddShopPlanMutation() {
 //   const queryClient = useQueryClient();
 //   return useMutation(
@@ -65,7 +57,7 @@ export function useSingleShopplans(shopplanId) {
 //   );
 // }
 
-//update single shop plan
+// update single shop plan
 // export function useShopPlanUpdateMutation() {
 //   const queryClient = useQueryClient();
 

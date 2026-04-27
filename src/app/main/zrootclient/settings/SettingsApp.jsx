@@ -50,18 +50,14 @@ function SettingsApp() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
           >
-            <SettingsAppHeader
-              className="mb-6 md:mb-8"
-              onSetSidebarOpen={setLeftSidebarOpen}
-            />
+            <SettingsAppHeader className="mb-6 md:mb-8" onSetSidebarOpen={setLeftSidebarOpen} />
 
             {/* Main Content Area with subtle background */}
             <div
               className="rounded-3xl p-4 md:p-6 lg:p-8"
               style={{
                 background: "white",
-                boxShadow:
-                  "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
+                boxShadow: "0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06)",
               }}
             >
               <Outlet />
@@ -73,9 +69,7 @@ function SettingsApp() {
       leftSidebarOnClose={() => {
         setLeftSidebarOpen(false);
       }}
-      leftSidebarContent={
-        <SettingsAppSidebarContent onSetSidebarOpen={setLeftSidebarOpen} />
-      }
+      leftSidebarContent={<SettingsAppSidebarContent onSetSidebarOpen={setLeftSidebarOpen} />}
       leftSidebarWidth={400}
       scroll={isMobile ? "normal" : "content"}
     />

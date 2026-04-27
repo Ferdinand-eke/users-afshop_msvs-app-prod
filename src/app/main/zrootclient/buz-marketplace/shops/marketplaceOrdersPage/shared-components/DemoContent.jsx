@@ -12,19 +12,17 @@ function DemoContent(props) {
   const [activeTab, setActiveTab] = useState("active");
 
   // Filter orders based on status
-  const activeOrders = userCreatedOrders?.filter(
-    (order) =>
-      order?.status !== "cancelled" &&
-      order?.status !== "refunded" &&
-      order?.status !== "failed"
-  ) || [];
+  const activeOrders =
+    userCreatedOrders?.filter(
+      (order) =>
+        order?.status !== "cancelled" && order?.status !== "refunded" && order?.status !== "failed",
+    ) || [];
 
-  const cancelledOrders = userCreatedOrders?.filter(
-    (order) =>
-      order?.status === "cancelled" ||
-      order?.status === "refunded" ||
-      order?.status === "failed"
-  ) || [];
+  const cancelledOrders =
+    userCreatedOrders?.filter(
+      (order) =>
+        order?.status === "cancelled" || order?.status === "refunded" || order?.status === "failed",
+    ) || [];
 
   const displayedOrders = activeTab === "active" ? activeOrders : cancelledOrders;
 
@@ -110,17 +108,9 @@ function DemoContent(props) {
           </motion.div>
 
           {/* Loading Text */}
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h3 className="text-2xl font-bold text-gray-900 mb-3">
-              Loading Your Orders
-            </h3>
-            <p className="text-gray-600 mb-6">
-              Please wait while we fetch your order history...
-            </p>
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.3 }}>
+            <h3 className="text-2xl font-bold text-gray-900 mb-3">Loading Your Orders</h3>
+            <p className="text-gray-600 mb-6">Please wait while we fetch your order history...</p>
 
             {/* Animated Dots */}
             <div className="flex items-center justify-center gap-2">
@@ -217,9 +207,7 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center min-h-screen px-4"
       >
-        <ClienttErrorPage
-          message={"Error occurred while retrieving your orders"}
-        />
+        <ClienttErrorPage message={"Error occurred while retrieving your orders"} />
       </motion.div>
     );
   }
@@ -236,7 +224,8 @@ function DemoContent(props) {
           <div
             className="w-24 h-24 mx-auto mb-6 rounded-full flex items-center justify-center"
             style={{
-              background: "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)",
+              background:
+                "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)",
             }}
           >
             <svg
@@ -262,7 +251,7 @@ function DemoContent(props) {
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            onClick={() => window.location.href = '/marketplace'}
+            onClick={() => (window.location.href = "/marketplace")}
             className="px-8 py-3 rounded-xl font-semibold text-white transition-all"
             style={{
               background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
@@ -288,9 +277,7 @@ function DemoContent(props) {
         >
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
             <div>
-              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">
-                My Orders
-              </h1>
+              <h1 className="text-2xl sm:text-3xl font-bold text-gray-900 mb-2">My Orders</h1>
               <p className="text-sm sm:text-base text-gray-600">
                 Track and manage all your marketplace orders
               </p>
@@ -301,7 +288,8 @@ function DemoContent(props) {
               <div
                 className="px-4 py-3 rounded-xl text-center"
                 style={{
-                  background: "linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.05) 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.05) 100%)",
                   border: "1px solid rgba(234, 88, 12, 0.2)",
                 }}
               >
@@ -313,7 +301,8 @@ function DemoContent(props) {
               <div
                 className="px-4 py-3 rounded-xl text-center"
                 style={{
-                  background: "linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)",
                   border: "1px solid rgba(34, 197, 94, 0.2)",
                 }}
               >
@@ -332,9 +321,7 @@ function DemoContent(props) {
               whileTap={{ scale: 0.98 }}
               onClick={() => setActiveTab("active")}
               className={`px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base transition-all relative ${
-                activeTab === "active"
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
+                activeTab === "active" ? "text-orange-600" : "text-gray-600 hover:text-gray-900"
               }`}
             >
               <span className="flex items-center gap-2">
@@ -366,9 +353,7 @@ function DemoContent(props) {
               whileTap={{ scale: 0.98 }}
               onClick={() => setActiveTab("cancelled")}
               className={`px-4 sm:px-6 py-3 font-semibold text-sm sm:text-base transition-all relative ${
-                activeTab === "cancelled"
-                  ? "text-orange-600"
-                  : "text-gray-600 hover:text-gray-900"
+                activeTab === "cancelled" ? "text-orange-600" : "text-gray-600 hover:text-gray-900"
               }`}
             >
               <span className="flex items-center gap-2">
@@ -436,7 +421,8 @@ function DemoContent(props) {
               <div
                 className="w-20 h-20 rounded-full flex items-center justify-center mb-4"
                 style={{
-                  background: "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)",
+                  background:
+                    "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)",
                 }}
               >
                 <svg
@@ -454,9 +440,7 @@ function DemoContent(props) {
                 </svg>
               </div>
               <Typography variant="h6" className="font-bold text-gray-800 mb-2 text-center">
-                {activeTab === "active"
-                  ? "No Active Orders"
-                  : "No Cancelled Orders"}
+                {activeTab === "active" ? "No Active Orders" : "No Cancelled Orders"}
               </Typography>
               <Typography className="text-gray-600 text-center max-w-md">
                 {activeTab === "active"

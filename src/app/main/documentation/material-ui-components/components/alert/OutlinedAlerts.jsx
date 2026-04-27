@@ -1,8 +1,9 @@
-import * as React from 'react';
-import Alert from '@mui/material/Alert';
-import Stack from '@mui/material/Stack';
+import * as React from "react";
+import Alert from "@mui/material/Alert";
+import Stack from "@mui/material/Stack";
 export default function OutlinedAlerts() {
-    return (<Stack sx={{ width: '100%' }} spacing={2}>
+  return (
+    <Stack sx={{ width: "100%" }} spacing={2}>
       <Alert variant="outlined" severity="success">
         This is an outlined success Alert.
       </Alert>
@@ -15,5 +16,6 @@ export default function OutlinedAlerts() {
       <Alert variant="outlined" severity="error">
         This is an outlined error Alert.
       </Alert>
-    </Stack>);
+    </Stack>
+  );
 }

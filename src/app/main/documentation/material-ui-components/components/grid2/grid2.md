@@ -1,7 +1,7 @@
 ---
 productId: material-ui
 title: React Grid component
-githubLabel: 'component: Grid'
+githubLabel: "component: Grid"
 materialDesign: https://m2.material.io/design/layout/understanding-layout.html
 ---
 
@@ -31,8 +31,8 @@ We encourage everyone to try the new version of the `Grid` by visiting the [Grid
 From now on, the `Grid` v1 and `Grid` v2 refer to the import as:
 
 ```js
-import Grid from '@mui/material/Grid'; // Grid version 1
-import Grid from '@mui/material/Unstable_Grid2'; // Grid version 2
+import Grid from "@mui/material/Grid"; // Grid version 1
+import Grid from "@mui/material/Unstable_Grid2"; // Grid version 2
 ```
 
 :::
@@ -181,7 +181,7 @@ The demo below illustrates how to use the offset props:
 If you specify custom breakpoints in the theme, you can use those names as grid item props in responsive values:
 
 ```js
-import { ThemeProvider, createTheme } from '@mui/material/styles';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
 
 function Demo() {
   return (
@@ -225,7 +225,7 @@ You have to set module augmentation on the theme breakpoints interface.
 Properties set to `true` will appear as `{key}`(size prop) and `{key}Offset`(offset prop).
 
 ```ts
-declare module '@mui/system' {
+declare module "@mui/system" {
   interface BreakpointOverrides {
     // Your custom breakpoints
     laptop: true;

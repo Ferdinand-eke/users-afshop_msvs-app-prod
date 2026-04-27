@@ -31,7 +31,10 @@ import ContactModel from "../models/ContactModel";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 // import { useAdminRecruitStaff } from "src/app/aaqueryhooks/adminHandlingQuery";
-import { useActivateNewUserByAdmin, useAdminCreateNewUser } from "src/app/aaqueryhooks/usersHandlingQuery";
+import {
+  useActivateNewUserByAdmin,
+  useAdminCreateNewUser,
+} from "src/app/aaqueryhooks/usersHandlingQuery";
 import { Typography } from "@mui/material";
 import { getNewUserAccountToken } from "src/app/aaqueryhooks/utils/opsUtils";
 // import InputAdornment from '@mui/material/InputAdornment';
@@ -139,10 +142,10 @@ function ActivateUserForm() {
   // } = useGetAdminById(id, {
   // 	skip: !id || id === 'new'
   // });
-const getActivateNewUserToken = getNewUserAccountToken()
+  const getActivateNewUserToken = getNewUserAccountToken();
   const recruitNewUserAccount = useAdminCreateNewUser();
-  const activateNewUserCallback = useActivateNewUserByAdmin()
-  console.log("New-User-Token", getActivateNewUserToken)
+  const activateNewUserCallback = useActivateNewUserByAdmin();
+  console.log("New-User-Token", getActivateNewUserToken);
 
   const { control, watch, reset, handleSubmit, formState } = useForm({
     mode: "all",
@@ -159,17 +162,17 @@ const getActivateNewUserToken = getNewUserAccountToken()
       // if (id === 'new') {
       // 	reset(ContactModel({}));
       // }
-	//   if(recruitNewUserAccount.isSuccess){
-	// 	reset(ContactModel({}));
-	//   }
+      //   if(recruitNewUserAccount.isSuccess){
+      // 	reset(ContactModel({}));
+      //   }
       reset(ContactModel({}));
     },
     // [contactId, reset]
     [
       // id,
       reset,
-	//   recruitNewUserAccount?.isSuccess,
-    ]
+      //   recruitNewUserAccount?.isSuccess,
+    ],
   );
 
   // useEffect(() => {
@@ -185,13 +188,12 @@ const getActivateNewUserToken = getNewUserAccountToken()
   const onSubmit = useCallback(() => {
     // console.log("Crete STAFF-FORMDATA", { contact: form })
     console.log("Activate And Crete User-FORMDATA", form);
-    const formAndToken = {...form, activationToken:getActivateNewUserToken}
+    const formAndToken = { ...form, activationToken: getActivateNewUserToken };
 
-    console.log("Activate User AccountFormDATA:", formAndToken)
+    console.log("Activate User AccountFormDATA:", formAndToken);
     // return
     activateNewUserCallback.mutate(formAndToken);
-	// reset(ContactModel({}));
-   
+    // reset(ContactModel({}));
   }, [form]);
 
   function handleRemoveContact() {
@@ -219,7 +221,6 @@ const getActivateNewUserToken = getNewUserAccountToken()
   // 	return <FuseLoading className="min-h-screen" />;
   // }
 
- 
   return (
     <>
       <Box
@@ -303,9 +304,7 @@ const getActivateNewUserToken = getNewUserAccountToken()
               InputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
-                    <FuseSvgIcon size={20}>
-                      heroicons-solid:user-circle
-                    </FuseSvgIcon>
+                    <FuseSvgIcon size={20}>heroicons-solid:user-circle</FuseSvgIcon>
                   </InputAdornment>
                 ),
               }}
@@ -467,7 +466,7 @@ const getActivateNewUserToken = getNewUserAccountToken()
           className="ml-8"
           variant="contained"
           color="secondary"
-          disabled={_.isEmpty(dirtyFields) || !isValid }
+          disabled={_.isEmpty(dirtyFields) || !isValid}
           onClick={handleSubmit(onSubmit)}
         >
           Save

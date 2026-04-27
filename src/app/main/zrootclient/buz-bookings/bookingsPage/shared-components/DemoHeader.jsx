@@ -10,16 +10,12 @@ import { MenuItem, Select } from "@mui/material";
  * The DemoHeader component.
  */
 function DemoHeader(props) {
-  const {
-    leftSidebarToggle,
-    rightSidebarToggle,
-   
-  } = props;
+  const { leftSidebarToggle, rightSidebarToggle } = props;
 
   return (
     <div className="flex flex-col w-full sm:py-16 sm:px-20 ">
-		{/* p-24 */}
-     
+      {/* p-24 */}
+
       <div className="flex justify-between items-center w-full mt-8">
         {leftSidebarToggle && (
           <div className="flex shrink-0 items-center">
@@ -28,14 +24,10 @@ function DemoHeader(props) {
             </IconButton>
           </div>
         )}
-     
-        
+
         {rightSidebarToggle && (
           <div className="flex shrink-0 items-center">
-            <IconButton
-              onClick={rightSidebarToggle}
-              aria-label="toggle sidebar"
-            >
+            <IconButton onClick={rightSidebarToggle} aria-label="toggle sidebar">
               <FuseSvgIcon>heroicons-outline:map</FuseSvgIcon>
             </IconButton>
           </div>

@@ -2,7 +2,7 @@
 productId: material-ui
 title: Backdrop React Component
 components: Backdrop
-githubLabel: 'component: backdrop'
+githubLabel: "component: backdrop"
 ---
 
 # Backdrop

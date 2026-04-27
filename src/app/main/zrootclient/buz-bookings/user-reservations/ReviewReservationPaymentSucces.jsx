@@ -1,4 +1,3 @@
-
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
 import { Button } from "@mui/material";
@@ -29,8 +28,6 @@ const item = {
   },
 };
 
-
-
 /**
  * The Payment success page.
  */
@@ -53,12 +50,7 @@ function ReviewReservationPaymentSucces() {
     );
   }
 
-  const {
-    data: successPaidReservation,
-    isLoading,
-    isError,
-  } = useGetUserSingleTrip(reservationId);
-
+  const { data: successPaidReservation, isLoading, isError } = useGetUserSingleTrip(reservationId);
 
   if (isLoading) {
     return <FuseLoading />;
@@ -94,15 +86,9 @@ function ReviewReservationPaymentSucces() {
         <PaymentSuccessful
           userName={user?.name}
           reservationId={successPaidReservation?.data?.reservation?.id}
-          checkInDate={formatDateUtil(
-            successPaidReservation?.data?.reservation?.startDate
-          )}
-          checkOutDate={formatDateUtil(
-            successPaidReservation?.data?.reservation?.endDate
-          )}
-          propertyName={
-            successPaidReservation?.data?.reservation?.listing?.title
-          }
+          checkInDate={formatDateUtil(successPaidReservation?.data?.reservation?.startDate)}
+          checkOutDate={formatDateUtil(successPaidReservation?.data?.reservation?.endDate)}
+          propertyName={successPaidReservation?.data?.reservation?.listing?.title}
         />
       ) : (
         <motion.div
@@ -158,15 +144,11 @@ function ReviewReservationPaymentSucces() {
                 >
                   <p className="text-gray-600 mb-2 text-lg">
                     We're sorry,{" "}
-                    <span className="font-semibold text-gray-800">
-                      {user?.name || "Guest"}
-                    </span>
-                    !
+                    <span className="font-semibold text-gray-800">{user?.name || "Guest"}</span>!
                   </p>
                   <p className="text-gray-600 mb-6">
-                    An error occurred while processing your payment. This could
-                    be due to insufficient funds, network issues, or payment
-                    gateway errors.
+                    An error occurred while processing your payment. This could be due to
+                    insufficient funds, network issues, or payment gateway errors.
                   </p>
                 </motion.div>
 
@@ -201,28 +183,19 @@ function ReviewReservationPaymentSucces() {
                   <ul className="space-y-2 text-sm text-gray-700">
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Check your card balance and ensure you have sufficient
-                        funds
-                      </span>
+                      <span>Check your card balance and ensure you have sufficient funds</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Verify your card details and billing information
-                      </span>
+                      <span>Verify your card details and billing information</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Try a different payment method or card
-                      </span>
+                      <span>Try a different payment method or card</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Contact your bank if the issue persists
-                      </span>
+                      <span>Contact your bank if the issue persists</span>
                     </li>
                   </ul>
                 </motion.div>
@@ -257,9 +230,8 @@ function ReviewReservationPaymentSucces() {
                         Your reservation is still pending
                       </p>
                       <p className="text-xs text-gray-600">
-                        Don't worry! Your selected property is still held for
-                        you. Complete the payment within 1 hour to confirm
-                        your booking.
+                        Don't worry! Your selected property is still held for you. Complete the
+                        payment within 1 hour to confirm your booking.
                       </p>
                     </div>
                   </div>
@@ -277,15 +249,13 @@ function ReviewReservationPaymentSucces() {
                     component={NavLinkAdapter}
                     to={`/bookings/${reservationId}/review`}
                     sx={{
-                      background:
-                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                       textTransform: "none",
                       px: 4,
                       py: 1.5,
                       fontWeight: 600,
                       "&:hover": {
-                        background:
-                          "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
                         boxShadow: "0 8px 20px rgba(234, 88, 12, 0.4)",
                       },
                     }}
@@ -404,14 +374,7 @@ function ReviewReservationPaymentSucces() {
                     stroke="#dc2626"
                     strokeWidth="3"
                   />
-                  <rect
-                    x="80"
-                    y="180"
-                    width="240"
-                    height="30"
-                    fill="#dc2626"
-                    opacity="0.3"
-                  />
+                  <rect x="80" y="180" width="240" height="30" fill="#dc2626" opacity="0.3" />
 
                   {/* Big X Mark */}
                   <motion.g

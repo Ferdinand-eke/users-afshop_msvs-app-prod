@@ -16,7 +16,8 @@ L.Icon.Default.mergeOptions({
 
 // Custom orange marker icon
 const customIcon = new L.Icon({
-  iconUrl: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAzMiA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDQ4QzE2IDQ4IDMyIDI5LjMzMzMgMzIgMTZDMzIgNy4xNjM0NCAyNC44MzY2IDAgMTYgMEM3LjE2MzQ0IDAgMCA3LjE2MzQ0IDAgMTZDMCAyOS4zMzMzIDE2IDQ4IDE2IDQ4WiIgZmlsbD0iI0VBNTgwQyIvPgo8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
+  iconUrl:
+    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAzMiA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDQ4QzE2IDQ4IDMyIDI5LjMzMzMgMzIgMTZDMzIgNy4xNjM0NCAyNC44MzY2IDAgMTYgMEM3LjE2MzQ0IDAgMCA3LjE2MzQ0IDAgMTZDMCAyOS4zMzMzIDE2IDQ4IDE2IDQ4WiIgZmlsbD0iI0VBNTgwQyIvPgo8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
   iconSize: [32, 48],
   iconAnchor: [16, 48],
   popupAnchor: [0, -48],
@@ -58,10 +59,7 @@ function ImprovedBookingsMap({ items }) {
 
     const validItems = items.filter(
       (item) =>
-        item?.latitude &&
-        item?.longitude &&
-        !isNaN(item.latitude) &&
-        !isNaN(item.longitude)
+        item?.latitude && item?.longitude && !isNaN(item.latitude) && !isNaN(item.longitude),
     );
 
     if (validItems.length === 0) {
@@ -77,10 +75,8 @@ function ImprovedBookingsMap({ items }) {
     ]);
 
     // Calculate center as average of all positions
-    const avgLat =
-      positions.reduce((sum, pos) => sum + pos[0], 0) / positions.length;
-    const avgLng =
-      positions.reduce((sum, pos) => sum + pos[1], 0) / positions.length;
+    const avgLat = positions.reduce((sum, pos) => sum + pos[0], 0) / positions.length;
+    const avgLng = positions.reduce((sum, pos) => sum + pos[1], 0) / positions.length;
 
     return {
       center: [avgLat, avgLng],
@@ -99,13 +95,15 @@ function ImprovedBookingsMap({ items }) {
       >
         <div className="flex items-center justify-between">
           <Chip
-            label={`${items?.filter(
-              (item) =>
-                item?.latitude &&
-                item?.longitude &&
-                !isNaN(item.latitude) &&
-                !isNaN(item.longitude)
-            ).length || 0} Properties`}
+            label={`${
+              items?.filter(
+                (item) =>
+                  item?.latitude &&
+                  item?.longitude &&
+                  !isNaN(item.latitude) &&
+                  !isNaN(item.longitude),
+              ).length || 0
+            } Properties`}
             sx={{
               backgroundColor: "rgba(234, 88, 12, 0.95)",
               color: "white",
@@ -153,10 +151,7 @@ function ImprovedBookingsMap({ items }) {
         {items
           ?.filter(
             (item) =>
-              item?.latitude &&
-              item?.longitude &&
-              !isNaN(item.latitude) &&
-              !isNaN(item.longitude)
+              item?.latitude && item?.longitude && !isNaN(item.latitude) && !isNaN(item.longitude),
           )
           .map((item) => (
             <Marker
@@ -181,8 +176,8 @@ function ImprovedBookingsMap({ items }) {
                         alt={item?.title}
                         className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
                         style={{
-                          objectFit: 'cover',
-                          objectPosition: 'center',
+                          objectFit: "cover",
+                          objectPosition: "center",
                         }}
                       />
                     </div>
@@ -214,10 +209,10 @@ function ImprovedBookingsMap({ items }) {
                           fontSize: "1.125rem",
                           color: "#6b7280",
                           lineHeight: 1.5,
-                          display: '-webkit-box',
+                          display: "-webkit-box",
                           WebkitLineClamp: 2,
-                          WebkitBoxOrient: 'vertical',
-                          overflow: 'hidden',
+                          WebkitBoxOrient: "vertical",
+                          overflow: "hidden",
                         }}
                       >
                         📍 {item.address}

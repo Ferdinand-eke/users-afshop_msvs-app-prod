@@ -16,7 +16,6 @@ import PaginationBar from "./PaginationBar";
  * Demo Content
  */
 function DemoContent(props) {
-
   const {
     isLoading,
     isError,
@@ -25,14 +24,21 @@ function DemoContent(props) {
     currentPage,
     itemsPerPage,
     onPageChange,
-    onItemsPerPageChange
+    onItemsPerPageChange,
   } = props;
 
   // Fallback: if totalItems is not provided by backend, estimate based on products length
   // This assumes if we get less than itemsPerPage, we're on the last page
   const estimatedTotal = totalItems > 0 ? totalItems : products?.length || 0;
 
-  console.log('DemoContent - totalItems:', totalItems, 'products length:', products?.length, 'estimatedTotal:', estimatedTotal);
+  console.log(
+    "DemoContent - totalItems:",
+    totalItems,
+    "products length:",
+    products?.length,
+    "estimatedTotal:",
+    estimatedTotal,
+  );
 
   if (isLoading) {
     return (
@@ -48,7 +54,7 @@ function DemoContent(props) {
                   width="100%"
                   height={280}
                   animation="wave"
-                  sx={{ bgcolor: 'grey.200' }}
+                  sx={{ bgcolor: "grey.200" }}
                 />
 
                 <CardContent className="p-6">
@@ -58,7 +64,7 @@ function DemoContent(props) {
                     width="80%"
                     height={32}
                     animation="wave"
-                    sx={{ bgcolor: 'grey.200', marginBottom: 1 }}
+                    sx={{ bgcolor: "grey.200", marginBottom: 1 }}
                   />
 
                   {/* Address Skeleton */}
@@ -67,7 +73,7 @@ function DemoContent(props) {
                     width="60%"
                     height={24}
                     animation="wave"
-                    sx={{ bgcolor: 'grey.200', marginBottom: 2 }}
+                    sx={{ bgcolor: "grey.200", marginBottom: 2 }}
                   />
 
                   {/* Features Row Skeleton */}
@@ -77,21 +83,21 @@ function DemoContent(props) {
                       width={80}
                       height={32}
                       animation="wave"
-                      sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+                      sx={{ bgcolor: "grey.200", borderRadius: 1 }}
                     />
                     <Skeleton
                       variant="rectangular"
                       width={80}
                       height={32}
                       animation="wave"
-                      sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+                      sx={{ bgcolor: "grey.200", borderRadius: 1 }}
                     />
                     <Skeleton
                       variant="rectangular"
                       width={80}
                       height={32}
                       animation="wave"
-                      sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+                      sx={{ bgcolor: "grey.200", borderRadius: 1 }}
                     />
                   </div>
 
@@ -102,14 +108,14 @@ function DemoContent(props) {
                       width={120}
                       height={36}
                       animation="wave"
-                      sx={{ bgcolor: 'grey.200' }}
+                      sx={{ bgcolor: "grey.200" }}
                     />
                     <Skeleton
                       variant="rectangular"
                       width={100}
                       height={36}
                       animation="wave"
-                      sx={{ bgcolor: 'grey.200', borderRadius: 2 }}
+                      sx={{ bgcolor: "grey.200", borderRadius: 2 }}
                     />
                   </div>
                 </CardContent>
@@ -124,35 +130,35 @@ function DemoContent(props) {
               width={100}
               height={40}
               animation="wave"
-              sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+              sx={{ bgcolor: "grey.200", borderRadius: 1 }}
             />
             <Skeleton
               variant="rectangular"
               width={40}
               height={40}
               animation="wave"
-              sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+              sx={{ bgcolor: "grey.200", borderRadius: 1 }}
             />
             <Skeleton
               variant="rectangular"
               width={40}
               height={40}
               animation="wave"
-              sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+              sx={{ bgcolor: "grey.200", borderRadius: 1 }}
             />
             <Skeleton
               variant="rectangular"
               width={40}
               height={40}
               animation="wave"
-              sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+              sx={{ bgcolor: "grey.200", borderRadius: 1 }}
             />
             <Skeleton
               variant="rectangular"
               width={100}
               height={40}
               animation="wave"
-              sx={{ bgcolor: 'grey.200', borderRadius: 1 }}
+              sx={{ bgcolor: "grey.200", borderRadius: 1 }}
             />
           </div>
         </div>
@@ -186,8 +192,6 @@ function DemoContent(props) {
     );
   }
 
-  
-
   return (
     <div className="flex-auto p-24 sm:p-40">
       <div className="flex flex-col">
@@ -210,9 +214,7 @@ function DemoContent(props) {
               leaseTerm={property?.leaseTerm || "ANNUM"}
             />
           ))}
-       
         </div>
-
 
         {/* Pagination Bar - Always show for testing */}
         <PaginationBar

@@ -10,7 +10,6 @@ const AddToProductCartButton = ({
   quantityLeft,
   //   disabledDates,
 }) => {
-
   // console.log("QUANTITY__LEFT___IN__BUTTON", quantityLeft);
   let checkArray = [];
   cartItems?.forEach((element) => {
@@ -35,14 +34,11 @@ const AddToProductCartButton = ({
     return updateCartQty(formData);
   };
 
-
   useEffect(() => {}, [cartItems, productId, checkArray]);
 
   // console.log("CART__SESION__&&&___ITEMS__IN__BUTTON", cartItems);
 
-  const matchingCartItem = cartItems?.filter(
-    (element) => element.productId === productId
-  )[0];
+  const matchingCartItem = cartItems?.filter((element) => element.productId === productId)[0];
 
   return (
     <div
@@ -54,7 +50,6 @@ const AddToProductCartButton = ({
         overflow-hidden
         "
     >
-      
       {checkArray.includes(productId) ? (
         <div className="flex items-center justify-center gap-4 mt-4 md:mt-0 md:ml-4 text-lg">
           <Button

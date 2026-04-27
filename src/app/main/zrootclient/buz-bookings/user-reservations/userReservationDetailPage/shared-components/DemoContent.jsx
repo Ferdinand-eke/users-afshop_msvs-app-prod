@@ -30,7 +30,7 @@ function DemoContent(props) {
 
   const dayDifference = differenceInCalendarDays(
     new Date(reservation?.startDate),
-    new Date(Date.now())
+    new Date(Date.now()),
   );
   const cancelMyReservation = useCancelUserReservation();
 
@@ -55,7 +55,7 @@ function DemoContent(props) {
   const cancelReservation = (reservationIdPayload) => {
     if (
       window.confirm(
-        "Are you certain about this? Once cancelled, this action cannot be reversed unless a new reservation is placed."
+        "Are you certain about this? Once cancelled, this action cannot be reversed unless a new reservation is placed.",
       )
     ) {
       cancelMyReservation.mutate(reservationIdPayload);
@@ -143,9 +143,7 @@ function DemoContent(props) {
             Back to Reservations
           </Button>
 
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            Reservation Details
-          </h1>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">Reservation Details</h1>
           <div className="flex flex-wrap items-center gap-3">
             <Chip
               label={`ID: ${reservation?.id}`}
@@ -186,9 +184,7 @@ function DemoContent(props) {
                 )}
                 <div>
                   <Typography variant="h6" className="font-bold text-gray-900">
-                    {reservation?.isTripFullfiled
-                      ? "Stay Fulfilled"
-                      : "Stay Not Fulfilled"}
+                    {reservation?.isTripFullfiled ? "Stay Fulfilled" : "Stay Not Fulfilled"}
                   </Typography>
                   <Typography variant="body2" className="text-gray-600">
                     Current reservation status
@@ -214,6 +210,22 @@ function DemoContent(props) {
               </div>
             </div>
           </div>
+
+          {/* Property Info */}
+          {(reservation?.bookingPropertyName || reservation?.bookingPropertyAddress) && (
+            <div className="p-6 border-t border-gray-100">
+              {reservation?.bookingPropertyName && (
+                <Typography variant="h6" className="font-bold text-gray-900 mb-1">
+                  {reservation.bookingPropertyName}
+                </Typography>
+              )}
+              {reservation?.bookingPropertyAddress && (
+                <Typography variant="body2" className="text-gray-600">
+                  {reservation.bookingPropertyAddress}
+                </Typography>
+              )}
+            </div>
+          )}
 
           {/* Stay Period */}
           <div className="p-6 border-t border-gray-100">
@@ -392,8 +404,8 @@ function DemoContent(props) {
             {/* Refund Policy */}
             <div className="mt-4 p-3 bg-orange-50 rounded-xl border border-orange-200">
               <Typography variant="caption" className="text-orange-700 leading-relaxed block">
-                <strong>Refund Policy:</strong> Reservations are eligible for refund if
-                cancelled prior to 48 hours before check-in. View our full{" "}
+                <strong>Refund Policy:</strong> Reservations are eligible for refund if cancelled
+                prior to 48 hours before check-in. View our full{" "}
                 <span className="underline cursor-pointer font-semibold">
                   Cancellation & Refund Policy
                 </span>
@@ -436,11 +448,7 @@ function DemoContent(props) {
       </motion.div>
 
       {/* Property Chat Dialog */}
-      <PropertyChatDialog
-        open={chatOpen}
-        onClose={handleChatToggle}
-        reservation={reservation}
-      />
+      <PropertyChatDialog open={chatOpen} onClose={handleChatToggle} reservation={reservation} />
     </div>
   );
 }

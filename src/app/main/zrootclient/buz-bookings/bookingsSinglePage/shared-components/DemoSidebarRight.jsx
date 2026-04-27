@@ -1,17 +1,13 @@
 import { motion } from "framer-motion";
 import { Typography, Card, CardContent } from "@mui/material";
-import {
-  CalendarMonth,
-  Star,
-  VerifiedUser,
-  TrendingUp,
-} from "@mui/icons-material";
+import { CalendarMonth, Star, VerifiedUser, TrendingUp } from "@mui/icons-material";
 import DetailsRight from "../../bookings-components/DetailsRight";
 
 /**
  * DemoSidebarRight Component - REDESIGNED
  * Professional booking sidebar with compelling UX
  */
+
 function DemoSidebarRight(props) {
   const {
     isLoading,
@@ -27,7 +23,6 @@ function DemoSidebarRight(props) {
     disabledDates,
   } = props;
 
-  
   return (
     <div
       className="flex flex-col h-screen p-6 overflow-y-auto"

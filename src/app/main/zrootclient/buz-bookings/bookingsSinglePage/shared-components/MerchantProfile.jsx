@@ -1,4 +1,4 @@
-import { Typography, Avatar, Button, Chip, Divider} from "@mui/material";
+import { Typography, Avatar, Button, Chip, Divider } from "@mui/material";
 import { motion } from "framer-motion";
 import {
   VerifiedUser,
@@ -17,7 +17,6 @@ import { navigateToMainDomain, navigateToMerchantSubdomain } from "src/app/utils
  * Displays merchant/host information for the property
  */
 function MerchantProfile({ merchantData }) {
-
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -191,70 +190,49 @@ function MerchantProfile({ merchantData }) {
         <Divider sx={{ my: 3 }} />
 
         {/* Description */}
-        <div className="mb-4">
-          <Typography
-            sx={{
-              fontSize: "1.125rem",
-              fontWeight: 700,
-              color: "#111827",
-              marginBottom: "8px",
-            }}
-          >
-            About
-          </Typography>
-          <Typography
-            sx={{
-              fontSize: "1rem",
-              color: "#6b7280",
-              lineHeight: 1.6,
-            }}
-          >
-            {merchantData?.shopbio}
-          </Typography>
-        </div>
+        {merchantData?.shopbio && (
+          <div className="mb-4">
+            <Typography
+              sx={{
+                fontSize: "1.125rem",
+                fontWeight: 700,
+                color: "#111827",
+                marginBottom: "8px",
+              }}
+            >
+              About
+            </Typography>
+            <Typography
+              sx={{
+                fontSize: "1rem",
+                color: "#6b7280",
+                lineHeight: 1.6,
+              }}
+            >
+              {merchantData?.shopbio}
+            </Typography>
+          </div>
+        )}
 
-        <Divider sx={{ my: 3 }} />
+        {/* <Divider sx={{ my: 3 }} /> */}
 
         {/* Contact Information */}
-        <div className="space-y-3 mb-4">
-          <div className="flex items-center gap-3 ">
-            <LocationOn sx={{ fontSize: "1.65rem",  color: "#ea580c" }} />
+
+        {/* <div className="space-y-3 mb-4">
+          {merchantData?.address  && <div className="flex items-center gap-3 ">
+            <LocationOn sx={{ fontSize: "1.65rem", color: "#ea580c" }} />
             <Typography sx={{ fontSize: "1rem", color: "#6b7280", fontWeight: 600 }}>
               {merchantData?.address}
             </Typography>
-          </div>
-          <div className="flex items-center gap-3 ">
+          </div>}
+          
+          {merchantData?.shopphone && <div className="flex items-center gap-3 ">
             <Phone sx={{ fontSize: "1.65rem", color: "#ea580c" }} />
             <Typography sx={{ fontSize: "1rem", color: "#6b7280", fontWeight: 600 }}>
               {merchantData?.shopphone}
             </Typography>
-          </div>
-        
-        </div>
-
-        {/* CTA Button - Navigate to Merchant Subdomain */}
-        {/* <Button
-          onClick={() => navigateToMerchantSubdomain(merchantData?.slug, '/')}
-          fullWidth
-          sx={{
-            backgroundColor: "#ea580c",
-            color: "white",
-            fontWeight: 700,
-            fontSize: "1.125rem",
-            padding: "12px 24px",
-            borderRadius: "12px",
-            textTransform: "none",
-            marginTop: "16px",
-            transition: "all 0.3s ease",
-            "&:hover": {
-              backgroundColor: "#c2410c",
-              transform: "translateY(-2px)",
-              boxShadow: "0 10px 20px rgba(234, 88, 12, 0.3)",
-            },
-          }}
-        >
-          View Full Profilesss
-        </Button> */}
+          </div>}
+        </div> */}
       </div>
     </motion.div>
   );

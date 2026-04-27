@@ -19,10 +19,7 @@ import {
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import { useNavigate, useParams } from "react-router";
-import {
-  formatCurrency,
-  generateClientUID,
-} from "src/app/main/vendors-shop/PosUtils";
+import { formatCurrency, generateClientUID } from "src/app/main/vendors-shop/PosUtils";
 import { format } from "date-fns";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { useForm } from "react-hook-form";
@@ -46,8 +43,8 @@ import MyAddresses from "../../buz-bookings/user-reservations/MyAddresses";
 
 // Lazy load map components for better performance
 const ShopLocationMap = lazy(() => import("../components/maps/ShopLocationMap"));
-const ShopLocationMapLoadingPlaceholder = lazy(() =>
-  import("../components/maps/ShopLocationMapLoadingPlaceholder")
+const ShopLocationMapLoadingPlaceholder = lazy(
+  () => import("../components/maps/ShopLocationMapLoadingPlaceholder"),
 );
 
 const container = {
@@ -85,15 +82,11 @@ const schema = z.object({
     .string()
     .nonempty("You must enter an address as regulated by the government")
     .min(5, "The address must be at least 5 characters"),
-  orderCountryDestination: z
-    .string()
-    .nonempty("You must enter a country for this order"),
+  orderCountryDestination: z.string().nonempty("You must enter a country for this order"),
   orderStateProvinceDestination: z
     .string()
     .nonempty("You must enter a state destination for this order"),
-  orderLgaDestination: z
-    .string()
-    .nonempty("You must enter an L.G.A/County for this order"),
+  orderLgaDestination: z.string().nonempty("You must enter an L.G.A/County for this order"),
   orderMarketPickupDestination: z
     .string()
     .nonempty("You must enter a market pick up point for this order"),
@@ -189,14 +182,12 @@ function CartReview() {
     getValues()?.orderLgaDestination,
   ]);
 
-  console.log("Markets LOCATIONS", selectedMarketData?.lat)
+  console.log("Markets LOCATIONS", selectedMarketData?.lat);
 
   // Update selected market data when market selection changes
   useEffect(() => {
     if (orderMarketPickupDestination && markets?.length > 0) {
-      const selectedMarket = markets.find(
-        (market) => market.id === orderMarketPickupDestination
-      );
+      const selectedMarket = markets.find((market) => market.id === orderMarketPickupDestination);
       setSelectedMarketData(selectedMarket);
     } else {
       setSelectedMarketData(null);
@@ -205,9 +196,7 @@ function CartReview() {
 
   async function findStatesByCountry() {
     setLoading(true);
-    const stateResponseData = await getStateByCountryId(
-      getValues()?.orderCountryDestination
-    );
+    const stateResponseData = await getStateByCountryId(getValues()?.orderCountryDestination);
 
     if (stateResponseData) {
       setStateData(stateResponseData?.data?.states);
@@ -216,7 +205,7 @@ function CartReview() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -232,7 +221,7 @@ function CartReview() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -248,7 +237,7 @@ function CartReview() {
           function () {
             setLoading(false);
           }.bind(this),
-          250
+          250,
         );
       }
     }
@@ -314,8 +303,7 @@ function CartReview() {
                             <div
                               className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                               style={{
-                                background:
-                                  "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                                background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                               }}
                             >
                               <svg
@@ -345,8 +333,7 @@ function CartReview() {
                             onClick={() => setAddressModalOpen(true)}
                             className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all hover:shadow-md text-xs sm:text-sm font-semibold w-full sm:w-auto"
                             style={{
-                              background:
-                                "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                               color: "white",
                             }}
                           >
@@ -403,9 +390,7 @@ function CartReview() {
                                 />
                               </svg>
                               <div className="flex-1">
-                                {name && (
-                                  <p className="font-semibold text-gray-800">{name}</p>
-                                )}
+                                {name && <p className="font-semibold text-gray-800">{name}</p>}
                                 {address && (
                                   <p className="text-sm text-gray-600 mt-1">
                                     {address} {phone && `| ${phone}`}
@@ -522,8 +507,7 @@ function CartReview() {
                               rows={3}
                               error={!!errors.address}
                               helperText={
-                                errors?.address?.message ||
-                                "Include street, city for verification"
+                                errors?.address?.message || "Include street, city for verification"
                               }
                               InputProps={{
                                 startAdornment: (
@@ -584,8 +568,8 @@ function CartReview() {
                             />
                           </svg>
                           <p className="text-sm text-gray-700">
-                            Your information is securely stored and will only be
-                            used for order delivery and communication purposes.
+                            Your information is securely stored and will only be used for order
+                            delivery and communication purposes.
                           </p>
                         </div>
                       </div>
@@ -613,8 +597,7 @@ function CartReview() {
                           <div
                             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                             style={{
-                              background:
-                                "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                             }}
                           >
                             <svg
@@ -975,8 +958,7 @@ function CartReview() {
                           <div
                             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                             style={{
-                              background:
-                                "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                             }}
                           >
                             <svg
@@ -999,10 +981,8 @@ function CartReview() {
                             </h2>
                             <p className="text-xs sm:text-sm text-gray-600">
                               {cart?.data?.cartSession?.cartProducts?.length || 0} item
-                              {cart?.data?.cartSession?.cartProducts?.length !== 1
-                                ? "s"
-                                : ""}{" "}
-                              in your cart
+                              {cart?.data?.cartSession?.cartProducts?.length !== 1 ? "s" : ""} in
+                              your cart
                             </p>
                           </div>
                         </div>
@@ -1056,8 +1036,7 @@ function CartReview() {
                           <div
                             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                             style={{
-                              background:
-                                "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                             }}
                           >
                             <svg
@@ -1296,8 +1275,7 @@ function CartReview() {
                           <div
                             className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                             style={{
-                              background:
-                                "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                             }}
                           >
                             <svg
@@ -1338,29 +1316,26 @@ function CartReview() {
                             Terms and conditions on placing an order on Africanshops
                           </p>
                           <p className="text-sm text-gray-700 mb-3 leading-relaxed">
-                            This may be because: 1) Your order is below the minimum
-                            purchase amount of 2,000 naira or above the maximum purchase
-                            amount of 250,000 naira; or 2) Cash on delivery is not
-                            available for your delivery address or the pick-up station
-                            selected; or 3) You have had multiple failed delivery
-                            attempts or cancelled orders; or 4) the number you are using
-                            to place the order is a number that has a restriction
+                            This may be because: 1) Your order is below the minimum purchase amount
+                            of 2,000 naira or above the maximum purchase amount of 250,000 naira; or
+                            2) Cash on delivery is not available for your delivery address or the
+                            pick-up station selected; or 3) You have had multiple failed delivery
+                            attempts or cancelled orders; or 4) the number you are using to place
+                            the order is a number that has a restriction
                           </p>
                           <p className="text-sm text-gray-700 mb-3 leading-relaxed">
-                            By placing an order, you agree to our delivery terms and
-                            conditions. All orders are subject to availability and
-                            confirmation of the order price. Dispatch times may vary
-                            according to availability and subject to any delays resulting
-                            from postal delays or force majeure for which we will not be
-                            responsible.
+                            By placing an order, you agree to our delivery terms and conditions. All
+                            orders are subject to availability and confirmation of the order price.
+                            Dispatch times may vary according to availability and subject to any
+                            delays resulting from postal delays or force majeure for which we will
+                            not be responsible.
                           </p>
                           <p className="text-sm text-gray-700 mb-3 leading-relaxed">
-                            We reserve the right to refuse any order you place with us.
-                            We may, in our sole discretion, limit or cancel quantities
-                            purchased per person, per household or per order. These
-                            restrictions may include orders placed by or under the same
-                            customer account, the same credit card, and/or orders that
-                            use the same billing and/or shipping address.
+                            We reserve the right to refuse any order you place with us. We may, in
+                            our sole discretion, limit or cancel quantities purchased per person,
+                            per household or per order. These restrictions may include orders placed
+                            by or under the same customer account, the same credit card, and/or
+                            orders that use the same billing and/or shipping address.
                           </p>
                         </div>
                       </div>
@@ -1475,8 +1450,8 @@ function CartReview() {
                               Select a Pickup Location
                             </h3>
                             <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
-                              Choose a market warehouse from the delivery location
-                              section above to view its location on the map
+                              Choose a market warehouse from the delivery location section above to
+                              view its location on the map
                             </p>
                           </div>
                         </motion.div>
@@ -1727,12 +1702,7 @@ function CartReview() {
                 gap: 2,
               }}
             >
-              <svg
-                className="w-8 h-8"
-                fill="none"
-                viewBox="0 0 24 24"
-                stroke="currentColor"
-              >
+              <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -1750,8 +1720,7 @@ function CartReview() {
                 </Typography>
 
                 <Typography variant="body1" className="text-gray-700 leading-relaxed">
-                  Your order is almost complete. By closing now without payment, you
-                  risk:
+                  Your order is almost complete. By closing now without payment, you risk:
                 </Typography>
 
                 <div className="space-y-3 ml-4">
@@ -1770,8 +1739,7 @@ function CartReview() {
                       />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
-                      <strong>Losing these products</strong> - Stock is limited and
-                      selling fast
+                      <strong>Losing these products</strong> - Stock is limited and selling fast
                     </Typography>
                   </div>
 
@@ -1809,8 +1777,8 @@ function CartReview() {
                       />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
-                      <strong>Cart expiration</strong> - Your cart items will be
-                      released back to inventory
+                      <strong>Cart expiration</strong> - Your cart items will be released back to
+                      inventory
                     </Typography>
                   </div>
                 </div>
@@ -1944,13 +1912,16 @@ const ReviewCartItem = ({
         <p className="text-sm text-gray-600 mt-1">Quantity: {cartQuantity}</p>
       </div>
       <div className="text-left sm:text-right w-full sm:w-auto">
-        <p className="text-lg font-bold text-gray-800"> ₦ {(() => {
+        <p className="text-lg font-bold text-gray-800">
+          {" "}
+          ₦{" "}
+          {(() => {
             let itemPrice = price;
 
             if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
               // Find the matching price tier from product's priceTiers array
               const matchingTier = cartItem?.product?.priceTiers?.find(
-                (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+                (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId,
               );
 
               if (matchingTier) {
@@ -1958,24 +1929,24 @@ const ReviewCartItem = ({
               }
             }
 
-            return formatCurrency(parseInt(itemPrice) );
-          })()}</p>
+            return formatCurrency(parseInt(itemPrice));
+          })()}
+        </p>
         {oldPrice && !(oldPrice === undefined) && (
           <>
-            <p className="text-sm text-gray-500 line-through">
-              {formatCurrency(oldPrice)}
-            </p>
+            <p className="text-sm text-gray-500 line-through">{formatCurrency(oldPrice)}</p>
             <p className="text-sm text-orange-600 font-semibold">{discount}</p>
           </>
         )}
         <p className="text-base text-orange-600 font-bold mt-2">
-          Total: ₦ {(() => {
+          Total: ₦{" "}
+          {(() => {
             let itemPrice = price;
 
             if (cartItem?.isBulkOrder && cartItem?.bulkPriceTierId) {
               // Find the matching price tier from product's priceTiers array
               const matchingTier = cartItem?.product?.priceTiers?.find(
-                (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId
+                (tier) => (tier?.id || tier?._id) === cartItem?.bulkPriceTierId,
               );
 
               if (matchingTier) {

@@ -2,7 +2,7 @@
 productId: material-ui
 title: React List component
 components: Collapse, Divider, List, ListItem, ListItemButton, ListItemAvatar, ListItemIcon, ListItemSecondaryAction, ListItemText, ListSubheader
-githubLabel: 'component: list'
+githubLabel: "component: list"
 materialDesign: https://m2.material.io/components/lists
 ---
 
@@ -44,8 +44,8 @@ You can find a [demo with React Router following this section](/material-ui/inte
 ## Basics
 
 ```jsx
-import List from '@mui/material/List';
-import ListItem from '@mui/material/ListItem';
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
 ```
 
 ## Nested List

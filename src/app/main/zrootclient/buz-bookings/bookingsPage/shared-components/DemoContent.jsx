@@ -9,7 +9,6 @@ import ContentLoadingPlaceholder from "./ContentLoadingPlaceholder";
  * Demo Content
  */
 function DemoContent(props) {
-
   const {
     isLoading,
     isError,
@@ -18,14 +17,14 @@ function DemoContent(props) {
     currentPage,
     itemsPerPage,
     onPageChange,
-    onItemsPerPageChange
+    onItemsPerPageChange,
   } = props;
 
   // Fallback: if totalItems is not provided by backend, estimate based on listings length
   // This assumes if we get less than itemsPerPage, we're on the last page
   const estimatedTotal = totalItems > 0 ? totalItems : listings?.length || 0;
 
-  console.log('DemoContent listings:', listings);
+  console.log("DemoContent listings:", listings);
   // Show loading placeholder
   if (isLoading) {
     return <ContentLoadingPlaceholder />;
@@ -44,14 +43,14 @@ function DemoContent(props) {
   }
   /***No listings found */
 
-  if (!listings?.length > 0 ) {
+  if (!listings?.length > 0) {
     return (
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }}
         className="flex flex-col flex-1 items-center justify-center min-h-screen"
         style={{
-          background: 'linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)',
+          background: "linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)",
         }}
       >
         <div className="flex flex-col items-center justify-center max-w-2xl px-8 text-center">
@@ -69,15 +68,43 @@ function DemoContent(props) {
               xmlns="http://www.w3.org/2000/svg"
               className="text-gray-500"
             >
-              <circle cx="80" cy="80" r="70" stroke="currentColor" strokeWidth="3" strokeDasharray="8 8" opacity="0.3" />
-              <path
-                d="M80 35L95 55H65L80 35Z"
-                fill="currentColor"
-                opacity="0.2"
+              <circle
+                cx="80"
+                cy="80"
+                r="70"
+                stroke="currentColor"
+                strokeWidth="3"
+                strokeDasharray="8 8"
+                opacity="0.3"
               />
-              <rect x="50" y="55" width="60" height="50" rx="4" fill="currentColor" opacity="0.15" />
-              <rect x="60" y="70" width="15" height="20" rx="2" fill="currentColor" opacity="0.25" />
-              <rect x="85" y="70" width="15" height="20" rx="2" fill="currentColor" opacity="0.25" />
+              <path d="M80 35L95 55H65L80 35Z" fill="currentColor" opacity="0.2" />
+              <rect
+                x="50"
+                y="55"
+                width="60"
+                height="50"
+                rx="4"
+                fill="currentColor"
+                opacity="0.15"
+              />
+              <rect
+                x="60"
+                y="70"
+                width="15"
+                height="20"
+                rx="2"
+                fill="currentColor"
+                opacity="0.25"
+              />
+              <rect
+                x="85"
+                y="70"
+                width="15"
+                height="20"
+                rx="2"
+                fill="currentColor"
+                opacity="0.25"
+              />
               <circle cx="80" cy="115" r="15" fill="currentColor" opacity="0.2" />
             </svg>
           </motion.div>
@@ -91,9 +118,9 @@ function DemoContent(props) {
               variant="h3"
               sx={{
                 fontWeight: 700,
-                color: '#1f2937',
-                marginBottom: '16px',
-                fontSize: { xs: '1.875rem', sm: '2.25rem' },
+                color: "#1f2937",
+                marginBottom: "16px",
+                fontSize: { xs: "1.875rem", sm: "2.25rem" },
               }}
             >
               No Listings Available
@@ -108,14 +135,14 @@ function DemoContent(props) {
             <Typography
               variant="body1"
               sx={{
-                color: '#6b7280',
-                fontSize: { xs: '1rem', sm: '1.125rem' },
+                color: "#6b7280",
+                fontSize: { xs: "1rem", sm: "1.125rem" },
                 lineHeight: 1.7,
-                marginBottom: '24px',
+                marginBottom: "24px",
               }}
             >
-              There are currently no property listings available at this time.
-              Please check back later or adjust your search filters to discover new opportunities.
+              There are currently no property listings available at this time. Please check back
+              later or adjust your search filters to discover new opportunities.
             </Typography>
           </motion.div>
 
@@ -132,13 +159,12 @@ function DemoContent(props) {
     );
   }
 
-
   return (
     <div
       className="flex-auto p-24 sm:p-40"
       style={{
-        background: 'linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)',
-        minHeight: '100vh',
+        background: "linear-gradient(180deg, #fafaf9 0%, #f5f5f4 50%, #fef3e2 100%)",
+        minHeight: "100vh",
       }}
     >
       <div className="flex flex-col">
@@ -148,9 +174,9 @@ function DemoContent(props) {
             variant="h4"
             sx={{
               fontWeight: 800,
-              color: '#1f2937',
-              marginBottom: '8px',
-              fontSize: '2rem',
+              color: "#1f2937",
+              marginBottom: "8px",
+              fontSize: "2rem",
             }}
           >
             Available Properties
@@ -158,8 +184,8 @@ function DemoContent(props) {
           <Typography
             variant="body1"
             sx={{
-              color: '#6b7280',
-              fontSize: '1.125rem',
+              color: "#6b7280",
+              fontSize: "1.125rem",
             }}
           >
             Find your perfect accommodation from our curated listings
@@ -188,14 +214,15 @@ function DemoContent(props) {
 
         {/* Pagination Bar */}
 
-        {listings?.length > 0 && <PaginationBar
-          totalItems={estimatedTotal}
-          currentPage={currentPage}
-          itemsPerPage={itemsPerPage}
-          onPageChange={onPageChange}
-          onItemsPerPageChange={onItemsPerPageChange}
-        />}
-        
+        {listings?.length > onItemsPerPageChange && (
+          <PaginationBar
+            totalItems={estimatedTotal}
+            currentPage={currentPage}
+            itemsPerPage={itemsPerPage}
+            onPageChange={onPageChange}
+            onItemsPerPageChange={onItemsPerPageChange}
+          />
+        )}
       </div>
     </div>
   );

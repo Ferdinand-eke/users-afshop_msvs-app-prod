@@ -31,18 +31,14 @@ function SellerInformation({
         <div className="flex items-start justify-between mb-6">
           <div className="flex-1">
             <div className="flex items-center gap-2 mb-3">
-              <h3 className="text-xl font-bold text-gray-900">
-                {sellerName}
-              </h3>
+              <h3 className="text-xl font-bold text-gray-900">{sellerName}</h3>
               {showVerified && (
                 <span className="bg-blue-100 text-blue-700 text-xs font-bold px-3 py-1 rounded-full">
                   VERIFIED
                 </span>
               )}
             </div>
-            <p className="text-gray-500 text-sm">
-              {sellerDescription}
-            </p>
+            <p className="text-gray-500 text-sm">{sellerDescription}</p>
           </div>
         </div>
 
@@ -53,9 +49,7 @@ function SellerInformation({
               <i className="fas fa-star text-yellow-500 text-2xl"></i>
             </div>
             <p className="text-2xl font-bold text-gray-900">{sellerScore}%</p>
-            <p className="text-xs text-gray-600 font-medium mt-1">
-              Seller Score
-            </p>
+            <p className="text-xs text-gray-600 font-medium mt-1">Seller Score</p>
           </div>
           <div className="bg-white rounded-lg p-4 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-center mb-2">
@@ -64,9 +58,7 @@ function SellerInformation({
             <p className="text-2xl font-bold text-gray-900">
               {followers >= 1000 ? `${(followers / 1000).toFixed(1)}K` : followers}
             </p>
-            <p className="text-xs text-gray-600 font-medium mt-1">
-              Followers
-            </p>
+            <p className="text-xs text-gray-600 font-medium mt-1">Followers</p>
           </div>
           <div className="bg-white rounded-lg p-4 text-center border border-gray-200 shadow-sm hover:shadow-md transition-shadow">
             <div className="flex items-center justify-center mb-2">
@@ -75,9 +67,7 @@ function SellerInformation({
             <p className="text-2xl font-bold text-gray-900">
               {products >= 1000 ? `${(products / 1000).toFixed(1)}K` : products}
             </p>
-            <p className="text-xs text-gray-600 font-medium mt-1">
-              Products
-            </p>
+            <p className="text-xs text-gray-600 font-medium mt-1">Products</p>
           </div>
         </div>
 
@@ -94,17 +84,13 @@ function SellerInformation({
         <div className="bg-gray-50 rounded-lg p-5 border border-gray-200">
           <div className="flex items-center gap-2 mb-4">
             <i className="fas fa-chart-line text-orange-600 text-lg"></i>
-            <h4 className="font-bold text-base text-gray-900">
-              Performance Metrics
-            </h4>
+            <h4 className="font-bold text-base text-gray-900">Performance Metrics</h4>
           </div>
           <div className="space-y-4">
             {/* Shipping Speed */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">
-                  Shipping Speed
-                </span>
+                <span className="text-sm font-medium text-gray-700">Shipping Speed</span>
                 <span className={`text-sm font-bold text-${shippingSpeed.color}-600`}>
                   {shippingSpeed.label}
                 </span>
@@ -120,9 +106,7 @@ function SellerInformation({
             {/* Quality Score */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">
-                  Quality Score
-                </span>
+                <span className="text-sm font-medium text-gray-700">Quality Score</span>
                 <span className={`text-sm font-bold text-${qualityScore.color}-600`}>
                   {qualityScore.label}
                 </span>
@@ -138,9 +122,7 @@ function SellerInformation({
             {/* Customer Rating */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">
-                  Customer Rating
-                </span>
+                <span className="text-sm font-medium text-gray-700">Customer Rating</span>
                 <span className={`text-sm font-bold text-${customerRating.color}-600`}>
                   {customerRating.label}
                 </span>
@@ -156,9 +138,7 @@ function SellerInformation({
             {/* Response Time */}
             <div>
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-gray-700">
-                  Response Time
-                </span>
+                <span className="text-sm font-medium text-gray-700">Response Time</span>
                 <span className={`text-sm font-bold text-${responseTime.color}-600`}>
                   {responseTime.label}
                 </span>

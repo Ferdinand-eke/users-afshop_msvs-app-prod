@@ -1,16 +1,16 @@
-import React, { useState } from 'react';
-import { RxCross1 } from 'react-icons/rx';
-import { IoBagHandleOutline } from 'react-icons/io5';
-import { BsCartPlus } from 'react-icons/bs';
+import React, { useState } from "react";
+import { RxCross1 } from "react-icons/rx";
+import { IoBagHandleOutline } from "react-icons/io5";
+import { BsCartPlus } from "react-icons/bs";
 // import styles from "../../styles/styles";
-import { Link } from 'react-router-dom';
-import { AiOutlineHeart } from 'react-icons/ai';
+import { Link } from "react-router-dom";
+import { AiOutlineHeart } from "react-icons/ai";
 // import { useDispatch, useSelector } from "react-redux";
 // import { removeFromWishlist } from "../../redux/actions/wishlist";
 // import { backend_url } from "../../server";
 // import { addTocart } from "../../redux/actions/cart";
-import { wishlistData } from '../../static/data';
-import styles from '../../styles/style';
+import { wishlistData } from "../../static/data";
+import styles from "../../styles/style";
 
 const Wishlist = ({ setOpenWishlist }) => {
   //const { wishlist } = useSelector((state) => state.wishlist);
@@ -54,9 +54,7 @@ const Wishlist = ({ setOpenWishlist }) => {
               {/* Item length */}
               <div className={`${styles.noramlFlex} p-4`}>
                 <AiOutlineHeart size={25} />
-                <h5 className="pl-2 text-[20px] font-[500]">
-                  {wishlist && wishlist.length} items
-                </h5>
+                <h5 className="pl-2 text-[20px] font-[500]">{wishlist && wishlist.length} items</h5>
               </div>
 
               {/* cart Single Items */}

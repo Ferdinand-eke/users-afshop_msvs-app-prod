@@ -16,14 +16,11 @@ import Button from "@mui/material/Button";
 import useJwtAuth from "../useJwtAuth";
 import { toast } from "react-toastify";
 
-
 const defaultValues = {
-
   email: "",
   password: "",
   remember: true,
 };
-
 
 function JwtSignInForm() {
   const { signIn, isLoading } = useJwtAuth();
@@ -39,7 +36,6 @@ function JwtSignInForm() {
     setShowPassword(!showPassword);
   };
 
-
   function onSubmit(formData) {
     const { email, password } = formData;
     signIn({
@@ -47,7 +43,7 @@ function JwtSignInForm() {
       password,
     }).catch((error) => {
       console.log("FormJSXError", error);
-      toast.error(error?.message)
+      toast.error(error?.message);
     });
   }
   return (
@@ -73,17 +69,17 @@ function JwtSignInForm() {
             required
             fullWidth
             sx={{
-              '& .MuiOutlinedInput-root': {
-                '&:hover fieldset': {
-                  borderColor: '#ea580c',
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: "#ea580c",
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#ea580c',
-                  borderWidth: '2px',
+                "&.Mui-focused fieldset": {
+                  borderColor: "#ea580c",
+                  borderWidth: "2px",
                 },
               },
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: '#ea580c',
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "#ea580c",
               },
             }}
           />
@@ -113,7 +109,7 @@ function JwtSignInForm() {
                     onMouseDown={(e) => e.preventDefault()}
                     edge="end"
                     sx={{
-                      color: '#ea580c',
+                      color: "#ea580c",
                     }}
                   >
                     {showPassword ? <VisibilityOff /> : <Visibility />}
@@ -122,17 +118,17 @@ function JwtSignInForm() {
               ),
             }}
             sx={{
-              '& .MuiOutlinedInput-root': {
-                '&:hover fieldset': {
-                  borderColor: '#ea580c',
+              "& .MuiOutlinedInput-root": {
+                "&:hover fieldset": {
+                  borderColor: "#ea580c",
                 },
-                '&.Mui-focused fieldset': {
-                  borderColor: '#ea580c',
-                  borderWidth: '2px',
+                "&.Mui-focused fieldset": {
+                  borderColor: "#ea580c",
+                  borderWidth: "2px",
                 },
               },
-              '& .MuiInputLabel-root.Mui-focused': {
-                color: '#ea580c',
+              "& .MuiInputLabel-root.Mui-focused": {
+                color: "#ea580c",
               },
             }}
           />
@@ -152,8 +148,8 @@ function JwtSignInForm() {
                     size="small"
                     {...field}
                     sx={{
-                      '&.Mui-checked': {
-                        color: '#ea580c',
+                      "&.Mui-checked": {
+                        color: "#ea580c",
                       },
                     }}
                   />
@@ -167,10 +163,10 @@ function JwtSignInForm() {
           className="text-md font-medium"
           to="/forgot-password"
           style={{
-            background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-            WebkitBackgroundClip: 'text',
-            WebkitTextFillColor: 'transparent',
-            backgroundClip: 'text',
+            background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
           }}
         >
           Forgot password?
@@ -185,17 +181,17 @@ function JwtSignInForm() {
         type="submit"
         size="large"
         sx={{
-          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-          color: 'white',
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          color: "white",
           fontWeight: 600,
-          height: '48px',
-          fontSize: '1rem',
-          '&:hover': {
-            background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
+          height: "48px",
+          fontSize: "1rem",
+          "&:hover": {
+            background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
           },
-          '&:disabled': {
-            background: '#e5e7eb',
-            color: '#9ca3af',
+          "&:disabled": {
+            background: "#e5e7eb",
+            color: "#9ca3af",
           },
         }}
       >

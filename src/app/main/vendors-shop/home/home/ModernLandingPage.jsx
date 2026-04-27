@@ -85,8 +85,8 @@ function ModernLandingPage() {
           linear-gradient(180deg, rgba(0,0,0,0.1) 1px, transparent 1px),
           linear-gradient(180deg, #001a33 0%, #003d66 30%, #004d80 60%, #0059a0 100%)
         `,
-        backgroundSize: '120px 60px, 120px 60px, 100% 100%',
-        backgroundPosition: '0 0, 0 30px, 0 0',
+        backgroundSize: "120px 60px, 120px 60px, 100% 100%",
+        backgroundPosition: "0 0, 0 30px, 0 0",
       }}
     >
       {/* ============================================
@@ -134,7 +134,7 @@ function ModernLandingPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.4 }}
               >
-                  <Typography
+                <Typography
                   component="h1"
                   sx={{
                     fontSize: { xs: "1.85rem", sm: "2.25rem", md: "3.5rem", lg: "4.5rem" },
@@ -144,10 +144,8 @@ function ModernLandingPage() {
                     color: "white",
                   }}
                 >
-                 Where Africa Trades
-                  <span style={{ display: "block", color: "#fde047" }}>
-                    Travels, and Thrives.
-                  </span>
+                  Where Africa Trades
+                  <span style={{ display: "block", color: "#fde047" }}>Travels, and Thrives.</span>
                 </Typography>
               </motion.div>
 
@@ -170,8 +168,9 @@ function ModernLandingPage() {
                     maxWidth: "600px",
                   }}
                 >
-                  Shop authentic products, book premium stays,<br/> discover amazing restaurants,
-                  and explore investment <br/> opportunities — <span style={{ fontWeight: 500, color: '#fde047' }}>all in one ecosystem</span>.
+                  Shop authentic products, book premium stays,
+                  <br /> discover amazing restaurants, and explore investment <br /> opportunities —{" "}
+                  <span style={{ fontWeight: 500, color: "#fde047" }}>all in one ecosystem</span>.
                 </Typography>
               </motion.div>
 
@@ -240,9 +239,9 @@ function ModernLandingPage() {
                 transition={{ delay: 1 }}
               >
                 {[
-                  { num: "3K+", label: "Products" },
-                  { num: "1K+", label: "Merchants" },
-                  { num: "10K+", label: "Happy Customers" },
+                  { num: "1K+", label: "Products" },
+                  { num: "100+", label: "Merchants" },
+                  { num: "5K+", label: "Happy Customers" },
                 ].map((stat, i) => (
                   <div key={i} className="text-center">
                     <Typography
@@ -276,9 +275,10 @@ function ModernLandingPage() {
               className="relative mt-8 md:mt-0"
             >
               {/* Main Illustration Card */}
-              <div className="relative bg-white/10 backdrop-blur-md rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-4 sm:p-6 md:p-8 border border-white/20"
-                style={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}>
-
+              <div
+                className="relative bg-white/10 backdrop-blur-md rounded-[24px] sm:rounded-[32px] md:rounded-[40px] p-4 sm:p-6 md:p-8 border border-white/20"
+                style={{ boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)" }}
+              >
                 {/* Category Tags */}
                 <div className="px-2 py-3 sm:px-6 sm:py-6 md:px-10 md:py-10 flex flex-wrap gap-2 sm:gap-3 mb-4 sm:mb-6">
                   <span className="px-2 py-1 sm:px-3 sm:py-1.5 md:px-4 md:py-2 bg-white/90 rounded-full text-xs sm:text-sm font-semibold text-gray-800">
@@ -420,7 +420,7 @@ function ModernLandingPage() {
                     </div>
                     <div>
                       <Typography className="text-white font-bold text-lg sm:text-xl md:text-2xl">
-                        100K+
+                        5K+
                       </Typography>
                       <Typography className="text-white/70 text-[10px] sm:text-xs">
                         Happy Customers
@@ -467,9 +467,7 @@ function ModernLandingPage() {
                 <Typography className="text-xs font-bold text-gray-900 cursor-pointer hover:underline">
                   Real Estate Hub
                 </Typography>
-                <Typography className="text-xs text-gray-600">
-                  Coming Soon
-                </Typography>
+                <Typography className="text-xs text-gray-600">Coming Soon</Typography>
               </motion.div>
             </motion.div>
           </div>
@@ -516,10 +514,7 @@ function ModernLandingPage() {
                     marginRight: "12px",
                   }}
                 />
-                <Typography
-                  variant="h5"
-                  sx={{ fontWeight: 900, color: "#1f2937" }}
-                >
+                <Typography variant="h5" sx={{ fontWeight: 900, color: "#1f2937" }}>
                   Categories
                 </Typography>
               </div>
@@ -548,10 +543,7 @@ function ModernLandingPage() {
                         label="FLASH SALE"
                         className="bg-red-600 text-white font-bold mb-4 w-fit"
                       />
-                      <Typography
-                        variant="h2"
-                        className="text-white font-black mb-4"
-                      >
+                      <Typography variant="h2" className="text-white font-black mb-4">
                         Mega Electronics Sale
                       </Typography>
                       <Typography className="text-white/90 text-xl mb-6">
@@ -577,10 +569,7 @@ function ModernLandingPage() {
                         label="NEW ARRIVALS"
                         className="bg-blue-600 text-white font-bold mb-4 w-fit"
                       />
-                      <Typography
-                        variant="h2"
-                        className="text-white font-black mb-4"
-                      >
+                      <Typography variant="h2" className="text-white font-black mb-4">
                         Luxury Stays Await
                       </Typography>
                       <Typography className="text-white/90 text-xl mb-6">
@@ -599,26 +588,26 @@ function ModernLandingPage() {
             </motion.div>
 
             {/* Right Sidebar - Quick Actions */}
-            <motion.div
-              variants={fadeInUp}
-              className="md:col-span-3 flex flex-col h-[500px]"
-            >
+            <motion.div variants={fadeInUp} className="md:col-span-3 flex flex-col h-[500px]">
               <div className="h-full bg-gray-200 rounded-2xl p-4 flex flex-col justify-between">
                 <div className="flex flex-col space-y-4">
                   <Link
                     to="/contact"
                     className="bg-white p-6 rounded-2xl shadow transition ease-in-out delay-150 hover:scale-105 cursor-pointer block"
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                   >
                     <div className="flex flex-col items-center text-center ">
-                      <PhoneIcon
-                        className="text-orange-600 mb-2"
-                        style={{ fontSize: "2.5rem" }}
-                      />
-                      <Typography className="font-bold text-gray-900 mb-2" style={{ textDecoration: 'none' }}>
+                      <PhoneIcon className="text-orange-600 mb-2" style={{ fontSize: "2.5rem" }} />
+                      <Typography
+                        className="font-bold text-gray-900 mb-2"
+                        style={{ textDecoration: "none" }}
+                      >
                         Call to Order
                       </Typography>
-                      <Typography className="text-2xl font-bold text-orange-600" style={{ textDecoration: 'none' }}>
+                      <Typography
+                        className="text-2xl font-bold text-orange-600"
+                        style={{ textDecoration: "none" }}
+                      >
                         0708-7200-297
                       </Typography>
                     </div>
@@ -629,17 +618,20 @@ function ModernLandingPage() {
                     target="_blank"
                     rel="noopener noreferrer"
                     className="bg-white p-6 rounded-2xl shadow transition ease-in-out delay-150 hover:scale-105 cursor-pointer block"
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                   >
                     <div className="flex flex-col items-center text-center">
-                      <StoreIcon
-                        className="text-blue-600 mb-2"
-                        style={{ fontSize: "2.5rem" }}
-                      />
-                      <Typography className="font-bold text-gray-900" style={{ textDecoration: 'none' }}>
+                      <StoreIcon className="text-blue-600 mb-2" style={{ fontSize: "2.5rem" }} />
+                      <Typography
+                        className="font-bold text-gray-900"
+                        style={{ textDecoration: "none" }}
+                      >
                         Become a Merchant
                       </Typography>
-                      <Typography className="text-sm text-gray-600 mt-1" style={{ textDecoration: 'none' }}>
+                      <Typography
+                        className="text-sm text-gray-600 mt-1"
+                        style={{ textDecoration: "none" }}
+                      >
                         Start selling today
                       </Typography>
                     </div>
@@ -649,17 +641,23 @@ function ModernLandingPage() {
                 <Link
                   to="/deals"
                   className="bg-white mt-10 h-full p-6 rounded-2xl shadow transition ease-in-out delay-150 hover:scale-105 cursor-pointer block"
-                  style={{ textDecoration: 'none' }}
+                  style={{ textDecoration: "none" }}
                 >
                   <div className="flex flex-col items-center text-center">
                     <LocalOfferIcon
                       className="text-green-600 mb-2"
                       style={{ fontSize: "2.5rem" }}
                     />
-                    <Typography className="font-bold text-gray-900" style={{ textDecoration: 'none' }}>
+                    <Typography
+                      className="font-bold text-gray-900"
+                      style={{ textDecoration: "none" }}
+                    >
                       Today's Deals
                     </Typography>
-                    <Typography className="text-sm text-gray-600 mt-1" style={{ textDecoration: 'none' }}>
+                    <Typography
+                      className="text-sm text-gray-600 mt-1"
+                      style={{ textDecoration: "none" }}
+                    >
                       Limited time offers
                     </Typography>
                   </div>
@@ -727,9 +725,7 @@ function ModernLandingPage() {
               <motion.div key={service.id} variants={scaleIn}>
                 <Button
                   onClick={() => setActiveService(service.id)}
-                  variant={
-                    activeService === service.id ? "contained" : "outlined"
-                  }
+                  variant={activeService === service.id ? "contained" : "outlined"}
                   size="large"
                   startIcon={service.icon}
                   sx={{
@@ -799,15 +795,11 @@ function ModernLandingPage() {
                       marginBottom: "16px",
                     }}
                   />
-                  <Typography
-                    variant="h3"
-                    className="font-black text-gray-900 mb-4"
-                  >
+                  <Typography variant="h3" className="font-black text-gray-900 mb-4">
                     African Marketplace
                   </Typography>
                   <Typography className="text-xl text-gray-700 max-w-2xl mx-auto">
-                    Discover authentic African products from thousands of
-                    verified merchants
+                    Discover authentic African products from thousands of verified merchants
                   </Typography>
                 </div>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -851,15 +843,11 @@ function ModernLandingPage() {
                       marginBottom: "16px",
                     }}
                   />
-                  <Typography
-                    variant="h3"
-                    className="font-black text-gray-900 mb-4"
-                  >
+                  <Typography variant="h3" className="font-black text-gray-900 mb-4">
                     Hotels & Apartments
                   </Typography>
                   <Typography className="text-xl text-gray-700 max-w-2xl mx-auto">
-                    Premium accommodations across Africa for business and
-                    leisure
+                    Premium accommodations across Africa for business and leisure
                   </Typography>
                 </div>
                 <BookingsHub />
@@ -883,10 +871,7 @@ function ModernLandingPage() {
                       marginBottom: "16px",
                     }}
                   />
-                  <Typography
-                    variant="h3"
-                    className="font-black text-gray-900 mb-4"
-                  >
+                  <Typography variant="h3" className="font-black text-gray-900 mb-4">
                     Restaurants & Dining
                   </Typography>
                   <Typography className="text-xl text-gray-700 max-w-2xl mx-auto">
@@ -915,10 +900,7 @@ function ModernLandingPage() {
                         marginBottom: "16px",
                       }}
                     />
-                    <Typography
-                      variant="h3"
-                      className="font-black text-gray-900 mb-4"
-                    >
+                    <Typography variant="h3" className="font-black text-gray-900 mb-4">
                       Real Estate & Investments
                     </Typography>
                   </div>
@@ -954,9 +936,7 @@ function ModernLandingPage() {
                         <Typography variant="h5" className="font-bold mb-2">
                           {item.title}
                         </Typography>
-                        <Typography className="text-gray-600">
-                          {item.desc}
-                        </Typography>
+                        <Typography className="text-gray-600">{item.desc}</Typography>
                       </Card>
                     ))}
                   </div>
@@ -989,8 +969,7 @@ function ModernLandingPage() {
               Building Africa's Digital Future
             </Typography>
             <Typography className="text-xl text-gray-400 max-w-3xl mx-auto">
-              Join us in transforming how Africa does business, travel, and
-              trade
+              Join us in transforming how Africa does business, travel, and trade
             </Typography>
           </motion.div>
 
@@ -1004,8 +983,7 @@ function ModernLandingPage() {
             >
               <Card
                 sx={{
-                  background:
-                    "linear-gradient(to bottom right, #ea580c, #dc2626)",
+                  background: "linear-gradient(to bottom right, #ea580c, #dc2626)",
                   color: "white",
                   borderRadius: "24px",
                   height: "100%",
@@ -1037,10 +1015,9 @@ function ModernLandingPage() {
                       color: "white",
                     }}
                   >
-                    To become Africa's leading integrated digital ecosystem,
-                    empowering millions of businesses and consumers to thrive in
-                    the digital economy. We envision a connected continent where
-                    commerce knows no boundaries.
+                    To become Africa's leading integrated digital ecosystem, empowering millions of
+                    businesses and consumers to thrive in the digital economy. We envision a
+                    connected continent where commerce knows no boundaries.
                   </Typography>
                 </CardContent>
               </Card>
@@ -1055,8 +1032,7 @@ function ModernLandingPage() {
             >
               <Card
                 sx={{
-                  background:
-                    "linear-gradient(to bottom right, #2563eb, #9333ea)",
+                  background: "linear-gradient(to bottom right, #2563eb, #9333ea)",
                   color: "white",
                   borderRadius: "24px",
                   height: "100%",
@@ -1088,10 +1064,9 @@ function ModernLandingPage() {
                       color: "white",
                     }}
                   >
-                    To provide world-class digital infrastructure that enables
-                    African businesses to reach global markets, while helping
-                    consumers access quality products, services, and experiences
-                    across the continent.
+                    To provide world-class digital infrastructure that enables African businesses to
+                    reach global markets, while helping consumers access quality products, services,
+                    and experiences across the continent.
                   </Typography>
                 </CardContent>
               </Card>
@@ -1133,11 +1108,7 @@ function ModernLandingPage() {
                 { IconComponent: HandshakeIcon, label: "B2B Trading" },
                 { IconComponent: TrendingUpIcon, label: "Analytics" },
               ].map((service, i) => (
-                <motion.div
-                  key={i}
-                  variants={scaleIn}
-                  transition={{ delay: i * 0.1 }}
-                >
+                <motion.div key={i} variants={scaleIn} transition={{ delay: i * 0.1 }}>
                   <Card className="bg-gray-800 border border-orange-500/20 rounded-2xl hover:border-orange-500 transition-all cursor-pointer">
                     <CardContent className="p-6 text-center">
                       <service.IconComponent
@@ -1147,9 +1118,7 @@ function ModernLandingPage() {
                           marginBottom: "12px",
                         }}
                       />
-                      <Typography className="font-bold text-white">
-                        {service.label}
-                      </Typography>
+                      <Typography className="font-bold text-white">{service.label}</Typography>
                     </CardContent>
                   </Card>
                 </motion.div>
@@ -1167,8 +1136,7 @@ function ModernLandingPage() {
           >
             <Card
               sx={{
-                background:
-                  "linear-gradient(to right, #ea580c, #dc2626, #db2777)",
+                background: "linear-gradient(to right, #ea580c, #dc2626, #db2777)",
                 borderRadius: "24px",
                 display: "inline-block",
                 maxWidth: "800px",

@@ -44,7 +44,6 @@ const item = {
 function MarketplaceOrdersDetail() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
 
-
   const routeParams = useParams();
   const { orderId } = routeParams;
 
@@ -53,7 +52,6 @@ function MarketplaceOrdersDetail() {
     isLoading: orderLoading,
     isError: orderError,
   } = useGetAuthUserOrderItems(orderId);
-
 
   if (orderLoading) {
     return <FuseLoading />;
@@ -66,9 +64,7 @@ function MarketplaceOrdersDetail() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={" Error occurred while retriving your order details"}
-        />
+        <ClienttErrorPage message={" Error occurred while retriving your order details"} />
       </motion.div>
     );
   }
@@ -97,56 +93,37 @@ function MarketplaceOrdersDetail() {
             <div className="flex  flex-col md:flex-row gap-8">
               {/* Map */}
               <Box className="w-full md:w-3/12  bg-gray-100 relative  mt-4 md:mt-0 md:sticky top-16 md:h-[250px] gap-8">
-               
-
                 <UserAccountLeads />
               </Box>
 
-
               {/* Main Content */}
-              <div
-                className="flex-1 w-full md:w-6/12  p-4 bg-white rounded-md overflow-scroll"
-              >
+              <div className="flex-1 w-full md:w-6/12  p-4 bg-white rounded-md overflow-scroll">
                 <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-8 ">
                   <>
                     <main className="w-4/4 p-4 overflow-y-scroll">
-                    
                       <div className="border-b pb-4 mb-4">
                         <div className="flex">
-                          <Typography
-                            component={NavLinkAdapter}
-                            to={`/marketplace/user/orders`}
-                          >
+                          <Typography component={NavLinkAdapter} to={`/marketplace/user/orders`}>
                             {"<=="}
                           </Typography>
                           <h1 className="text-xl font-bold">Order Details</h1>
                         </div>
+                        <p>Reservation ID: {orderData?.data?.MOrder?.paymentResult?.reference}</p>
                         <p>
-                          Reservation ID:{" "}
-                          {orderData?.data?.MOrder?.paymentResult?.reference}
+                          Placed on: {new Date(orderData?.data?.MOrder?.createdAt)?.toDateString()}
                         </p>
-                        <p>
-                          Placed on:{" "}
-                          {new Date(
-                            orderData?.data?.MOrder?.createdAt
-                          )?.toDateString()}
-                        </p>
-                        <p>
-                          Total: N{" "}
-                          {formatCurrency(orderData?.data?.MOrder?.totalPrice)}
-                        </p>
+                        <p>Total: N {formatCurrency(orderData?.data?.MOrder?.totalPrice)}</p>
                       </div>
                       <div className="space-y-4">
                         {orderData?.data?.paidOrderItems?.map((order) => (
                           <div className="border p-4" key={order?._id}>
                             <div className="flex flex-row md:flex-row justify-between items-start md:items-center">
                               <img
-                              src={order?.image}
+                                src={order?.image}
                                 alt="6-ways Adjustable Ergonomic Baby Carrier"
                                 className="w-full md:w-3/12 h-[120px] object-cover px-4 rounded-8"
                               />
                               <div className="w-full md:w-9/12 mx-4 p-4">
-                           
                                 <p className="font-bold">{order?.name}</p>
                                 <div className="flex flex-row">
                                   <p className="text-sm font-bold">
@@ -159,11 +136,8 @@ function MarketplaceOrdersDetail() {
                                     {order?.quantity}
                                   </p>
                                   <p className="text-sm font-bold ml-4">
-                                    <span className="text-[10px]">Total:</span>{" "}
-                                    N
-                                    {formatCurrency(
-                                      order.price * order.quantity
-                                    )}
+                                    <span className="text-[10px]">Total:</span> N
+                                    {formatCurrency(order.price * order.quantity)}
                                   </p>
                                 </div>
 
@@ -194,18 +168,11 @@ function MarketplaceOrdersDetail() {
                         <div className="border p-4">
                           <h2 className="font-bold">PAYMENT INFORMATION</h2>
                           <p className="text-sm font-bold">
-                            Payment Method:{" "}
-                            {
-                              orderData?.data?.MOrder?.paymentResult
-                                ?.paymentMethod
-                            }
+                            Payment Method: {orderData?.data?.MOrder?.paymentResult?.paymentMethod}
                           </p>
 
                           <p className="text-sm font-bold">
-                            Total Amount: N{" "}
-                            {formatCurrency(
-                              orderData?.data?.MOrder?.totalPrice
-                            )}
+                            Total Amount: N {formatCurrency(orderData?.data?.MOrder?.totalPrice)}
                           </p>
                         </div>
                         <div className="border p-4">
@@ -216,29 +183,22 @@ function MarketplaceOrdersDetail() {
                             {orderData?.data?.MOrder?.isCheckIn ? (
                               <span className="text-green-500">Checked-In</span>
                             ) : (
-                              <span className="text-red-500">
-                                Check-In Pending...
-                              </span>
+                              <span className="text-red-500">Check-In Pending...</span>
                             )}
                           </p>
                           <p className="text-sm font-bold">
                             CHECK OUT:{" "}
                             {orderData?.data?.MOrder?.isCheckOut ? (
-                              <span className="text-green-500">
-                                Checked-Out
-                              </span>
+                              <span className="text-green-500">Checked-Out</span>
                             ) : (
-                              <span className="text-red-500">
-                                Check-Out Pending...
-                              </span>
+                              <span className="text-red-500">Check-Out Pending...</span>
                             )}
                           </p>
 
                           <br />
                           <p>
-                            Reservation is eligible for refund if reservation is
-                            cancelled prior to 48hrs befor check-in. Access our
-                            cancellation and Refund Policy.
+                            Reservation is eligible for refund if reservation is cancelled prior to
+                            48hrs befor check-in. Access our cancellation and Refund Policy.
                           </p>
                         </div>
                       </div>
@@ -254,7 +214,6 @@ function MarketplaceOrdersDetail() {
                   </>
                 </div>
               </div>
-
 
               {/* Map */}
               <Box className="w-full md:w-3/12  bg-gray-100 relative  mt-4 md:mt-0 md:sticky top-16 md:h-screen gap-8">

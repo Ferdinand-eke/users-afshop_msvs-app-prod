@@ -1,12 +1,5 @@
 import { useState } from "react";
-import {
-  Typography,
-  Button,
-  Chip,
-  Divider,
-  IconButton,
-  Avatar,
-} from "@mui/material";
+import { Typography, Button, Chip, Divider, IconButton, Avatar } from "@mui/material";
 import {
   LocationOn,
   Phone,
@@ -153,11 +146,7 @@ function DemoSidebar(props) {
                 "&:hover": { backgroundColor: "#fef2f2" },
               }}
             >
-              {isFavorite ? (
-                <Favorite sx={{ color: "#ef4444" }} />
-              ) : (
-                <FavoriteBorder />
-              )}
+              {isFavorite ? <Favorite sx={{ color: "#ef4444" }} /> : <FavoriteBorder />}
             </IconButton>
             <IconButton
               sx={{
@@ -203,10 +192,7 @@ function DemoSidebar(props) {
           {/* Specialties */}
           {profileData.specialties && profileData.specialties.length > 0 && (
             <div className="mb-4">
-              <Typography
-                variant="caption"
-                className="text-gray-500 font-semibold mb-2 block"
-              >
+              <Typography variant="caption" className="text-gray-500 font-semibold mb-2 block">
                 SPECIALTIES
               </Typography>
               <div className="flex flex-wrap gap-2">
@@ -246,10 +232,7 @@ function DemoSidebar(props) {
 
           {/* Contact Information */}
           <div className="space-y-3">
-            <Typography
-              variant="caption"
-              className="text-gray-500 font-semibold block mb-2"
-            >
+            <Typography variant="caption" className="text-gray-500 font-semibold block mb-2">
               CONTACT INFORMATION
             </Typography>
 

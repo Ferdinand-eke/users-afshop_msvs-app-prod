@@ -1,24 +1,14 @@
 import React from "react";
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillYoutube,
-  AiOutlineTwitter,
-} from "react-icons/ai";
+import { AiFillFacebook, AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { Link } from "react-router-dom";
-import {
-  footercompanyLinks,
-  footerProductLinks,
-  footerSupportLinks,
-} from "../../static/data";
+import { footercompanyLinks, footerProductLinks, footerSupportLinks } from "../../static/data";
 
 const Footer = () => {
   return (
     <div className="bg-[#000] text-white">
       <div className="md:flex md:justify-between md:items-center sm:px-12 px-4 bg-[#342ac8] py-7">
         <h1 className="lg:text-4xl text-3xl md:mb-0 mb-6 lg:leading-normal font-semibold md:w-2/5">
-          <span className="text-[#56d879]">Subscribe</span> us for get news{" "}
-          <br />
+          <span className="text-[#56d879]">Subscribe</span> us for get news <br />
           events and offers
         </h1>
         <div>
@@ -45,24 +35,15 @@ const Footer = () => {
           <p>The home and elements needeed to create beatiful products.</p>
           <div className="flex items-center mt-[15px]">
             <AiFillFacebook size={25} className="cursor-pointer" />
-            <AiOutlineTwitter
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-            <AiFillInstagram
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
-            <AiFillYoutube
-              size={25}
-              style={{ marginLeft: "15px", cursor: "pointer" }}
-            />
+            <AiOutlineTwitter size={25} style={{ marginLeft: "15px", cursor: "pointer" }} />
+            <AiFillInstagram size={25} style={{ marginLeft: "15px", cursor: "pointer" }} />
+            <AiFillYoutube size={25} style={{ marginLeft: "15px", cursor: "pointer" }} />
           </div>
         </ul>
 
         <ul className="text-center sm:text-start">
           <h1 className="mb-1 font-semibold">Company</h1>
-          {footerProductLinks.map((link,index) => (
+          {footerProductLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-gray-400 hover:text-teal-400 duration-300
@@ -77,7 +58,7 @@ const Footer = () => {
 
         <ul className="text-center sm:text-start">
           <h1 className="mb-1 font-semibold">Shop</h1>
-          {footercompanyLinks.map((link,index) => (
+          {footercompanyLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-gray-400 hover:text-teal-400 duration-300
@@ -92,7 +73,7 @@ const Footer = () => {
 
         <ul className="text-center sm:text-start">
           <h1 className="mb-1 font-semibold">Support</h1>
-          {footerSupportLinks.map((link,index) => (
+          {footerSupportLinks.map((link, index) => (
             <li key={index}>
               <Link
                 className="text-gray-400 hover:text-teal-400 duration-300

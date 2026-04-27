@@ -73,7 +73,6 @@ const ProductDetailsWithReviews = ({ productData }) => {
     { stars: 1, count: 1, percentage: 1 },
   ];
 
-
   const handleSubmitComment = () => {
     if (comment.trim() || rating > 0) {
       const newReview = {
@@ -117,9 +116,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
               />
               <Typography
                 variant={isMobile ? "subtitle1" : "h6"}
-                className={`font-bold ${
-                  active === 1 ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold ${active === 1 ? "text-white" : "text-gray-900"}`}
               >
                 Product Details
               </Typography>
@@ -153,9 +150,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
               />
               <Typography
                 variant={isMobile ? "subtitle1" : "h6"}
-                className={`font-bold ${
-                  active === 2 ? "text-white" : "text-gray-900"
-                }`}
+                className={`font-bold ${active === 2 ? "text-white" : "text-gray-900"}`}
               >
                 Reviews ({reviews.length})
               </Typography>
@@ -185,10 +180,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
             <div className="mb-8">
               <div className="flex items-center gap-2 mb-4">
                 <Description sx={{ color: "#ea580c", fontSize: "1.75rem" }} />
-                <Typography
-                  variant={isMobile ? "h6" : "h5"}
-                  className="font-bold text-gray-900"
-                >
+                <Typography variant={isMobile ? "h6" : "h5"} className="font-bold text-gray-900">
                   Product Description
                 </Typography>
               </div>
@@ -207,10 +199,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
             <div>
               <div className="flex items-center gap-2 mb-4">
                 <VerifiedUser sx={{ color: "#10b981", fontSize: "1.75rem" }} />
-                <Typography
-                  variant={isMobile ? "h6" : "h5"}
-                  className="font-bold text-gray-900"
-                >
+                <Typography variant={isMobile ? "h6" : "h5"} className="font-bold text-gray-900">
                   Product Specifications
                 </Typography>
               </div>
@@ -373,8 +362,8 @@ const ProductDetailsWithReviews = ({ productData }) => {
                                 stat.stars >= 4
                                   ? "#10b981"
                                   : stat.stars === 3
-                                  ? "#f59e0b"
-                                  : "#ef4444",
+                                    ? "#f59e0b"
+                                    : "#ef4444",
                               borderRadius: 4,
                             },
                           }}
@@ -393,13 +382,12 @@ const ProductDetailsWithReviews = ({ productData }) => {
           {user?.email && (
             <>
               {/* Add Comment Section */}
-              <div className={`${isMobile ? "p-6" : "p-8"} bg-gradient-to-br from-gray-50 to-white border-b-2 border-gray-200`}>
+              <div
+                className={`${isMobile ? "p-6" : "p-8"} bg-gradient-to-br from-gray-50 to-white border-b-2 border-gray-200`}
+              >
                 <div className="flex items-center gap-2 mb-6">
                   <RateReview sx={{ color: "#ea580c", fontSize: "1.75rem" }} />
-                  <Typography
-                    variant={isMobile ? "h6" : "h5"}
-                    className="font-bold text-gray-900"
-                  >
+                  <Typography variant={isMobile ? "h6" : "h5"} className="font-bold text-gray-900">
                     Write a Review
                   </Typography>
                 </div>
@@ -411,10 +399,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
                 >
                   {/* Rating Input */}
                   <div className="mb-6">
-                    <Typography
-                      variant="body1"
-                      className="text-gray-700 font-semibold mb-3"
-                    >
+                    <Typography variant="body1" className="text-gray-700 font-semibold mb-3">
                       Rate this product
                     </Typography>
                     <div className="flex items-center gap-4">
@@ -548,9 +533,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
                       Customer Reviews ({reviews.length})
                     </Typography>
                   </div>
-                  <select
-                    className="px-4 py-2 border-2 border-gray-200 rounded-xl text-gray-700 font-medium focus:outline-none focus:border-orange-600 cursor-pointer bg-white"
-                  >
+                  <select className="px-4 py-2 border-2 border-gray-200 rounded-xl text-gray-700 font-medium focus:outline-none focus:border-orange-600 cursor-pointer bg-white">
                     <option>Most relevant</option>
                     <option>Newest first</option>
                     <option>Highest rated</option>
@@ -584,10 +567,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
                             >
                               {review.author}
                             </Typography>
-                            <Typography
-                              variant="body2"
-                              className="text-gray-500"
-                            >
+                            <Typography variant="body2" className="text-gray-500">
                               • {review.timeAgo}
                             </Typography>
                             {review.isAuthor && (
@@ -650,10 +630,7 @@ const ProductDetailsWithReviews = ({ productData }) => {
                           className={`${isMobile ? "ml-10 space-y-2 mt-3" : "ml-14 space-y-4 mt-4"}`}
                         >
                           {review.replies.map((reply) => (
-                            <div
-                              key={reply.id}
-                              className={`flex ${isMobile ? "gap-2" : "gap-3"}`}
-                            >
+                            <div key={reply.id} className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                               <Avatar
                                 src={reply.authorImage}
                                 alt={reply.author}

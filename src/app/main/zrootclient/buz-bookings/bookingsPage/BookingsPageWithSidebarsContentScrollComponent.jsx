@@ -47,11 +47,7 @@ function ActiveBookingsPage() {
   }, [isMobile]);
 
   // Fetch booking properties with filters
-  const {
-    data: bookingprops,
-    isLoading,
-    isError,
-  } = useGetAllBookingProperties(filters);
+  const { data: bookingprops, isLoading, isError } = useGetAllBookingProperties(filters);
 
   // Handle filter changes from FilterList component
   const handleFilterChange = useCallback(
@@ -108,7 +104,7 @@ function ActiveBookingsPage() {
       // Update filters state (this will trigger useGetAllBookingProperties to refetch)
       setFilters(apiFilters);
     },
-    [itemsPerPage, currentPage]
+    [itemsPerPage, currentPage],
   );
 
   // Sync pagination changes with filters
@@ -121,7 +117,6 @@ function ActiveBookingsPage() {
       }));
     }
   }, [currentPage, itemsPerPage]);
-
 
   // Handle page change
   const handlePageChange = useCallback((newPage) => {
@@ -152,8 +147,14 @@ function ActiveBookingsPage() {
   }, []);
 
   // Memoize derived data to avoid recalculation on every render
-  const bookingLists = useMemo(() => bookingprops?.data?.bookingLists, [bookingprops?.data?.bookingLists]);
-  const totalItems = useMemo(() => bookingprops?.data?.pagination?.total || 0, [bookingprops?.data?.pagination?.total]);
+  const bookingLists = useMemo(
+    () => bookingprops?.data?.bookingLists,
+    [bookingprops?.data?.bookingLists],
+  );
+  const totalItems = useMemo(
+    () => bookingprops?.data?.pagination?.total || 0,
+    [bookingprops?.data?.pagination?.total],
+  );
 
   // Memoize header component
   const headerComponent = useMemo(
@@ -163,9 +164,10 @@ function ActiveBookingsPage() {
         rightSidebarToggle={handleRightSidebarToggle}
       />
     ),
-    [handleLeftSidebarToggle, handleRightSidebarToggle]
+    [handleLeftSidebarToggle, handleRightSidebarToggle],
   );
 
+  
   // Memoize content component
   const contentComponent = useMemo(
     () => (
@@ -180,19 +182,28 @@ function ActiveBookingsPage() {
         onItemsPerPageChange={handleItemsPerPageChange}
       />
     ),
-    [bookingLists, isLoading, isError, totalItems, currentPage, itemsPerPage, handlePageChange, handleItemsPerPageChange]
+    [
+      bookingLists,
+      isLoading,
+      isError,
+      totalItems,
+      currentPage,
+      itemsPerPage,
+      handlePageChange,
+      handleItemsPerPageChange,
+    ],
   );
 
   // Memoize left sidebar content
   const leftSidebarContentComponent = useMemo(
     () => <DemoSidebar onFilterChange={handleFilterChange} />,
-    [handleFilterChange]
+    [handleFilterChange],
   );
 
   // Memoize right sidebar content
   const rightSidebarContentComponent = useMemo(
     () => <DemoSidebarRight bookingsData={bookingLists} />,
-    [bookingLists]
+    [bookingLists],
   );
 
   return (
@@ -228,12 +239,12 @@ function BookingsPageWithSidebarsContentScrollComponent() {
   // Extract the bookings service status - memoized to prevent unnecessary re-renders
   const bookingsServiceStatus = useMemo(
     () => appSettings?.data?.payload?.bookingsServiceStatus,
-    [appSettings?.data?.payload?.bookingsServiceStatus]
+    [appSettings?.data?.payload?.bookingsServiceStatus],
   );
 
   // Log app settings to console only when bookingsServiceStatus changes (development only)
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development' && bookingsServiceStatus !== undefined) {
+    if (process.env.NODE_ENV === "development" && bookingsServiceStatus !== undefined) {
       console.log("Bookings Service Status:", bookingsServiceStatus);
     }
   }, [bookingsServiceStatus]);

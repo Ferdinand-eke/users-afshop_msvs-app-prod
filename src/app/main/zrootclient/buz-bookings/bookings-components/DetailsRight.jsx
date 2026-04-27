@@ -3,8 +3,6 @@ import React, { lazy, useMemo, useState } from "react";
 import { ListingReservation } from "./reservationreview";
 import { ListingRooms } from "./property-rooms/ListingRooms";
 
-
-
 const DetailsRight = React.memo(
   ({
     listing,
@@ -23,8 +21,6 @@ const DetailsRight = React.memo(
     //   [locationValue]
     // );
 
-
-
     return (
       <div>
         <Box>
@@ -36,7 +32,11 @@ const DetailsRight = React.memo(
 
           {listing?.isRentIndividualRoom ? (
             <>
-              <Typography className="text-gray-600 mb-2 px-4 text-sm font-semibold" variant="body2" color="text.secondary">
+              <Typography
+                className="text-gray-600 mb-2 px-4 text-sm font-semibold"
+                variant="body2"
+                color="text.secondary"
+              >
                 View rooms and available dates.
               </Typography>
 
@@ -44,12 +44,10 @@ const DetailsRight = React.memo(
                 rooms={listing?.rooms}
                 propertyId={listing?.id}
                 merchantId={listing?.shop}
+                bookingPropertyName={listing?.title}
+      bookingPropertyAddress={listing?.propertyAddress}
               />
-
             </>
-
-    
-
           ) : (
             <>
               {listing ? (
@@ -73,12 +71,9 @@ const DetailsRight = React.memo(
             </>
           )}
         </Box>
-
-
-       
       </div>
     );
-  }
+  },
 );
 
 export default DetailsRight;

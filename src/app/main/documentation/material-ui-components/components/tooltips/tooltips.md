@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Tooltip component
 components: Tooltip
-githubLabel: 'component: tooltip'
+githubLabel: "component: tooltip"
 materialDesign: https://m2.material.io/components/tooltips
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/tooltip/
 ---
@@ -145,7 +145,7 @@ If you're not wrapping a Material UI component that inherits from `ButtonBase`,
 ```jsx
 <Tooltip title="You don't have permission to do this">
   <span>
-    <button disabled={disabled} style={disabled ? { pointerEvents: 'none' } : {}}>
+    <button disabled={disabled} style={disabled ? { pointerEvents: "none" } : {}}>
       A disabled button
     </button>
   </span>

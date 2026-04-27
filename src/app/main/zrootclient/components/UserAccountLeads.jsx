@@ -4,13 +4,7 @@ import { selectUser } from "src/app/auth/user/store/userSlice";
 import Typography from "@mui/material/Typography";
 import Avatar from "@mui/material/Avatar";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import {
-  Person,
-  ShoppingBag,
-  Restaurant,
-  BeachAccess,
-  ChevronRight,
-} from "@mui/icons-material";
+import { Person, ShoppingBag, Restaurant, BeachAccess, ChevronRight } from "@mui/icons-material";
 
 /**
  * UserAccountLeads Component
@@ -47,11 +41,7 @@ const UserAccountLeads = () => {
   ];
 
   return (
-    <motion.aside
-      initial={{ opacity: 0, y: 10 }}
-      animate={{ opacity: 1, y: 0 }}
-      className="w-full"
-    >
+    <motion.aside initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} className="w-full">
       {/* User Profile Card */}
       <div
         className="rounded-2xl p-6 mb-6 relative overflow-hidden"
@@ -99,10 +89,7 @@ const UserAccountLeads = () => {
             </Avatar>
           )}
           <div className="flex-1">
-            <Typography
-              variant="h6"
-              className="font-bold text-white mb-1 leading-tight"
-            >
+            <Typography variant="h6" className="font-bold text-white mb-1 leading-tight">
               {user.name || user.data.displayName || "Guest User"}
             </Typography>
             <Typography variant="caption" className="text-white/80">

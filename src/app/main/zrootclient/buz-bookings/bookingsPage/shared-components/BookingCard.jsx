@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Typography, IconButton, Button } from '@mui/material';
-import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from '@mui/icons-material';
-import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
-import { formatCurrency } from 'src/app/main/vendors-shop/PosUtils';
+import { useState } from "react";
+import { Typography, IconButton, Button } from "@mui/material";
+import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from "@mui/icons-material";
+import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 /**
  * BookingCard Component
@@ -19,26 +19,21 @@ function BookingCard({
   rating = 0,
   reviewCount = 0,
   category,
-  bookingPeriod
+  bookingPeriod,
 }) {
-  
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
 
   const handlePrevImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleNextImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const toggleFavorite = (e) => {
@@ -55,26 +50,31 @@ function BookingCard({
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <span key={`full-${i}`} className="text-black">★</span>
+        <span key={`full-${i}`} className="text-black">
+          ★
+        </span>,
       );
     }
 
     if (hasHalfStar) {
       stars.push(
-        <span key="half" className="text-black">⯨</span>
+        <span key="half" className="text-black">
+          ⯨
+        </span>,
       );
     }
 
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
       stars.push(
-        <span key={`empty-${i}`} className="text-gray-300">★</span>
+        <span key={`empty-${i}`} className="text-gray-300">
+          ★
+        </span>,
       );
     }
 
     return stars;
   };
-  
 
   return (
     <div className="bg-white rounded-xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 max-w-sm flex flex-col h-full">
@@ -137,9 +137,7 @@ function BookingCard({
                       setCurrentImageIndex(index);
                     }}
                     className={`w-6 h-6 rounded-full transition-all ${
-                      index === currentImageIndex
-                        ? 'bg-white w-6'
-                        : 'bg-white/60 hover:bg-white/80'
+                      index === currentImageIndex ? "bg-white w-6" : "bg-white/60 hover:bg-white/80"
                     }`}
                     aria-label={`Go to image ${index + 1}`}
                   />
@@ -166,15 +164,15 @@ function BookingCard({
             variant="h6"
             sx={{
               fontWeight: 700,
-              fontSize: '1.625rem',
-              color: '#111827',
-              marginBottom: '4px',
+              fontSize: "1.625rem",
+              color: "#111827",
+              marginBottom: "4px",
               lineHeight: 1.4,
-              display: '-webkit-box',
+              display: "-webkit-box",
               WebkitLineClamp: 2,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
-              minHeight: '3.5rem',
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
+              minHeight: "3.5rem",
             }}
           >
             {title}
@@ -184,13 +182,13 @@ function BookingCard({
           <Typography
             variant="body1"
             sx={{
-              fontSize: '1rem',
-              color: '#6b7280',
-              marginBottom: '16px',
-              display: '-webkit-box',
+              fontSize: "1rem",
+              color: "#6b7280",
+              marginBottom: "16px",
+              display: "-webkit-box",
               WebkitLineClamp: 1,
-              WebkitBoxOrient: 'vertical',
-              overflow: 'hidden',
+              WebkitBoxOrient: "vertical",
+              overflow: "hidden",
             }}
           >
             {address}
@@ -204,8 +202,8 @@ function BookingCard({
                 variant="h6"
                 sx={{
                   fontWeight: 800,
-                  fontSize: '1.45rem',
-                  color: '#ea580c',
+                  fontSize: "1.45rem",
+                  color: "#ea580c",
                 }}
               >
                 N{formatCurrency(price)}
@@ -213,8 +211,8 @@ function BookingCard({
               <Typography
                 variant="body1"
                 sx={{
-                  fontSize: '0.95rem',
-                  color: '#6b7280',
+                  fontSize: "0.95rem",
+                  color: "#6b7280",
                 }}
               >
                 /{bookingPeriod}
@@ -223,17 +221,15 @@ function BookingCard({
 
             {/* Rating */}
             <div className="flex items-center gap-2">
-              <div className="flex text-sm">
-                {renderStars()}
-              </div>
+              <div className="flex text-sm">{renderStars()}</div>
               <Typography
                 variant="body1"
                 sx={{
-                  fontSize: '0.95rem',
-                  color: '#6b7280',
+                  fontSize: "0.95rem",
+                  color: "#6b7280",
                 }}
               >
-                ({reviewCount.toString().padStart(2, '0')})
+                ({reviewCount.toString().padStart(2, "0")})
               </Typography>
             </div>
           </div>
@@ -243,14 +239,14 @@ function BookingCard({
             <Typography
               variant="body1"
               sx={{
-                fontSize: '1rem',
-                color: '#6b7280',
-                marginBottom: '16px',
+                fontSize: "1rem",
+                color: "#6b7280",
+                marginBottom: "16px",
                 fontWeight: 500,
               }}
             >
               <i className="fas fa-door-open mr-2"></i>
-              {roomCount} {roomCount === 1 ? 'Room' : 'Rooms'}
+              {roomCount} {roomCount === 1 ? "Room" : "Rooms"}
             </Typography>
           )}
         </div>
@@ -263,18 +259,18 @@ function BookingCard({
             to={`/bookings/listings/${slug}/view`}
             fullWidth
             sx={{
-              backgroundColor: '#ea580c',
-              color: 'white',
+              backgroundColor: "#ea580c",
+              color: "white",
               fontWeight: 700,
-              fontSize: '1rem',
-              padding: '12px 24px',
-              borderRadius: '12px',
-              textTransform: 'none',
-              transition: 'all 0.3s ease',
-              '&:hover': {
-                backgroundColor: '#c2410c',
-                transform: 'translateY(-2px)',
-                boxShadow: '0 10px 20px rgba(234, 88, 12, 0.3)',
+              fontSize: "1rem",
+              padding: "12px 24px",
+              borderRadius: "12px",
+              textTransform: "none",
+              transition: "all 0.3s ease",
+              "&:hover": {
+                backgroundColor: "#c2410c",
+                transform: "translateY(-2px)",
+                boxShadow: "0 10px 20px rgba(234, 88, 12, 0.3)",
               },
             }}
           >

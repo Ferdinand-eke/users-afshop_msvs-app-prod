@@ -1,4 +1,13 @@
-import { Box, Container, Typography, Button, Paper, useTheme, useMediaQuery, TextField } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Paper,
+  useTheme,
+  useMediaQuery,
+  TextField,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import RocketLaunchIcon from "@mui/icons-material/RocketLaunch";
 import NotificationsActiveIcon from "@mui/icons-material/NotificationsActive";
@@ -156,7 +165,8 @@ const ComingSoonPage = ({ serviceName = "Service" }) => {
             color="text.secondary"
             sx={{ mb: 4, lineHeight: 1.7 }}
           >
-            We're building something amazing! Our new {serviceName.toLowerCase()} service will revolutionize your experience.
+            We're building something amazing! Our new {serviceName.toLowerCase()} service will
+            revolutionize your experience.
           </Typography>
 
           <FeatureCard>
@@ -240,11 +250,7 @@ const ComingSoonPage = ({ serviceName = "Service" }) => {
           </NotifyBox>
 
           <Box sx={{ mt: 5 }}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ mb: 3 }}
-            >
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
               In the meantime, explore our other services
             </Typography>
 

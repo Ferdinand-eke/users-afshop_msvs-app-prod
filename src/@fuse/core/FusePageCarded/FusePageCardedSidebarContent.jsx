@@ -1,20 +1,20 @@
-import FuseScrollbars from '@fuse/core/FuseScrollbars';
+import FuseScrollbars from "@fuse/core/FuseScrollbars";
 
 /**
  * The FusePageCardedSidebarContent component is a content container for the FusePageCardedSidebar component.
  */
 function FusePageCardedSidebarContent(props) {
-	const { innerScroll, children } = props;
+  const { innerScroll, children } = props;
 
-	if (!children) {
-		return null;
-	}
+  if (!children) {
+    return null;
+  }
 
-	return (
-		<FuseScrollbars enable={innerScroll}>
-			<div className="FusePageCarded-sidebarContent">{children}</div>
-		</FuseScrollbars>
-	);
+  return (
+    <FuseScrollbars enable={innerScroll}>
+      <div className="FusePageCarded-sidebarContent">{children}</div>
+    </FuseScrollbars>
+  );
 }
 
 export default FusePageCardedSidebarContent;

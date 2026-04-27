@@ -1,20 +1,8 @@
 import FuseLoading from "@fuse/core/FuseLoading";
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  Button,
-  Typography,
-  IconButton,
-  Chip,
-  Rating,
-} from "@mui/material";
-import {
-  Favorite,
-  FavoriteBorder,
-  Visibility,
-  LocalOffer,
-  Star,
-} from "@mui/icons-material";
+import { Button, Typography, IconButton, Chip, Rating } from "@mui/material";
+import { Favorite, FavoriteBorder, Visibility, LocalOffer, Star } from "@mui/icons-material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
@@ -86,11 +74,7 @@ function MenuItemCard({ item, index }) {
           className="absolute bottom-3 right-3 bg-white/90 hover:bg-white shadow-lg"
           size="small"
         >
-          {isFavorite ? (
-            <Favorite sx={{ color: "#ef4444" }} />
-          ) : (
-            <FavoriteBorder />
-          )}
+          {isFavorite ? <Favorite sx={{ color: "#ef4444" }} /> : <FavoriteBorder />}
         </IconButton>
 
         {/* Quick View Button - Shows on hover */}
@@ -136,10 +120,7 @@ function MenuItemCard({ item, index }) {
 
         {/* Description */}
         {item?.description && (
-          <Typography
-            variant="body2"
-            className="text-gray-600 mb-3 line-clamp-2"
-          >
+          <Typography variant="body2" className="text-gray-600 mb-3 line-clamp-2">
             {item?.description || "Delicious and freshly prepared meal."}
           </Typography>
         )}
@@ -174,10 +155,7 @@ function MenuItemCard({ item, index }) {
                 ₦{formatCurrency(item?.price)}
               </Typography>
               {hasDiscount && (
-                <Typography
-                  variant="body2"
-                  className="line-through text-gray-400"
-                >
+                <Typography variant="body2" className="line-through text-gray-400">
                   ₦{formatCurrency(item?.listprice)}
                 </Typography>
               )}
@@ -218,11 +196,7 @@ function MenuItemCard({ item, index }) {
 function DemoContent(props) {
   const { rcsId } = props;
 
-  const {
-    data: RcsMenu,
-    isLoading: menuLoading,
-    isError: menuError,
-  } = useGetRCSMenuItems(rcsId);
+  const { data: RcsMenu, isLoading: menuLoading, isError: menuError } = useGetRCSMenuItems(rcsId);
 
   if (menuLoading) {
     return <FuseLoading />;
@@ -264,8 +238,7 @@ function DemoContent(props) {
               Our Menu
             </Typography>
             <Typography variant="body2" className="text-gray-600 mt-1">
-              Discover our delicious selection of {RcsMenu?.data?.menus?.length}{" "}
-              items
+              Discover our delicious selection of {RcsMenu?.data?.menus?.length} items
             </Typography>
           </div>
           <Chip

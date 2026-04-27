@@ -34,12 +34,11 @@ const defaultValues = {
 function MerchantModernReversedActivatePage({ resendOTP }) {
   const remoteResponseToken = getMerchantSignUpToken();
   const avtivateMerchant = useStoreUserPreSignUpFromOtp();
-  const { control, formState, handleSubmit, reset, getValues, setValue } =
-    useForm({
-      mode: "onChange",
-      defaultValues,
-      resolver: zodResolver(schema),
-    });
+  const { control, formState, handleSubmit, reset, getValues, setValue } = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: zodResolver(schema),
+  });
   const { isValid, dirtyFields, errors } = formState;
 
   function onSubmit() {
@@ -59,11 +58,7 @@ function MerchantModernReversedActivatePage({ resendOTP }) {
     <>
       <div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
         <div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
-          <img
-            className="w-48"
-            src="assets/images/afslogo/afLogo.svg"
-            alt="logo"
-          />
+          <img className="w-48" src="assets/images/afslogo/afLogo.svg" alt="logo" />
 
           <Typography className="mt-32 text-4xl font-extrabold leading-tight tracking-tight">
             Activate Your Merchant Account
@@ -100,19 +95,14 @@ function MerchantModernReversedActivatePage({ resendOTP }) {
               color="secondary"
               className=" mt-4 w-full"
               aria-label="Register"
-              disabled={
-                _.isEmpty(dirtyFields) || !isValid || avtivateMerchant.isLoading
-              }
+              disabled={_.isEmpty(dirtyFields) || !isValid || avtivateMerchant.isLoading}
               type="submit"
               size="large"
             >
               Send reset link
             </Button>
 
-            <Typography
-              className="mt-32 text-md font-medium"
-              color="text.secondary"
-            >
+            <Typography className="mt-32 text-md font-medium" color="text.secondary">
               <span>Resend OTP on expiration of timer</span> <span>5-55</span>
               <Button
                 className="ml-4 btn cursor-pointer"

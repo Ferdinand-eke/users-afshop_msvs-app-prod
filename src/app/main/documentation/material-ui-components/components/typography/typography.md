@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Typography component
 components: Typography
-githubLabel: 'component: Typography'
+githubLabel: "component: Typography"
 materialDesign: https://m2.material.io/design/typography/the-type-system.html
 ---
 
@@ -36,10 +36,10 @@ pnpm add @fontsource/roboto
 Then you can import it in your entry point like this:
 
 ```tsx
-import '@fontsource/roboto/300.css';
-import '@fontsource/roboto/400.css';
-import '@fontsource/roboto/500.css';
-import '@fontsource/roboto/700.css';
+import "@fontsource/roboto/300.css";
+import "@fontsource/roboto/400.css";
+import "@fontsource/roboto/500.css";
+import "@fontsource/roboto/700.css";
 ```
 
 :::info
@@ -101,16 +101,16 @@ const theme = createTheme({
     MuiTypography: {
       defaultProps: {
         variantMapping: {
-          h1: 'h2',
-          h2: 'h2',
-          h3: 'h2',
-          h4: 'h2',
-          h5: 'h2',
-          h6: 'h2',
-          subtitle1: 'h2',
-          subtitle2: 'h2',
-          body1: 'span',
-          body2: 'span',
+          h1: "h2",
+          h2: "h2",
+          h3: "h2",
+          h4: "h2",
+          h5: "h2",
+          h6: "h2",
+          subtitle1: "h2",
+          subtitle2: "h2",
+          body1: "span",
+          body2: "span",
         },
       },
     },

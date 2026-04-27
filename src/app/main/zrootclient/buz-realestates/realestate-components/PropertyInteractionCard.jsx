@@ -1,11 +1,20 @@
 import { useState } from "react";
-import { Button, Typography, Dialog, DialogTitle, DialogContent, DialogActions, TextField, CircularProgress } from "@mui/material";
-import { useAppSelector } from 'app/store/hooks';
+import {
+  Button,
+  Typography,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  CircularProgress,
+} from "@mui/material";
+import { useAppSelector } from "app/store/hooks";
 // import { selectFuseCurrentLayoutConfig } from '@fuse/core/FuseSettings/fuseSettingsSlice';
-import { selectUser } from 'src/app/auth/user/store/userSlice';
+import { selectUser } from "src/app/auth/user/store/userSlice";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
-import { useCreateInspectionSchedule } from 'app/configs/data/server-calls/auth/userapp/a_estates/useInspectionScheduleRepo';
-import { useCreatePropertyOffer } from 'app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo';
+import { useCreateInspectionSchedule } from "app/configs/data/server-calls/auth/userapp/a_estates/useInspectionScheduleRepo";
+import { useCreatePropertyOffer } from "app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo";
 
 /**
  * PropertyInteractionCard Component
@@ -37,7 +46,10 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
       propertyId: propertyData?.id,
       scheduledDate: inspectionDate,
       scheduledTimeSlot: inspectionTime, // Changed from timeSlot to scheduledTimeSlot to match API
-      userName: user?.data?.name || user?.name || `${user?.data?.firstName || ''} ${user?.data?.lastName || ''}`.trim(),
+      userName:
+        user?.data?.name ||
+        user?.name ||
+        `${user?.data?.firstName || ""} ${user?.data?.lastName || ""}`.trim(),
       userEmail: user?.data?.email || user?.email,
       userPhone: userPhone, // Use the phone number from the form input
       notes: inspectionNotes,
@@ -61,7 +73,10 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
     const offerData = {
       propertyId: propertyData?.id,
       offerAmount: parseFloat(offerAmount),
-      buyerName: user?.data?.name || user?.name || `${user?.data?.firstName || ''} ${user?.data?.lastName || ''}`.trim(),
+      buyerName:
+        user?.data?.name ||
+        user?.name ||
+        `${user?.data?.firstName || ""} ${user?.data?.lastName || ""}`.trim(),
       buyerEmail: user?.data?.email || user?.email,
       buyerPhone: offerPhone,
       message: offerMessage,
@@ -86,7 +101,10 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
 
   return (
     <>
-      <div className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border-2 border-gray-100 overflow-hidden" style={{ height: '50vh', display: 'flex', flexDirection: 'column' }}>
+      <div
+        className="bg-gradient-to-br from-white to-gray-50 rounded-xl shadow-lg border-2 border-gray-100 overflow-hidden"
+        style={{ height: "50vh", display: "flex", flexDirection: "column" }}
+      >
         {/* Header */}
         <div className="bg-gradient-to-r from-orange-500 to-orange-600 px-4 py-3">
           <div className="flex items-center gap-2">
@@ -100,28 +118,27 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
         </div>
 
         {/* Content */}
-        <div className="p-4 flex-1 overflow-y-auto" style={{
-          scrollbarWidth: 'thin',
-          scrollbarColor: '#d1d5db transparent'
-        }}>
+        <div
+          className="p-4 flex-1 overflow-y-auto"
+          style={{
+            scrollbarWidth: "thin",
+            scrollbarColor: "#d1d5db transparent",
+          }}
+        >
           {/* Quick Stats */}
           <div className="grid grid-cols-2 gap-3 mb-4">
             <div className="bg-white rounded-lg p-3 text-center border border-gray-200 shadow-sm">
               <div className="flex items-center justify-center mb-1">
                 <i className="fas fa-eye text-blue-500 text-xl"></i>
               </div>
-              <p className="text-xl font-bold text-gray-900">
-                {propertyData?.views || 243}
-              </p>
+              <p className="text-xl font-bold text-gray-900">{propertyData?.views || 243}</p>
               <p className="text-sm text-gray-600 font-medium">Views</p>
             </div>
             <div className="bg-white rounded-lg p-3 text-center border border-gray-200 shadow-sm">
               <div className="flex items-center justify-center mb-1">
                 <i className="fas fa-heart text-red-500 text-xl"></i>
               </div>
-              <p className="text-xl font-bold text-gray-900">
-                {propertyData?.favorites || 18}
-              </p>
+              <p className="text-xl font-bold text-gray-900">{propertyData?.favorites || 18}</p>
               <p className="text-sm text-gray-600 font-medium">Favorites</p>
             </div>
           </div>
@@ -214,10 +231,8 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 </Typography>
                 <Typography className="text-sm text-blue-700">
                   Available for{" "}
-                  <span className="font-bold">
-                    {propertyData?.listingType || "Sale"}
-                  </span>
-                  . Schedule inspection to view.
+                  <span className="font-bold">{propertyData?.listingType || "Sale"}</span>. Schedule
+                  inspection to view.
                 </Typography>
               </div>
             </div>
@@ -237,27 +252,21 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
 
           {/* Contact Info */}
           <div className="mt-3 pt-3 border-t">
-            <Typography className="text-sm font-semibold text-gray-900 mb-2">
-              Need Help?
-            </Typography>
+            <Typography className="text-sm font-semibold text-gray-900 mb-2">Need Help?</Typography>
             <div className="space-y-1.5">
               <a
                 href={`tel:${realtorInfo?.phone || "+234-XXX-XXX-XXXX"}`}
                 className="flex items-center gap-2 text-gray-700 hover:text-orange-600 transition-colors"
               >
                 <i className="fas fa-phone text-orange-500 text-sm"></i>
-                <span className="text-sm">
-                  {realtorInfo?.phone || "+234-XXX-XXX-XXXX"}
-                </span>
+                <span className="text-sm">{realtorInfo?.phone || "+234-XXX-XXX-XXXX"}</span>
               </a>
               <a
                 href={`mailto:${realtorInfo?.email || "info@realestate.com"}`}
                 className="flex items-center gap-2 text-gray-700 hover:text-orange-600 transition-colors"
               >
                 <i className="fas fa-envelope text-orange-500 text-sm"></i>
-                <span className="text-sm">
-                  {realtorInfo?.email || "info@realestate.com"}
-                </span>
+                <span className="text-sm">{realtorInfo?.email || "info@realestate.com"}</span>
               </a>
             </div>
           </div>
@@ -285,7 +294,8 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 Login Required
               </Typography>
               <Typography className="text-gray-600 mb-6">
-                You need to be logged in to schedule a property inspection. Please sign in or create an account to continue.
+                You need to be logged in to schedule a property inspection. Please sign in or create
+                an account to continue.
               </Typography>
               <Button
                 component={NavLinkAdapter}
@@ -363,7 +373,12 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
             <Button
               onClick={handleScheduleInspection}
               variant="contained"
-              disabled={!inspectionDate || !inspectionTime || !userPhone || createInspectionMutation.isLoading}
+              disabled={
+                !inspectionDate ||
+                !inspectionTime ||
+                !userPhone ||
+                createInspectionMutation.isLoading
+              }
               sx={{
                 backgroundColor: "#ea580c",
                 "&:hover": { backgroundColor: "#c2410c" },
@@ -405,7 +420,8 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 Login Required
               </Typography>
               <Typography className="text-gray-600 mb-6">
-                You need to be logged in to make an offer on this property. Please sign in or create an account to continue.
+                You need to be logged in to make an offer on this property. Please sign in or create
+                an account to continue.
               </Typography>
               <Button
                 component={NavLinkAdapter}
@@ -426,9 +442,7 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
           ) : (
             <div className="py-4 space-y-4">
               <div className="bg-gray-50 p-4 rounded-lg">
-                <Typography className="text-sm text-gray-600 mb-1">
-                  Listed Price
-                </Typography>
+                <Typography className="text-sm text-gray-600 mb-1">Listed Price</Typography>
                 <Typography className="text-2xl font-bold text-gray-900">
                   ₦{propertyData?.price?.toLocaleString() || "XX,XXX,XXX"}
                 </Typography>
@@ -465,8 +479,8 @@ function PropertyInteractionCard({ propertyData, realtorInfo }) {
                 variant="outlined"
               />
               <Typography className="text-sm text-gray-600">
-                Your offer will be sent to the realtor for review. They will respond
-                within 48 hours.
+                Your offer will be sent to the realtor for review. They will respond within 48
+                hours.
               </Typography>
             </div>
           )}

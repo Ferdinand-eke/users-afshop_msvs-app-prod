@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 /**
  * The scrumboard app.
  */
 function ScrumboardApp() {
-	return <Outlet />;
+  return <Outlet />;
 }
 
 export default ScrumboardApp;

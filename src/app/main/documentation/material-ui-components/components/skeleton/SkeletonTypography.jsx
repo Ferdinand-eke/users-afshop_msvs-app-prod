@@ -1,28 +1,29 @@
-import * as React from 'react';
-import Typography from '@mui/material/Typography';
-import Skeleton from '@mui/material/Skeleton';
-import Grid from '@mui/material/Grid';
-const variants = [
-    'h1',
-    'h3',
-    'body1',
-    'caption',
-];
+import * as React from "react";
+import Typography from "@mui/material/Typography";
+import Skeleton from "@mui/material/Skeleton";
+import Grid from "@mui/material/Grid";
+const variants = ["h1", "h3", "body1", "caption"];
 function TypographyDemo(props) {
-    const { loading = false } = props;
-    return (<div>
-      {variants.map((variant) => (<Typography component="div" key={variant} variant={variant}>
+  const { loading = false } = props;
+  return (
+    <div>
+      {variants.map((variant) => (
+        <Typography component="div" key={variant} variant={variant}>
           {loading ? <Skeleton /> : variant}
-        </Typography>))}
-    </div>);
+        </Typography>
+      ))}
+    </div>
+  );
 }
 export default function SkeletonTypography() {
-    return (<Grid container spacing={8}>
+  return (
+    <Grid container spacing={8}>
       <Grid item xs>
-        <TypographyDemo loading/>
+        <TypographyDemo loading />
       </Grid>
       <Grid item xs>
         <TypographyDemo />
       </Grid>
-    </Grid>);
+    </Grid>
+  );
 }

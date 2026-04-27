@@ -83,7 +83,7 @@ function ContactUs() {
       <div
         className="relative min-h-[50vh] flex items-center overflow-hidden"
         style={{
-          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)',
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 50%, #dc2626 100%)",
         }}
       >
         <div className="absolute inset-0 opacity-10">
@@ -190,10 +190,9 @@ function ContactUs() {
                           </Typography>
                           <Typography className="text-white text-lg font-bold">
                             africanshops@africanshops.org
-                           
                           </Typography>
                           <Typography className="text-white text-lg">
-                             info@africanshops.org
+                            info@africanshops.org
                           </Typography>
                         </div>
                       </div>
@@ -206,9 +205,7 @@ function ContactUs() {
                           <Typography className="text-white/80 text-sm font-semibold mb-1">
                             Office Address
                           </Typography>
-                          <Typography className="text-white text-lg">
-                            Abuja, Nigeria
-                          </Typography>
+                          <Typography className="text-white text-lg">Abuja, Nigeria</Typography>
                           <Typography className="text-white text-sm mt-2">
                             Serving customers across Africa
                           </Typography>
@@ -297,9 +294,7 @@ function ContactUs() {
                     <div className="absolute bottom-4 left-4 bg-white px-4 py-2 rounded-full shadow-lg">
                       <div className="flex items-center space-x-2">
                         <LocationOnIcon sx={{ color: "#f97316" }} />
-                        <Typography className="font-bold text-gray-900">
-                          Abuja, Nigeria
-                        </Typography>
+                        <Typography className="font-bold text-gray-900">Abuja, Nigeria</Typography>
                       </div>
                     </div>
                   </div>
@@ -524,7 +519,7 @@ function ContactUs() {
       <div
         className="py-20"
         style={{
-          background: 'linear-gradient(90deg, #f97316 0%, #ea580c 50%, #dc2626 100%)',
+          background: "linear-gradient(90deg, #f97316 0%, #ea580c 50%, #dc2626 100%)",
         }}
       >
         <div className="container mx-auto px-8 md:px-16 text-center">

@@ -35,9 +35,7 @@ function DemoSidebar() {
           >
             Special Offers
           </h3>
-          <p className="text-xs text-gray-600 mt-1">
-            Exclusive deals just for you
-          </p>
+          <p className="text-xs text-gray-600 mt-1">Exclusive deals just for you</p>
         </div>
 
         {/* Ads Slider - 70% of the 40% space */}

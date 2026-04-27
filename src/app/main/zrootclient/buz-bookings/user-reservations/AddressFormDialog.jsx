@@ -21,10 +21,7 @@ import { useCreateUserAddress } from "app/configs/data/server-calls/auth/userapp
  * Form Validation Schema
  */
 const addressSchema = z.object({
-  name: z
-    .string()
-    .nonempty("Name is required")
-    .min(3, "Name must be at least 3 characters"),
+  name: z.string().nonempty("Name is required").min(3, "Name must be at least 3 characters"),
   phone: z
     .string()
     .nonempty("Phone number is required")
@@ -170,8 +167,8 @@ function AddressFormDialog({ open, onClose, onSuccess }) {
                 />
               </svg>
               <p className="text-xs text-gray-700">
-                Save your address for faster checkout. You can mark it as default
-                to auto-fill in future bookings.
+                Save your address for faster checkout. You can mark it as default to auto-fill in
+                future bookings.
               </p>
             </div>
 
@@ -281,8 +278,7 @@ function AddressFormDialog({ open, onClose, onSuccess }) {
                   rows={3}
                   error={!!errors.address}
                   helperText={
-                    errors?.address?.message ||
-                    "Include street, city, state for verification"
+                    errors?.address?.message || "Include street, city, state for verification"
                   }
                   InputProps={{
                     startAdornment: (
@@ -341,9 +337,7 @@ function AddressFormDialog({ open, onClose, onSuccess }) {
                   }
                   label={
                     <div className="flex items-center gap-2">
-                      <span className="text-sm text-gray-700">
-                        Set as default address
-                      </span>
+                      <span className="text-sm text-gray-700">Set as default address</span>
                       <span className="text-xs bg-orange-100 text-orange-600 px-2 py-0.5 rounded">
                         Recommended
                       </span>
@@ -383,8 +377,7 @@ function AddressFormDialog({ open, onClose, onSuccess }) {
                 !isValid || createAddress.isLoading
                   ? "linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)"
                   : "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
-              color:
-                !isValid || createAddress.isLoading ? "#9ca3af" : "white",
+              color: !isValid || createAddress.isLoading ? "#9ca3af" : "white",
               "&:hover": {
                 background:
                   !isValid || createAddress.isLoading

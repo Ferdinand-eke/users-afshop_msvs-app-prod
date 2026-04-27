@@ -41,7 +41,6 @@ const schema = z.object({
   closeAccount: z.boolean(),
 });
 
-
 function CloseAccountSetting({ userEmail }) {
   const [confirmDialogOpen, setConfirmDialogOpen] = useState(false);
   const [finalConfirmDialogOpen, setFinalConfirmDialogOpen] = useState(false);
@@ -49,12 +48,11 @@ function CloseAccountSetting({ userEmail }) {
   // Initialize the close account mutation hook
   const closeAccountMutation = useCloseUserAccount();
 
-  const { control, reset, watch, handleSubmit, formState, getValues, setValue } =
-    useForm({
-      defaultValues,
-      mode: "onChange",
-      resolver: zodResolver(schema),
-    });
+  const { control, reset, watch, handleSubmit, formState, getValues, setValue } = useForm({
+    defaultValues,
+    mode: "onChange",
+    resolver: zodResolver(schema),
+  });
 
   const { isValid, errors } = formState;
   const { closeAccount } = watch();
@@ -87,7 +85,6 @@ function CloseAccountSetting({ userEmail }) {
       password: getValues("password"),
     };
 
-
     // ========================================================================
     // TEMPORARY DISABLE: Uncomment the toast below to temporarily disable this feature
     // ========================================================================
@@ -112,7 +109,7 @@ function CloseAccountSetting({ userEmail }) {
       onError: () => {
         // Error is already handled in the mutation hook
         // Keep the dialog open so user can retry
-      }
+      },
     });
   }
 
@@ -140,9 +137,7 @@ function CloseAccountSetting({ userEmail }) {
             </FuseSvgIcon>
           </div>
           <div>
-            <Typography className="text-xl font-bold text-gray-800">
-              Close Account
-            </Typography>
+            <Typography className="text-xl font-bold text-gray-800">Close Account</Typography>
             <Typography className="text-sm text-gray-600">
               Permanently delete your account and all associated data
             </Typography>
@@ -173,10 +168,7 @@ function CloseAccountSetting({ userEmail }) {
                         value ? "bg-red-100" : "bg-gray-100"
                       }`}
                     >
-                      <FuseSvgIcon
-                        size={20}
-                        className={value ? "text-red-600" : "text-gray-600"}
-                      >
+                      <FuseSvgIcon size={20} className={value ? "text-red-600" : "text-gray-600"}>
                         heroicons-solid:trash
                       </FuseSvgIcon>
                     </div>
@@ -537,8 +529,8 @@ function CloseAccountSetting({ userEmail }) {
             }}
           >
             <Typography className="text-xs text-gray-600">
-              If you're having issues, our support team is here to help. Contact us
-              before making this final decision.
+              If you're having issues, our support team is here to help. Contact us before making
+              this final decision.
             </Typography>
           </div>
         </DialogContent>
@@ -612,8 +604,8 @@ function CloseAccountSetting({ userEmail }) {
           </Typography>
 
           <Typography variant="body1" className="text-gray-700 mb-4">
-            Once you click "Yes, Delete Everything", your account and all data will be
-            permanently deleted. This action is irreversible.
+            Once you click "Yes, Delete Everything", your account and all data will be permanently
+            deleted. This action is irreversible.
           </Typography>
 
           <div

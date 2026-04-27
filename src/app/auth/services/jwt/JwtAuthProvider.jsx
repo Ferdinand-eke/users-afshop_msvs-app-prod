@@ -1,10 +1,4 @@
-import {
-  createContext,
-  useState,
-  useEffect,
-  useCallback,
-  useMemo,
-} from "react";
+import { createContext, useState, useEffect, useCallback, useMemo } from "react";
 import axios from "axios";
 import jwtDecode from "jwt-decode";
 import config from "./jwtAuthConfig";
@@ -12,7 +6,10 @@ import { useSnackbar } from "notistack";
 import Cookie from "js-cookie";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router";
-import { getSessionRedirectUrl, resetSessionRedirectUrl } from "@fuse/core/FuseAuthorization/sessionRedirectUrl";
+import {
+  getSessionRedirectUrl,
+  resetSessionRedirectUrl,
+} from "@fuse/core/FuseAuthorization/sessionRedirectUrl";
 // import { useAdminLogin } from "app/configs/data/server-calls/merchant-auth";
 import { useShopAdminLogin } from "app/configs/data/server-calls/auth/admin-auth";
 
@@ -86,7 +83,6 @@ function JwtAuthProvider(props) {
    * HANDLE USER DAT STORAGE
    */
   const setUserCredentialsStorage = useCallback((userCredentials) => {
-
     Cookie.set(config.adminCredentials, JSON.stringify({ userCredentials }));
   }, []);
 
@@ -99,7 +95,6 @@ function JwtAuthProvider(props) {
     if (userCredentials) {
       return userCredentials;
     }
-
   }, []);
 
   /***Remove user credentials */
@@ -113,9 +108,7 @@ function JwtAuthProvider(props) {
   const [user, setUser] = useState(getUserCredentialsStorage());
   const [isLoading, setIsLoading] = useState(false);
   const [isLoginLoading, setLoginIsLoading] = useState(false);
-  const [isAuthenticated, setIsAuthenticated] = useState(
-    getIsAuthenticatedStatus()
-  );
+  const [isAuthenticated, setIsAuthenticated] = useState(getIsAuthenticatedStatus());
   const [authStatus, setAuthStatus] = useState(getIsAuthStatusStorage()); //'configuring'
   const { children } = props;
 
@@ -126,7 +119,6 @@ function JwtAuthProvider(props) {
   const handleSignInSuccess = useCallback((userData, accessToken) => {
     setSession(accessToken);
     setIsAuthenticated(setIsAthenticatedStorage(accessToken));
-
 
     setUserCredentialsStorage(userData);
 
@@ -142,16 +134,15 @@ function JwtAuthProvider(props) {
       // Default behavior: reload to home page
       window.location.reload();
     }
-
   }, []); /**here is where token is stored */
   /**
    * Handle sign-up success
    */
   const handleSignUpSuccess = useCallback((userData, accessToken) => {
     setSession(accessToken);
-    
+
     setIsAuthenticated(setIsAthenticatedStorage(accessToken));
-    
+
     setUserCredentialsStorage(userData);
   }, []);
   /**
@@ -180,21 +171,21 @@ function JwtAuthProvider(props) {
     setIsAuthenticated(false);
     setUser(null);
   }, []);
- 
+
   const setSession = useCallback((accessToken) => {
     if (accessToken) {
       localStorage.setItem(config.tokenStorageKey, accessToken);
-   
+
       axios.defaults.headers.common.accessToken = `${accessToken}`;
     }
   }, []);
- 
+
   const resetSession = useCallback(() => {
     localStorage.removeItem(config.tokenStorageKey);
-    
+
     delete axios.defaults.headers.common.accessToken;
   }, []);
-  
+
   const getAccessToken = useCallback(() => {
     return localStorage.getItem(config.tokenStorageKey);
   }, []);
@@ -204,7 +195,7 @@ function JwtAuthProvider(props) {
     if (accessToken) {
       try {
         const decoded = jwtDecode(accessToken);
-     
+
         const currentTime = Date.now() / 1000;
         return decoded.exp > currentTime;
       } catch (error) {
@@ -222,22 +213,18 @@ function JwtAuthProvider(props) {
       if (isTokenValid(accessToken)) {
         try {
           setIsLoading(true);
-          const response = await axios.get(
-            config.getAuthAdminInBravortAdminUrl,
-            {
-              headers: { shoparccreed: `${accessToken}` },
-            }
-          );
-      
+          const response = await axios.get(config.getAuthAdminInBravortAdminUrl, {
+            headers: { shoparccreed: `${accessToken}` },
+          });
+
           const transFormedUser = {
             id: response?.data?.user?.id,
             name: response?.data?.user?.name,
             email: response?.data?.user?.email,
             role: "merchant",
             shopplan: response?.data?.user?.shopplan,
-          
           };
-     
+
           handleSignInSuccess(transFormedUser, accessToken);
           setIsLoading(false);
           return true;
@@ -246,7 +233,7 @@ function JwtAuthProvider(props) {
           toast.error(
             error?.response && error?.response?.data?.message
               ? error?.response?.data?.message
-              : error?.message
+              : error?.message,
           );
           handleSignInFailure(axiosError);
           setIsLoading(false);
@@ -262,9 +249,7 @@ function JwtAuthProvider(props) {
     };
 
     if (!isAuthenticated || isAuthenticated === null) {
-  
       attemptAutoLogin().then((signedIn) => {
-      
         setIsLoading(false);
         setAuthStatus(signedIn ? "authenticated" : "unauthenticated");
       });
@@ -279,8 +264,6 @@ function JwtAuthProvider(props) {
     isAuthenticated,
   ]);
 
-
-
   const adminLogIn = useShopAdminLogin();
   const handleRequest = async (
     url,
@@ -288,7 +271,7 @@ function JwtAuthProvider(props) {
     //  handleSuccess,
     handleSignInSuccess,
     //  handleFailure,
-    handleSignInFailure
+    handleSignInFailure,
   ) => {
     try {
       adminLogIn.mutate(data);
@@ -298,7 +281,7 @@ function JwtAuthProvider(props) {
       toast.error(
         error?.response && error?.response?.data?.message
           ? error?.response?.data?.message
-          : error?.message
+          : error?.message,
       );
 
       handleSignInFailure(axiosError);
@@ -311,17 +294,12 @@ function JwtAuthProvider(props) {
       config.signInBravortAdminUrl,
       credentials,
       handleSignInSuccess,
-      handleSignInFailure
+      handleSignInFailure,
     );
   };
   /***Refactor signUp function */
   const signUp = useCallback((data) => {
-    return handleRequest(
-      config.signUpUrl,
-      data,
-      handleSignUpSuccess,
-      handleSignUpFailure
-    );
+    return handleRequest(config.signUpUrl, data, handleSignUpSuccess, handleSignUpFailure);
   }, []);
   /**
    * Sign out
@@ -399,13 +377,12 @@ function JwtAuthProvider(props) {
           }
 
           return Promise.reject(axiosError);
-        }
+        },
       );
     }
   }, [isAuthenticated]);
   const storedAccessToken = getAccessToken();
   useEffect(() => {
-   
     if (storedAccessToken) {
       setAuthStatusStorage(storedAccessToken);
     }
@@ -436,13 +413,9 @@ function JwtAuthProvider(props) {
       updateUser,
       refreshToken,
       setIsLoading,
-    ]
+    ],
   );
-  return (
-    <JwtAuthContext.Provider value={authContextValue}>
-      {children}
-    </JwtAuthContext.Provider>
-  );
+  return <JwtAuthContext.Provider value={authContextValue}>{children}</JwtAuthContext.Provider>;
 }
 
 export default JwtAuthProvider;

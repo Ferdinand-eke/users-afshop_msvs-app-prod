@@ -112,7 +112,7 @@ function OfferDemoLeftSidebar() {
                   ? getActiveColor(item.color) + " shadow-sm"
                   : "border-transparent bg-white hover:bg-gray-50"
               }`}
-              style={{ textDecoration: 'none' }}
+              style={{ textDecoration: "none" }}
             >
               <div className="flex items-start gap-3">
                 <div
@@ -128,14 +128,14 @@ function OfferDemoLeftSidebar() {
                     className={`font-semibold mb-0.5 ${
                       isActive ? "text-gray-900" : "text-gray-800"
                     }`}
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                   >
                     {item.title}
                   </Typography>
                   <Typography
                     variant="caption"
                     className={isActive ? "text-gray-700" : "text-gray-500"}
-                    style={{ textDecoration: 'none' }}
+                    style={{ textDecoration: "none" }}
                   >
                     {item.description}
                   </Typography>

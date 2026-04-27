@@ -32,10 +32,7 @@ import {
 } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { useAppSelector } from "app/store/hooks";
-import {
-  calculateCartTotalAmount,
-  formatCurrency,
-} from "src/app/main/vendors-shop/PosUtils";
+import { calculateCartTotalAmount, formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { useNavigate } from "react-router";
 
@@ -59,10 +56,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
   useEffect(() => {
     if (open) {
       localStorage.setItem("minimumOrderSliderOpen", "true");
-      localStorage.setItem(
-        "minimumOrderProductId",
-        productData?.id || productData?._id || ""
-      );
+      localStorage.setItem("minimumOrderProductId", productData?.id || productData?._id || "");
     }
   }, [open, productData, selectedTier?.id || selectedTier?._id]);
 
@@ -118,10 +112,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
     if (!selectedTier) return;
     const newQuantity = selectedQuantity + delta;
     // Ensure quantity stays within tier's min and max
-    if (
-      newQuantity >= selectedTier.minQuantity &&
-      newQuantity <= selectedTier.maxQuantity
-    ) {
+    if (newQuantity >= selectedTier.minQuantity && newQuantity <= selectedTier.maxQuantity) {
       setSelectedQuantity(newQuantity);
     }
   };
@@ -133,7 +124,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
     // Clamp between min and max
     const clampedValue = Math.max(
       selectedTier.minQuantity,
-      Math.min(selectedTier.maxQuantity, numValue)
+      Math.min(selectedTier.maxQuantity, numValue),
     );
     setSelectedQuantity(clampedValue);
   };
@@ -237,7 +228,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
     if (element?.isBulkOrder && element?.bulkPriceTierId) {
       // Find the matching price tier from product's priceTiers array
       const matchingTier = element?.product?.priceTiers?.find(
-        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId,
       );
 
       if (matchingTier) {
@@ -254,8 +245,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
   const shippingTotal = 0; // Placeholder delivery cost
   const vat = 0; // Placeholder VAT
-  const grandTotal =
-    parseInt(totalAmount) + parseInt(shippingTotal) + parseInt(vat);
+  const grandTotal = parseInt(totalAmount) + parseInt(shippingTotal) + parseInt(vat);
 
   // Calculate item subtotal
   // const calculateItemSubtotal = () => {
@@ -269,10 +259,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
   // tier.minQuantity
   const getTotalVariationsAndItems = () => {
     const totalVariations = allCartItems.length;
-    const totalItems = allCartItems.reduce(
-      (sum, item) => sum + item.quantity,
-      0
-    );
+    const totalItems = allCartItems.reduce((sum, item) => sum + item.quantity, 0);
     return { totalVariations, totalItems };
   };
 
@@ -333,8 +320,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
           style={{
             background: "linear-gradient(to right, #ea580c, #dc2626)",
             padding: "20px 24px",
-            boxShadow:
-              "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
+            boxShadow: "0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)",
           }}
         >
           <div className="flex items-center gap-3">
@@ -446,7 +432,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                 const isCurrent = currentTier?.id === tier.id;
                 const isSelected = selectedTier?.id === tier.id;
                 const savingsPercent = Math.round(
-                  ((productData?.price - tier.price) / productData?.price) * 100
+                  ((productData?.price - tier.price) / productData?.price) * 100,
                 );
 
                 return (
@@ -471,10 +457,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                     }}
                   >
                     {/* Tier Header */}
-                    <div
-                      className="p-5 cursor-pointer"
-                      onClick={() => handleTierSelect(tier)}
-                    >
+                    <div className="p-5 cursor-pointer" onClick={() => handleTierSelect(tier)}>
                       <div className="flex items-center justify-between mb-3">
                         <div className="flex items-center gap-2">
                           {isCurrent && (
@@ -508,10 +491,8 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                           label={`Save ${savingsPercent}%`}
                           size="small"
                           sx={{
-                            backgroundColor:
-                              isSelected || isCurrent ? "#10b981" : "#f3f4f6",
-                            color:
-                              isSelected || isCurrent ? "white" : "#065f46",
+                            backgroundColor: isSelected || isCurrent ? "#10b981" : "#f3f4f6",
+                            color: isSelected || isCurrent ? "white" : "#065f46",
                             fontWeight: 700,
                             fontSize: "0.95rem",
                           }}
@@ -523,8 +504,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                           <Typography
                             sx={{
                               fontSize: "0.975rem",
-                              color:
-                                isSelected || isCurrent ? "#c2410c" : "#6b7280",
+                              color: isSelected || isCurrent ? "#c2410c" : "#6b7280",
                               fontWeight: 600,
                               marginBottom: "4px",
                             }}
@@ -536,8 +516,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                             sx={{
                               fontSize: "1.75rem",
                               fontWeight: 900,
-                              color:
-                                isSelected || isCurrent ? "#ea580c" : "#111827",
+                              color: isSelected || isCurrent ? "#ea580c" : "#111827",
                             }}
                           >
                             ₦{formatCurrency(tier.price)}
@@ -617,9 +596,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
 
                           <TextField
                             value={selectedQuantity}
-                            onChange={(e) =>
-                              handleQuantityInputChange(e.target.value)
-                            }
+                            onChange={(e) => handleQuantityInputChange(e.target.value)}
                             size="small"
                             sx={{
                               flex: 1,
@@ -687,19 +664,13 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                                 color: "#ea580c",
                               }}
                             >
-                              ₦
-                              {formatCurrency(
-                                tier.price * selectedQuantity
-                              ).toLocaleString()}
+                              ₦{formatCurrency(tier.price * selectedQuantity).toLocaleString()}
                             </Typography>
                           </div>
                         </div>
 
                         {/* Add to Cart Button */}
-                        <motion.div
-                          whileHover={{ scale: 1.02 }}
-                          whileTap={{ scale: 0.98 }}
-                        >
+                        <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
                           <Button
                             variant="contained"
                             fullWidth
@@ -707,11 +678,9 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                             onClick={onAddToUserCart}
                             disabled={addToCartLoading}
                             sx={{
-                              background:
-                                "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
+                              background: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
                               "&:hover": {
-                                background:
-                                  "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
+                                background: "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
                               },
                               textTransform: "none",
                               fontSize: "1.15rem",
@@ -721,8 +690,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                               boxShadow: "0 4px 15px rgba(234, 88, 12, 0.3)",
                             }}
                           >
-                            Add {selectedQuantity}{" "}
-                            {productData?.unitweight?.unitname} to Cart
+                            Add {selectedQuantity} {productData?.unitweight?.unitname} to Cart
                           </Button>
                         </motion.div>
                       </div>
@@ -824,12 +792,9 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                               let itemPrice = item?.product?.price;
                               if (item?.isBulkOrder && item?.bulkPriceTierId) {
                                 // Find the matching price tier from product's priceTiers array
-                                const matchingTier =
-                                  item?.product?.priceTiers?.find(
-                                    (tier) =>
-                                      (tier?.id || tier?._id) ===
-                                      item?.bulkPriceTierId
-                                  );
+                                const matchingTier = item?.product?.priceTiers?.find(
+                                  (tier) => (tier?.id || tier?._id) === item?.bulkPriceTierId,
+                                );
 
                                 if (matchingTier) {
                                   itemPrice = matchingTier?.price;
@@ -839,29 +804,21 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                             })()}
                           </Typography>
 
-                          <Typography
-                            variant="caption"
-                            className="text-gray-500"
-                          >
+                          <Typography variant="caption" className="text-gray-500">
                             Subtotal: ₦
                             {(() => {
                               let itemPrice = item?.product?.price;
                               if (item?.isBulkOrder && item?.bulkPriceTierId) {
                                 // Find the matching price tier from product's priceTiers array
-                                const matchingTier =
-                                  item?.product?.priceTiers?.find(
-                                    (tier) =>
-                                      (tier?.id || tier?._id) ===
-                                      item?.bulkPriceTierId
-                                  );
+                                const matchingTier = item?.product?.priceTiers?.find(
+                                  (tier) => (tier?.id || tier?._id) === item?.bulkPriceTierId,
+                                );
 
                                 if (matchingTier) {
                                   itemPrice = matchingTier?.price;
                                 }
                               }
-                              return formatCurrency(
-                                itemPrice * item?.quantity
-                              ).toLocaleString();
+                              return formatCurrency(itemPrice * item?.quantity).toLocaleString();
                             })()}
                             {/* {(
                               parseInt(item?.product?.price) *
@@ -873,9 +830,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
 
                       <div className="flex flex-col gap-2 items-end">
                         <div className="flex items-center gap-2 bg-gray-50 border-2 border-gray-300 rounded-xl">
-                          <motion.div
-                            whileTap={{ scale: item?.isBulkOrder ? 1 : 0.9 }}
-                          >
+                          <motion.div whileTap={{ scale: item?.isBulkOrder ? 1 : 0.9 }}>
                             <IconButton
                               size="small"
                               onClick={() => decreaseCart(item?.id)}
@@ -883,18 +838,12 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                               sx={{
                                 backgroundColor: "white",
                                 "&:hover": {
-                                  backgroundColor: item?.isBulkOrder
-                                    ? "white"
-                                    : "#fee2e2",
-                                  color: item?.isBulkOrder
-                                    ? "inherit"
-                                    : "#dc2626",
+                                  backgroundColor: item?.isBulkOrder ? "white" : "#fee2e2",
+                                  color: item?.isBulkOrder ? "inherit" : "#dc2626",
                                 },
                                 padding: "8px",
                                 opacity: item?.isBulkOrder ? 0.5 : 1,
-                                cursor: item?.isBulkOrder
-                                  ? "not-allowed"
-                                  : "pointer",
+                                cursor: item?.isBulkOrder ? "not-allowed" : "pointer",
                               }}
                             >
                               <Remove fontSize="small" />
@@ -912,9 +861,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                           >
                             {item?.quantity}
                           </Typography>
-                          <motion.div
-                            whileTap={{ scale: item?.isBulkOrder ? 1 : 0.9 }}
-                          >
+                          <motion.div whileTap={{ scale: item?.isBulkOrder ? 1 : 0.9 }}>
                             <IconButton
                               size="small"
                               onClick={() => increaseCart(item?.id)}
@@ -922,18 +869,12 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                               sx={{
                                 backgroundColor: "white",
                                 "&:hover": {
-                                  backgroundColor: item?.isBulkOrder
-                                    ? "white"
-                                    : "#dcfce7",
-                                  color: item?.isBulkOrder
-                                    ? "inherit"
-                                    : "#16a34a",
+                                  backgroundColor: item?.isBulkOrder ? "white" : "#dcfce7",
+                                  color: item?.isBulkOrder ? "inherit" : "#16a34a",
                                 },
                                 padding: "8px",
                                 opacity: item?.isBulkOrder ? 0.5 : 1,
-                                cursor: item?.isBulkOrder
-                                  ? "not-allowed"
-                                  : "pointer",
+                                cursor: item?.isBulkOrder ? "not-allowed" : "pointer",
                               }}
                             >
                               <Add fontSize="small" />
@@ -941,10 +882,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                           </motion.div>
                         </div>
                         {allCartItems?.length > 1 && (
-                          <motion.div
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.9 }}
-                          >
+                          <motion.div whileHover={{ scale: 1.1 }} whileTap={{ scale: 0.9 }}>
                             <IconButton
                               size="small"
                               onClick={() => removeItemInCart(item?.id)}
@@ -990,9 +928,8 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
                               lineHeight: 1.4,
                             }}
                           >
-                            This is a bulk order with fixed quantity. To modify,
-                            remove this item and select a different price tier
-                            from the product page.
+                            This is a bulk order with fixed quantity. To modify, remove this item
+                            and select a different price tier from the product page.
                           </Typography>
                         </div>
                       </motion.div>
@@ -1221,8 +1158,7 @@ function UseMinimumOrder({ open, onClose, productData, pricingTiers }) {
               sx={{
                 background: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
                 "&:hover": {
-                  background:
-                    "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
+                  background: "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
                 },
                 textTransform: "none",
                 fontSize: "1.125rem",

@@ -50,7 +50,6 @@ const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
   "& .FusePageSimple-sidebarContent": {},
 }));
 
-
 /**
  * Active Single Product Page Component
  * This component renders when the marketplace service is ACTIVE
@@ -64,17 +63,12 @@ function ActiveSingleProductPage() {
     setRightSidebarOpen(!isMobile);
   }, [isMobile]);
 
-  
   const routeParams = useParams();
   const navigate = useNavigate();
   const user = useAppSelector(selectUser);
   const { productId: productIdFromRoute, productSlug } = routeParams;
 
-  const {
-    data: product,
-    isLoading,
-    isError,
-  } = useGetSingleProduct(productSlug);
+  const { data: product, isLoading, isError } = useGetSingleProduct(productSlug);
 
   const { mutate: addToart, isLoading: cartLoading } = useAddToCart();
   const [select, setSelect] = useState(0);
@@ -82,7 +76,7 @@ function ActiveSingleProductPage() {
   // const [cartloading, setCartLoading] = useState(false);
   const [cart, setCart] = useState([]);
   // const { data: userCartData } =useGetMyMarketplaceCartByUserCred(); //user?.id
-   const { data: userCartData } =useMyCart(user?.id); //user?.id
+  const { data: userCartData } = useMyCart(user?.id); //user?.id
 
   const onAddToUserCart = useCallback(() => {
     if (!user?.email) {
@@ -110,8 +104,6 @@ function ActiveSingleProductPage() {
     //if same add to cart else show error message
 
     if (userCartData?.data?.cartSession?.cartProducts?.length === 0) {
-    
- 
       if (userCartData?.data?.cartSession?.lgaId) {
         addToart(formData);
         // getCartWhenAuth()
@@ -121,8 +113,8 @@ function ActiveSingleProductPage() {
       // const payloadData = getShoppingSession()
 
       if (
-        userCartData?.data?.cartSession?.lgaId ===
-        product?.data?.product?.productLga  || !userCartData?.data?.cartSession?.lgaId
+        userCartData?.data?.cartSession?.lgaId === product?.data?.product?.productLga ||
+        !userCartData?.data?.cartSession?.lgaId
       ) {
         addToart(formData);
         // getCartWhenAuth()
@@ -160,7 +152,10 @@ function ActiveSingleProductPage() {
   // Memoize derived data to avoid recalculation on every render
   const productData = useMemo(() => product?.data?.product, [product?.data?.product]);
   const productId = useMemo(() => product?.data?.product?.id, [product?.data?.product?.id]);
-  const cartItems = useMemo(() => userCartData?.data?.cartSession?.cartProducts, [userCartData?.data?.cartSession?.cartProducts]);
+  const cartItems = useMemo(
+    () => userCartData?.data?.cartSession?.cartProducts,
+    [userCartData?.data?.cartSession?.cartProducts],
+  );
 
   // Memoize header component
   const headerComponent = useMemo(
@@ -170,7 +165,7 @@ function ActiveSingleProductPage() {
         rightSidebarToggle={handleRightSidebarToggle}
       />
     ),
-    [handleLeftSidebarToggle, handleRightSidebarToggle]
+    [handleLeftSidebarToggle, handleRightSidebarToggle],
   );
 
   // Memoize content component
@@ -188,7 +183,7 @@ function ActiveSingleProductPage() {
         cartItems={cartItems}
       />
     ),
-    [productData, isLoading, isError, select, onAddToUserCart, cartLoading, productId, cartItems]
+    [productData, isLoading, isError, select, onAddToUserCart, cartLoading, productId, cartItems],
   );
 
   // Memoize left sidebar content
@@ -197,7 +192,7 @@ function ActiveSingleProductPage() {
   // Memoize right sidebar content
   const rightSidebarContentComponent = useMemo(
     () => <DemoSidebarRight productInfo={productData} />,
-    [productData]
+    [productData],
   );
 
   return (
@@ -223,6 +218,7 @@ const MemoizedActiveSingleProductPage = memo(ActiveSingleProductPage);
  * Wraps the active single product page with service status landing pages
  */
 
+
 function SingleProductWithContentScrollPage() {
   // Fetch user app settings
   const {
@@ -234,12 +230,12 @@ function SingleProductWithContentScrollPage() {
   // Extract the marketplace service status - memoized to prevent unnecessary re-renders
   const marketplaceServiceStatus = useMemo(
     () => appSettings?.data?.payload?.marketplaceServiceStatus,
-    [appSettings?.data?.payload?.marketplaceServiceStatus]
+    [appSettings?.data?.payload?.marketplaceServiceStatus],
   );
 
   // Log service status only when it changes (development only)
   useEffect(() => {
-    if (process.env.NODE_ENV === 'development' && marketplaceServiceStatus !== undefined) {
+    if (process.env.NODE_ENV === "development" && marketplaceServiceStatus !== undefined) {
       console.log("Marketplace Service Status (Single Product):", marketplaceServiceStatus);
     }
   }, [marketplaceServiceStatus]);

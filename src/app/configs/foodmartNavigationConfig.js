@@ -2,8 +2,6 @@ import i18next from 'i18next';
 import ar from './navigation-i18n/ar';
 import en from './navigation-i18n/en';
 import tr from './navigation-i18n/tr';
-import { authRoles } from '../auth';
-import DocumentationNavigation from '../main/documentation/DocumentationNavigation';
 
 i18next.addResourceBundle('en', 'navigation', en);
 i18next.addResourceBundle('tr', 'navigation', tr);
@@ -12,10 +10,8 @@ i18next.addResourceBundle('ar', 'navigation', ar);
  * The foodmartNavigationConfig object is an array of navigation items for the Fuse application.
  */
 
-
 const foodmartNavigationConfig = [
-
-	/***Dashboard pane */
+	/** *Dashboard pane */
 	{
 		id: 'dashboards',
 		title: 'Dashboards',
@@ -30,8 +26,7 @@ const foodmartNavigationConfig = [
 				type: 'item',
 				icon: 'heroicons-outline:clipboard-check',
 				url: '/shop-dashboard'
-			},
-			
+			}
 		]
 	},
 
@@ -43,14 +38,13 @@ const foodmartNavigationConfig = [
 		icon: 'heroicons-outline:home',
 		translate: 'FOODMART',
 		children: [
-
 			{
 				id: 'food.managedfoodmartlistings',
 				title: 'Managed Food Marts',
 				type: 'item',
 				icon: 'heroicons-outline:clipboard-check',
 				url: '/foodmarts/managed-foodmerchants'
-			},
+			}
 			// {
 			// 	id: 'properties.manageduserlist',
 			// 	title: 'Managed USER Properties',
@@ -58,14 +52,10 @@ const foodmartNavigationConfig = [
 			// 	icon: 'heroicons-outline:clipboard-check',
 			// 	url: '/userlistings'
 			// },
-			
-			
 		]
 	},
 
-	
-
-	/***Finance management pane */
+	/** *Finance management pane */
 	{
 		id: 'FInance',
 		title: 'Manage Finance',
@@ -74,14 +64,13 @@ const foodmartNavigationConfig = [
 		icon: 'heroicons-outline:home',
 		translate: 'FINANCE',
 		children: [
-			
 			{
 				id: 'estates.earnings',
 				title: 'Wallet',
 				type: 'item',
 				icon: 'heroicons-outline:clipboard-check',
 				url: '/africanshops/finance'
-			},
+			}
 
 			// {
 			// 	id: 'withdrawals.list',
@@ -90,12 +79,10 @@ const foodmartNavigationConfig = [
 			// 	icon: 'heroicons-outline:clipboard-check',
 			// 	url: '/finance/withdrawals'
 			// },
-		
-			
 		]
 	},
 
-	/***Support management pane */
+	/** *Support management pane */
 	{
 		id: 'Support.Helpcenter',
 		title: 'Get Support',
@@ -104,22 +91,17 @@ const foodmartNavigationConfig = [
 		icon: 'heroicons-outline:home',
 		translate: 'SUPPORT',
 		children: [
-			
 			{
 				id: 'support.users',
 				title: 'Suppport',
 				type: 'item',
 				icon: 'heroicons-outline:support',
 				url: '/support'
-			},
-
-			
-		
-			
+			}
 		]
 	},
 
-	/***Messanger pane */
+	/** *Messanger pane */
 	{
 		id: 'Africanshops.Messanger',
 		title: 'Messanger',
@@ -128,7 +110,6 @@ const foodmartNavigationConfig = [
 		icon: 'heroicons-outline:chat-alt',
 		translate: 'MESSANGER',
 		children: [
-			
 			{
 				id: 'apps.messenger',
 				title: 'Messenger',
@@ -136,13 +117,9 @@ const foodmartNavigationConfig = [
 				icon: 'heroicons-outline:chat-alt',
 				url: '/africanshops/messenger',
 				translate: 'MESSENGER'
-			},
-
-			
-		
-			
+			}
 		]
-	},
+	}
 
 	// {
 	// 	id: 'users',
@@ -173,11 +150,8 @@ const foodmartNavigationConfig = [
 	// 			icon: 'heroicons-outline:user-group',
 	// 			url: '/users/shopstaff'
 	// 		},
-			
+
 	// 	]
 	// },
-
-	
-
 ];
 export default foodmartNavigationConfig;

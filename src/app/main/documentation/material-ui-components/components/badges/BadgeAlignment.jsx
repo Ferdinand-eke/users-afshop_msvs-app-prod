@@ -1,17 +1,17 @@
-import * as React from 'react';
-import Badge from '@mui/material/Badge';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormLabel from '@mui/material/FormLabel';
-import Radio from '@mui/material/Radio';
-import RadioGroup from '@mui/material/RadioGroup';
-import Box from '@mui/material/Box';
-import MailIcon from '@mui/icons-material/Mail';
-import HighlightedCode from '../../utils/HighlightedCode';
+import * as React from "react";
+import Badge from "@mui/material/Badge";
+import FormControl from "@mui/material/FormControl";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import FormLabel from "@mui/material/FormLabel";
+import Radio from "@mui/material/Radio";
+import RadioGroup from "@mui/material/RadioGroup";
+import Box from "@mui/material/Box";
+import MailIcon from "@mui/icons-material/Mail";
+import HighlightedCode from "../../utils/HighlightedCode";
 
 export default function BadgeAlignment() {
-  const [horizontal, setHorizontal] = React.useState('right');
-  const [vertical, setVertical] = React.useState('top');
+  const [horizontal, setHorizontal] = React.useState("right");
+  const [vertical, setVertical] = React.useState("top");
 
   const handleHorizontalChange = (event) => {
     setHorizontal(event.target.value);
@@ -31,34 +31,26 @@ export default function BadgeAlignment() {
 `;
 
   return (
-    <Box sx={{ width: '100%' }}>
+    <Box sx={{ width: "100%" }}>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          '& fieldset': {
+          display: "flex",
+          justifyContent: "center",
+          "& fieldset": {
             margin: 3,
           },
         }}
       >
         <FormControl component="fieldset">
           <FormLabel component="legend">Vertical</FormLabel>
-          <RadioGroup
-            name="vertical"
-            value={vertical}
-            onChange={handleVerticalChange}
-          >
+          <RadioGroup name="vertical" value={vertical} onChange={handleVerticalChange}>
             <FormControlLabel value="top" control={<Radio />} label="Top" />
             <FormControlLabel value="bottom" control={<Radio />} label="Bottom" />
           </RadioGroup>
         </FormControl>
         <FormControl component="fieldset">
           <FormLabel component="legend">Horizontal</FormLabel>
-          <RadioGroup
-            name="horizontal"
-            value={horizontal}
-            onChange={handleHorizontalChange}
-          >
+          <RadioGroup name="horizontal" value={horizontal} onChange={handleHorizontalChange}>
             <FormControlLabel value="right" control={<Radio />} label="Right" />
             <FormControlLabel value="left" control={<Radio />} label="Left" />
           </RadioGroup>
@@ -66,10 +58,10 @@ export default function BadgeAlignment() {
       </Box>
       <Box
         sx={{
-          display: 'flex',
-          justifyContent: 'center',
-          color: 'action.active',
-          '& > *': {
+          display: "flex",
+          justifyContent: "center",
+          color: "action.active",
+          "& > *": {
             margin: 2,
           },
         }}

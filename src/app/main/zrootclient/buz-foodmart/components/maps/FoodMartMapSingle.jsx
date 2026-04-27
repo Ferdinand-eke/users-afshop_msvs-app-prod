@@ -25,16 +25,19 @@ function FoodMartMapSingle({ center, items }) {
       />
       <>
         <Marker position={[center?.latitude, center?.longitude]}>
-      <Popup>
-        <div className="flex gap-[16px]">
-          <img src={items?.imageSrc} alt="" className="w-[64px] h-[48px] object-cover rounded-4"/>
-          <div className="flex flex-col justify-between">
-            <Typography >{items?.title}</Typography>
-            
-          </div>
-        </div>
-      </Popup>
-    </Marker>
+          <Popup>
+            <div className="flex gap-[16px]">
+              <img
+                src={items?.imageSrc}
+                alt=""
+                className="w-[64px] h-[48px] object-cover rounded-4"
+              />
+              <div className="flex flex-col justify-between">
+                <Typography>{items?.title}</Typography>
+              </div>
+            </div>
+          </Popup>
+        </Marker>
       </>
     </MapContainer>
   );

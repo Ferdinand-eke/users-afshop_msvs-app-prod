@@ -45,7 +45,6 @@ function UserReservationsWithSidebarsContentScrollPage() {
     isError: isCancelledError,
   } = useUserCancelledTrips();
 
-
   return (
     <Root
       header={

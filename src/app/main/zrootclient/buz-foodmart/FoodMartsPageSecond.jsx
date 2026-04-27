@@ -59,9 +59,7 @@ function FoodMartsPageSecond() {
             <div className="flex flex-1">
               {/* Sidebar */}
               <div className="w-full md:w-1/5 bg-white p-4 sticky top-16 h-screen overflow-y-auto">
-                <div className="text-2xl font-bold text-blue-600 mb-8">
-                  Categories.
-                </div>
+                <div className="text-2xl font-bold text-blue-600 mb-8">Categories.</div>
                 <div className="mb-8">
                   <h2 className="text-lg font-semibold mb-4">New Feeds</h2>
                   <ul>
@@ -125,9 +123,7 @@ function FoodMartsPageSecond() {
                     <i className="fas fa-moon text-gray-500"></i>
                   </div>
                 </div>
-                <h1 className="text-2xl font-bold mb-4">
-                  Restaurants And Food Vendors Around You
-                </h1>
+                <h1 className="text-2xl font-bold mb-4">Restaurants And Food Vendors Around You</h1>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   {/* Add the card elements as before */}
                   {/* <div className="grid grid-cols-1 md:grid-cols-2 gap-4 overflow-scroll"> */}
@@ -149,9 +145,7 @@ function FoodMartsPageSecond() {
                     >
                       Jay's Kitchen
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -171,9 +165,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $320/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$320/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -192,9 +184,7 @@ function FoodMartsPageSecond() {
                     >
                       Chef Makamba
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -214,9 +204,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -235,9 +223,7 @@ function FoodMartsPageSecond() {
                     >
                       Today's Kitchen
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -257,9 +243,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -278,9 +262,7 @@ function FoodMartsPageSecond() {
                     >
                       HotStop Kitchen
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -300,9 +282,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -315,12 +295,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -340,9 +316,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -354,12 +328,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -379,9 +349,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -393,12 +361,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -418,9 +382,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -432,12 +394,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -457,9 +415,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -471,12 +427,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -496,9 +448,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -510,12 +460,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -535,9 +481,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -549,12 +493,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -574,9 +514,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -588,12 +526,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -613,9 +547,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -627,12 +559,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -652,9 +580,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -666,12 +592,8 @@ function FoodMartsPageSecond() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -691,9 +613,7 @@ function FoodMartsPageSecond() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -709,9 +629,7 @@ function FoodMartsPageSecond() {
                     <p className="text-gray-700 mb-4">
                       This page can't load Google Maps correctly.
                     </p>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                      OK
-                    </button>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
                   </div>
                 </div>
                 <img

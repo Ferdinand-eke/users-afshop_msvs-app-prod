@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Grid, Typography, Box } from '@mui/material';
-import FilterList from './FilterList';
-import BookingCard from './BookingCard';
+import { useState } from "react";
+import { Grid, Typography, Box } from "@mui/material";
+import FilterList from "./FilterList";
+import BookingCard from "./BookingCard";
 
 /**
  * FilterListExample Component
@@ -15,65 +15,61 @@ function FilterListExample() {
   const mockProperties = [
     {
       id: 1,
-      slug: 'luxury-villa-lekki',
-      title: 'Luxury Villa in Lekki Phase 1',
-      address: 'Lekki Phase 1, Lagos, Nigeria',
+      slug: "luxury-villa-lekki",
+      title: "Luxury Villa in Lekki Phase 1",
+      address: "Lekki Phase 1, Lagos, Nigeria",
       price: 350,
       roomCount: 4,
       bathroomCount: 3,
-      propertyType: 'Villa',
-      country: 'NG',
-      state: 'lagos',
-      lga: 'lekki',
-      district: 'phase-1',
-      amenities: ['wifi', 'air-conditioning', 'swimming-pool', 'washer'],
+      propertyType: "Villa",
+      country: "NG",
+      state: "lagos",
+      lga: "lekki",
+      district: "phase-1",
+      amenities: ["wifi", "air-conditioning", "swimming-pool", "washer"],
       rating: 4.8,
       reviewCount: 24,
       images: [
-        { url: 'https://via.placeholder.com/400x300?text=Villa+Image+1' },
-        { url: 'https://via.placeholder.com/400x300?text=Villa+Image+2' }
-      ]
+        { url: "https://via.placeholder.com/400x300?text=Villa+Image+1" },
+        { url: "https://via.placeholder.com/400x300?text=Villa+Image+2" },
+      ],
     },
     {
       id: 2,
-      slug: 'modern-apartment-victoria-island',
-      title: 'Modern Apartment with Sea View',
-      address: 'Victoria Island, Lagos, Nigeria',
+      slug: "modern-apartment-victoria-island",
+      title: "Modern Apartment with Sea View",
+      address: "Victoria Island, Lagos, Nigeria",
       price: 250,
       roomCount: 3,
       bathroomCount: 2,
-      propertyType: 'Apartment',
-      country: 'NG',
-      state: 'lagos',
-      lga: 'victoria-island',
-      district: 'oniru',
-      amenities: ['wifi', 'air-conditioning', 'tv-cable', 'dryer'],
+      propertyType: "Apartment",
+      country: "NG",
+      state: "lagos",
+      lga: "victoria-island",
+      district: "oniru",
+      amenities: ["wifi", "air-conditioning", "tv-cable", "dryer"],
       rating: 4.5,
       reviewCount: 18,
-      images: [
-        { url: 'https://via.placeholder.com/400x300?text=Apartment+Image+1' }
-      ]
+      images: [{ url: "https://via.placeholder.com/400x300?text=Apartment+Image+1" }],
     },
     {
       id: 3,
-      slug: 'cozy-guesthouse-ikeja',
-      title: 'Cozy Guesthouse in Ikeja GRA',
-      address: 'Ikeja GRA, Lagos, Nigeria',
+      slug: "cozy-guesthouse-ikeja",
+      title: "Cozy Guesthouse in Ikeja GRA",
+      address: "Ikeja GRA, Lagos, Nigeria",
       price: 120,
       roomCount: 2,
       bathroomCount: 1,
-      propertyType: 'Guesthouse',
-      country: 'NG',
-      state: 'lagos',
-      lga: 'ikeja',
-      district: 'ikeja-gra',
-      amenities: ['wifi', 'air-conditioning', 'laundry'],
+      propertyType: "Guesthouse",
+      country: "NG",
+      state: "lagos",
+      lga: "ikeja",
+      district: "ikeja-gra",
+      amenities: ["wifi", "air-conditioning", "laundry"],
       rating: 4.2,
       reviewCount: 12,
-      images: [
-        { url: 'https://via.placeholder.com/400x300?text=Guesthouse+Image+1' }
-      ]
-    }
+      images: [{ url: "https://via.placeholder.com/400x300?text=Guesthouse+Image+1" }],
+    },
   ];
 
   // Filter properties based on selected filters
@@ -124,8 +120,8 @@ function FilterListExample() {
       // Room count
       if (filterCriteria.roomCount) {
         const roomCount =
-          filterCriteria.roomCount === '6+' ? 6 : parseInt(filterCriteria.roomCount, 10);
-        if (filterCriteria.roomCount === '6+') {
+          filterCriteria.roomCount === "6+" ? 6 : parseInt(filterCriteria.roomCount, 10);
+        if (filterCriteria.roomCount === "6+") {
           if (property.roomCount < roomCount) return false;
         } else if (property.roomCount !== roomCount) {
           return false;
@@ -135,8 +131,8 @@ function FilterListExample() {
       // Bathroom count
       if (filterCriteria.bathroomCount) {
         const bathroomCount =
-          filterCriteria.bathroomCount === '5+' ? 5 : parseInt(filterCriteria.bathroomCount, 10);
-        if (filterCriteria.bathroomCount === '5+') {
+          filterCriteria.bathroomCount === "5+" ? 5 : parseInt(filterCriteria.bathroomCount, 10);
+        if (filterCriteria.bathroomCount === "5+") {
           if (property.bathroomCount < bathroomCount) return false;
         } else if (property.bathroomCount !== bathroomCount) {
           return false;
@@ -146,7 +142,7 @@ function FilterListExample() {
       // Amenities (property must have all selected amenities)
       if (filterCriteria.amenities && filterCriteria.amenities.length > 0) {
         const hasAllAmenities = filterCriteria.amenities.every((amenity) =>
-          property.amenities.includes(amenity)
+          property.amenities.includes(amenity),
         );
         if (!hasAllAmenities) return false;
       }
@@ -163,9 +159,13 @@ function FilterListExample() {
   };
 
   // Initialize with all properties
-  const displayProperties = filteredProperties.length > 0 || Object.keys(filters).some(key => filters[key] && (Array.isArray(filters[key]) ? filters[key].length > 0 : true))
-    ? filteredProperties
-    : mockProperties;
+  const displayProperties =
+    filteredProperties.length > 0 ||
+    Object.keys(filters).some(
+      (key) => filters[key] && (Array.isArray(filters[key]) ? filters[key].length > 0 : true),
+    )
+      ? filteredProperties
+      : mockProperties;
 
   return (
     <Box className="min-h-screen bg-gray-50 p-6">
@@ -185,7 +185,8 @@ function FilterListExample() {
         <Grid item xs={12} lg={9}>
           <div className="mb-4">
             <Typography variant="body1" className="text-gray-600">
-              {displayProperties.length} {displayProperties.length === 1 ? 'property' : 'properties'} found
+              {displayProperties.length}{" "}
+              {displayProperties.length === 1 ? "property" : "properties"} found
             </Typography>
           </div>
 

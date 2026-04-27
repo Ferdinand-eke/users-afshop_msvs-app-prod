@@ -17,7 +17,7 @@ function DemoContent(props) {
     currentPage,
     itemsPerPage,
     onPageChange,
-    onItemsPerPageChange
+    onItemsPerPageChange,
   } = props;
 
   // Fallback: if totalItems is not provided by backend, estimate based on foodMarts length

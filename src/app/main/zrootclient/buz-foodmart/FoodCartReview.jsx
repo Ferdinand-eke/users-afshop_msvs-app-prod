@@ -19,10 +19,7 @@ import {
   useReservationPaidUpdateMutation,
 } from "app/configs/data/server-calls/auth/userapp/a_bookings/use-reservations";
 import { useParams } from "react-router";
-import {
-  formatCurrency,
-  generateClientUID,
-} from "src/app/main/vendors-shop/PosUtils";
+import { formatCurrency, generateClientUID } from "src/app/main/vendors-shop/PosUtils";
 import { format } from "date-fns";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -79,29 +76,21 @@ const schema = z.object({
     .string()
     .nonempty("You must enter an address as regulated by the gpvernment")
     .min(5, "The product name must be at least 5 characters"),
-  orderCountryDestination: z
-    .string()
-    .nonempty("You must enter a country for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
+  orderCountryDestination: z.string().nonempty("You must enter a country for this order"),
+  // .min(5, "The product name must be at least 5 characters"),
   orderStateProvinceDestination: z
     .string()
     .nonempty("You must enter a state destination for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
-  orderLgaDestination: z
-    .string()
-    .nonempty("You must enter an L.G.A/County for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
-    orderMarketPickupDestination: z
+  // .min(5, "The product name must be at least 5 characters"),
+  orderLgaDestination: z.string().nonempty("You must enter an L.G.A/County for this order"),
+  // .min(5, "The product name must be at least 5 characters"),
+  orderMarketPickupDestination: z
     .string()
     .nonempty("You must enter a market pick up point for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
-    district: z
-    .string()
-    .nonempty("You must enter a market pick up point for this order"),
-    // .min(5, "The product name must be at least 5 characters"),
+  // .min(5, "The product name must be at least 5 characters"),
+  district: z.string().nonempty("You must enter a market pick up point for this order"),
+  // .min(5, "The product name must be at least 5 characters"),
 });
-
-
 
 /**
  * The Courses page.
@@ -109,7 +98,6 @@ const schema = z.object({
 function FoodCartReview() {
   const user = useAppSelector(selectUser);
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
-
 
   const { data: foodCart, isLoading: foodCartLoading } = useGetMyFoodCart(user?.id);
   const [selectedPaymentOption, setSelectedPaymentOption] = useState("");
@@ -139,7 +127,6 @@ function FoodCartReview() {
   const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
 
   const email = user?.email;
-
 
   const payments = [
     {
@@ -186,13 +173,11 @@ function FoodCartReview() {
     getValues()?.orderLgaDestination,
   ]);
 
-  console.log("STATE__ID", getValues()?.orderStateProvinceDestination)
+  console.log("STATE__ID", getValues()?.orderStateProvinceDestination);
 
   async function findStatesByCountry() {
     setLoading(true);
-    const stateResponseData = await getStateByCountryId(
-      getValues()?.orderCountryDestination
-    );
+    const stateResponseData = await getStateByCountryId(getValues()?.orderCountryDestination);
 
     if (stateResponseData) {
       setStateData(stateResponseData?.data?.states);
@@ -201,20 +186,17 @@ function FoodCartReview() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
-
-
-  
 
   //**Get L.G.As from state_ID data */
   async function getLgasFromState(sid) {
     setLoading(true);
     const responseData = await getLgasByStateId(sid);
 
-    console.log("LGAS___data", responseData)
+    console.log("LGAS___data", responseData);
 
     if (responseData) {
       setBlgas(responseData?.data?.lgas);
@@ -222,7 +204,7 @@ function FoodCartReview() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -232,19 +214,18 @@ function FoodCartReview() {
     if (lid) {
       setLoading(true);
       const responseData = await getMarketsByLgaId(lid);
-      console.log("marketsByLGA", responseData)
+      console.log("marketsByLGA", responseData);
       if (responseData) {
         setBMarkets(responseData?.data?.markets);
         setTimeout(
           function () {
             setLoading(false);
           }.bind(this),
-          250
+          250,
         );
       }
     }
   }
-
 
   return (
     <FusePageSimple
@@ -258,16 +239,13 @@ function FoodCartReview() {
 
               <div className="flex-1 p-4 bg-white rounded-md">
                 <div className="max-w-5xl mx-auto p-4 overflow-scroll">
-              
                   <>
                     <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                       <div className="flex justify-between items-center border-b pb-2 mb-2">
                         <h2 className="text-lg font-semibold">
                           1. CUSTOMER BILLING & SHIPPING ADDRESS
                         </h2>
-                        <span className="text-blue-500 cursor-pointer">
-                          Change
-                        </span>
+                        <span className="text-blue-500 cursor-pointer">Change</span>
                       </div>
                       {name && <p className="font-semibold">{name}</p>}
 
@@ -356,16 +334,11 @@ function FoodCartReview() {
                                 error={!!errors.orderCountryDestination}
                                 helperText={errors?.orderCountryDestination?.message}
                               >
-                                {countryData?.data?.countries?.map(
-                                  (buzcountry, index) => (
-                                    <MenuItem
-                                      key={index}
-                                      value={buzcountry?.id}
-                                    >
-                                      {buzcountry?.name}
-                                    </MenuItem>
-                                  )
-                                )}
+                                {countryData?.data?.countries?.map((buzcountry, index) => (
+                                  <MenuItem key={index} value={buzcountry?.id}>
+                                    {buzcountry?.name}
+                                  </MenuItem>
+                                ))}
                               </Select>
                             )}
                           />
@@ -482,39 +455,29 @@ function FoodCartReview() {
                           />
                         )}
                       />
-
                     </div>
                   </>
 
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                     <div className="flex justify-between items-center border-b pb-2 mb-2">
-                      <h2 className="text-lg font-semibold">
-                        2. DELIVERY DETAILS
-                      </h2>
-                      <span className="text-blue-500 cursor-pointer">
-                        Change
-                      </span>
+                      <h2 className="text-lg font-semibold">2. DELIVERY DETAILS</h2>
+                      <span className="text-blue-500 cursor-pointer">Change</span>
                     </div>
                     <p className="font-semibold">Door Delivery</p>
                     <p>
-                      Delivery between <strong>11 December</strong> and{" "}
-                      <strong>13 December</strong>.
+                      Delivery between <strong>11 December</strong> and <strong>13 December</strong>
+                      .
                     </p>
                   </div>
                   {/* paymentMethods */}
 
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                     <div className="border-b pb-2 mb-2">
-                      <h2 className="text-lg font-semibold">
-                        3. PAYMENT METHOD
-                      </h2>
+                      <h2 className="text-lg font-semibold">3. PAYMENT METHOD</h2>
                     </div>
                     {payments?.map((optionType) => (
                       <div className="mb-4">
-                        <div
-                          className="flex items-center mb-2"
-                          key={optionType?.keycode}
-                        >
+                        <div className="flex items-center mb-2" key={optionType?.keycode}>
                           <input
                             type="radio"
                             name="payment"
@@ -535,92 +498,74 @@ function FoodCartReview() {
                         </div>
                       </div>
                     ))}
-
                   </div>
 
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                     <div className="border-b pb-2 mb-2">
-                      <h2 className="text-lg font-semibold">
-                        4. TERMS & CONDITIONS
-                      </h2>
+                      <h2 className="text-lg font-semibold">4. TERMS & CONDITIONS</h2>
                     </div>
 
                     <div className="mb-4 overflow-y-scroll">
                       <div className="flex items-center mb-2"></div>
                       <div className="bg-gray-100 p-2 rounded-lg">
                         <p className="text-blue-500 font-semibold">
-                          Terms and condition on booking a reservation on
-                          Africanshops.
+                          Terms and condition on booking a reservation on Africanshops.
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
 
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                       </div>
@@ -631,7 +576,6 @@ function FoodCartReview() {
                     <br />
                   </div>
                 </div>
-
               </div>
 
               <div className="w-full md:w-1/3 relative  mt-4 md:mt-0 md:sticky top-16 h-[450px]">

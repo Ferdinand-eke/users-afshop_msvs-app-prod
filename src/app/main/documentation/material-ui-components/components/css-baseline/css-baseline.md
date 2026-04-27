@@ -1,7 +1,7 @@
 ---
 productId: material-ui
 components: CssBaseline, ScopedCssBaseline
-githubLabel: 'component: CssBaseline'
+githubLabel: "component: CssBaseline"
 ---
 
 # CSS Baseline
@@ -15,8 +15,8 @@ githubLabel: 'component: CssBaseline'
 You might be familiar with [normalize.css](https://github.com/necolas/normalize.css), a collection of HTML element and attribute style-normalizations.
 
 ```jsx
-import * as React from 'react';
-import CssBaseline from '@mui/material/CssBaseline';
+import * as React from "react";
+import CssBaseline from "@mui/material/CssBaseline";
 
 export default function MyApp() {
   return (
@@ -34,9 +34,9 @@ However, you might be progressively migrating a website to Material UI, using a
 It's possible to apply the baseline only to the children by using the `ScopedCssBaseline` component.
 
 ```jsx
-import * as React from 'react';
-import ScopedCssBaseline from '@mui/material/ScopedCssBaseline';
-import MyApp from './MyApp';
+import * as React from "react";
+import ScopedCssBaseline from "@mui/material/ScopedCssBaseline";
+import MyApp from "./MyApp";
 
 export default function MyApp() {
   return (
@@ -78,13 +78,13 @@ Consider using [color-scheme](#color-scheme) instead.
 The colors of the scrollbars can be customized to improve the contrast (especially on Windows). Add this code to your theme (for dark mode).
 
 ```jsx
-import darkScrollbar from '@mui/material/darkScrollbar';
+import darkScrollbar from "@mui/material/darkScrollbar";
 
 const theme = createTheme({
   components: {
     MuiCssBaseline: {
       styleOverrides: (themeParam) => ({
-        body: themeParam.palette.mode === 'dark' ? darkScrollbar() : null,
+        body: themeParam.palette.mode === "dark" ? darkScrollbar() : null,
       }),
     },
   },

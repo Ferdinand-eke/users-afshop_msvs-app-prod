@@ -1,61 +1,44 @@
-import {
-  getUserFoodCartApi,
-  getUserShoppingCart,
-} from "app/configs/data/client/RepositoryAuthClient";
+import { getUserFoodCartApi, getUserShoppingCart } from 'app/configs/data/client/RepositoryAuthClient';
 // import { useCookies } from "react-cookie";
-import Cookie from "js-cookie";
+import Cookie from 'js-cookie';
 
 export function formatCurrency(num) {
-  if (num !== undefined) {
-    return parseFloat(num)
-      .toString()
-      .replace(/(\d)(?=(\d{3})+(?!\d))/g, "$1,");
-  } else {
-  }
+	if (num !== undefined) {
+		return parseFloat(num)
+			.toString()
+			.replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+	}
 }
 
 export const formatDateUtil = (dateString) => {
-    if (!dateString) return "";
-    const date = new Date(dateString);
-    const days = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-    const months = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+	if (!dateString) return '';
 
-    const dayName = days[date.getDay()];
-    const monthName = months[date.getMonth()];
-    const day = date.getDate();
-    const year = date.getFullYear();
+	const date = new Date(dateString);
+	const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+	const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
-    return `${dayName} ${monthName} ${day} ${year}`;
-  };
+	const dayName = days[date.getDay()];
+	const monthName = months[date.getMonth()];
+	const day = date.getDate();
+	const year = date.getFullYear();
+
+	return `${dayName} ${monthName} ${day} ${year}`;
+};
 
 // my new additions
 export function calculateTax(obj) {
-  // return Object.values(obj)
-  //     .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
-  //     .toFixed(2);
+	// return Object.values(obj)
+	//     .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
+	//     .toFixed(2);
 }
 
-/***Cart Totalling */
+/** *Cart Totalling */
 export function calculateCartTotalAmount(obj) {
-  console.log("Calculating cart total amount util", obj);
-  return Object.values(obj)
-    .reduce((acc, { quantity, price }) => acc + quantity * price, 0)
-    .toFixed(2);
+	console.log('Calculating cart total amount util', obj);
+	return Object.values(obj)
+		.reduce((acc, { quantity, price }) => acc + quantity * price, 0)
+		.toFixed(2);
 }
-
 
 //   export function calculateAmount(obj) {
 //     return Object.values(obj)
@@ -64,79 +47,76 @@ export function calculateCartTotalAmount(obj) {
 // }
 
 export function generateClientUID() {
-  // I generate the UID from two parts here
-  // to ensure the random number provide enough bits.
-  var firstPart = (Math.random() * 466566) | 0;
-  var secondPart = (Math.random() * 466566) | 0;
-  firstPart = ("000" + firstPart.toString(36)).slice(-3);
-  secondPart = ("000" + secondPart.toString(36)).slice(-3);
-  return firstPart + secondPart;
+	// I generate the UID from two parts here
+	// to ensure the random number provide enough bits.
+	let firstPart = (Math.random() * 466566) | 0;
+	let secondPart = (Math.random() * 466566) | 0;
+	firstPart = `000${firstPart.toString(36)}`.slice(-3);
+	secondPart = `000${secondPart.toString(36)}`.slice(-3);
+	return firstPart + secondPart;
 }
 
-/****store user client shopping session */
+/** **store user client shopping session */
 export const storeShoppingSession = async (payloadData) => {
-  const cartItems = await getCartItems();
-  console.log("Adding to cartDetails 0", cartItems);
+	const cartItems = await getCartItems();
+	console.log('Adding to cartDetails 0', cartItems);
 
-  if (cartItems.length < 1) {
-    console.log("Adding to cart when < 1", cartItems.length);
-    Cookie.set("cartSession", JSON.stringify({ payloadData }));
-  }
+	if (cartItems.length < 1) {
+		console.log('Adding to cart when < 1', cartItems.length);
+		Cookie.set('cartSession', JSON.stringify({ payloadData }));
+	}
 };
 
-
-/****get user client shopping session */
+/** **get user client shopping session */
 export function getShoppingSession() {
-  // const [cookies, setCookie] = useCookies('cartSession');
+	// const [cookies, setCookie] = useCookies('cartSession');
 
-  // return Cookie.get('cartSession')
+	// return Cookie.get('cartSession')
 
-  const { payloadData } = Cookie.get("cartSession")
-    ? JSON.parse(Cookie.get("cartSession"))
-    : "";
-  if (payloadData) {
-    return payloadData;
-  }
+	const { payloadData } = Cookie.get('cartSession') ? JSON.parse(Cookie.get('cartSession')) : '';
+
+	if (payloadData) {
+		return payloadData;
+	}
 }
 
 async function getCartItems() {
-  // let newItems = [];
-  const cartResponseData = await getUserShoppingCart();
+	// let newItems = [];
+	const cartResponseData = await getUserShoppingCart();
 
-  // console.log('cartsITEMSIN_UTIL', cartResponseData?.data?.cartItems)
+	// console.log('cartsITEMSIN_UTIL', cartResponseData?.data?.cartItems)
 
-  return cartResponseData?.data?.cartItems;
+	return cartResponseData?.data?.cartItems;
 }
 
-/****
+/** **
  * ###################################################################################
  * ----------------FOOD CART UTILS---------------------------------------------------
  * ###################################################################################
  */
 
-/****store user FOOD_VENDOR client shopping session */
+/** **store user FOOD_VENDOR client shopping session */
 export const storeFoodVendorSession = async (payloadData) => {
-  const cartItems = await getFoodCartItems();
+	const cartItems = await getFoodCartItems();
 
-  console.log("Adding to foodCartDetails 0", cartItems);
-  if (cartItems.length < 1) {
-    Cookie.set("foodCartSession", JSON.stringify({ payloadData }));
-  }
+	console.log('Adding to foodCartDetails 0', cartItems);
+
+	if (cartItems.length < 1) {
+		Cookie.set('foodCartSession', JSON.stringify({ payloadData }));
+	}
 };
 
-/****get user FOOD_VENDOR client shopping session */
+/** **get user FOOD_VENDOR client shopping session */
 export function getFoodVendorSession() {
+	const { payloadData } = Cookie.get('foodCartSession') ? JSON.parse(Cookie.get('foodCartSession')) : '';
 
-  const { payloadData } = Cookie.get("foodCartSession")
-    ? JSON.parse(Cookie.get("foodCartSession"))
-    : "";
-  if (payloadData) {
-    return payloadData;
-  }
+	if (payloadData) {
+		return payloadData;
+	}
 }
 
 async function getFoodCartItems() {
-  const foodCartResponseData = await getUserFoodCartApi();
+	const foodCartResponseData = await getUserFoodCartApi();
 
-  return foodCartResponseData?.data?.foodcart;
+	return foodCartResponseData?.data?.foodcart;
 }

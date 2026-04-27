@@ -5,8 +5,8 @@ import {
   FormControl,
   InputLabel,
   Typography,
-  Box
-} from '@mui/material';
+  Box,
+} from "@mui/material";
 
 /**
  * ProductPaginationBar Component
@@ -18,7 +18,7 @@ function ProductPaginationBar({
   currentPage,
   itemsPerPage,
   onPageChange,
-  onItemsPerPageChange
+  onItemsPerPageChange,
 }) {
   // Calculate total pages
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -76,15 +76,15 @@ function ProductPaginationBar({
         showFirstButton
         showLastButton
         sx={{
-          '& .MuiPaginationItem-root': {
-            '&.Mui-selected': {
-              backgroundColor: '#ea580c',
-              color: 'white',
-              '&:hover': {
-                backgroundColor: '#c2410c'
-              }
-            }
-          }
+          "& .MuiPaginationItem-root": {
+            "&.Mui-selected": {
+              backgroundColor: "#ea580c",
+              color: "white",
+              "&:hover": {
+                backgroundColor: "#c2410c",
+              },
+            },
+          },
         }}
       />
     </Box>

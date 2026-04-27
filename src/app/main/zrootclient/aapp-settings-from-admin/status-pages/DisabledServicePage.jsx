@@ -1,4 +1,13 @@
-import { Box, Container, Typography, Button, Paper, useTheme, useMediaQuery, Chip } from "@mui/material";
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Paper,
+  useTheme,
+  useMediaQuery,
+  Chip,
+} from "@mui/material";
 import { styled } from "@mui/material/styles";
 import BlockIcon from "@mui/icons-material/Block";
 import InfoOutlinedIcon from "@mui/icons-material/InfoOutlined";
@@ -105,10 +114,7 @@ const DisabledServicePage = ({ serviceName = "Service" }) => {
             <BlockIcon className="main-icon" />
           </IconWrapper>
 
-          <StatusBadge
-            icon={<InfoOutlinedIcon />}
-            label="Service Unavailable"
-          />
+          <StatusBadge icon={<InfoOutlinedIcon />} label="Service Unavailable" />
 
           <Typography
             variant={isMobile ? "h4" : "h3"}
@@ -131,12 +137,9 @@ const DisabledServicePage = ({ serviceName = "Service" }) => {
             We apologize, but the {serviceName.toLowerCase()} service is temporarily unavailable.
           </Typography>
 
-          <Typography
-            variant="body2"
-            color="text.secondary"
-            sx={{ mb: 4 }}
-          >
-            We're working on bringing this service back. In the meantime, explore our other amazing services!
+          <Typography variant="body2" color="text.secondary" sx={{ mb: 4 }}>
+            We're working on bringing this service back. In the meantime, explore our other amazing
+            services!
           </Typography>
 
           <Box sx={{ mt: 4 }}>
@@ -155,10 +158,7 @@ const DisabledServicePage = ({ serviceName = "Service" }) => {
             </Typography>
 
             {exploreAlternatives.map((alternative, index) => (
-              <AlternativeBox
-                key={index}
-                onClick={() => navigate(alternative.path)}
-              >
+              <AlternativeBox key={index} onClick={() => navigate(alternative.path)}>
                 <Box sx={{ flex: 1 }}>
                   <Typography variant="subtitle1" sx={{ fontWeight: 600, textAlign: "left" }}>
                     {alternative.title}
@@ -167,11 +167,7 @@ const DisabledServicePage = ({ serviceName = "Service" }) => {
                     {alternative.description}
                   </Typography>
                 </Box>
-                <Button
-                  variant="outlined"
-                  size="small"
-                  sx={{ minWidth: 100 }}
-                >
+                <Button variant="outlined" size="small" sx={{ minWidth: 100 }}>
                   Explore
                 </Button>
               </AlternativeBox>

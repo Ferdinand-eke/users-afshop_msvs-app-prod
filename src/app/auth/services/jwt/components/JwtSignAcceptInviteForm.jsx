@@ -35,7 +35,7 @@ const schema = z
 const defaultValues = {
   // email: '',
   activationCode: "",
-  activationToken:"",
+  activationToken: "",
   password: "",
   passwordConfirm: "",
   acceptTermsConditions: false,
@@ -43,9 +43,9 @@ const defaultValues = {
 };
 
 function JwtSignAcceptInviteForm() {
-	const acceptInvite = useAdminInvitationAcceptance()
-	const routeParams = useParams();
-	const { token } = routeParams;
+  const acceptInvite = useAdminInvitationAcceptance();
+  const routeParams = useParams();
+  const { token } = routeParams;
   const { signIn } = useJwtAuth();
   const { control, formState, handleSubmit, setValue, setError } = useForm({
     mode: "onChange",
@@ -54,24 +54,21 @@ function JwtSignAcceptInviteForm() {
   });
   const { isValid, dirtyFields, errors } = formState;
 
-//   console.log("Token STRING", token)
+  //   console.log("Token STRING", token)
 
   function onSubmit(formData) {
-   
-	const formDataWithUpdatedTokenParam = {...formData, activationToken:token}
+    const formDataWithUpdatedTokenParam = { ...formData, activationToken: token };
 
-	console.log("ACCEPT-INVITE-Values", formDataWithUpdatedTokenParam);
-	// return
-	acceptInvite.mutate(formDataWithUpdatedTokenParam)
-    
+    console.log("ACCEPT-INVITE-Values", formDataWithUpdatedTokenParam);
+    // return
+    acceptInvite.mutate(formDataWithUpdatedTokenParam);
   }
 
-
-  useEffect(()=>{
-if(acceptInvite.isError){
-	window.alert(acceptInvite.error)
-}
-  },[acceptInvite.isError])
+  useEffect(() => {
+    if (acceptInvite.isError) {
+      window.alert(acceptInvite.error);
+    }
+  }, [acceptInvite.isError]);
   return (
     <form
       name="loginForm"

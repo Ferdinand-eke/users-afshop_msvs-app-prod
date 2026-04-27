@@ -6,36 +6,35 @@ import { useRef } from "react";
 import { useParams } from "react-router";
 
 const CategoryAndTradehub = ({ onFilterChange, initialFilters = {}, resetRef }) => {
-    const onFilterChangeRef = useRef(onFilterChange);
+  const onFilterChangeRef = useRef(onFilterChange);
 
-    // Update ref when onFilterChange changes
-    useEffect(() => {
-      onFilterChangeRef.current = onFilterChange;
-    }, [onFilterChange]);
+  // Update ref when onFilterChange changes
+  useEffect(() => {
+    onFilterChangeRef.current = onFilterChange;
+  }, [onFilterChange]);
 
-    // Filter state
-    const [category, setCategory] = useState(initialFilters.category || "");
+  // Filter state
+  const [category, setCategory] = useState(initialFilters.category || "");
 
-    // Expose reset function through ref
-    useEffect(() => {
-      if (resetRef) {
-        resetRef.current = () => {
-          setCategory("");
-          // Notify parent about the category reset
-          if (onFilterChangeRef.current) {
-            onFilterChangeRef.current({ category: "" });
-          }
-        };
-      }
-    }, [resetRef]);
+  // Expose reset function through ref
+  useEffect(() => {
+    if (resetRef) {
+      resetRef.current = () => {
+        setCategory("");
+        // Notify parent about the category reset
+        if (onFilterChangeRef.current) {
+          onFilterChangeRef.current({ category: "" });
+        }
+      };
+    }
+  }, [resetRef]);
 
-    console.log("Product by cat-filter CAT", category)
+  console.log("Product by cat-filter CAT", category);
 
   const routeParams = useParams();
   const { id } = routeParams;
 
   const { data: categoriesData, isLoading } = useProductCats();
-
 
   let categoriesView;
   if (!isLoading) {
@@ -59,17 +58,17 @@ const CategoryAndTradehub = ({ onFilterChange, initialFilters = {}, resetRef }) 
               }
             }}
             sx={{
-              fontSize: '1.125rem',
+              fontSize: "1.125rem",
               fontWeight: item.id === category ? 700 : 500,
-              color: item.id === category ? '#ea580c' : '#374151',
-              textDecoration: 'none',
-              display: 'block',
-              width: '100%',
-              overflow: 'hidden',
-              textOverflow: 'ellipsis',
-              whiteSpace: 'nowrap',
-              '&:hover': {
-                color: '#ea580c',
+              color: item.id === category ? "#ea580c" : "#374151",
+              textDecoration: "none",
+              display: "block",
+              width: "100%",
+              overflow: "hidden",
+              textOverflow: "ellipsis",
+              whiteSpace: "nowrap",
+              "&:hover": {
+                color: "#ea580c",
               },
             }}
           >
@@ -90,9 +89,9 @@ const CategoryAndTradehub = ({ onFilterChange, initialFilters = {}, resetRef }) 
       <div className="p-4 bg-gradient-to-r from-orange-600 to-red-600 sticky top-0 z-10">
         <Typography
           sx={{
-            fontSize: '1.25rem',
+            fontSize: "1.25rem",
             fontWeight: 700,
-            color: 'white',
+            color: "white",
           }}
         >
           Product Categories
@@ -100,9 +99,7 @@ const CategoryAndTradehub = ({ onFilterChange, initialFilters = {}, resetRef }) 
       </div>
 
       {/* Categories List */}
-      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2">
-        {categoriesView}
-      </div>
+      <div className="flex-1 overflow-y-auto overflow-x-hidden p-2">{categoriesView}</div>
     </div>
   );
 };

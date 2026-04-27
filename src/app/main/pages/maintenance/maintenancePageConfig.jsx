@@ -1,20 +1,20 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
-const MaintenancePage = lazy(() => import('./MaintenancePage'));
+const MaintenancePage = lazy(() => import("./MaintenancePage"));
 /**
  * The maintenance page config.
  */
 const maintenancePageConfig = {
-	settings: {
-		layout: {
-			config: {}
-		}
-	},
-	routes: [
-		{
-			path: 'pages/maintenance',
-			element: <MaintenancePage />
-		}
-	]
+  settings: {
+    layout: {
+      config: {},
+    },
+  },
+  routes: [
+    {
+      path: "pages/maintenance",
+      element: <MaintenancePage />,
+    },
+  ],
 };
 export default maintenancePageConfig;

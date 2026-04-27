@@ -25,13 +25,7 @@ import {
   FilterList as FilterListIcon,
 } from "@mui/icons-material";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-import {
-  getLgasByStateId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
-
-
-
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 
 const PROPERTY_TYPES = [
   "Apartment",
@@ -80,23 +74,15 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
 
   // Filter state
   const [keyword, setKeyword] = useState(initialFilters.keyword || "");
-  const [propertyType, setPropertyType] = useState(
-    initialFilters.propertyType || ""
-  );
+  const [propertyType, setPropertyType] = useState(initialFilters.propertyType || "");
   const [country, setCountry] = useState(initialFilters.country || "");
   const [state, setState] = useState(initialFilters.state || "");
   const [lga, setLga] = useState(initialFilters.lga || "");
   const [district, setDistrict] = useState(initialFilters.district || "");
-  const [priceRange, setPriceRange] = useState(
-    initialFilters.priceRange || [0, 1000000]
-  );
+  const [priceRange, setPriceRange] = useState(initialFilters.priceRange || [0, 1000000]);
   const [roomCount, setRoomCount] = useState(initialFilters.roomCount || "");
-  const [bathroomCount, setBathroomCount] = useState(
-    initialFilters.bathroomCount || ""
-  );
-  const [selectedAmenities, setSelectedAmenities] = useState(
-    initialFilters.amenities || []
-  );
+  const [bathroomCount, setBathroomCount] = useState(initialFilters.bathroomCount || "");
+  const [selectedAmenities, setSelectedAmenities] = useState(initialFilters.amenities || []);
 
   // UI state
   const [showAdvancedFeatures, setShowAdvancedFeatures] = useState(false);
@@ -133,23 +119,26 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
   // Emit filter changes to parent component with debounce for keyword
   useEffect(() => {
     // Debounce keyword search to prevent excessive API calls
-    const timeoutId = setTimeout(() => {
-      if (onFilterChangeRef.current) {
-        const filters = {
-          keyword,
-          propertyType,
-          country,
-          state,
-          lga,
-          district,
-          priceRange,
-          roomCount,
-          bathroomCount,
-          amenities: selectedAmenities,
-        };
-        onFilterChangeRef.current(filters);
-      }
-    }, keyword ? 500 : 0); // 500ms debounce for keyword, immediate for others
+    const timeoutId = setTimeout(
+      () => {
+        if (onFilterChangeRef.current) {
+          const filters = {
+            keyword,
+            propertyType,
+            country,
+            state,
+            lga,
+            district,
+            priceRange,
+            roomCount,
+            bathroomCount,
+            amenities: selectedAmenities,
+          };
+          onFilterChangeRef.current(filters);
+        }
+      },
+      keyword ? 500 : 0,
+    ); // 500ms debounce for keyword, immediate for others
 
     return () => clearTimeout(timeoutId);
   }, [
@@ -180,7 +169,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         function () {
           setStatesLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -200,7 +189,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -208,9 +197,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
   // Handle amenity toggle
   const handleAmenityToggle = (amenityId) => {
     setSelectedAmenities((prev) =>
-      prev.includes(amenityId)
-        ? prev.filter((id) => id !== amenityId)
-        : [...prev, amenityId]
+      prev.includes(amenityId) ? prev.filter((id) => id !== amenityId) : [...prev, amenityId],
     );
   };
 
@@ -237,24 +224,27 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
     <div
       className="rounded-2xl shadow-lg p-6 max-w-md mx-auto lg:max-w-xs overflow-hidden"
       style={{
-        background: 'linear-gradient(135deg, #ffffff 0%, #fff5f0 50%, #ffedd5 100%)',
+        background: "linear-gradient(135deg, #ffffff 0%, #fff5f0 50%, #ffedd5 100%)",
       }}
     >
       {/* Header with Gradient */}
       <div
         className="flex items-center gap-3 mb-6 p-4 rounded-xl -mx-6 -mt-6 mb-6"
         style={{
-          background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-          boxShadow: '0 4px 15px rgba(249, 115, 22, 0.3)',
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          boxShadow: "0 4px 15px rgba(249, 115, 22, 0.3)",
         }}
       >
-        <FilterListIcon sx={{ color: 'white', fontSize: '1.75rem' }} />
-        <Typography variant="h6" sx={{ fontWeight: 700, color: 'white', fontSize: '1.25rem' }}>
+        <FilterListIcon sx={{ color: "white", fontSize: "1.75rem" }} />
+        <Typography variant="h6" sx={{ fontWeight: 700, color: "white", fontSize: "1.25rem" }}>
           Filter Properties
         </Typography>
       </div>
 
-      <div className="space-y-4 overflow-y-auto overflow-x-hidden" style={{ maxHeight: 'calc(100% - 80px)' }}>
+      <div
+        className="space-y-4 overflow-y-auto overflow-x-hidden"
+        style={{ maxHeight: "calc(100% - 80px)" }}
+      >
         {/* Keyword Search */}
         <TextField
           fullWidth
@@ -263,14 +253,14 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover fieldset': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover fieldset": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused fieldset': {
-                borderColor: '#ea580c',
+              "&.Mui-focused fieldset": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -291,24 +281,23 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         />
 
         {/* Location Section */}
-        <Typography
-          variant="subtitle2"
-          className="font-medium text-gray-700 pt-2"
-        >
+        <Typography variant="subtitle2" className="font-medium text-gray-700 pt-2">
           Location
         </Typography>
 
         {/* Country */}
-        <FormControl fullWidth size="small"
+        <FormControl
+          fullWidth
+          size="small"
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ea580c',
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -332,16 +321,19 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* State */}
-        <FormControl fullWidth size="small" disabled={!country}
+        <FormControl
+          fullWidth
+          size="small"
+          disabled={!country}
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ea580c',
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -366,16 +358,19 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* LGA */}
-        <FormControl fullWidth size="small" disabled={!state}
+        <FormControl
+          fullWidth
+          size="small"
+          disabled={!state}
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ea580c',
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -422,16 +417,18 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         <Divider className="my-4" />
 
         {/* Property Type */}
-        <FormControl fullWidth size="small"
+        <FormControl
+          fullWidth
+          size="small"
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ea580c',
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -456,10 +453,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
 
         {/* Price Range */}
         <div className="pt-2">
-          <Typography
-            variant="subtitle2"
-            className="font-medium text-gray-700 mb-2"
-          >
+          <Typography variant="subtitle2" className="font-medium text-gray-700 mb-2">
             Price Range
           </Typography>
           <Box className="px-2">
@@ -488,16 +482,18 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
         </div>
 
         {/* Room Count */}
-        <FormControl fullWidth size="small"
+        <FormControl
+          fullWidth
+          size="small"
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ea580c',
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -514,28 +510,25 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
             </MenuItem>
             {[1, 2, 3, 4, 5, "6+"].map((count) => (
               <MenuItem key={count} value={count}>
-                {count}{" "}
-                {count === "6+"
-                  ? "Bedrooms"
-                  : count === 1
-                    ? "Bedroom"
-                    : "Bedrooms"}
+                {count} {count === "6+" ? "Bedrooms" : count === 1 ? "Bedroom" : "Bedrooms"}
               </MenuItem>
             ))}
           </Select>
         </FormControl>
 
         {/* Bathroom Count */}
-        <FormControl fullWidth size="small"
+        <FormControl
+          fullWidth
+          size="small"
           sx={{
-            backgroundColor: 'white',
-            borderRadius: '8px',
-            '& .MuiOutlinedInput-root': {
-              '&:hover .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#f97316',
+            backgroundColor: "white",
+            borderRadius: "8px",
+            "& .MuiOutlinedInput-root": {
+              "&:hover .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#f97316",
               },
-              '&.Mui-focused .MuiOutlinedInput-notchedOutline': {
-                borderColor: '#ea580c',
+              "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+                borderColor: "#ea580c",
               },
             },
           }}
@@ -552,12 +545,7 @@ function FilterList({ onFilterChange, initialFilters = {} }) {
             </MenuItem>
             {[1, 2, 3, 4, "5+"].map((count) => (
               <MenuItem key={count} value={count}>
-                {count}{" "}
-                {count === "5+"
-                  ? "Bathrooms"
-                  : count === 1
-                    ? "Bathroom"
-                    : "Bathrooms"}
+                {count} {count === "5+" ? "Bathrooms" : count === 1 ? "Bathroom" : "Bathrooms"}
               </MenuItem>
             ))}
           </Select>

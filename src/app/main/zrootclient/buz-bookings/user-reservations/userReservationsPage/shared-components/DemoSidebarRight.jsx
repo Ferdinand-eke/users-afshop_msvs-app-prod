@@ -95,23 +95,15 @@ function DemoSidebarRight() {
   return (
     <div className="h-full flex flex-col p-6 md:p-8 overflow-hidden">
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: -10 }}
-        animate={{ opacity: 1, y: 0 }}
-        className="mb-6"
-      >
+      <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="mb-6">
         <div
           className="h-1 w-16 rounded-full mb-4"
           style={{
             background: "linear-gradient(90deg, #f97316 0%, #ea580c 100%)",
           }}
         />
-        <h2 className="text-xl font-bold text-gray-900 mb-1">
-          Explore Nearby
-        </h2>
-        <p className="text-sm text-gray-600">
-          Discover what's around your stay
-        </p>
+        <h2 className="text-xl font-bold text-gray-900 mb-1">Explore Nearby</h2>
+        <p className="text-sm text-gray-600">Discover what's around your stay</p>
       </motion.div>
 
       {/* Category Filters */}
@@ -132,15 +124,12 @@ function DemoSidebarRight() {
               key={category.id}
               onClick={() => setSelectedCategory(category.id)}
               className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-semibold transition-all whitespace-nowrap ${
-                isActive
-                  ? "text-white shadow-md"
-                  : "text-gray-600 bg-gray-100 hover:bg-gray-200"
+                isActive ? "text-white shadow-md" : "text-gray-600 bg-gray-100 hover:bg-gray-200"
               }`}
               style={
                 isActive
                   ? {
-                      background:
-                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                     }
                   : {}
               }
@@ -176,8 +165,7 @@ function DemoSidebarRight() {
               <div
                 className="absolute inset-0"
                 style={{
-                  background:
-                    "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%)",
+                  background: "linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0.4) 100%)",
                 }}
               />
               {/* Distance Badge */}
@@ -196,27 +184,20 @@ function DemoSidebarRight() {
                 </h3>
                 <div className="flex items-center gap-1 px-2 py-0.5 rounded-full bg-orange-50">
                   <Star sx={{ fontSize: "0.875rem", color: "#f97316" }} />
-                  <span className="text-xs font-semibold text-orange-600">
-                    {activity.rating}
-                  </span>
+                  <span className="text-xs font-semibold text-orange-600">{activity.rating}</span>
                 </div>
               </div>
 
               {/* Description */}
-              <p className="text-xs text-gray-600 mb-3 line-clamp-2">
-                {activity.description}
-              </p>
+              <p className="text-xs text-gray-600 mb-3 line-clamp-2">{activity.description}</p>
 
               {/* Footer */}
               <div className="flex items-center justify-between">
-                <span className="text-xs font-semibold text-gray-700">
-                  {activity.price}
-                </span>
+                <span className="text-xs font-semibold text-gray-700">{activity.price}</span>
                 <div className="flex items-center text-xs font-semibold group-hover:text-orange-600 transition-colors">
                   <span
                     style={{
-                      background:
-                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -242,9 +223,7 @@ function DemoSidebarRight() {
         className="mt-6 p-4 rounded-xl bg-gradient-to-br from-orange-50 to-orange-100/50 border border-orange-200"
       >
         <p className="text-xs text-gray-700 text-center">
-          <span className="font-semibold text-orange-700">
-            {filteredActivities.length} places
-          </span>{" "}
+          <span className="font-semibold text-orange-700">{filteredActivities.length} places</span>{" "}
           nearby to explore during your stay
         </p>
       </motion.div>

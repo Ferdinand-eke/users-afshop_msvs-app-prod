@@ -1,8 +1,8 @@
-import React from 'react';
+import React from "react";
 // import { backend_url } from "../../server";
-import styles from '../../styles/style';
-import CountDown from './CountDown.jsx';
-import { Link } from 'react-router-dom';
+import styles from "../../styles/style";
+import CountDown from "./CountDown.jsx";
+import { Link } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addTocart } from "../../redux/actions/cart";
 // import { toast } from "react-toastify";
@@ -26,11 +26,7 @@ const EventCard = ({ active, data }) => {
     // }
   };
   return (
-    <div
-      className={`w-full block bg-white rounded-lg ${
-        active ? 'unset' : 'mb-12'
-      } lg:flex p-2`}
-    >
+    <div className={`w-full block bg-white rounded-lg ${active ? "unset" : "mb-12"} lg:flex p-2`}>
       <div className="w-full lg:-w[50%] m-auto">
         <img src={`${data?.image_Url[0]?.url}`} alt="" />
       </div>
@@ -46,9 +42,7 @@ const EventCard = ({ active, data }) => {
               {data.discount_price}$
             </h5>
           </div>
-          <span className="pr-3 font-[400] text-[17px] text-[#44a55e]">
-            {data.total_sell} sold
-          </span>
+          <span className="pr-3 font-[400] text-[17px] text-[#44a55e]">{data.total_sell} sold</span>
         </div>
         <CountDown data={data} />
         <br />

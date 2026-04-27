@@ -88,9 +88,7 @@ function DemoContent(props) {
             </div>
             <div className="bg-white px-6 py-4 mt-4 shadow-md">
               <div className="flex items-center justify-between px-2">
-                <span className="bg-blue-500 text-white px-3 py-1 rounded">
-                  FEATURED
-                </span>
+                <span className="bg-blue-500 text-white px-3 py-1 rounded">FEATURED</span>
                 <div className="flex items-center">
                   <i className="fas fa-star text-yellow-500"></i>
                   <i className="fas fa-star text-yellow-500"></i>
@@ -101,9 +99,7 @@ function DemoContent(props) {
                 </div>
               </div>
               <h1 className="text-2xl font-bold mt-2 px-2">{bookingData?.title}</h1>
-              <p className="text-gray-600 mt-2 px-2">
-                {bookingData?.shortDescription}
-              </p>
+              <p className="text-gray-600 mt-2 px-2">{bookingData?.shortDescription}</p>
               <div className="flex items-center mt-2 px-2">
                 <span className="text-gray-600">Share:</span>
                 <i className="fab fa-facebook text-blue-600 ml-2"></i>
@@ -123,34 +119,28 @@ function DemoContent(props) {
               <h2 className="text-xl font-bold px-2">Amenities</h2>
               <ul className="list-disc list-inside mt-2 text-gray-600 px-4">
                 <li className="mb-2 px-2">
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
+                  Create immersive augmented reality scenes for any focal project such as animated
+                  walk throughs and product visualizations.
                 </li>
                 <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
+                  After completing this course you’ll be considered to create apps with a complete
+                  understanding of the principles of 3D animation.
                 </li>
                 <li>
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
+                  Create immersive augmented reality scenes for any focal project such as animated
+                  walk throughs and product visualizations.
                 </li>
                 <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
+                  After completing this course you’ll be considered to create apps with a complete
+                  understanding of the principles of 3D animation.
                 </li>
                 <li>
-                  Create immersive augmented reality scenes for any focal
-                  project such as animated walk throughs and product
-                  visualizations.
+                  Create immersive augmented reality scenes for any focal project such as animated
+                  walk throughs and product visualizations.
                 </li>
                 <li>
-                  After completing this course you’ll be considered to create
-                  apps with a complete understanding of the principles of 3D
-                  animation.
+                  After completing this course you’ll be considered to create apps with a complete
+                  understanding of the principles of 3D animation.
                 </li>
               </ul>
             </div>
@@ -285,9 +275,7 @@ const ProductDetailsInfo = ({
           >
             Description
           </h5>
-          {active === 1 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
+          {active === 1 ? <div className={`${siteStyle.active_indicator}`} /> : null}
         </div>
         <div className="relative">
           <h5
@@ -298,9 +286,7 @@ const ProductDetailsInfo = ({
           >
             Apartment Reviews
           </h5>
-          {active === 2 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
+          {active === 2 ? <div className={`${siteStyle.active_indicator}`} /> : null}
         </div>
       </div>
       {active === 1 ? (
@@ -309,10 +295,7 @@ const ProductDetailsInfo = ({
             className={`${isMobile ? "w-full" : "w-1/1"} bg-white flex flex-col ${isMobile ? "h-[60vh]" : ""}`}
           >
             <div className={`${isMobile ? "p-3" : "p-6"} border-b`}>
-              <Typography
-                variant={isMobile ? "caption" : "body2"}
-                className="text-gray-600 mb-2"
-              >
+              <Typography variant={isMobile ? "caption" : "body2"} className="text-gray-600 mb-2">
                 {propertyData?.description}
               </Typography>
             </div>
@@ -327,9 +310,7 @@ const ProductDetailsInfo = ({
           {user?.email && (
             <>
               {/* Add Comment Section */}
-              <div
-                className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}
-              >
+              <div className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}>
                 <Typography
                   variant={isMobile ? "caption" : "subtitle2"}
                   className="font-semibold mb-2"
@@ -409,9 +390,7 @@ const ProductDetailsInfo = ({
               </div>
 
               {/* Reviews/Comments List */}
-              <div
-                className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}
-              >
+              <div className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}>
                 <div
                   className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"} px-2`}
                 >
@@ -432,10 +411,7 @@ const ProductDetailsInfo = ({
 
                 <div className={`${isMobile ? "space-y-2" : "space-y-4"}`}>
                   {reviews.map((review) => (
-                    <div
-                      key={review.id}
-                      className={`${isMobile ? "space-y-1" : "space-y-2"}`}
-                    >
+                    <div key={review.id} className={`${isMobile ? "space-y-1" : "space-y-2"}`}>
                       <div className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                         <Avatar
                           src={review.authorImage}
@@ -471,12 +447,7 @@ const ProductDetailsInfo = ({
                             )}
                           </div>
                           {review.rating && (
-                            <Rating
-                              value={review.rating}
-                              readOnly
-                              size="small"
-                              className="mb-1"
-                            />
+                            <Rating value={review.rating} readOnly size="small" className="mb-1" />
                           )}
                           <Typography
                             variant={isMobile ? "caption" : "body2"}
@@ -490,21 +461,13 @@ const ProductDetailsInfo = ({
                             <button
                               className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
                             >
-                              <ThumbUp
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 14 : 16 }}
-                              />
-                              <span>
-                                {review.likes > 0 ? review.likes : "Like"}
-                              </span>
+                              <ThumbUp fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
+                              <span>{review.likes > 0 ? review.likes : "Like"}</span>
                             </button>
                             <button
                               className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
                             >
-                              <Reply
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 14 : 16 }}
-                              />
+                              <Reply fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
                               <span>Reply</span>
                             </button>
                           </div>
@@ -517,10 +480,7 @@ const ProductDetailsInfo = ({
                           className={`${isMobile ? "ml-8 space-y-2 mt-2" : "ml-12 space-y-3 mt-3"}`}
                         >
                           {review.replies.map((reply) => (
-                            <div
-                              key={reply.id}
-                              className={`flex ${isMobile ? "gap-2" : "gap-3"}`}
-                            >
+                            <div key={reply.id} className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                               <Avatar
                                 src={reply.authorImage}
                                 alt={reply.author}
@@ -537,9 +497,7 @@ const ProductDetailsInfo = ({
                                     variant={isMobile ? "caption" : "body2"}
                                     className="font-semibold"
                                     sx={{
-                                      fontSize: isMobile
-                                        ? "0.75rem"
-                                        : "0.875rem",
+                                      fontSize: isMobile ? "0.75rem" : "0.875rem",
                                     }}
                                   >
                                     {reply.author}
@@ -548,9 +506,7 @@ const ProductDetailsInfo = ({
                                     variant="caption"
                                     className="text-gray-500"
                                     sx={{
-                                      fontSize: isMobile
-                                        ? "0.65rem"
-                                        : "0.75rem",
+                                      fontSize: isMobile ? "0.65rem" : "0.75rem",
                                     }}
                                   >
                                     • {reply.timeAgo}
@@ -620,18 +576,13 @@ const ProductDetailsInfo = ({
                   variant={isMobile ? "caption" : "body2"}
                   className="text-gray-600 mb-2 px-2"
                 >
-                  {propertyData?.shortDescription ||
-                    "Share your thoughts about this property"}
+                  {propertyData?.shortDescription || "Share your thoughts about this property"}
                 </Typography>
                 {propertyData?.rating && (
                   <div className="flex items-center gap-2 px-2">
                     <Rating value={propertyData.rating} readOnly size="small" />
-                    <Typography
-                      variant={isMobile ? "caption" : "body2"}
-                      className="text-gray-600"
-                    >
-                      {propertyData.rating} ({propertyData.reviewCount || 0}{" "}
-                      reviews)
+                    <Typography variant={isMobile ? "caption" : "body2"} className="text-gray-600">
+                      {propertyData.rating} ({propertyData.reviewCount || 0} reviews)
                     </Typography>
                   </div>
                 )}

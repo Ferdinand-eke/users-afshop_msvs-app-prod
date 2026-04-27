@@ -37,7 +37,6 @@ function InspectionSchedulesPage() {
   // Fetch inspection schedules using react-query hook
   const { data: schedulesData, isLoading, isError } = useGetMyInspectionSchedules();
 
-
   // Extract schedules from response.data.payload
   const schedules = schedulesData?.data?.payload;
 
@@ -56,13 +55,7 @@ function InspectionSchedulesPage() {
           }}
         />
       }
-      content={
-        <DemoContent
-          schedules={schedules}
-          isLoading={isLoading}
-          isError={isError}
-        />
-      }
+      content={<DemoContent schedules={schedules} isLoading={isLoading} isError={isError} />}
       leftSidebarOpen={leftSidebarOpen}
       leftSidebarOnClose={() => {
         setLeftSidebarOpen(false);

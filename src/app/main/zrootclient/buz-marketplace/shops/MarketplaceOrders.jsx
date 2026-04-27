@@ -48,7 +48,7 @@ function MarketplaceOrders() {
   const isMobile = useThemeMediaQuery((theme) => theme.breakpoints.down("lg"));
   const user = useAppSelector(selectUser);
 
-  const {data:userOrders, isLoading, isError } = useGetAuthUserOrders(user?.id);
+  const { data: userOrders, isLoading, isError } = useGetAuthUserOrders(user?.id);
 
   if (isLoading) {
     return <FuseLoading />;
@@ -61,9 +61,7 @@ function MarketplaceOrders() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={" Error occurred while retriving your reservations"}
-        />
+        <ClienttErrorPage message={" Error occurred while retriving your reservations"} />
       </motion.div>
     );
   }
@@ -95,30 +93,20 @@ function MarketplaceOrders() {
               </Box>
 
               {/* Main Content */}
-              <div
-                className="flex-1 w-full md:w-9/12  p-4 bg-white rounded-md overflow-scroll">
+              <div className="flex-1 w-full md:w-9/12  p-4 bg-white rounded-md overflow-scroll">
                 <div className="grid grid-cols-1 lg:grid-cols-1 md:grid-cols-1 gap-8 ">
                   <>
                     <main className="w-full p-4 overflow-y-scroll">
-                      <h1 className="text-xl font-bold mb-4">
-                        Marketplace Orders
-                      </h1>
+                      <h1 className="text-xl font-bold mb-4">Marketplace Orders</h1>
                       <div className="flex space-x-4 mb-4">
                         <button className="border-b-2 border-orange-500 pb-2">
-                          ONGOING/FULLFILED ORDERS{" "}
-                          {userOrders?.data?.length}
+                          ONGOING/FULLFILED ORDERS {userOrders?.data?.length}
                         </button>
-                        <button className="pb-2">
-                          CANCELED/ORDERS (11)
-                        </button>
+                        <button className="pb-2">CANCELED/ORDERS (11)</button>
                       </div>
                       <div className="space-y-4">
                         {userOrders?.data?.map((order) => (
-                          <div
-                            className="bg-white p-4 rounded shadow mb-8"
-                            key={order?._id}
-                          >
-
+                          <div className="bg-white p-4 rounded shadow mb-8" key={order?._id}>
                             <OrderCard orderData={order} />
                           </div>
                         ))}
@@ -189,6 +177,5 @@ function MarketplaceOrders() {
     />
   );
 }
-
 
 export default MarketplaceOrders;

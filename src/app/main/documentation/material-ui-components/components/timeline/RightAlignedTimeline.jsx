@@ -1,21 +1,22 @@
-import * as React from 'react';
-import Timeline from '@mui/lab/Timeline';
-import TimelineItem from '@mui/lab/TimelineItem';
-import TimelineSeparator from '@mui/lab/TimelineSeparator';
-import TimelineConnector from '@mui/lab/TimelineConnector';
-import TimelineContent, { timelineContentClasses } from '@mui/lab/TimelineContent';
-import TimelineDot from '@mui/lab/TimelineDot';
-import TimelineOppositeContent from '@mui/lab/TimelineOppositeContent';
+import * as React from "react";
+import Timeline from "@mui/lab/Timeline";
+import TimelineItem from "@mui/lab/TimelineItem";
+import TimelineSeparator from "@mui/lab/TimelineSeparator";
+import TimelineConnector from "@mui/lab/TimelineConnector";
+import TimelineContent, { timelineContentClasses } from "@mui/lab/TimelineContent";
+import TimelineDot from "@mui/lab/TimelineDot";
+import TimelineOppositeContent from "@mui/lab/TimelineOppositeContent";
 export default function RightAlignedTimeline() {
-    return (<Timeline sx={{
-            [`& .${timelineContentClasses.root}`]: {
-                flex: 0.2,
-            },
-        }}>
+  return (
+    <Timeline
+      sx={{
+        [`& .${timelineContentClasses.root}`]: {
+          flex: 0.2,
+        },
+      }}
+    >
       <TimelineItem>
-        <TimelineOppositeContent color="textSecondary">
-          09:30 am
-        </TimelineOppositeContent>
+        <TimelineOppositeContent color="textSecondary">09:30 am</TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineDot />
           <TimelineConnector />
@@ -23,13 +24,12 @@ export default function RightAlignedTimeline() {
         <TimelineContent>Eat</TimelineContent>
       </TimelineItem>
       <TimelineItem>
-        <TimelineOppositeContent color="textSecondary">
-          10:00 am
-        </TimelineOppositeContent>
+        <TimelineOppositeContent color="textSecondary">10:00 am</TimelineOppositeContent>
         <TimelineSeparator>
           <TimelineDot />
         </TimelineSeparator>
         <TimelineContent>Code</TimelineContent>
       </TimelineItem>
-    </Timeline>);
+    </Timeline>
+  );
 }

@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 /**
  * The E-Commerce app.
  */
 function ECommerceApp() {
-	return <Outlet />;
+  return <Outlet />;
 }
 
 export default ECommerceApp;

@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { RxCross1 } from 'react-icons/rx';
-import { IoBagHandleOutline } from 'react-icons/io5';
-import { HiOutlineMinus, HiPlus } from 'react-icons/hi';
+import React, { useState } from "react";
+import { RxCross1 } from "react-icons/rx";
+import { IoBagHandleOutline } from "react-icons/io5";
+import { HiOutlineMinus, HiPlus } from "react-icons/hi";
 // import styles from '../../styles/styles';
-import { Link } from 'react-router-dom';
+import { Link } from "react-router-dom";
 // import { backend_url } from "../../server";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addTocart, removeFromCart } from "../../redux/actions/cart";
-import { toast } from 'react-toastify';
-import { cartData } from '../../static/data';
-import styles from '../../styles/style';
+import { toast } from "react-toastify";
+import { cartData } from "../../static/data";
+import styles from "../../styles/style";
 
 const Cart = ({ setOpenCart }) => {
   // const { cart } = useSelector((state) => state.cart);
@@ -20,10 +20,7 @@ const Cart = ({ setOpenCart }) => {
     // dispatch(removeFromCart(data));
   };
 
-  const totalPrice = cart.reduce(
-    (acc, item) => acc + item.qty * item.discount_price,
-    0
-  );
+  const totalPrice = cart.reduce((acc, item) => acc + item.qty * item.discount_price, 0);
 
   const quantityChangeHandler = (data) => {
     // dispatch(addTocart(data));
@@ -35,11 +32,7 @@ const Cart = ({ setOpenCart }) => {
         {cart && cart.length === 0 ? (
           <div className="w-full h-screen flex items-center justify-center">
             <div className="flex w-full justify-end pt-5 pr-5 fixed top-3 right-3">
-              <RxCross1
-                size={25}
-                className="cursor-pointer"
-                onClick={() => setOpenCart(false)}
-              />
+              <RxCross1 size={25} className="cursor-pointer" onClick={() => setOpenCart(false)} />
             </div>
             <h5>Cart Items is empty!</h5>
           </div>
@@ -47,18 +40,12 @@ const Cart = ({ setOpenCart }) => {
           <>
             <div>
               <div className="flex w-full justify-end pt-5 pr-5">
-                <RxCross1
-                  size={25}
-                  className="cursor-pointer"
-                  onClick={() => setOpenCart(false)}
-                />
+                <RxCross1 size={25} className="cursor-pointer" onClick={() => setOpenCart(false)} />
               </div>
               {/* Item length */}
               <div className={`${styles.noramlFlex} p-4`}>
                 <IoBagHandleOutline size={25} />
-                <h5 className="pl-2 text-[20px] font-[500]">
-                  {cart && cart.length} items
-                </h5>
+                <h5 className="pl-2 text-[20px] font-[500]">{cart && cart.length} items</h5>
               </div>
 
               {/* cart Single Items */}
@@ -147,10 +134,7 @@ const CartSingle = ({ data, quantityChangeHandler, removeFromCartHandler }) => {
             US${totalPrice}
           </h4>
         </div>
-        <RxCross1
-          className="cursor-pointer"
-          onClick={() => removeFromCartHandler(data)}
-        />
+        <RxCross1 className="cursor-pointer" onClick={() => removeFromCartHandler(data)} />
       </div>
     </div>
   );

@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Stack component
 components: Stack
-githubLabel: 'component: Stack'
+githubLabel: "component: Stack"
 ---
 
 # Stack
@@ -22,7 +22,7 @@ Stack is ideal for one-dimensional layouts, while Grid is preferable when you ne
 ## Basics
 
 ```jsx
-import Stack from '@mui/material/Stack';
+import Stack from "@mui/material/Stack";
 ```
 
 The Stack component acts as a generic container, wrapping around the elements to be arranged.
@@ -70,8 +70,8 @@ We recommend checking the [support percentage](https://caniuse.com/?search=flex%
 To set the prop to all stack instances, create a theme with default props:
 
 ```js
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-import Stack from '@mui/material/Stack';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+import Stack from "@mui/material/Stack";
 
 const theme = createTheme({
   components: {
@@ -117,7 +117,7 @@ For instance, the top-margin on the `Button` component below will be ignored.
 
 ```jsx
 <Stack>
-  <Button sx={{ marginTop: '30px' }}>...</Button>
+  <Button sx={{ marginTop: "30px" }}>...</Button>
 </Stack>
 ```
 

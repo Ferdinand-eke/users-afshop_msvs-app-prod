@@ -48,7 +48,7 @@ function VisitFoodMartPage() {
   const { martId } = routeParams;
   const { data: martMenu, isLoading, isError } = useGetMartMenu(martId);
 
- console.log("SINGLE____FOOD___MART",  martMenu?.data?.foodMart)
+  console.log("SINGLE____FOOD___MART", martMenu?.data?.foodMart);
 
   if (isLoading) {
     return <FuseLoading />;
@@ -91,15 +91,13 @@ function VisitFoodMartPage() {
                 <div className="w-full md:w-full bg-white p-4">
                   <div className="flex flex-col items-center">
                     <img
-                      src={ martMenu?.data?.foodMart?.imageSrc}
+                      src={martMenu?.data?.foodMart?.imageSrc}
                       alt="Store logo"
                       className="rounded-full mb-4 h-[100px]"
                     />
                     <div className="text-center">
                       <p className="text-gray-500">Since 2023</p>
-                      <h2 className="text-xl font-bold">
-                        { martMenu?.data?.foodMart?.title}
-                      </h2>
+                      <h2 className="text-xl font-bold">{martMenu?.data?.foodMart?.title}</h2>
                       <p className="text-gray-500">
                         {martMenu?.data?.data?.menu?.length} items in menu
                       </p>
@@ -130,8 +128,7 @@ function VisitFoodMartPage() {
                   <div className="mt-6">
                     <h3 className="font-bold">Address</h3>
                     <p className="text-gray-500">
-                      East Avenue 1743, West Tower, New York, Manhattan, 12332,
-                      United States
+                      East Avenue 1743, West Tower, New York, Manhattan, 12332, United States
                     </p>
                   </div>
                   <div className="mt-4">
@@ -146,7 +143,7 @@ function VisitFoodMartPage() {
               <main className="mt-10 flex-1 p-4 rounded-md">
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
                   <Typography className="text-[12px] font-bold">
-                    Menu at ({ martMenu?.data?.foodMart?.title})
+                    Menu at ({martMenu?.data?.foodMart?.title})
                   </Typography>
                   <div className="flex space-x-4 mt-4 md:mt-0">
                     <select className="border rounded px-4 py-2">
@@ -190,18 +187,14 @@ function VisitFoodMartPage() {
                           </Typography>
                           <p className="text-orange-500 font-bold mt-2">
                             ₦ {formatCurrency(item?.price)}{" "}
-                            <span className="text-sm">
-                              / {item?.unitPerQuantity}{" "}
-                            </span>
+                            <span className="text-sm">/ {item?.unitPerQuantity} </span>
                           </p>
                           {item?.listprice && (
                             <p className="text-gray-500 line-through">
                               ₦ {formatCurrency(item?.listprice)}
                             </p>
                           )}
-                          {item?.listprice && (
-                            <p className="text-green-500">-70%</p>
-                          )}
+                          {item?.listprice && <p className="text-green-500">-70%</p>}
                         </div>
                       </div>
 
@@ -242,9 +235,10 @@ function VisitFoodMartPage() {
                   className="w-full h-full object-cover"
                 /> */}
 
-              <FoodMartMapSingle 
-                center={ martMenu?.data?.foodMart?.foodMartState} 
-                items={martMenu?.data?.data?.menu} />
+                <FoodMartMapSingle
+                  center={martMenu?.data?.foodMart?.foodMartState}
+                  items={martMenu?.data?.data?.menu}
+                />
               </div>
             </div>
           </div>

@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Accordion component
 components: Accordion, AccordionActions, AccordionDetails, AccordionSummary
-githubLabel: 'component: accordion'
+githubLabel: "component: accordion"
 materialDesign: https://m1.material.io/components/expansion-panels.html
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/accordion/
 ---
@@ -31,9 +31,9 @@ This component is no longer documented in the [Material Design guidelines](https
 ## Basics
 
 ```jsx
-import Accordion from '@mui/material/Accordion';
-import AccordionDetails from '@mui/material/AccordionDetails';
-import AccordionSummary from '@mui/material/AccordionSummary';
+import Accordion from "@mui/material/Accordion";
+import AccordionDetails from "@mui/material/AccordionDetails";
+import AccordionSummary from "@mui/material/AccordionSummary";
 ```
 
 ### Expand icon
@@ -105,9 +105,7 @@ The Accordion component then derives the necessary `aria-labelledby` and `id` fr
   <AccordionSummary id="panel-header" aria-controls="panel-content">
     Header
   </AccordionSummary>
-  <AccordionDetails>
-    Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-  </AccordionDetails>
+  <AccordionDetails>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</AccordionDetails>
 </Accordion>
 ```
 

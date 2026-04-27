@@ -1,10 +1,11 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import Fade from '@mui/material/Fade';
-import Zoom from '@mui/material/Zoom';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import Fade from "@mui/material/Fade";
+import Zoom from "@mui/material/Zoom";
 export default function TransitionsTooltips() {
-    return (<div>
+  return (
+    <div>
       <Tooltip title="Add">
         <Button>Grow</Button>
       </Tooltip>
@@ -14,5 +15,6 @@ export default function TransitionsTooltips() {
       <Tooltip TransitionComponent={Zoom} title="Add">
         <Button>Zoom</Button>
       </Tooltip>
-    </div>);
+    </div>
+  );
 }

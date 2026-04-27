@@ -1,14 +1,6 @@
 import { motion } from "framer-motion";
 import { useState } from "react";
-import {
-  Button,
-  Typography,
-  Chip,
-  Rating,
-  IconButton,
-  Divider,
-  Badge,
-} from "@mui/material";
+import { Button, Typography, Chip, Rating, IconButton, Divider, Badge } from "@mui/material";
 import {
   LocalOffer,
   Star,
@@ -31,7 +23,6 @@ import ProductDetailsWithReviews from "./ProductDetailsWithReviews";
 import ProductImageGalleryView from "./ProductImageGalleryView";
 import SingleProductLoadingPlaceholder from "./SingleProductLoadingPlaceholder";
 
-
 /**
  * Demo Content - Single Product Page
  * Completely redesigned with compelling, engaging, and professional UI
@@ -52,9 +43,9 @@ function DemoContentSingleProduct(props) {
 
   // console.log("Single Product Data:", productData);
 
-
   const [galleryOpen, setGalleryOpen] = useState(false);
   const [isFavorite, setIsFavorite] = useState(false);
+
 
   // Loading state
   if (isLoading) {
@@ -320,10 +311,7 @@ function DemoContentSingleProduct(props) {
 
                 {hasDiscount && (
                   <div className="flex items-center gap-3 mt-3">
-                    <Typography
-                      variant="h6"
-                      className="line-through text-gray-500"
-                    >
+                    <Typography variant="h6" className="line-through text-gray-500">
                       ₦{formatCurrency(productData?.listprice)}
                     </Typography>
                     <Chip
@@ -357,7 +345,6 @@ function DemoContentSingleProduct(props) {
                   </Typography>
                 </div>
               </div>
-
 
               {/* Add to Cart Button */}
               <div className="mb-6">
@@ -417,15 +404,25 @@ function DemoContentSingleProduct(props) {
                 <ul className="space-y-3">
                   {[
                     { icon: Phone, text: "Call 07087200297 to place your order", color: "#10b981" },
-                    { icon: WhatsApp, text: "Need extra money? Loan up to ₦500,000 on your Africanshops Wallet", color: "#22c55e" },
-                    { icon: LocalShipping, text: "Enjoy cheaper shipping fees when you select a PickUp Station at checkout", color: "#3b82f6" },
+                    {
+                      icon: WhatsApp,
+                      text: "Need extra money? Loan up to ₦500,000 on your Africanshops Wallet",
+                      color: "#22c55e",
+                    },
+                    {
+                      icon: LocalShipping,
+                      text: "Enjoy cheaper shipping fees when you select a PickUp Station at checkout",
+                      color: "#3b82f6",
+                    },
                   ].map((promo, index) => (
                     <motion.li
                       key={index}
                       whileHover={{ x: 5 }}
                       className="flex items-start gap-3 p-4 bg-white rounded-xl shadow-sm hover:shadow-md transition-all duration-300 cursor-pointer"
                     >
-                      <promo.icon sx={{ color: promo.color, fontSize: "1.5rem", marginTop: "2px" }} />
+                      <promo.icon
+                        sx={{ color: promo.color, fontSize: "1.5rem", marginTop: "2px" }}
+                      />
                       <Typography variant="body2" className="text-gray-700 leading-relaxed">
                         {promo.text}
                       </Typography>
@@ -449,6 +446,7 @@ function DemoContentSingleProduct(props) {
       </div>
 
       {/* Image Gallery Modal */}
+      
       <ProductImageGalleryView
         open={galleryOpen}
         onClose={() => setGalleryOpen(false)}

@@ -25,18 +25,10 @@ import {
   FilterList as FilterListIcon,
 } from "@mui/icons-material";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-import {
-  getLgasByStateId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 
 // Placeholder data for shop plans
-const SHOP_PLANS = [
-  "Basic",
-  "Premium",
-  "Enterprise",
-  "Free Trial",
-];
+const SHOP_PLANS = ["Basic", "Premium", "Enterprise", "Free Trial"];
 
 // Placeholder data for markets
 const MARKETS = [
@@ -69,7 +61,6 @@ const PRODUCT_FEATURES = [
  */
 
 function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
-  
   const { data: COUNTRIES } = useSellerCountries();
 
   // Use ref to store the latest onFilterChange callback
@@ -87,12 +78,8 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
   const [lga, setLga] = useState(initialFilters.lga || "");
   const [shopPlan, setShopPlan] = useState(initialFilters.shopPlan || "");
   const [market, setMarket] = useState(initialFilters.market || "");
-  const [priceRange, setPriceRange] = useState(
-    initialFilters.priceRange || [0, 1000000]
-  );
-  const [selectedFeatures, setSelectedFeatures] = useState(
-    initialFilters.features || []
-  );
+  const [priceRange, setPriceRange] = useState(initialFilters.priceRange || [0, 1000000]);
+  const [selectedFeatures, setSelectedFeatures] = useState(initialFilters.features || []);
 
   // UI state
   const [showAdvancedFeatures, setShowAdvancedFeatures] = useState(false);
@@ -119,33 +106,27 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
   // Emit filter changes to parent component with debounce for keyword
   useEffect(() => {
     // Debounce keyword search to prevent excessive API calls
-    const timeoutId = setTimeout(() => {
-      if (onFilterChangeRef.current) {
-        const filters = {
-          keyword,
-          country,
-          state,
-          lga,
-          shopPlan,
-          market,
-          priceRange,
-          features: selectedFeatures,
-        };
-        onFilterChangeRef.current(filters);
-      }
-    }, keyword ? 500 : 0); // 500ms debounce for keyword, immediate for others
+    const timeoutId = setTimeout(
+      () => {
+        if (onFilterChangeRef.current) {
+          const filters = {
+            keyword,
+            country,
+            state,
+            lga,
+            shopPlan,
+            market,
+            priceRange,
+            features: selectedFeatures,
+          };
+          onFilterChangeRef.current(filters);
+        }
+      },
+      keyword ? 500 : 0,
+    ); // 500ms debounce for keyword, immediate for others
 
     return () => clearTimeout(timeoutId);
-  }, [
-    keyword,
-    country,
-    state,
-    lga,
-    shopPlan,
-    market,
-    priceRange,
-    selectedFeatures,
-  ]);
+  }, [keyword, country, state, lga, shopPlan, market, priceRange, selectedFeatures]);
 
   //**Get States from Country_ID data */
   const [statesloading, setStatesLoading] = useState(false);
@@ -161,7 +142,7 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
         function () {
           setStatesLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -180,7 +161,7 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -188,9 +169,7 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
   // Handle feature toggle
   const handleFeatureToggle = (featureId) => {
     setSelectedFeatures((prev) =>
-      prev.includes(featureId)
-        ? prev.filter((id) => id !== featureId)
-        : [...prev, featureId]
+      prev.includes(featureId) ? prev.filter((id) => id !== featureId) : [...prev, featureId],
     );
   };
 
@@ -251,10 +230,7 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
         />
 
         {/* Location Section */}
-        <Typography
-          variant="subtitle2"
-          className="font-medium text-gray-700 pt-2"
-        >
+        <Typography variant="subtitle2" className="font-medium text-gray-700 pt-2">
           Location
         </Typography>
 
@@ -364,10 +340,7 @@ function ProductFilter({ onFilterChange, initialFilters = {}, onClearAll }) {
 
         {/* Price Range */}
         <div className="pt-2">
-          <Typography
-            variant="subtitle2"
-            className="font-medium text-gray-700 mb-2"
-          >
+          <Typography variant="subtitle2" className="font-medium text-gray-700 mb-2">
             Price Range
           </Typography>
           <Box className="px-2">

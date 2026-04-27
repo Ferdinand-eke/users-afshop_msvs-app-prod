@@ -1,5 +1,5 @@
-import { useEffect, useState } from 'react';
-import { getSubdomain } from 'src/app/utils/subdomainUtils';
+import { useEffect, useState } from "react";
+import { getSubdomain } from "src/app/utils/subdomainUtils";
 
 /**
  * MerchantSubdomainLayout
@@ -15,12 +15,12 @@ function MerchantSubdomainLayout({ PageComponent }) {
     const slug = getSubdomain();
     const hostname = window.location.hostname;
 
-    console.log('═══════════════════════════════════════');
-    console.log('MerchantSubdomainLayout Detection:');
-    console.log('  Hostname:', hostname);
-    console.log('  Detected Slug:', slug);
-    console.log('  Path:', window.location.pathname);
-    console.log('═══════════════════════════════════════');
+    console.log("═══════════════════════════════════════");
+    console.log("MerchantSubdomainLayout Detection:");
+    console.log("  Hostname:", hostname);
+    console.log("  Detected Slug:", slug);
+    console.log("  Path:", window.location.pathname);
+    console.log("═══════════════════════════════════════");
 
     setMerchantSlug(slug);
     setLoading(false);

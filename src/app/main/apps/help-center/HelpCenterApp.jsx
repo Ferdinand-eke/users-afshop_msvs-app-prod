@@ -1,10 +1,10 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet } from "react-router-dom";
 
 /**
  * The help center app.
  */
 function HelpCenterApp() {
-	return <Outlet />;
+  return <Outlet />;
 }
 
 export default HelpCenterApp;

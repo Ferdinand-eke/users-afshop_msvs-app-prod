@@ -11,11 +11,13 @@ This is a **PREMIUM FEATURE** that allows merchants to have their entire busines
 ## How It Works
 
 ### Standard Flow (Free Tier)
+
 - Merchants listed on main domain: `africanshops.org`
 - Property bookings happen on: `africanshops.org/bookings/listings/123`
 - All branding is AfricanShops
 
 ### Premium Subdomain Flow
+
 - Merchant gets branded subdomain: `cindy-fabrics.africanshops.org`
 - Everything happens on their domain:
   - Profile: `cindy-fabrics.africanshops.org/`
@@ -28,6 +30,7 @@ This is a **PREMIUM FEATURE** that allows merchants to have their entire busines
 ## Current Implementation
 
 ### 1. Subdomain Detection
+
 The app automatically detects if a user is on a merchant subdomain:
 
 ```javascript
@@ -37,6 +40,7 @@ The app automatically detects if a user is on a merchant subdomain:
 ```
 
 ### 2. No Subdomain Cascading
+
 Fixed to prevent URLs like `reens.cindy-fabrics.localhost`:
 
 ```javascript
@@ -50,13 +54,17 @@ getMerchantSubdomainUrl() builds from clean base domain
 ```
 
 ### 3. Merchant Not Found
+
 If subdomain doesn't match any merchant:
+
 - Shows professional 404 page
 - Offers navigation back to main site
 - Example: `invalid-merchant.localhost:3000` → 404 page
 
 ### 4. Console Logging
+
 Added detailed logging for debugging:
+
 ```
 ═══════════════════════════════════════
 Navigating to Merchant Subdomain:
@@ -72,6 +80,7 @@ Navigating to Merchant Subdomain:
 ## URL Structure
 
 ### Development
+
 ```
 Main Domain:
 http://localhost:3000/                          → Homepage
@@ -84,6 +93,7 @@ http://kwame-shops.localhost:3000/              → Kwame Shops profile
 ```
 
 ### Production
+
 ```
 Main Domain:
 https://africanshops.org/                       → Homepage
@@ -102,12 +112,14 @@ https://kwame-shops.africanshops.org/           → Kwame Shops full site
 Currently configured in `MerchantSubdomainConfig.jsx`:
 
 ### Active Routes
+
 ```javascript
 /                   → Merchant profile/homepage
 /profile            → Merchant profile (explicit)
 ```
 
 ### Future Routes (Ready to Enable)
+
 ```javascript
 /products           → Merchant's product catalog
 /about              → About the merchant
@@ -123,33 +135,37 @@ Currently configured in `MerchantSubdomainConfig.jsx`:
 ## Navigation Functions
 
 ### `navigateToMerchantSubdomain(merchantSlug, path)`
+
 Navigate to a specific merchant's subdomain:
 
 ```javascript
 // From anywhere, go to Cindy Fabrics
-navigateToMerchantSubdomain('cindy-fabrics', '/');
+navigateToMerchantSubdomain("cindy-fabrics", "/");
 // Result: http://cindy-fabrics.localhost:3000/
 
 // From anywhere, go to Reens Apartments
-navigateToMerchantSubdomain('reens-apartments', '/profile');
+navigateToMerchantSubdomain("reens-apartments", "/profile");
 // Result: http://reens-apartments.localhost:3000/profile
 ```
 
 **Smart Features:**
+
 - Works from main domain or any subdomain
 - Strips existing subdomain before building new URL
 - No cascading/stacking issues
 
 ### `navigateToMainDomain(path)`
+
 Return to main AfricanShops domain:
 
 ```javascript
 // From any merchant subdomain
-navigateToMainDomain('/bookings/listings');
+navigateToMainDomain("/bookings/listings");
 // Result: http://localhost:3000/bookings/listings
 ```
 
 **Smart Features:**
+
 - Strips ALL subdomains
 - Always returns to clean base domain
 - Preserves authentication (same domain cookies)
@@ -159,6 +175,7 @@ navigateToMainDomain('/bookings/listings');
 ## Adding New Pages to Merchant Subdomains
 
 ### Step 1: Create Page Component
+
 ```javascript
 // src/app/main/merchant-subdomain/MerchantProductsPage.jsx
 function MerchantProductsPage({ merchantSlug }) {
@@ -174,20 +191,22 @@ function MerchantProductsPage({ merchantSlug }) {
 ```
 
 ### Step 2: Add Route
+
 ```javascript
 // src/app/main/merchant-subdomain/MerchantSubdomainConfig.jsx
-import MerchantProductsPage from './MerchantProductsPage';
+import MerchantProductsPage from "./MerchantProductsPage";
 
 routes: [
   // ... existing routes ...
   {
-    path: '/products',
+    path: "/products",
     element: <MerchantSubdomainLayout PageComponent={MerchantProductsPage} />,
   },
-]
+];
 ```
 
 ### Step 3: Test
+
 Visit: `http://cindy-fabrics.localhost:3000/products`
 Should show Cindy Fabrics products page ✅
 
@@ -196,6 +215,7 @@ Should show Cindy Fabrics products page ✅
 ## Technical Details
 
 ### Files Structure
+
 ```
 src/app/
 ├── utils/
@@ -213,6 +233,7 @@ src/app/
 ### Key Functions (subdomainUtils.js)
 
 #### `getSubdomain()`
+
 ```javascript
 // Returns merchant slug from hostname
 'cindy-fabrics.localhost' → 'cindy-fabrics'
@@ -220,6 +241,7 @@ src/app/
 ```
 
 #### `getMerchantSubdomainUrl(merchantSlug, path)`
+
 ```javascript
 // Builds merchant subdomain URL
 ('cindy-fabrics', '/profile')
@@ -227,6 +249,7 @@ src/app/
 ```
 
 #### `getBaseDomainUrl(path)`
+
 ```javascript
 // Strips subdomain, returns main domain URL
 From: 'cindy-fabrics.localhost'
@@ -238,13 +261,16 @@ From: 'cindy-fabrics.localhost'
 ## Authentication Considerations
 
 ### ⚠️ Important: LocalStorage Isolation
+
 Subdomains have **separate localStorage** from main domain:
+
 - User logs in on `localhost:3000` → Token stored in `localhost` localStorage
 - User visits `cindy-fabrics.localhost:3000` → Different localStorage, no token
 
 ### Solutions
 
 **Option 1: Share via Cookies (Recommended for Premium Feature)**
+
 ```javascript
 // Use cookies with domain set to '.localhost' or '.africanshops.org'
 document.cookie = "token=xyz; domain=.africanshops.org";
@@ -252,12 +278,14 @@ document.cookie = "token=xyz; domain=.africanshops.org";
 ```
 
 **Option 2: Token in URL (Less Secure)**
+
 ```javascript
 // Pass token in URL parameter
-navigateToMerchantSubdomain('cindy', '/?token=xyz');
+navigateToMerchantSubdomain("cindy", "/?token=xyz");
 ```
 
 **Option 3: Message Window (Complex)**
+
 ```javascript
 // Use postMessage API between windows
 ```
@@ -269,21 +297,25 @@ navigateToMerchantSubdomain('cindy', '/?token=xyz');
 ## Future Premium Features
 
 ### Phase 1: Profile Pages (Current)
+
 - ✅ Merchant profile on subdomain
 - ✅ Subdomain detection
 - ✅ 404 handling
 
 ### Phase 2: Booking Flow
+
 - [ ] Merchant's properties list on subdomain
 - [ ] Booking checkout on subdomain
 - [ ] Shared authentication via cookies
 
 ### Phase 3: Full E-commerce
+
 - [ ] Product catalog on subdomain
 - [ ] Shopping cart on subdomain
 - [ ] Payment processing on subdomain
 
 ### Phase 4: Customization
+
 - [ ] Custom merchant branding/colors
 - [ ] Custom domain mapping (e.g., `book.cindysfabrics.com` → `cindy-fabrics.africanshops.org`)
 - [ ] Custom SSL for mapped domains
@@ -293,6 +325,7 @@ navigateToMerchantSubdomain('cindy', '/?token=xyz');
 ## Production Deployment
 
 ### DNS Configuration
+
 ```bash
 # Main domain
 africanshops.org → A → your-server-ip
@@ -302,12 +335,14 @@ africanshops.org → A → your-server-ip
 ```
 
 ### SSL Certificate
+
 ```bash
 # Get wildcard certificate
 *.africanshops.org + africanshops.org
 ```
 
 ### Server Configuration (Nginx Example)
+
 ```nginx
 server {
     server_name africanshops.org *.africanshops.org;
@@ -325,23 +360,28 @@ server {
 ## Testing Checklist
 
 ### ✅ Subdomain Detection
+
 - [ ] Visit `cindy-fabrics.localhost:3000/` → Shows Cindy profile
 - [ ] Visit `reens-apartments.localhost:3000/` → Shows Reens profile
 - [ ] Visit `localhost:3000/` → Shows main site
 
 ### ✅ Navigation Between Merchants
+
 - [ ] From Cindy subdomain → Click link to Reens
 - [ ] Should go to `reens-apartments.localhost:3000` (NO cascading)
 
 ### ✅ Return to Main Domain
+
 - [ ] From merchant subdomain → Click "Back to AfricanShops"
 - [ ] Should return to `localhost:3000`
 
 ### ✅ Invalid Merchant
+
 - [ ] Visit `invalid-merchant.localhost:3000`
 - [ ] Should show "Merchant Not Found" page
 
 ### ✅ Console Logging
+
 - [ ] Check browser console for subdomain detection logs
 - [ ] Verify URLs generated correctly
 
@@ -350,11 +390,13 @@ server {
 ## Monetization Strategy
 
 ### Free Tier
+
 - Listed on main domain
 - Standard AfricanShops branding
 - Limited customization
 
 ### Premium Tier ($X/month)
+
 - **Own branded subdomain** (e.g., `yourshop.africanshops.org`)
 - Full merchant branding
 - All bookings happen on merchant subdomain
@@ -362,6 +404,7 @@ server {
 - Advanced analytics
 
 ### Enterprise Tier ($Y/month)
+
 - Everything in Premium
 - **Custom domain mapping** (e.g., `book.yourshop.com`)
 - Custom SSL certificate
@@ -382,6 +425,7 @@ You now have a **complete merchant subdomain system** ready to be activated as a
 6. ✅ Production-ready architecture
 
 **Next Steps:**
+
 1. Test thoroughly with multiple merchants
 2. Implement authentication sharing (cookies)
 3. Add more merchant-specific pages

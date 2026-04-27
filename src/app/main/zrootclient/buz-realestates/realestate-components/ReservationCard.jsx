@@ -3,8 +3,6 @@ import { Typography } from "@mui/material";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 const ReservationCard = ({ placedReservation }) => {
- 
-
   return (
     <>
       <div className="flex space-x-4 p-4">
@@ -32,14 +30,11 @@ const ReservationCard = ({ placedReservation }) => {
             </span>
           )}
           <p className="text-md font-mono font-bold mt-2">
-            Your Check In:{" "}
-            {new Date(placedReservation?.startDate)?.toDateString()}
+            Your Check In: {new Date(placedReservation?.startDate)?.toDateString()}
           </p>
           <p className="text-md font-mono font-bold mt-1">
-            Your Check Out:{" "}
-            {new Date(placedReservation?.endDate)?.toDateString()}
+            Your Check Out: {new Date(placedReservation?.endDate)?.toDateString()}
           </p>
-
         </div>
         {placedReservation?.isPaid && (
           <Typography
@@ -47,7 +42,9 @@ const ReservationCard = ({ placedReservation }) => {
             to={`/bookings/${placedReservation?.id}/reservation-detail`}
             className="text-black boreder-none px-2"
           >
-            <span className="bg-orange-300 hover:bg-orange-600 px-4 py-2 rounded-4">SEE DETAILS</span>
+            <span className="bg-orange-300 hover:bg-orange-600 px-4 py-2 rounded-4">
+              SEE DETAILS
+            </span>
           </Typography>
         )}
 

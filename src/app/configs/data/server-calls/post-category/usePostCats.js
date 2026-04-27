@@ -1,11 +1,9 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { toast } from 'react-toastify';
+import { useQuery } from 'react-query';
 
-import { useNavigate } from 'react-router';
 import { getPostcats } from '../../client/clientToApiRoutes';
 
 export default function usePostCats() {
-  return useQuery(['postcategories'], getPostcats);
+	return useQuery(['postcategories'], getPostcats);
 }
 
 // //get single post category
@@ -91,7 +89,7 @@ export default function usePostCats() {
 //         queryClient.refetchQueries('postcategories', { force: true });
 //         navigate('/postcategories/list');
 //       }
-  
+
 //     },
 //     onError: (error) => {
 //       toast.error(

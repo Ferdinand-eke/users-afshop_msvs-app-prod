@@ -1,13 +1,13 @@
-import {  useQuery } from 'react-query';
+import { useQuery } from 'react-query';
 // import { getTradehubs } from '../../store-redux/api/apiRoutes';
 
 import { getTradehubs } from '../../client/clientToApiRoutes';
 
 export default function useHubs() {
-  return useQuery(['tradeHubs'], getTradehubs);
+	return useQuery(['tradeHubs'], getTradehubs);
 }
 
-//get single traade hub
+// get single traade hub
 // export function useSingleHub(hubId) {
 //   return useQuery(['tradeHubs', hubId], () => getTradehubById(hubId), {
 //     enabled: Boolean(hubId),

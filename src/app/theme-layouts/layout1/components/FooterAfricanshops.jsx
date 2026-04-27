@@ -1,10 +1,5 @@
 import React from "react";
-import {
-  AiFillFacebook,
-  AiFillInstagram,
-  AiFillYoutube,
-  AiOutlineTwitter,
-} from "react-icons/ai";
+import { AiFillFacebook, AiFillInstagram, AiFillYoutube, AiOutlineTwitter } from "react-icons/ai";
 import { Typography, Divider } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import {
@@ -19,7 +14,7 @@ const FooterAfricanshops = () => {
     <footer
       className="text-white"
       style={{
-        background: 'linear-gradient(to bottom right, #111827, #1f2937, #000000)'
+        background: "linear-gradient(to bottom right, #111827, #1f2937, #000000)",
       }}
     >
       {/* Main Footer Content */}
@@ -27,7 +22,11 @@ const FooterAfricanshops = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
           {/* Brand Section */}
           <div className="space-y-6">
-            <Link to="/" className="inline-flex items-center space-x-3 group" style={{ textDecoration: 'none' }}>
+            <Link
+              to="/"
+              className="inline-flex items-center space-x-3 group"
+              style={{ textDecoration: "none" }}
+            >
               <img
                 src="assets/images/afslogo/afslogo.png"
                 width={48}
@@ -41,7 +40,8 @@ const FooterAfricanshops = () => {
             </Link>
 
             <Typography className="text-gray-400 leading-relaxed max-w-xs">
-              Nurturing African businesses and ideologies. Your gateway to authentic African commerce.
+              Nurturing African businesses and ideologies. Your gateway to authentic African
+              commerce.
             </Typography>
 
             {/* Social Media Icons */}
@@ -148,7 +148,7 @@ const FooterAfricanshops = () => {
       </div>
 
       {/* Divider */}
-      <Divider sx={{ borderColor: 'rgba(255, 255, 255, 0.1)' }} />
+      <Divider sx={{ borderColor: "rgba(255, 255, 255, 0.1)" }} />
 
       {/* Bottom Footer */}
       <div className="container mx-auto px-6 md:px-12 lg:px-16 py-8">

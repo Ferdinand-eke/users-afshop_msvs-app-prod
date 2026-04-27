@@ -19,7 +19,10 @@ import {
 } from "@mui/material";
 import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "react-toastify";
-import { useInitiateUserSettingsChangeMail, useConfirmUserSettingsChangeMail } from "app/configs/data/server-calls/useUsers/useUsersQuery";
+import {
+  useInitiateUserSettingsChangeMail,
+  useConfirmUserSettingsChangeMail,
+} from "app/configs/data/server-calls/useUsers/useUsersQuery";
 
 // Local storage key for userMailToken
 const MAIL_TOKEN_KEY = "userMailToken";
@@ -57,10 +60,7 @@ const emailChangeSchema = z
       .string()
       .email("You must enter a valid email")
       .min(1, "You must enter an email"),
-    newEmail: z
-      .string()
-      .email("You must enter a valid email")
-      .min(1, "You must enter an email"),
+    newEmail: z.string().email("You must enter a valid email").min(1, "You must enter an email"),
     confirmNewEmail: z
       .string()
       .email("You must enter a valid email")
@@ -148,7 +148,7 @@ function ChangeEmailSetting({ userEmail }) {
     if (changeMail.isError) {
       toast.error(
         changeMail?.error?.response?.data?.message ||
-          "Failed to initiate email change. Please try again."
+          "Failed to initiate email change. Please try again.",
       );
     }
   }, [changeMail.isError, changeMail.error]);
@@ -263,17 +263,13 @@ function ChangeEmailSetting({ userEmail }) {
 
               <div className="space-y-3 bg-gray-50 p-4 rounded-xl">
                 <div>
-                  <Typography className="text-xs text-gray-500 mb-1">
-                    From:
-                  </Typography>
+                  <Typography className="text-xs text-gray-500 mb-1">From:</Typography>
                   <Typography className="text-sm font-semibold text-gray-800">
                     {emailForm.getValues().currentEmail}
                   </Typography>
                 </div>
                 <div>
-                  <Typography className="text-xs text-gray-500 mb-1">
-                    To:
-                  </Typography>
+                  <Typography className="text-xs text-gray-500 mb-1">To:</Typography>
                   <Typography className="text-sm font-semibold text-orange-600">
                     {emailForm.getValues().newEmail}
                   </Typography>
@@ -288,8 +284,8 @@ function ChangeEmailSetting({ userEmail }) {
                 }}
               >
                 <Typography className="text-xs text-gray-600">
-                  An OTP will be sent to your new email address. You'll need to
-                  enter it to complete the email change.
+                  An OTP will be sent to your new email address. You'll need to enter it to complete
+                  the email change.
                 </Typography>
               </div>
             </DialogContent>
@@ -399,9 +395,7 @@ function EmailChangeForm({
           </FuseSvgIcon>
         </div>
         <div>
-          <Typography className="text-xl font-bold text-gray-800">
-            Change Your Email
-          </Typography>
+          <Typography className="text-xl font-bold text-gray-800">Change Your Email</Typography>
           <Typography className="text-sm text-gray-600">
             You can only change your email twice within 6 months
           </Typography>
@@ -549,14 +543,9 @@ function EmailChangeForm({
                     ),
                     endAdornment: (
                       <InputAdornment position="end">
-                        <IconButton
-                          onClick={() => setShowpassword(!showpassword)}
-                          edge="end"
-                        >
+                        <IconButton onClick={() => setShowpassword(!showpassword)} edge="end">
                           <FuseSvgIcon size={20} className="text-gray-500">
-                            {showpassword
-                              ? "heroicons-solid:eye-off"
-                              : "heroicons-solid:eye"}
+                            {showpassword ? "heroicons-solid:eye-off" : "heroicons-solid:eye"}
                           </FuseSvgIcon>
                         </IconButton>
                       </InputAdornment>
@@ -666,15 +655,7 @@ function EmailChangeForm({
 }
 
 // OTP Verification Form Component
-function OtpVerificationForm({
-  control,
-  errors,
-  isDirty,
-  isValid,
-  onSubmit,
-  onCancel,
-  isLoading,
-}) {
+function OtpVerificationForm({ control, errors, isDirty, isValid, onSubmit, onCancel, isLoading }) {
   return (
     <div
       className="bg-white rounded-2xl shadow-lg p-6 sm:p-8 mb-6"
@@ -695,9 +676,7 @@ function OtpVerificationForm({
           </FuseSvgIcon>
         </div>
         <div>
-          <Typography className="text-xl font-bold text-gray-800">
-            Verify Your Email
-          </Typography>
+          <Typography className="text-xl font-bold text-gray-800">Verify Your Email</Typography>
           <Typography className="text-sm text-gray-600">
             Enter the 6-digit OTP sent to your new email
           </Typography>
@@ -715,8 +694,8 @@ function OtpVerificationForm({
           },
         }}
       >
-        We've sent a verification code to your new email address. Please check
-        your inbox and enter the code below.
+        We've sent a verification code to your new email address. Please check your inbox and enter
+        the code below.
       </Alert>
 
       <form onSubmit={onSubmit}>
@@ -787,9 +766,7 @@ function OtpVerificationForm({
                 <ul className="text-xs text-gray-600 space-y-1 list-disc list-inside">
                   <li>Check your spam folder if you don't see the email</li>
                   <li>The OTP code is valid for 15 minutes</li>
-                  <li>
-                    Make sure to enter all 6 digits without any spaces
-                  </li>
+                  <li>Make sure to enter all 6 digits without any spaces</li>
                 </ul>
               </div>
             </div>

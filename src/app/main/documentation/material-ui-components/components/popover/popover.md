@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Popover component
 components: Grow, Popover
-githubLabel: 'component: Popover'
+githubLabel: "component: Popover"
 ---
 
 # Popover

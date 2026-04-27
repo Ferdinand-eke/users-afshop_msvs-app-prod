@@ -17,10 +17,7 @@ import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import useGetAllFoodMarts from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import { Controller, useForm } from "react-hook-form";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-import {
-  getLgasByStateId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 import ClienttErrorPage from "../../components/ClienttErrorPage";
 import FoodMartMap from "../components/maps/FoodMartMap";
 import UserCountrySelect from "src/app/apselects/usercountryselect";
@@ -81,8 +78,6 @@ function FoodMartsPage() {
     });
   };
 
-  
-
   useEffect(() => {
     if (selectCountry?._id?.length > 0) {
       findStatesByCountry(selectCountry?._id);
@@ -92,7 +87,6 @@ function FoodMartsPage() {
       getLgasFromState(getValues()?.selectState?._id);
     }
   }, [selectCountry?._id, selectState?._id, selectLga?._id]);
-
 
   async function findStatesByCountry(countryId) {
     setLoading(true);
@@ -105,7 +99,7 @@ function FoodMartsPage() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -121,7 +115,7 @@ function FoodMartsPage() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -137,9 +131,7 @@ function FoodMartsPage() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={" Error occurred while retriving listings"}
-        />
+        <ClienttErrorPage message={" Error occurred while retriving listings"} />
       </motion.div>
     );
   }
@@ -202,20 +194,10 @@ function FoodMartsPage() {
                 </div>
                 <h2 className="font-bold mt-6 mb-4">PRICE (₦)</h2>
                 <div className="flex items-center space-x-2">
-                  <input
-                    type="number"
-                    className="border rounded p-2 w-20"
-                    placeholder="6090"
-                  />
+                  <input type="number" className="border rounded p-2 w-20" placeholder="6090" />
                   <span>-</span>
-                  <input
-                    type="number"
-                    className="border rounded p-2 w-20"
-                    placeholder="9999999"
-                  />
-                  <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                    APPLY
-                  </button>
+                  <input type="number" className="border rounded p-2 w-20" placeholder="9999999" />
+                  <button className="bg-orange-500 text-white px-4 py-2 rounded">APPLY</button>
                 </div>
                 <h2 className="font-bold mt-6 mb-4">DISCOUNT PERCENTAGE</h2>
                 <div className="space-y-2">
@@ -241,25 +223,19 @@ function FoodMartsPage() {
               {/* Main Content */}
 
               <main className="mt-10 md:w-3/4 p-4 rounded-md">
-          
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
                   <h1 className="text-xl font-bold">Listings</h1>
                   <div className="flex mx-4 space-x-4 mt-4 md:mt-0 text-[10px]">
-                    
                     <UserCountrySelect
                       value={selectCountry}
-                      onChange={(value) =>
-                        setCustomValue("selectCountry", value)
-                      }
+                      onChange={(value) => setCustomValue("selectCountry", value)}
                     />
-                   
+
                     {selectCountry?._id && (
                       <UserStateSelect
                         states={stateData}
                         value={selectState}
-                        onChange={(value) =>
-                          setCustomValue("selectState", value)
-                        }
+                        onChange={(value) => setCustomValue("selectState", value)}
                       />
                     )}
 
@@ -274,10 +250,7 @@ function FoodMartsPage() {
                 </div>
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-8">
                   {AllFoodMarts?.data?.data?.map((foodmart, index) => (
-                    <div
-                      key={index}
-                      className="bg-white p-4 rounded shadow flex flex-col "
-                    >
+                    <div key={index} className="bg-white p-4 rounded shadow flex flex-col ">
                       <div className="relative">
                         <img
                           src={foodmart?.imageSrcs[0]?.url}
@@ -322,21 +295,14 @@ function FoodMartsPage() {
 
               {/* Map */}
               <div className="w-full md:w-1/3 bg-gray-200 relative  mt-4 md:mt-0 md:sticky top-16 h-screen">
-               
-                 {selectCountry?._id && 
-                  <FoodMartMap
-                    center={selectCountry}
-                    items={AllFoodMarts?.data?.data}
-                  />}
-
-
-
+                {selectCountry?._id && (
+                  <FoodMartMap center={selectCountry} items={AllFoodMarts?.data?.data} />
+                )}
               </div>
             </div>
           </div>
         </>
       }
-      
       scroll={isMobile ? "normal" : "page"}
     />
   );

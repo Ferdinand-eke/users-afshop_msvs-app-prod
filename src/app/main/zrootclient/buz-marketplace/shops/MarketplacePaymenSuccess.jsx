@@ -32,8 +32,8 @@ function MarketplacePaymenSuccess() {
         createdAt: new Date().toISOString(),
         totalAmount: 0, // Replace with actual order total
         itemCount: 0, // Replace with actual item count
-      }
-    }
+      },
+    },
   };
 
   if (!orderId) {
@@ -143,15 +143,11 @@ function MarketplacePaymenSuccess() {
                 >
                   <p className="text-gray-600 mb-2 text-lg">
                     We're sorry,{" "}
-                    <span className="font-semibold text-gray-800">
-                      {user?.name || "Guest"}
-                    </span>
-                    !
+                    <span className="font-semibold text-gray-800">{user?.name || "Guest"}</span>!
                   </p>
                   <p className="text-gray-600 mb-6">
-                    An error occurred while processing your payment. This could
-                    be due to insufficient funds, network issues, or payment
-                    gateway errors.
+                    An error occurred while processing your payment. This could be due to
+                    insufficient funds, network issues, or payment gateway errors.
                   </p>
                 </motion.div>
 
@@ -186,28 +182,19 @@ function MarketplacePaymenSuccess() {
                   <ul className="space-y-2 text-sm text-gray-700">
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Check your card balance and ensure you have sufficient
-                        funds
-                      </span>
+                      <span>Check your card balance and ensure you have sufficient funds</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Verify your card details and billing information
-                      </span>
+                      <span>Verify your card details and billing information</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Try a different payment method or card
-                      </span>
+                      <span>Try a different payment method or card</span>
                     </li>
                     <li className="flex items-start gap-2">
                       <span className="text-red-600 mt-0.5">•</span>
-                      <span>
-                        Contact your bank if the issue persists
-                      </span>
+                      <span>Contact your bank if the issue persists</span>
                     </li>
                   </ul>
                 </motion.div>
@@ -242,8 +229,8 @@ function MarketplacePaymenSuccess() {
                         Your order is still pending
                       </p>
                       <p className="text-xs text-gray-600">
-                        Don't worry! Your cart items are saved. Complete the
-                        payment to confirm your order.
+                        Don't worry! Your cart items are saved. Complete the payment to confirm your
+                        order.
                       </p>
                     </div>
                   </div>
@@ -261,15 +248,13 @@ function MarketplacePaymenSuccess() {
                     component={NavLinkAdapter}
                     to="/marketplace/cart"
                     sx={{
-                      background:
-                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                       textTransform: "none",
                       px: 4,
                       py: 1.5,
                       fontWeight: 600,
                       "&:hover": {
-                        background:
-                          "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
                         boxShadow: "0 8px 20px rgba(234, 88, 12, 0.4)",
                       },
                     }}
@@ -388,14 +373,7 @@ function MarketplacePaymenSuccess() {
                     stroke="#dc2626"
                     strokeWidth="3"
                   />
-                  <rect
-                    x="80"
-                    y="180"
-                    width="240"
-                    height="30"
-                    fill="#dc2626"
-                    opacity="0.3"
-                  />
+                  <rect x="80" y="180" width="240" height="30" fill="#dc2626" opacity="0.3" />
 
                   {/* Big X Mark */}
                   <motion.g

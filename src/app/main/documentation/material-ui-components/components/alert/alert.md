@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Alert component
 components: Alert, AlertTitle
-githubLabel: 'component: alert'
+githubLabel: "component: alert"
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/alert/
 ---
 
@@ -33,7 +33,7 @@ Use the Material UI [Dialog](https://mui.com/material-ui/react-dialog/) compone
 ## Basics
 
 ```jsx
-import Alert from '@mui/material/Alert';
+import Alert from "@mui/material/Alert";
 ```
 
 The Alert component wraps around its content, and stretches to fill its enclosing container.
@@ -61,7 +61,7 @@ When using an outlined Alert with the [Snackbar](/material-ui/react-snackbar/) c
 You can prevent this by adding `bgcolor: 'background.paper'` to [the `sx` prop](/material-ui/customization/how-to-customize/#the-sx-prop) on the Alert component:
 
 ```jsx
-<Alert sx={{ bgcolor: 'background.paper' }} />
+<Alert sx={{ bgcolor: "background.paper" }} />
 ```
 
 Check out the [Snackbar—customization](/material-ui/react-snackbar/#customization) doc for an example of how to use these two components together.
@@ -100,7 +100,7 @@ You can define this prop globally by customizing your app's theme. See [Theme co
 To add a title to an Alert, import the Alert Title component:
 
 ```jsx
-import AlertTitle from '@mui/material/AlertTitle';
+import AlertTitle from "@mui/material/AlertTitle";
 ```
 
 You can nest this component above the message in your Alert for a neatly styled and properly aligned title, as shown below:

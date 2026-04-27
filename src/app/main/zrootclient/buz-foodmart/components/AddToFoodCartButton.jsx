@@ -3,46 +3,37 @@ import { useUpdateFoodCartItemQty } from "app/configs/data/server-calls/auth/use
 import { useEffect } from "react";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
-const AddToFoodCartButton = ({ onSubmit, loading, productId, 
-    cartItems, quantityLeft
-}) => {
+const AddToFoodCartButton = ({ onSubmit, loading, productId, cartItems, quantityLeft }) => {
   let checkArray = [];
   cartItems?.forEach((element) => {
     checkArray?.push(element?.martMenu?.id);
   });
 
-  
-    const { mutate: updateCartQty } = useUpdateFoodCartItemQty();
-  
-    const increaseCart = (itemId) => {
-      const formData = {
-        flag: "increase",
-        foodCartItemId: itemId,
-      };
-      return updateCartQty(formData);
-    };
-  
-    const decreaseCart = (itemId) => {
-      const formData = {
-        flag: "decrease",
-        foodCartItemId: itemId,
-      };
-      return updateCartQty(formData);
-    };
+  const { mutate: updateCartQty } = useUpdateFoodCartItemQty();
 
-     useEffect(() => {}, [cartItems, productId, checkArray]);
-    
-      // console.log("CART__SESION__&&&___ITEMS__IN__BUTTON", cartItems);
-    
-      const matchingCartItem = cartItems?.filter(
-        (element) => element.martMenu?.id === productId
-      )[0];
-    
-  
+  const increaseCart = (itemId) => {
+    const formData = {
+      flag: "increase",
+      foodCartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
 
+  const decreaseCart = (itemId) => {
+    const formData = {
+      flag: "decrease",
+      foodCartItemId: itemId,
+    };
+    return updateCartQty(formData);
+  };
+
+  useEffect(() => {}, [cartItems, productId, checkArray]);
+
+  // console.log("CART__SESION__&&&___ITEMS__IN__BUTTON", cartItems);
+
+  const matchingCartItem = cartItems?.filter((element) => element.martMenu?.id === productId)[0];
 
   return (
-
     <div
     //   className="
     //     bg-white
@@ -57,13 +48,13 @@ const AddToFoodCartButton = ({ onSubmit, loading, productId,
           <Button
             size="xs"
             className="text-white font-bold border border-orange-500 bg-orange-500  hover:bg-orange-800 rounded px-4 py-1"
-           onClick={() => decreaseCart(matchingCartItem?.id)}
+            onClick={() => decreaseCart(matchingCartItem?.id)}
           >
             -
           </Button>
           {/* <span className="mx-4">{cartQuantity}</span> */}
 
-           <p>{matchingCartItem?.quantity}</p>
+          <p>{matchingCartItem?.quantity}</p>
 
           {parseInt(matchingCartItem?.quantity) < parseInt(quantityLeft) && (
             <Button

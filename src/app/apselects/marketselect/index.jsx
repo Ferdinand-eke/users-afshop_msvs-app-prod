@@ -1,44 +1,37 @@
-import React from 'react'
-import Select from 'react-select'
+import React from "react";
+import Select from "react-select";
 // import useCountries from '../../hooks/useCountries'
 // import useSellerCountries from 'app/configs/data/server-calls/countries/useCountries'
 
 const MarketSelect = ({ value, onChange, markets }) => {
-    // const { getAll } = useCountries()
+  // const { getAll } = useCountries()
 
-    return (
-        <div>
-            <label
-                style={{ fontSize: '12px', fontWeight: '800' }}>
-                *Shop/Business market Origin
-            </label>
-            <Select
-                placeholder="What market are you in?"
-                isClearable
-                options={markets}
-                value={value}
-                onChange={(value) => onChange(value )}
-                formatOptionLabel={(option) => (
-                    <div className="flex flex-row items-center gap-3">
-                    
-                        <div>
-                            {option?.name}
-                        </div>
-                    </div>
-                )}
-                theme={(theme) => ({
-                    ...theme,
-                    borderRadius:6,
-                    colors
-                    : {
-                        ...theme.colors,
-                        primary: 'black',
-                        primary25: '#ffe4e6'
-                    }
-                })}
-            />
-        </div>
-    )
-}
+  return (
+    <div>
+      <label style={{ fontSize: "12px", fontWeight: "800" }}>*Shop/Business market Origin</label>
+      <Select
+        placeholder="What market are you in?"
+        isClearable
+        options={markets}
+        value={value}
+        onChange={(value) => onChange(value)}
+        formatOptionLabel={(option) => (
+          <div className="flex flex-row items-center gap-3">
+            <div>{option?.name}</div>
+          </div>
+        )}
+        theme={(theme) => ({
+          ...theme,
+          borderRadius: 6,
+          colors: {
+            ...theme.colors,
+            primary: "black",
+            primary25: "#ffe4e6",
+          },
+        })}
+      />
+    </div>
+  );
+};
 
-export default MarketSelect
+export default MarketSelect;

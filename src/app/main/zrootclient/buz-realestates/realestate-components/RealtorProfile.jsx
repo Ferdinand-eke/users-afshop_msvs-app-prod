@@ -1,57 +1,45 @@
-import {
-  Box,
-  Paper,
-  Avatar,
-  Typography,
-  Divider
-} from '@mui/material';
-import {
-  BookmarkBorder,
-  GroupOutlined,
-  MailOutline,
-  ArrowForward
-} from '@mui/icons-material';
+import { Box, Paper, Avatar, Typography, Divider } from "@mui/material";
+import { BookmarkBorder, GroupOutlined, MailOutline, ArrowForward } from "@mui/icons-material";
 
 const RealtorProfile = ({ realtor }) => {
-
   // Default realtor data if not provided
   const realtorData = realtor || {
-    name: 'Shirleys Home Idu',
-    title: 'Property Listings',
-    subtitle: 'Hotels & Apartments',
-    location: 'Abuja, Federal Capital Territory',
-    website: 'Africanshops',
-    avatar: '',
+    name: "Shirleys Home Idu",
+    title: "Property Listings",
+    subtitle: "Hotels & Apartments",
+    location: "Abuja, Federal Capital Territory",
+    website: "Africanshops",
+    avatar: "",
     stats: {
       connections: 94,
-      followers: '200.0k',
-      following: '1.2k',
-      profileViews: 156
-    }
+      followers: "200.0k",
+      following: "1.2k",
+      profileViews: 156,
+    },
   };
 
   return (
     <Box
       className="relative"
       sx={{
-        height: '50vh',
-        display: 'flex',
-        flexDirection: 'column'
+        height: "50vh",
+        display: "flex",
+        flexDirection: "column",
       }}
     >
       <Paper
         className="overflow-hidden"
         sx={{
           flex: 1,
-          display: 'flex',
-          flexDirection: 'column'
+          display: "flex",
+          flexDirection: "column",
         }}
       >
         {/* Header Banner */}
         <Box
           className="h-24 relative"
           sx={{
-            background: 'linear-gradient(135deg, #ea580c 0%, #fb923c 100%)'
+            background: "linear-gradient(135deg, #ea580c 0%, #fb923c 100%)",
           }}
         >
           {/* Profile Avatar */}
@@ -61,13 +49,13 @@ const RealtorProfile = ({ realtor }) => {
             sx={{
               width: 80,
               height: 80,
-              position: 'absolute',
+              position: "absolute",
               bottom: -40,
-              left: '50%',
-              transform: 'translateX(-50%)',
-              border: '4px solid white',
-              bgcolor: '#9ca3af',
-              fontSize: '2rem'
+              left: "50%",
+              transform: "translateX(-50%)",
+              border: "4px solid white",
+              bgcolor: "#9ca3af",
+              fontSize: "2rem",
             }}
           >
             {realtorData.name.charAt(0)}
@@ -78,25 +66,24 @@ const RealtorProfile = ({ realtor }) => {
         <Box
           className="pb-4 px-4"
           sx={{
-            marginTop: '50px', // Push content down to avoid avatar overlap
+            marginTop: "50px", // Push content down to avoid avatar overlap
             flex: 1,
-            overflowY: 'auto',
-            padding: '16px',
-            '&::-webkit-scrollbar': {
-              width: '6px'
+            overflowY: "auto",
+            padding: "16px",
+            "&::-webkit-scrollbar": {
+              width: "6px",
             },
-            '&::-webkit-scrollbar-thumb': {
-              bgcolor: '#d1d5db',
-              borderRadius: '3px'
-            }
-
+            "&::-webkit-scrollbar-thumb": {
+              bgcolor: "#d1d5db",
+              borderRadius: "3px",
+            },
           }}
         >
           {/* Name and Title */}
           <Typography
             variant="h5"
             className="text-center font-semibold mb-1"
-            sx={{ fontSize: '1.4rem' }}
+            sx={{ fontSize: "1.4rem" }}
           >
             {realtorData.name}
           </Typography>
@@ -104,7 +91,7 @@ const RealtorProfile = ({ realtor }) => {
           <Typography
             variant="body1"
             className="text-center text-gray-600 mb-1"
-            sx={{ fontSize: '1rem' }}
+            sx={{ fontSize: "1rem" }}
           >
             {realtorData.title}
           </Typography>
@@ -112,7 +99,7 @@ const RealtorProfile = ({ realtor }) => {
           <Typography
             variant="body1"
             className="text-center text-gray-500 mb-1"
-            sx={{ fontSize: '0.95rem' }}
+            sx={{ fontSize: "0.95rem" }}
           >
             {realtorData.subtitle}
           </Typography>
@@ -120,7 +107,7 @@ const RealtorProfile = ({ realtor }) => {
           <Typography
             variant="body1"
             className="text-center text-gray-500 mb-2"
-            sx={{ fontSize: '0.9rem' }}
+            sx={{ fontSize: "0.9rem" }}
           >
             {realtorData.location}
           </Typography>
@@ -129,10 +116,10 @@ const RealtorProfile = ({ realtor }) => {
             variant="body1"
             className="text-center mb-3"
             sx={{
-              color: '#ea580c',
-              cursor: 'pointer',
-              fontSize: '0.9rem',
-              '&:hover': { textDecoration: 'underline' }
+              color: "#ea580c",
+              cursor: "pointer",
+              fontSize: "0.9rem",
+              "&:hover": { textDecoration: "underline" },
             }}
           >
             {realtorData.website}
@@ -142,19 +129,15 @@ const RealtorProfile = ({ realtor }) => {
           <Box
             className="flex items-center justify-between py-2 px-3 cursor-pointer rounded transition-colors mb-2"
             sx={{
-              '&:hover': {
-                background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)'
-              }
+              "&:hover": {
+                background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)",
+              },
             }}
           >
-            <Typography
-              variant="body1"
-              className="text-gray-700"
-              sx={{ fontSize: '0.95rem' }}
-            >
+            <Typography variant="body1" className="text-gray-700" sx={{ fontSize: "0.95rem" }}>
               View all analytics
             </Typography>
-            <ArrowForward sx={{ fontSize: 20, color: '#ea580c' }} />
+            <ArrowForward sx={{ fontSize: 20, color: "#ea580c" }} />
           </Box>
 
           <Divider className="my-2" />
@@ -164,7 +147,7 @@ const RealtorProfile = ({ realtor }) => {
             <Typography
               variant="body1"
               className="font-semibold mb-3 px-2"
-              sx={{ fontSize: '1.05rem' }}
+              sx={{ fontSize: "1.05rem" }}
             >
               Network Stats
             </Typography>
@@ -172,72 +155,84 @@ const RealtorProfile = ({ realtor }) => {
             {/* Stats Grid - 2x2 Layout */}
             <Box className="grid grid-cols-2 gap-3 mb-2">
               {/* Connections */}
-              <Box className="rounded-lg p-3 text-center" sx={{ background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)' }}>
+              <Box
+                className="rounded-lg p-3 text-center"
+                sx={{ background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)" }}
+              >
                 <Typography
                   variant="h5"
                   className="font-bold"
-                  sx={{ color: '#ea580c', fontSize: '1.5rem' }}
+                  sx={{ color: "#ea580c", fontSize: "1.5rem" }}
                 >
                   {realtorData.stats.connections}
                 </Typography>
                 <Typography
                   variant="body2"
                   className="mt-1"
-                  sx={{ color: '#9a3412', fontSize: '0.85rem' }}
+                  sx={{ color: "#9a3412", fontSize: "0.85rem" }}
                 >
                   Connections
                 </Typography>
               </Box>
 
               {/* Profile Views */}
-              <Box className="rounded-lg p-3 text-center" sx={{ background: 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)' }}>
+              <Box
+                className="rounded-lg p-3 text-center"
+                sx={{ background: "linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)" }}
+              >
                 <Typography
                   variant="h5"
                   className="font-bold"
-                  sx={{ color: '#7c2d12', fontSize: '1.5rem' }}
+                  sx={{ color: "#7c2d12", fontSize: "1.5rem" }}
                 >
                   {realtorData.stats.profileViews}
                 </Typography>
                 <Typography
                   variant="body2"
                   className="mt-1"
-                  sx={{ color: '#7c2d12', fontSize: '0.85rem' }}
+                  sx={{ color: "#7c2d12", fontSize: "0.85rem" }}
                 >
                   Profile Views
                 </Typography>
               </Box>
 
               {/* Followers */}
-              <Box className="rounded-lg p-3 text-center" sx={{ background: 'linear-gradient(135deg, #fb923c 0%, #f97316 100%)' }}>
+              <Box
+                className="rounded-lg p-3 text-center"
+                sx={{ background: "linear-gradient(135deg, #fb923c 0%, #f97316 100%)" }}
+              >
                 <Typography
                   variant="h5"
                   className="font-bold text-white"
-                  sx={{ fontSize: '1.5rem' }}
+                  sx={{ fontSize: "1.5rem" }}
                 >
                   {realtorData.stats.followers}
                 </Typography>
                 <Typography
                   variant="body2"
                   className="text-white mt-1"
-                  sx={{ fontSize: '0.85rem' }}
+                  sx={{ fontSize: "0.85rem" }}
                 >
                   Followers
                 </Typography>
               </Box>
 
               {/* Following */}
-              <Box className="rounded-lg p-3 text-center" sx={{ background: 'linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%)' }}>
+              <Box
+                className="rounded-lg p-3 text-center"
+                sx={{ background: "linear-gradient(135deg, #ffedd5 0%, #fed7aa 100%)" }}
+              >
                 <Typography
                   variant="h5"
                   className="font-bold"
-                  sx={{ color: '#c2410c', fontSize: '1.5rem' }}
+                  sx={{ color: "#c2410c", fontSize: "1.5rem" }}
                 >
                   {realtorData.stats.following}
                 </Typography>
                 <Typography
                   variant="body2"
                   className="mt-1"
-                  sx={{ color: '#9a3412', fontSize: '0.85rem' }}
+                  sx={{ color: "#9a3412", fontSize: "0.85rem" }}
                 >
                   Following
                 </Typography>
@@ -253,17 +248,13 @@ const RealtorProfile = ({ realtor }) => {
             <Box
               className="flex items-center py-2 px-3 cursor-pointer rounded transition-colors"
               sx={{
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)'
-                }
+                "&:hover": {
+                  background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)",
+                },
               }}
             >
-              <BookmarkBorder sx={{ fontSize: 22, mr: 2, color: '#ea580c' }} />
-              <Typography
-                variant="body1"
-                className="text-gray-700"
-                sx={{ fontSize: '0.95rem' }}
-              >
+              <BookmarkBorder sx={{ fontSize: 22, mr: 2, color: "#ea580c" }} />
+              <Typography variant="body1" className="text-gray-700" sx={{ fontSize: "0.95rem" }}>
                 Saved items
               </Typography>
             </Box>
@@ -272,17 +263,13 @@ const RealtorProfile = ({ realtor }) => {
             <Box
               className="flex items-center py-2 px-3 cursor-pointer rounded transition-colors"
               sx={{
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)'
-                }
+                "&:hover": {
+                  background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)",
+                },
               }}
             >
-              <GroupOutlined sx={{ fontSize: 22, mr: 2, color: '#ea580c' }} />
-              <Typography
-                variant="body1"
-                className="text-gray-700"
-                sx={{ fontSize: '0.95rem' }}
-              >
+              <GroupOutlined sx={{ fontSize: 22, mr: 2, color: "#ea580c" }} />
+              <Typography variant="body1" className="text-gray-700" sx={{ fontSize: "0.95rem" }}>
                 Groups
               </Typography>
             </Box>
@@ -291,17 +278,13 @@ const RealtorProfile = ({ realtor }) => {
             <Box
               className="flex items-center py-2 px-3 cursor-pointer rounded transition-colors"
               sx={{
-                '&:hover': {
-                  background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)'
-                }
+                "&:hover": {
+                  background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)",
+                },
               }}
             >
-              <MailOutline sx={{ fontSize: 22, mr: 2, color: '#ea580c' }} />
-              <Typography
-                variant="body1"
-                className="text-gray-700"
-                sx={{ fontSize: '0.95rem' }}
-              >
+              <MailOutline sx={{ fontSize: 22, mr: 2, color: "#ea580c" }} />
+              <Typography variant="body1" className="text-gray-700" sx={{ fontSize: "0.95rem" }}>
                 Newsletters
               </Typography>
             </Box>

@@ -2,7 +2,6 @@
 // import L from 'leaflet'
 // import { MapContainer, Marker, TileLayer } from 'react-leaflet'
 
-
 // const Map = ({ center }) => {
 //     return (
 //         <MapContainer
@@ -22,13 +21,10 @@
 
 // export default Map
 
-
-import React from 'react'
+import React from "react";
 
 const index = () => {
-  return (
-    <div>index of map</div>
-  )
-}
+  return <div>index of map</div>;
+};
 
-export default index
+export default index;

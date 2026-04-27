@@ -1,16 +1,16 @@
-import { React, useState } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import { RxAvatar } from 'react-icons/rx';
-import styles from '../../styles/style';
+import { React, useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import { RxAvatar } from "react-icons/rx";
+import styles from "../../styles/style";
 // import axios from "axios";
 // import { server } from "../../server";
 // import { toast } from "react-toastify";
 
 const SingupComponent = () => {
-  const [email, setEmail] = useState('');
-  const [name, setName] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
   const [visible, setVisible] = useState(false);
   const [avatar, setAvatar] = useState(null);
 
@@ -55,10 +55,7 @@ const SingupComponent = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Full Name
               </label>
               <div className="mt-1">
@@ -75,10 +72,7 @@ const SingupComponent = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700">
                 Email address
               </label>
               <div className="mt-1">
@@ -95,15 +89,12 @@ const SingupComponent = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-700"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700">
                 Password
               </label>
               <div className="mt-1 relative">
                 <input
-                  type={visible ? 'text' : 'password'}
+                  type={visible ? "text" : "password"}
                   name="password"
                   autoComplete="current-password"
                   required
@@ -128,10 +119,7 @@ const SingupComponent = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="avatar"
-                className="block text-sm font-medium text-gray-700"
-              ></label>
+              <label htmlFor="avatar" className="block text-sm font-medium text-gray-700"></label>
               <div className="mt-2 flex items-center">
                 <span className="inline-block h-8 w-8 rounded-full overflow-hidden">
                   {avatar ? (

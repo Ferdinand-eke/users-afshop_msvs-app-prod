@@ -25,16 +25,13 @@ import {
   getStateByCountryId,
 } from "app/configs/data/client/clientToApiRoutes";
 import { firebaseApp } from "src/app/auth/services/firebase/initializeFirebase";
-import {
-  getStorage,
-  ref,
-  deleteObject,
-  uploadString,
-  getDownloadURL,
-} from "firebase/storage";
+import { getStorage, ref, deleteObject, uploadString, getDownloadURL } from "firebase/storage";
 import FuseUtils from "@fuse/utils/FuseUtils";
 import { toast } from "react-toastify";
-import { useGetAuthUserDetails, useUserUpdateMutation } from "app/configs/data/server-calls/useUsers/useUsersQuery";
+import {
+  useGetAuthUserDetails,
+  useUserUpdateMutation,
+} from "app/configs/data/server-calls/useUsers/useUsersQuery";
 import { motion } from "framer-motion";
 
 const defaultValues = {
@@ -82,15 +79,7 @@ const schema = z.object({
 });
 
 function AccountTab() {
-  const {
-    control,
-    watch,
-    reset,
-    handleSubmit,
-    formState,
-    getValues,
-    setValue,
-  } = useForm({
+  const { control, watch, reset, handleSubmit, formState, getValues, setValue } = useForm({
     defaultValues,
     mode: "onChange",
     resolver: zodResolver(schema),
@@ -259,7 +248,7 @@ function AccountTab() {
         });
       } else {
         // No new image, just update other fields
-        console.log("Update valies on client:", getValues())
+        console.log("Update valies on client:", getValues());
         // return
         await updateUserDetails.mutateAsync(getValues());
       }
@@ -269,9 +258,7 @@ function AccountTab() {
       reset(getValues());
     } catch (error) {
       console.error("Update error:", error);
-      toast.error(
-        error.response?.data?.message || error.message || "Failed to update profile"
-      );
+      toast.error(error.response?.data?.message || error.message || "Failed to update profile");
     } finally {
       setLoading(false);
     }
@@ -330,10 +317,7 @@ function AccountTab() {
                     >
                       <div className="absolute inset-0 bg-black bg-opacity-40 z-10 transition-opacity hover:bg-opacity-50" />
                       <div className="absolute inset-0 flex items-center justify-center z-20">
-                        <label
-                          htmlFor="button-avatar"
-                          className="flex p-3 cursor-pointer"
-                        >
+                        <label htmlFor="button-avatar" className="flex p-3 cursor-pointer">
                           <input
                             accept="image/*"
                             className="hidden"
@@ -691,11 +675,7 @@ function AccountTab() {
                 control={control}
                 name="businessCountry"
                 render={({ field }) => (
-                  <FormControl
-                    fullWidth
-                    error={!!errors.businessCountry}
-                    required
-                  >
+                  <FormControl fullWidth error={!!errors.businessCountry} required>
                     <InputLabel>Country</InputLabel>
                     <Select
                       {...field}
@@ -902,9 +882,7 @@ function AccountTab() {
                         </MenuItem>
                       )}
                     </Select>
-                    {errors.market && (
-                      <FormHelperText>{errors.market.message}</FormHelperText>
-                    )}
+                    {errors.market && <FormHelperText>{errors.market.message}</FormHelperText>}
                   </FormControl>
                 )}
               />
@@ -935,9 +913,7 @@ function AccountTab() {
               </FuseSvgIcon>
             </div>
             <div>
-              <Typography className="text-xl font-bold text-gray-800">
-                Social Media
-              </Typography>
+              <Typography className="text-xl font-bold text-gray-800">Social Media</Typography>
               <Typography className="text-sm text-gray-600">
                 Connect your social media handles (optional)
               </Typography>

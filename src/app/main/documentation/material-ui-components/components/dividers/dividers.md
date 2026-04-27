@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Divider component
 components: Divider
-githubLabel: 'component: divider'
+githubLabel: "component: divider"
 materialDesign: https://m2.material.io/components/dividers
 ---
 
@@ -21,7 +21,7 @@ The Material UI Divider component renders as a dark gray `<hr>` by default, and
 ## Basics
 
 ```jsx
-import Divider from '@mui/material/Divider';
+import Divider from "@mui/material/Divider";
 ```
 
 ### Variants

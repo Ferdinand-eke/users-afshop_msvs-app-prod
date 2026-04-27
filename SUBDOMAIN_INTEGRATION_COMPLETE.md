@@ -49,11 +49,11 @@ const MerchantSubdomainConfig = {
   },
   routes: [
     {
-      path: '/',
+      path: "/",
       element: <MerchantHospitalityPage merchantSlug={merchantSlug} />,
     },
     {
-      path: '/hospitality',
+      path: "/hospitality",
       element: <MerchantHospitalityPage merchantSlug={merchantSlug} />,
     },
   ],
@@ -94,6 +94,7 @@ const MerchantSubdomainConfig = {
 ### **Example URLs:**
 
 **Main Domain (Standard Routes):**
+
 ```
 http://localhost:3000/                    → ModernLandingPage
 http://localhost:3000/bookings/listings  → BookingsPage
@@ -101,6 +102,7 @@ http://localhost:3000/about               → AboutUs
 ```
 
 **Merchant Subdomain (Merchant Routes):**
+
 ```
 http://african-foods.localhost:3000/             → MerchantHospitalityPage
 http://african-foods.localhost:3000/hospitality  → MerchantHospitalityPage
@@ -135,6 +137,7 @@ http://[merchant-slug].localhost:3000/hospitality
 ```
 
 **Expected:**
+
 - Merchant hospitality page loads
 - Shows merchant profile with stats
 - "Coming Soon" section for listings
@@ -148,6 +151,7 @@ http://invalid-merchant-name.localhost:3000/
 ```
 
 **Expected:**
+
 - "Merchant Not Found" page displays
 - Shows attempted merchant slug
 - Buttons to navigate back to main site
@@ -188,18 +192,23 @@ src/
 ## Key Features Implemented
 
 ### ✅ **Conditional Route Loading**
+
 Routes are loaded based on subdomain detection - no conflicts with existing routes
 
 ### ✅ **Zero Impact on Existing Routes**
+
 All your current routes (`/bookings`, `/marketplace`, `/foodmarts`, etc.) work unchanged
 
 ### ✅ **Clean Merchant Pages**
+
 Merchant subdomain pages have no navbar, toolbar, or sidebars for a branded experience
 
 ### ✅ **Error Handling**
+
 Invalid merchant slugs show a professional 404 page with navigation options
 
 ### ✅ **Easy to Extend**
+
 Add new merchant pages by uncommenting routes in `MerchantSubdomainConfig.jsx`:
 
 ```javascript
@@ -223,6 +232,7 @@ Add new merchant pages by uncommenting routes in `MerchantSubdomainConfig.jsx`:
 For production (`africanshops.org`), configure wildcard DNS:
 
 **Cloudflare / DNS Provider:**
+
 ```
 Type: CNAME
 Name: *
@@ -231,6 +241,7 @@ Proxied: Yes
 ```
 
 This allows:
+
 - `merchant1.africanshops.org` ✅
 - `merchant2.africanshops.org` ✅
 - `any-merchant.africanshops.org` ✅
@@ -238,6 +249,7 @@ This allows:
 ### **SSL Certificate**
 
 Ensure your SSL certificate covers wildcard subdomains:
+
 ```
 *.africanshops.org
 ```
@@ -251,29 +263,33 @@ Most providers (Cloudflare, Let's Encrypt) support this automatically.
 ### **Issue: Routes still show 404**
 
 **Check 1:** Verify subdomain detection
+
 ```javascript
 // Open browser console on merchant subdomain
-console.log(window.location.hostname);  // Should show: merchant.localhost
-console.log(isSubdomainRoute());        // Should return: true
-console.log(getSubdomain());            // Should return: "merchant"
+console.log(window.location.hostname); // Should show: merchant.localhost
+console.log(isSubdomainRoute()); // Should return: true
+console.log(getSubdomain()); // Should return: "merchant"
 ```
 
 **Check 2:** Verify config is loaded
+
 ```javascript
 // In routesConfig.jsx, add console log
-console.log('onMerchantSubdomain:', onMerchantSubdomain);
-console.log('routeConfigs:', routeConfigs);
+console.log("onMerchantSubdomain:", onMerchantSubdomain);
+console.log("routeConfigs:", routeConfigs);
 ```
 
 ### **Issue: Merchant data not loading**
 
 **Check:** API response in browser console
+
 ```javascript
 // The hook should log the response
-console.log('MERCHANT__SUBDOMAIN__DATA', merchantData);
+console.log("MERCHANT__SUBDOMAIN__DATA", merchantData);
 ```
 
 Verify:
+
 1. Merchant ID/slug is correct
 2. API endpoint is accessible
 3. Merchant exists in database
@@ -281,15 +297,17 @@ Verify:
 ### **Issue: Button doesn't redirect**
 
 **Check:** MerchantProfile.jsx button
+
 ```javascript
 // Should call navigateToMerchantSubdomain
 onClick={() => navigateToMerchantSubdomain(merchantData?.slug, '/hospitality')}
 ```
 
 **Debug:**
+
 ```javascript
 // Add console log before navigation
-console.log('Navigating to:', merchantData?.slug);
+console.log("Navigating to:", merchantData?.slug);
 ```
 
 ---
@@ -299,6 +317,7 @@ console.log('Navigating to:', merchantData?.slug);
 ### **1. Add More Merchant Pages**
 
 Create new page components:
+
 - `MerchantProductsPage.jsx` - Show merchant's products
 - `MerchantAboutPage.jsx` - About the merchant
 - `MerchantContactPage.jsx` - Contact form
@@ -309,6 +328,7 @@ Uncomment routes in `MerchantSubdomainConfig.jsx`
 ### **2. Add Navigation Menu**
 
 Create a merchant navigation bar for subdomain pages:
+
 ```javascript
 <MerchantNav>
   <Link to="/hospitality">Properties</Link>
@@ -321,10 +341,11 @@ Create a merchant navigation bar for subdomain pages:
 ### **3. Add Analytics**
 
 Track merchant page views:
+
 ```javascript
 useEffect(() => {
   if (isSubdomainRoute()) {
-    analytics.track('Merchant Page View', {
+    analytics.track("Merchant Page View", {
       merchant: getSubdomain(),
       page: window.location.pathname,
     });
@@ -337,15 +358,18 @@ useEffect(() => {
 ## Summary
 
 ✅ **Integration Complete**
+
 - Merchant subdomain routes integrated into `routesConfig.jsx`
 - Conditional loading based on subdomain detection
 - Zero impact on existing routes
 
 ✅ **Ready to Test**
+
 - Test on `merchant-slug.localhost:3000/hospitality`
 - All existing routes remain functional
 
 ✅ **Production Ready**
+
 - Just needs DNS wildcard configuration
 - SSL certificate with wildcard support
 

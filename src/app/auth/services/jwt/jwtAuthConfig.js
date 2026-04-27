@@ -1,6 +1,4 @@
-
-
-const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD;   /**production & dev */
+const baseUrl = import.meta.env.VITE_API_BASE_URL_PROD; /** production & dev */
 
 const jwtAuthConfig = {
 	tokenStorageKey: 'jwt_access_token',
@@ -11,24 +9,18 @@ const jwtAuthConfig = {
 	updateUserUrl: 'mock-api/auth/user',
 	updateTokenFromHeader: true,
 
-
-	/******Bravort Admin Dashboard Controls API */
+	/** ****Bravort Admin Dashboard Controls API */
 	// signInBravortAdminUrl: `${baseUrl}/admin/login`,
 
 	// signInBravortAdminUrl: `${adminSignIn()}`,
-	signInBravortAdminUrl: `${baseUrl}/api/shop/login`,    
-
-
+	signInBravortAdminUrl: `${baseUrl}/api/shop/login`,
 
 	// getAuthAdminInBravortAdminUrl: `${baseUrl}/admin/get-auth-admin`,
 
 	getAuthAdminInBravortAdminUrl: `${baseUrl}/shop/get-auth-shop`,
 	isAuthenticatedStatus: 'jwt_is_authenticated_status',
 	authStatus: 'jwt_is_authStatus',
-	adminCredentials: 'jwt_auth_credentials',
-
+	adminCredentials: 'jwt_auth_credentials'
 };
 
 export default jwtAuthConfig;
-
-

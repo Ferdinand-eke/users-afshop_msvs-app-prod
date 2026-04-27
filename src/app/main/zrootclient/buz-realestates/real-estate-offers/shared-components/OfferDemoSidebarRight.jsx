@@ -109,7 +109,8 @@ function OfferDemoSidebarRight(props) {
               After Acceptance
             </Typography>
             <Typography variant="caption" className="text-green-800 text-xs">
-              Once your offer is accepted, contact the seller promptly to proceed with property documentation and payment arrangements.
+              Once your offer is accepted, contact the seller promptly to proceed with property
+              documentation and payment arrangements.
             </Typography>
           </div>
         </div>

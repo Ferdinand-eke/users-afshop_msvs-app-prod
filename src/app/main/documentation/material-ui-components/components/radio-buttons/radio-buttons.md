@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Radio Group component
 components: Radio, RadioGroup, FormControl, FormLabel, FormControlLabel
-githubLabel: 'component: radio'
+githubLabel: "component: radio"
 materialDesign: https://m2.material.io/components/selection-controls#radio-buttons
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/radio/
 ---
@@ -80,7 +80,7 @@ The Radio component uses this hook internally.
 ### API
 
 ```jsx
-import { useRadioGroup } from '@mui/material/RadioGroup';
+import { useRadioGroup } from "@mui/material/RadioGroup";
 ```
 
 #### Returns
@@ -112,7 +112,7 @@ import { useRadioGroup } from '@mui/material/RadioGroup';
 <Radio
   value="radioA"
   inputProps={{
-    'aria-label': 'Radio A',
+    "aria-label": "Radio A",
   }}
 />
 ```

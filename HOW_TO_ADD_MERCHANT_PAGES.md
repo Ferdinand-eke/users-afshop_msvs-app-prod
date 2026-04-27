@@ -49,11 +49,11 @@ src/app/main/merchant-subdomain/
 **File:** `src/app/main/merchant-subdomain/MerchantProductsPage.jsx`
 
 ```javascript
-import React from 'react';
-import { Box, Typography, Card, Grid } from '@mui/material';
-import { useGetMerchantPreview } from 'app/configs/data/server-calls/auth/userapp/a_merchants/useMerchantRepo';
-import { navigateToMainDomain } from 'src/app/utils/subdomainUtils';
-import { motion } from 'framer-motion';
+import React from "react";
+import { Box, Typography, Card, Grid } from "@mui/material";
+import { useGetMerchantPreview } from "app/configs/data/server-calls/auth/userapp/a_merchants/useMerchantRepo";
+import { navigateToMainDomain } from "src/app/utils/subdomainUtils";
+import { motion } from "framer-motion";
 
 function MerchantProductsPage({ merchantSlug }) {
   // Fetch merchant data
@@ -70,16 +70,13 @@ function MerchantProductsPage({ merchantSlug }) {
   const merchant = merchantData?.data?.merchant;
 
   return (
-    <Box sx={{ minHeight: '100vh', background: '#fafaf9', padding: 4 }}>
+    <Box sx={{ minHeight: "100vh", background: "#fafaf9", padding: 4 }}>
       {/* Header */}
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-      >
+      <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
         <Typography variant="h3" sx={{ fontWeight: 800, mb: 2 }}>
           {merchant?.shopname} - Products
         </Typography>
-        <Typography variant="body1" sx={{ color: '#6b7280', mb: 4 }}>
+        <Typography variant="body1" sx={{ color: "#6b7280", mb: 4 }}>
           Browse our collection of products
         </Typography>
       </motion.div>
@@ -88,7 +85,7 @@ function MerchantProductsPage({ merchantSlug }) {
       <Grid container spacing={3}>
         {/* Your products content here */}
         <Grid item xs={12}>
-          <Card sx={{ p: 4, textAlign: 'center' }}>
+          <Card sx={{ p: 4, textAlign: "center" }}>
             <Typography variant="h5" sx={{ mb: 2 }}>
               Products Coming Soon
             </Typography>
@@ -102,7 +99,7 @@ function MerchantProductsPage({ merchantSlug }) {
       {/* Back Button */}
       <Box sx={{ mt: 4 }}>
         <button
-          onClick={() => navigateToMainDomain('/')}
+          onClick={() => navigateToMainDomain("/")}
           className="px-6 py-3 bg-orange-600 text-white rounded-lg hover:bg-orange-700"
         >
           Back to Main Site
@@ -120,24 +117,26 @@ export default MerchantProductsPage;
 **File:** `src/app/main/merchant-subdomain/MerchantSubdomainConfig.jsx`
 
 ```javascript
-import { lazy } from 'react';
-import MerchantSubdomainLayout from './MerchantSubdomainLayout';
-import MerchantHospitalityPage from './MerchantHospitalityPage';
-import MerchantProductsPage from './MerchantProductsPage';  // ✅ Import your page
+import { lazy } from "react";
+import MerchantSubdomainLayout from "./MerchantSubdomainLayout";
+import MerchantHospitalityPage from "./MerchantHospitalityPage";
+import MerchantProductsPage from "./MerchantProductsPage"; // ✅ Import your page
 
 const MerchantSubdomainConfig = {
-  settings: { /* ... */ },
+  settings: {
+    /* ... */
+  },
   routes: [
     {
-      path: '/merchant-profile',
+      path: "/merchant-profile",
       element: <MerchantSubdomainLayout PageComponent={MerchantHospitalityPage} />,
     },
     {
-      path: '/merchant-profile/hospitality',
+      path: "/merchant-profile/hospitality",
       element: <MerchantSubdomainLayout PageComponent={MerchantHospitalityPage} />,
     },
     {
-      path: '/merchant-profile/products',  // ✅ Add your route
+      path: "/merchant-profile/products", // ✅ Add your route
       element: <MerchantSubdomainLayout PageComponent={MerchantProductsPage} />,
     },
   ],
@@ -149,11 +148,13 @@ export default MerchantSubdomainConfig;
 ### **Step 3: Test It!**
 
 Navigate to:
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile/products
 ```
 
 **Expected:**
+
 - ✅ Subdomain detected automatically
 - ✅ Merchant data loaded
 - ✅ Products page renders
@@ -182,6 +183,7 @@ function MerchantAboutPage({ merchantSlug }) {
 ```
 
 **Add Route:**
+
 ```javascript
 {
   path: '/merchant-profile/about',
@@ -190,6 +192,7 @@ function MerchantAboutPage({ merchantSlug }) {
 ```
 
 **Test:**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile/about
 ```
@@ -216,6 +219,7 @@ function MerchantContactPage({ merchantSlug }) {
 ```
 
 **Add Route:**
+
 ```javascript
 {
   path: '/merchant-profile/contact',
@@ -224,6 +228,7 @@ function MerchantContactPage({ merchantSlug }) {
 ```
 
 **Test:**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile/contact
 ```
@@ -233,11 +238,13 @@ http://cindy-fabrics.localhost:3000/merchant-profile/contact
 ## URL Structure
 
 ### **Pattern:**
+
 ```
 http://[merchant-slug].localhost:3000/merchant-profile/[page-name]
 ```
 
 ### **Examples:**
+
 ```
 http://cindy-fabrics.localhost:3000/merchant-profile                → Hospitality
 http://cindy-fabrics.localhost:3000/merchant-profile/hospitality    → Hospitality
@@ -254,22 +261,16 @@ http://cindy-fabrics.localhost:3000/merchant-profile/reviews        → Reviews
 ### **Within Merchant Subdomain:**
 
 ```javascript
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 
 function MyComponent() {
   const navigate = useNavigate();
 
   return (
     <div>
-      <button onClick={() => navigate('/merchant-profile/products')}>
-        View Products
-      </button>
-      <button onClick={() => navigate('/merchant-profile/about')}>
-        About Us
-      </button>
-      <button onClick={() => navigate('/merchant-profile/contact')}>
-        Contact
-      </button>
+      <button onClick={() => navigate("/merchant-profile/products")}>View Products</button>
+      <button onClick={() => navigate("/merchant-profile/about")}>About Us</button>
+      <button onClick={() => navigate("/merchant-profile/contact")}>Contact</button>
     </div>
   );
 }
@@ -296,27 +297,27 @@ import { navigateToMainDomain } from 'src/app/utils/subdomainUtils';
 ### **Example:** `MerchantNav.jsx`
 
 ```javascript
-import { useNavigate } from 'react-router-dom';
-import { Box, Button } from '@mui/material';
+import { useNavigate } from "react-router-dom";
+import { Box, Button } from "@mui/material";
 
 function MerchantNav() {
   const navigate = useNavigate();
 
   const navItems = [
-    { label: 'Home', path: '/merchant-profile' },
-    { label: 'Properties', path: '/merchant-profile/hospitality' },
-    { label: 'Products', path: '/merchant-profile/products' },
-    { label: 'About', path: '/merchant-profile/about' },
-    { label: 'Contact', path: '/merchant-profile/contact' },
+    { label: "Home", path: "/merchant-profile" },
+    { label: "Properties", path: "/merchant-profile/hospitality" },
+    { label: "Products", path: "/merchant-profile/products" },
+    { label: "About", path: "/merchant-profile/about" },
+    { label: "Contact", path: "/merchant-profile/contact" },
   ];
 
   return (
-    <Box sx={{ display: 'flex', gap: 2, mb: 4 }}>
+    <Box sx={{ display: "flex", gap: 2, mb: 4 }}>
       {navItems.map((item) => (
         <Button
           key={item.path}
           onClick={() => navigate(item.path)}
-          sx={{ color: '#ea580c', fontWeight: 600 }}
+          sx={{ color: "#ea580c", fontWeight: 600 }}
         >
           {item.label}
         </Button>
@@ -329,11 +330,12 @@ export default MerchantNav;
 ```
 
 **Use in any page:**
+
 ```javascript
 function MerchantProductsPage({ merchantSlug }) {
   return (
     <div>
-      <MerchantNav />  {/* ✅ Navigation menu */}
+      <MerchantNav /> {/* ✅ Navigation menu */}
       {/* Your page content */}
     </div>
   );

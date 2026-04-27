@@ -18,12 +18,11 @@
 // }
 // export const firebaseInitialized = initialized;
 
-
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import 'firebase/compat/database';
-import firebaseConfig from './firebaseAuthConfig';
-import { getAnalytics } from 'firebase/analytics';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import "firebase/compat/database";
+import firebaseConfig from "./firebaseAuthConfig";
+import { getAnalytics } from "firebase/analytics";
 /**
  * Initialize Firebase
  */
@@ -34,11 +33,9 @@ export const firebaseApp = firebase.initializeApp(firebaseConfig);
  */
 let initialized = false;
 try {
-	firebase?.auth();
-	initialized = true;
+  firebase?.auth();
+  initialized = true;
 } catch (e) {
-	console.error(e);
+  console.error(e);
 }
 export const firebaseInitialized = initialized;
-
-

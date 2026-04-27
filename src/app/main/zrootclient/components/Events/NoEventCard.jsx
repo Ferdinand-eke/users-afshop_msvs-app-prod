@@ -1,7 +1,7 @@
-import React from 'react';
+import React from "react";
 // import { backend_url } from "../../server";
-import styles from '../../styles/style';
-import { Link } from 'react-router-dom';
+import styles from "../../styles/style";
+import { Link } from "react-router-dom";
 // import { useDispatch, useSelector } from "react-redux";
 // import { addTocart } from "../../redux/actions/cart";
 // import { toast } from "react-toastify";
@@ -25,11 +25,7 @@ const NoEventCard = ({ active, data }) => {
     // }
   };
   return (
-    <div
-      className={`w-full block bg-white rounded-lg ${
-        active ? 'unset' : 'mb-12'
-      } lg:flex p-2`}
-    >
+    <div className={`w-full block bg-white rounded-lg ${active ? "unset" : "mb-12"} lg:flex p-2`}>
       <div className="w-full lg:-w[50%] m-auto">
         {/* <img src={`${data.images[0]}`} alt="" /> */}
         <h2>No event running currently...!</h2>

@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Breadcrumbs component
 components: Breadcrumbs, Link, Typography
-githubLabel: 'component: breadcrumbs'
+githubLabel: "component: breadcrumbs"
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/breadcrumb/
 ---
 

@@ -79,7 +79,9 @@ function MyAddresses({ open, onClose, onSelectAddress, onCreateNew }) {
       }}
     >
       {/* Header */}
-      <DialogTitle sx={{ m: 0, p: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+      <DialogTitle
+        sx={{ m: 0, p: 2, display: "flex", alignItems: "center", justifyContent: "space-between" }}
+      >
         <Typography variant="h6" component="span" className="font-semibold">
           My Addresses
         </Typography>
@@ -130,9 +132,7 @@ function MyAddresses({ open, onClose, onSelectAddress, onCreateNew }) {
         {/* Error State */}
         {isError && (
           <div className="p-4">
-            <Alert severity="error">
-              Failed to load addresses. Please try again later.
-            </Alert>
+            <Alert severity="error">Failed to load addresses. Please try again later.</Alert>
           </div>
         )}
 
@@ -142,7 +142,8 @@ function MyAddresses({ open, onClose, onSelectAddress, onCreateNew }) {
             <div
               className="w-16 h-16 mx-auto mb-4 rounded-full flex items-center justify-center"
               style={{
-                background: "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%)",
+                background:
+                  "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%)",
               }}
             >
               <svg

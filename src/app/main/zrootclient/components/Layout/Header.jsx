@@ -1,33 +1,24 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
-import {
-  cartData,
-  categoriesData,
-  productData,
-  wishlistData,
-} from '../../static/data';
-import {
-  AiOutlineHeart,
-  AiOutlineSearch,
-  AiOutlineShoppingCart,
-} from 'react-icons/ai';
-import { IoIosArrowDown, IoIosArrowForward } from 'react-icons/io';
-import { BiMenuAltLeft } from 'react-icons/bi';
-import { CgProfile } from 'react-icons/cg';
-import DropDown from './DropDown';
-import Navbar from './Navbar';
+import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import { cartData, categoriesData, productData, wishlistData } from "../../static/data";
+import { AiOutlineHeart, AiOutlineSearch, AiOutlineShoppingCart } from "react-icons/ai";
+import { IoIosArrowDown, IoIosArrowForward } from "react-icons/io";
+import { BiMenuAltLeft } from "react-icons/bi";
+import { CgProfile } from "react-icons/cg";
+import DropDown from "./DropDown";
+import Navbar from "./Navbar";
 // import { useSelector } from "react-redux";
 // import { backend_url } from '../../server';
-import Cart from '../cart/Cart.jsx';
-import Wishlist from '../Wishlist/Wishlist.jsx';
-import { RxCross1 } from 'react-icons/rx';
-import styles from '../../styles/style';
+import Cart from "../cart/Cart.jsx";
+import Wishlist from "../Wishlist/Wishlist.jsx";
+import { RxCross1 } from "react-icons/rx";
+import styles from "../../styles/style";
 
 const initiaUser = {
-  name: 'Eke Ferdinand',
-  email: 'nino@gmail.com',
+  name: "Eke Ferdinand",
+  email: "nino@gmail.com",
   avatar:
-    'https://images.unsplash.com/photo-1682997843688-94722786a722?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDd8UzRNS0xBc0JCNzR8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60',
+    "https://images.unsplash.com/photo-1682997843688-94722786a722?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHx0b3BpYy1mZWVkfDd8UzRNS0xBc0JCNzR8fGVufDB8fHx8&auto=format&fit=crop&w=500&q=60",
 };
 const Header = ({ activeHeading }) => {
   // Test Parameters starts
@@ -44,7 +35,7 @@ const Header = ({ activeHeading }) => {
   //   const { cart } = useSelector((state) => state.cart);
   const [cart, setCart] = useState(cartData);
   //   const { allProducts } = useSelector((state) => state.products);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [searchData, setSearchData] = useState(null);
   const [active, setActive] = useState(false);
   const [dropDown, setDropDown] = useState(false);
@@ -58,13 +49,11 @@ const Header = ({ activeHeading }) => {
 
     const filteredProducts =
       productData &&
-      productData.filter((product) =>
-        product.name.toLowerCase().includes(term.toLowerCase())
-      );
+      productData.filter((product) => product.name.toLowerCase().includes(term.toLowerCase()));
     setSearchData(filteredProducts);
   };
 
-  window.addEventListener('scroll', () => {
+  window.addEventListener("scroll", () => {
     if (window.scrollY > 70) {
       setActive(true);
     } else {
@@ -79,10 +68,7 @@ const Header = ({ activeHeading }) => {
         <div className="hidden 800px:h-[50px] 800px:my-[20px] 800px:flex items-center justify-between">
           <div>
             <Link to="/">
-              <img
-                src="https://shopo.quomodothemes.website/assets/images/logo.svg"
-                alt=""
-              />
+              <img src="https://shopo.quomodothemes.website/assets/images/logo.svg" alt="" />
             </Link>
           </div>
           {/* search box */}
@@ -94,16 +80,13 @@ const Header = ({ activeHeading }) => {
               onChange={handleSearchChange}
               className="h-[40px] w-full px-2 border-[#3957db] border-[2px] rounded-md"
             />
-            <AiOutlineSearch
-              size={30}
-              className="absolute right-2 top-1.5 cursor-pointer"
-            />
+            <AiOutlineSearch size={30} className="absolute right-2 top-1.5 cursor-pointer" />
             {searchData && searchData?.length !== 0 ? (
               <div className="absolute min-h-[30vh] bg-slate-50 shadow-sm-2 z-[9] p-4">
                 {searchData &&
                   searchData?.map((i, index) => {
                     const d = i.name;
-                    const Product_name = d.replace(/\s+/g, '-');
+                    const Product_name = d.replace(/\s+/g, "-");
                     return (
                       <Link to={`/product/${Product_name}`} key={index}>
                         <div className="w-full flex items-start-py-3">
@@ -122,10 +105,9 @@ const Header = ({ activeHeading }) => {
           </div>
 
           <div className={`${styles.button}`}>
-            <Link to={`${isSeller ? '/dashboard' : '/shop-create'}`}>
+            <Link to={`${isSeller ? "/dashboard" : "/shop-create"}`}>
               <h1 className="text-[#fff] flex items-center">
-                {isSeller ? 'Go Dashboard' : 'Become Seller'}{' '}
-                <IoIosArrowForward className="ml-1" />
+                {isSeller ? "Go Dashboard" : "Become Seller"} <IoIosArrowForward className="ml-1" />
               </h1>
             </Link>
           </div>
@@ -133,13 +115,11 @@ const Header = ({ activeHeading }) => {
       </div>
       <div
         className={`${
-          active === true ? 'shadow-sm fixed top-0 left-0 z-10' : null
+          active === true ? "shadow-sm fixed top-0 left-0 z-10" : null
         } transition hidden 800px:flex items-center justify-between w-full bg-green-700 h-[70px]`}
       >
         {/* [#3321c8] */}
-        <div
-          className={`${styles.section} relative ${styles.noramlFlex} justify-between`}
-        >
+        <div className={`${styles.section} relative ${styles.noramlFlex} justify-between`}>
           {/* categories */}
           <div onClick={() => setDropDown(!dropDown)}>
             <div className="relative h-[60px] mt-[10px] w-[270px] hidden 1000px:block">
@@ -155,10 +135,7 @@ const Header = ({ activeHeading }) => {
                 onClick={() => setDropDown(!dropDown)}
               />
               {dropDown ? (
-                <DropDown
-                  categoriesData={categoriesData}
-                  setDropDown={setDropDown}
-                />
+                <DropDown categoriesData={categoriesData} setDropDown={setDropDown} />
               ) : null}
             </div>
           </div>
@@ -181,14 +158,8 @@ const Header = ({ activeHeading }) => {
             </div>
 
             <div className={`${styles.noramlFlex}`}>
-              <div
-                className="relative cursor-pointer mr-[15px]"
-                onClick={() => setOpenCart(true)}
-              >
-                <AiOutlineShoppingCart
-                  size={30}
-                  color="rgb(255 255 255 / 83%)"
-                />
+              <div className="relative cursor-pointer mr-[15px]" onClick={() => setOpenCart(true)}>
+                <AiOutlineShoppingCart size={30} color="rgb(255 255 255 / 83%)" />
                 <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px] leading-tight text-center">
                   {cart && cart.length}
                 </span>
@@ -217,27 +188,19 @@ const Header = ({ activeHeading }) => {
             {openCart ? <Cart setOpenCart={setOpenCart} /> : null}
 
             {/* wishlist popup */}
-            {openWishlist ? (
-              <Wishlist setOpenWishlist={setOpenWishlist} />
-            ) : null}
+            {openWishlist ? <Wishlist setOpenWishlist={setOpenWishlist} /> : null}
           </div>
         </div>
       </div>
 
       {/*=================================== mobile header========================================== */}
       <div
-        className={`${
-          active === true ? 'shadow-sm fixed top-0 left-0 z-10' : null
-        }
+        className={`${active === true ? "shadow-sm fixed top-0 left-0 z-10" : null}
       w-full h-[60px] bg-[#fff] z-50 top-0 left-0 shadow-sm 800px:hidden`}
       >
         <div className="w-full flex items-center justify-between">
           <div>
-            <BiMenuAltLeft
-              size={40}
-              className="ml-4"
-              onClick={() => setOpen(true)}
-            />
+            <BiMenuAltLeft size={40} className="ml-4" onClick={() => setOpen(true)} />
           </div>
           <div>
             <Link to="/">
@@ -249,10 +212,7 @@ const Header = ({ activeHeading }) => {
             </Link>
           </div>
           <div>
-            <div
-              className="relative mr-[20px]"
-              onClick={() => setOpenCart(true)}
-            >
+            <div className="relative mr-[20px]" onClick={() => setOpenCart(true)}>
               <AiOutlineShoppingCart size={30} />
               <span className="absolute right-0 top-0 rounded-full bg-[#3bc177] w-4 h-4 top right p-0 m-0 text-white font-mono text-[12px]  leading-tight text-center">
                 {/* {cart && cart.length} */}1
@@ -268,9 +228,7 @@ const Header = ({ activeHeading }) => {
 
         {/* header sidebar */}
         {open && (
-          <div
-            className={`fixed w-full bg-[#0000005f] z-20 h-full top-0 left-0`}
-          >
+          <div className={`fixed w-full bg-[#0000005f] z-20 h-full top-0 left-0`}>
             <div className="fixed w-[70%] bg-[#fff] h-screen top-0 left-0 z-10 overflow-y-scroll">
               <div className="w-full justify-between flex pr-3">
                 <div>
@@ -284,11 +242,7 @@ const Header = ({ activeHeading }) => {
                     </span>
                   </div>
                 </div>
-                <RxCross1
-                  size={30}
-                  className="ml-4 mt-5"
-                  onClick={() => setOpen(false)}
-                />
+                <RxCross1 size={30} className="ml-4 mt-5" onClick={() => setOpen(false)} />
               </div>
 
               <div className="my-8 w-[92%] m-auto h-[40px relative]">
@@ -304,15 +258,11 @@ const Header = ({ activeHeading }) => {
                     {searchData.map((i) => {
                       const d = i.name;
 
-                      const Product_name = d.replace(/\s+/g, '-');
+                      const Product_name = d.replace(/\s+/g, "-");
                       return (
                         <Link to={`/product/${Product_name}`}>
                           <div className="flex items-center">
-                            <img
-                              src={i.image_Url[0].url}
-                              alt=""
-                              className="w-[50px] mr-2"
-                            />
+                            <img src={i.image_Url[0].url} alt="" className="w-[50px] mr-2" />
                             <h5>{i.name}</h5>
                           </div>
                         </Link>
@@ -347,16 +297,10 @@ const Header = ({ activeHeading }) => {
                   </div>
                 ) : (
                   <>
-                    <Link
-                      to="/login"
-                      className="text-[18px] pr-[10px] text-[#000000b7]"
-                    >
+                    <Link to="/login" className="text-[18px] pr-[10px] text-[#000000b7]">
                       Login /
                     </Link>
-                    <Link
-                      to="/sign-up"
-                      className="text-[18px] text-[#000000b7]"
-                    >
+                    <Link to="/sign-up" className="text-[18px] text-[#000000b7]">
                       Sign up
                     </Link>
                   </>

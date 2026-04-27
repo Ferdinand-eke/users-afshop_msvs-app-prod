@@ -10,12 +10,7 @@ import { MenuItem, Select } from "@mui/material";
  * The DemoHeader component.
  */
 function DemoHeader(props) {
-  const {
-    leftSidebarToggle,
-    rightSidebarToggle,
-  } = props;
-
- 
+  const { leftSidebarToggle, rightSidebarToggle } = props;
 
   // function handleClick() {}
 
@@ -32,15 +27,10 @@ function DemoHeader(props) {
           </div>
         )}
 
-        <div className="flex mx-4 space-x-4 mt-4 md:mt-0 text-[10px]">
-       
-        </div>
+        <div className="flex mx-4 space-x-4 mt-4 md:mt-0 text-[10px]"></div>
         {rightSidebarToggle && (
           <div className="flex shrink-0 items-center">
-            <IconButton
-              onClick={rightSidebarToggle}
-              aria-label="toggle sidebar"
-            >
+            <IconButton onClick={rightSidebarToggle} aria-label="toggle sidebar">
               <FuseSvgIcon>heroicons-outline:menu</FuseSvgIcon>
             </IconButton>
           </div>

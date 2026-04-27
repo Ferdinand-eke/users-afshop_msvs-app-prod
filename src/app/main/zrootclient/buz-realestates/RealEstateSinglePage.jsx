@@ -44,13 +44,8 @@ function RealEstateSinglePage() {
 
   const routeParams = useParams();
   const { propertyId, slug } = routeParams;
-  const {
-    data: estate,
-    isLoading,
-    isError,
-  } = useGetEstateProperty(slug);
+  const { data: estate, isLoading, isError } = useGetEstateProperty(slug);
 
- 
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -62,7 +57,7 @@ function RealEstateSinglePage() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage message={" Error occurred while retriving property details"}/>
+        <ClienttErrorPage message={" Error occurred while retriving property details"} />
       </motion.div>
     );
   }
@@ -81,16 +76,13 @@ function RealEstateSinglePage() {
     );
   }
 
-  
   return (
     <FusePageSimple
       content={
         <>
           <br />
 
-
-
-<div className="max-w-6xl mx-auto p-4 mt-20">
+          <div className="max-w-6xl mx-auto p-4 mt-20">
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
               <div className="col-span-2">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
@@ -115,9 +107,7 @@ function RealEstateSinglePage() {
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <div className="flex items-center justify-between">
-                    <span className="bg-blue-500 text-white px-2 py-1 rounded">
-                      FEATURED
-                    </span>
+                    <span className="bg-blue-500 text-white px-2 py-1 rounded">FEATURED</span>
                     <div className="flex items-center">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -145,49 +135,41 @@ function RealEstateSinglePage() {
                     fullWidth
                     className="bg-orange-500 text-white px-4 py-2 rounded mt-4"
                   >
-                    {formatCurrency(estate?.data?.propertyListing?.price)} 
+                    {formatCurrency(estate?.data?.propertyListing?.price)}
                   </Button>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Amenities</h2>
                   <ul className="list-disc list-inside mt-2 text-gray-600">
                     <li>
-                      Create immersive augmented reality scenes for any focal
-                      project such as animated walk throughs and product
-                      visualizations.
+                      Create immersive augmented reality scenes for any focal project such as
+                      animated walk throughs and product visualizations.
                     </li>
                     <li>
-                      After completing this course you’ll be considered to
-                      create apps with a complete understanding of the
-                      principles of 3D animation.
+                      After completing this course you’ll be considered to create apps with a
+                      complete understanding of the principles of 3D animation.
                     </li>
                     <li>
-                      Create immersive augmented reality scenes for any focal
-                      project such as animated walk throughs and product
-                      visualizations.
+                      Create immersive augmented reality scenes for any focal project such as
+                      animated walk throughs and product visualizations.
                     </li>
                     <li>
-                      After completing this course you’ll be considered to
-                      create apps with a complete understanding of the
-                      principles of 3D animation.
+                      After completing this course you’ll be considered to create apps with a
+                      complete understanding of the principles of 3D animation.
                     </li>
                     <li>
-                      Create immersive augmented reality scenes for any focal
-                      project such as animated walk throughs and product
-                      visualizations.
+                      Create immersive augmented reality scenes for any focal project such as
+                      animated walk throughs and product visualizations.
                     </li>
                     <li>
-                      After completing this course you’ll be considered to
-                      create apps with a complete understanding of the
-                      principles of 3D animation.
+                      After completing this course you’ll be considered to create apps with a
+                      complete understanding of the principles of 3D animation.
                     </li>
                   </ul>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Description</h2>
-                  <p className="text-gray-600 mt-2">
-                    {estate?.data?.propertyListing?.description}
-                  </p>
+                  <p className="text-gray-600 mt-2">{estate?.data?.propertyListing?.description}</p>
                 </div>
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Gallery</h2>
@@ -209,8 +191,6 @@ function RealEstateSinglePage() {
                 </div>
               </div>
 
-
-
               <div>
                 <div className="bg-white p-4 shadow-md">
                   <div className="flex items-center">
@@ -230,43 +210,30 @@ function RealEstateSinglePage() {
                     <div className="flex items-center">
                       <span className="text-gray-600">Support</span>
                       <div className="w-full bg-gray-200 h-2 ml-2">
-                        <div
-                          className="bg-yellow-500 h-2"
-                          style={{ width: "80%" }}
-                        ></div>
+                        <div className="bg-yellow-500 h-2" style={{ width: "80%" }}></div>
                       </div>
                     </div>
                     <div className="flex items-center mt-2">
                       <span className="text-gray-600">Speed</span>
                       <div className="w-full bg-gray-200 h-2 ml-2">
-                        <div
-                          className="bg-yellow-500 h-2"
-                          style={{ width: "90%" }}
-                        ></div>
+                        <div className="bg-yellow-500 h-2" style={{ width: "90%" }}></div>
                       </div>
                     </div>
                     <div className="flex items-center mt-2">
                       <span className="text-gray-600">Quality</span>
                       <div className="w-full bg-gray-200 h-2 ml-2">
-                        <div
-                          className="bg-yellow-500 h-2"
-                          style={{ width: "70%" }}
-                        ></div>
+                        <div className="bg-yellow-500 h-2" style={{ width: "70%" }}></div>
                       </div>
                     </div>
                     <div className="flex items-center mt-2">
                       <span className="text-gray-600">Delivery</span>
                       <div className="w-full bg-gray-200 h-2 ml-2">
-                        <div
-                          className="bg-yellow-500 h-2"
-                          style={{ width: "85%" }}
-                        ></div>
+                        <div className="bg-yellow-500 h-2" style={{ width: "85%" }}></div>
                       </div>
                     </div>
                   </div>
                 </div>
 
-               
                 <div className="bg-white p-4 mt-4 shadow-md">
                   <h2 className="text-xl font-bold">Reviews</h2>
                   <div className="mt-4">
@@ -288,9 +255,8 @@ function RealEstateSinglePage() {
                           </div>
                         </div>
                         <p className="text-gray-600 mt-1">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aliquam egestas libero ac turpis pharetra, in
-                          vehicula lacus elementum.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas
+                          libero ac turpis pharetra, in vehicula lacus elementum.
                         </p>
                       </div>
                     </div>
@@ -312,9 +278,8 @@ function RealEstateSinglePage() {
                           </div>
                         </div>
                         <p className="text-gray-600 mt-1">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aliquam egestas libero ac turpis pharetra, in
-                          vehicula lacus elementum.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas
+                          libero ac turpis pharetra, in vehicula lacus elementum.
                         </p>
                       </div>
                     </div>
@@ -336,9 +301,8 @@ function RealEstateSinglePage() {
                           </div>
                         </div>
                         <p className="text-gray-600 mt-1">
-                          Lorem ipsum dolor sit amet, consectetur adipiscing
-                          elit. Aliquam egestas libero ac turpis pharetra, in
-                          vehicula lacus elementum.
+                          Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam egestas
+                          libero ac turpis pharetra, in vehicula lacus elementum.
                         </p>
                       </div>
                     </div>

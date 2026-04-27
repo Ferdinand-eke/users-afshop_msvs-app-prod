@@ -3,32 +3,22 @@ import { Navigate } from "react-router-dom";
 import { authRoles } from "src/app/auth";
 // import UserReservationDetailWithSidebarsContentScrollPage from "./userReservationDetailPage/UserReservationDetailWithSidebarsContentScrollPage";
 
-const ModernReversedResetPasswordPage = lazy(
-  () => import("./ModernReversedResetPasswordPage")
-);
+const ModernReversedResetPasswordPage = lazy(() => import("./ModernReversedResetPasswordPage"));
 const ReviewReservation = lazy(() => import("./ReviewReservation"));
 
 const UserReservationsDetail = lazy(() => import("./UserReservationsDetail"));
-const ReviewReservationPaymentSucces = lazy(
-  () => import("./ReviewReservationPaymentSucces")
-);
+const ReviewReservationPaymentSucces = lazy(() => import("./ReviewReservationPaymentSucces"));
 
 /**User Reservations */
 const UserReservations = lazy(() => import("./UserReservations"));
 const UserReservationsWithSidebarsContentScrollPage = lazy(
-  () =>
-    import(
-      "./userReservationsPage/UserReservationsWithSidebarsContentScrollPage"
-    )
+  () => import("./userReservationsPage/UserReservationsWithSidebarsContentScrollPage"),
 );
 
 /**User Reservation Detail */
 const UserReservationDetailWithSidebarsContentScrollPage = lazy(
-	() =>
-	  import(
-		"./userReservationDetailPage/UserReservationDetailWithSidebarsContentScrollPage"
-	  )
-  );
+  () => import("./userReservationDetailPage/UserReservationDetailWithSidebarsContentScrollPage"),
+);
 
 /**
  * The reset password pages config.
@@ -56,9 +46,6 @@ const userReservationPagesConfig = {
     },
   },
 
-  
-  
-  
   routes: [
     {
       path: "bookings/reservation/review/:reservationId",
@@ -70,20 +57,15 @@ const userReservationPagesConfig = {
       element: <ReviewReservationPaymentSucces />,
     }, // (Done => Msvs) **cleaned for prod**
 
-
     {
       path: "bookings/my-reservations",
       element: <UserReservationsWithSidebarsContentScrollPage />, // (Done => Msvs) **cleaned for prod**
     },
-    
 
     {
       path: "bookings/:reservationId/reservation-detail",
-      element: <UserReservationDetailWithSidebarsContentScrollPage /> // (Done => Msvs)
+      element: <UserReservationDetailWithSidebarsContentScrollPage />, // (Done => Msvs)
     },
-
-
-    
   ],
 };
 

@@ -1,36 +1,37 @@
-import * as React from 'react';
-import FormatAlignLeftIcon from '@mui/icons-material/FormatAlignLeft';
-import FormatAlignCenterIcon from '@mui/icons-material/FormatAlignCenter';
-import FormatAlignRightIcon from '@mui/icons-material/FormatAlignRight';
-import FormatAlignJustifyIcon from '@mui/icons-material/FormatAlignJustify';
-import Stack from '@mui/material/Stack';
-import ToggleButton from '@mui/material/ToggleButton';
-import ToggleButtonGroup from '@mui/material/ToggleButtonGroup';
+import * as React from "react";
+import FormatAlignLeftIcon from "@mui/icons-material/FormatAlignLeft";
+import FormatAlignCenterIcon from "@mui/icons-material/FormatAlignCenter";
+import FormatAlignRightIcon from "@mui/icons-material/FormatAlignRight";
+import FormatAlignJustifyIcon from "@mui/icons-material/FormatAlignJustify";
+import Stack from "@mui/material/Stack";
+import ToggleButton from "@mui/material/ToggleButton";
+import ToggleButtonGroup from "@mui/material/ToggleButtonGroup";
 export default function ToggleButtonSizes() {
-    const [alignment, setAlignment] = React.useState('left');
-    const handleChange = (event, newAlignment) => {
-        setAlignment(newAlignment);
-    };
-    const children = [
-        <ToggleButton value="left" key="left">
+  const [alignment, setAlignment] = React.useState("left");
+  const handleChange = (event, newAlignment) => {
+    setAlignment(newAlignment);
+  };
+  const children = [
+    <ToggleButton value="left" key="left">
       <FormatAlignLeftIcon />
     </ToggleButton>,
-        <ToggleButton value="center" key="center">
+    <ToggleButton value="center" key="center">
       <FormatAlignCenterIcon />
     </ToggleButton>,
-        <ToggleButton value="right" key="right">
+    <ToggleButton value="right" key="right">
       <FormatAlignRightIcon />
     </ToggleButton>,
-        <ToggleButton value="justify" key="justify">
+    <ToggleButton value="justify" key="justify">
       <FormatAlignJustifyIcon />
     </ToggleButton>,
-    ];
-    const control = {
-        value: alignment,
-        onChange: handleChange,
-        exclusive: true,
-    };
-    return (<Stack spacing={2} alignItems="center">
+  ];
+  const control = {
+    value: alignment,
+    onChange: handleChange,
+    exclusive: true,
+  };
+  return (
+    <Stack spacing={2} alignItems="center">
       <ToggleButtonGroup size="small" {...control} aria-label="Small sizes">
         {children}
       </ToggleButtonGroup>
@@ -40,5 +41,6 @@ export default function ToggleButtonSizes() {
       <ToggleButtonGroup size="large" {...control} aria-label="Large sizes">
         {children}
       </ToggleButtonGroup>
-    </Stack>);
+    </Stack>
+  );
 }

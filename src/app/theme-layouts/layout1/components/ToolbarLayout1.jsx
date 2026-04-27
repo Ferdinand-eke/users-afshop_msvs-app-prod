@@ -38,15 +38,10 @@ function ToolbarLayout1(props) {
   const toolbarTheme = useAppSelector(selectToolbarTheme);
   const user = useAppSelector(selectUser);
 
-  const {getUrlString} = useRouteData()
+  const { getUrlString } = useRouteData();
   // console.log("URL_ARRAY_22",getUrlString);
- 
 
-  useEffect(() => {}, [
-    user?._id,
-    user?._email,
-   
-  ]);
+  useEffect(() => {}, [user?._id, user?._email]);
 
   return (
     <ThemeProvider theme={toolbarTheme}>
@@ -83,14 +78,13 @@ function ToolbarLayout1(props) {
                 </Hidden>
               </>
             )} */}
-              
-              {user?.email && <LogoHome />}
+
+            {user?.email && <LogoHome />}
 
             {/* <Hidden lgDown> */}
-              {(!user?.role ||
-                (Array.isArray(user?.role) && user?.role?.length === 0)) && (
-                <LogoHome />
-              )}
+            {(!user?.role || (Array.isArray(user?.role) && user?.role?.length === 0)) && (
+              <LogoHome />
+            )}
             {/* </Hidden> */}
           </div>
 
@@ -103,11 +97,7 @@ function ToolbarLayout1(props) {
             {/* <AdjustFontSize /> */}
             {/* <FullScreenToggle /> */}
 
-            {getUrlString && <>
-              {getUrlString === 'marketplace' && <NavigationSearch />}
-            </>}
-          
-            
+            {getUrlString && <>{getUrlString === "marketplace" && <NavigationSearch />}</>}
 
             <QuickPanelToggleButton />
             <CartToggleButton />
@@ -119,9 +109,7 @@ function ToolbarLayout1(props) {
           {config.navbar.display && config.navbar.position === "right" && (
             <>
               <Hidden lgDown>
-                {!navbar.open && (
-                  <NavbarToggleButton className="mx-0 h-40 w-40 p-0" />
-                )}
+                {!navbar.open && <NavbarToggleButton className="mx-0 h-40 w-40 p-0" />}
               </Hidden>
 
               <Hidden lgUp>

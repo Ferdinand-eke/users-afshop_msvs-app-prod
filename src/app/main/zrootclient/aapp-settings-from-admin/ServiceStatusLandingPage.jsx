@@ -12,6 +12,7 @@ import ComingSoonPage from "./status-pages/ComingSoonPage";
  * @param {boolean} isError - Error state for settings
  * @param {string} serviceName - Name of the service (e.g., "Bookings")
  */
+
 const ServiceStatusLandingPage = ({
   serviceStatus,
   ActiveComponent,

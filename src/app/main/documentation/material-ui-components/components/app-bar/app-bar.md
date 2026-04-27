@@ -2,7 +2,7 @@
 productId: material-ui
 title: App Bar React component
 components: AppBar, Toolbar, Menu
-githubLabel: 'component: app bar'
+githubLabel: "component: app bar"
 materialDesign: https://m2.material.io/components/app-bars-top
 ---
 
@@ -81,7 +81,7 @@ function App() {
 3. You can use `theme.mixins.toolbar` CSS:
 
 ```jsx
-const Offset = styled('div')(({ theme }) => theme.mixins.toolbar);
+const Offset = styled("div")(({ theme }) => theme.mixins.toolbar);
 
 function App() {
   return (
@@ -122,7 +122,6 @@ A floating action button appears on scroll to make it easy to get back to the to
 #### Arguments
 
 1. `options` (_object_ [optional]):
-
    - `options.disableHysteresis` (_bool_ [optional]): Defaults to `false`. Disable the hysteresis. Ignore the scroll direction when determining the `trigger` value.
    - `options.target` (_Node_ [optional]): Defaults to `window`.
    - `options.threshold` (_number_ [optional]): Defaults to `100`. Change the `trigger` value when the vertical scroll strictly crosses this threshold (exclusive).
@@ -134,7 +133,7 @@ A floating action button appears on scroll to make it easy to get back to the to
 #### Examples
 
 ```jsx
-import useScrollTrigger from '@mui/material/useScrollTrigger';
+import useScrollTrigger from "@mui/material/useScrollTrigger";
 
 function HideOnScroll(props) {
   const trigger = useScrollTrigger();

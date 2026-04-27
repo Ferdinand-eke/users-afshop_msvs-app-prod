@@ -15,14 +15,7 @@ import FoodMartImageGalleryView from "./FoodMartImageGalleryView";
  * Demo Content
  */
 function DemoContent(props) {
-  const {
-    isLoading,
-    isError,
-    menuData,
-    onAddToFoodCart,
-    addFoodCartLoading,
-    foodCart,
-  } = props;
+  const { isLoading, isError, menuData, onAddToFoodCart, addFoodCartLoading, foodCart } = props;
 
   const [select, setSelect] = useState(0);
   const [galleryOpen, setGalleryOpen] = useState(false);
@@ -107,17 +100,13 @@ function DemoContent(props) {
                 <span className="text-4xl font-bold text-black-500">
                   ₦ {formatCurrency(menuData?.price)}
                 </span>
-                <span className="text-base text-gray-600">
-                  per {menuData?.unitPerQuantity}
-                </span>
+                <span className="text-base text-gray-600">per {menuData?.unitPerQuantity}</span>
                 {menuData?.listprice && (
                   <>
                     <span className="text-gray-500 line-through text-xl">
                       ₦ {formatCurrency(menuData?.listprice)}
                     </span>
-                    <span className="text-white bg-red-500 text-sm px-3 py-1 rounded">
-                      -70%
-                    </span>
+                    <span className="text-white bg-red-500 text-sm px-3 py-1 rounded">-70%</span>
                   </>
                 )}
               </div>
@@ -141,9 +130,7 @@ function DemoContent(props) {
                   <i className="far fa-star text-gray-400 text-lg"></i>
                   <i className="far fa-star text-gray-400 text-lg"></i>
                 </div>
-                <span className="text-gray-500 ml-2 text-base">
-                  (No ratings available)
-                </span>
+                <span className="text-gray-500 ml-2 text-base">(No ratings available)</span>
               </div>
 
               <AddToFoodCartButton
@@ -151,8 +138,7 @@ function DemoContent(props) {
                 loading={addFoodCartLoading}
                 productId={menuData?.id}
                 cartItems={foodCart?.cartProducts}
-                 quantityLeft={menuData?.quantity}
-
+                quantityLeft={menuData?.quantity}
               />
 
               <div className="mt-6">
@@ -164,16 +150,12 @@ function DemoContent(props) {
                   </li>
                   <li className="flex items-center space-x-3 p-3 rounded-md relative bg-white hover:bg-orange-300 py-3 px-4 cursor-pointer transition-colors">
                     <i className="fas fa-user text-base"></i>
-                    Need extra money? Loan up to N500,000 on the Africanshops Wallet
-                    Android app.
+                    Need extra money? Loan up to N500,000 on the Africanshops Wallet Android app.
                   </li>
                   <li className="flex items-center space-x-3 p-3 rounded-md relative bg-white hover:bg-orange-300 py-3 px-4 cursor-pointer transition-colors">
                     <i className="fas fa-user text-base"></i>
-                    Enjoy cheaper shipping fees when you select a PickUp Station
-                    at checkout.
+                    Enjoy cheaper shipping fees when you select a PickUp Station at checkout.
                   </li>
-
-
                 </ul>
               </div>
             </div>

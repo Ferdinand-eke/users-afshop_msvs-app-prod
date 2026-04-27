@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Snackbar component
 components: Snackbar, SnackbarContent
-githubLabel: 'component: snackbar'
+githubLabel: "component: snackbar"
 materialDesign: https://m2.material.io/components/snackbars
 waiAria: https://www.w3.org/TR/wai-aria-1.1/#alert
 ---
@@ -31,7 +31,7 @@ Snackbars also from differ from [Dialogs](/material-ui/react-dialog/) in that Sn
 ### Import
 
 ```jsx
-import Snackbar from '@mui/material/Snackbar';
+import Snackbar from "@mui/material/Snackbar";
 ```
 
 ### Position
@@ -43,7 +43,7 @@ Use the `anchorOrigin` prop to control the Snackbar's position on the screen.
 ### Content
 
 ```jsx
-import SnackbarContent from '@mui/material/SnackbarContent';
+import SnackbarContent from "@mui/material/SnackbarContent";
 ```
 
 Use the Snackbar Content component to add text and actions to the Snackbar.

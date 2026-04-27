@@ -13,16 +13,9 @@ import {
   Divider,
   Box,
 } from "@mui/material";
-import {
-  Search,
-  Clear,
-  FilterList as FilterListIcon,
-} from "@mui/icons-material";
+import { Search, Clear, FilterList as FilterListIcon } from "@mui/icons-material";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
-import {
-  getLgasByStateId,
-  getStateByCountryId,
-} from "app/configs/data/client/RepositoryClient";
+import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 
 /**
  * FoodMartFilterList Component
@@ -49,9 +42,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
   const [state, setState] = useState(initialFilters.state || "");
   const [lga, setLga] = useState(initialFilters.lga || "");
   const [district, setDistrict] = useState(initialFilters.district || "");
-  const [priceRange, setPriceRange] = useState(
-    initialFilters.priceRange || [0, 100000]
-  );
+  const [priceRange, setPriceRange] = useState(initialFilters.priceRange || [0, 100000]);
 
   // UI state
   const [availableStates, setAvailableStates] = useState([]);
@@ -77,35 +68,28 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
   // Emit filter changes to parent component with debounce for text inputs
   useEffect(() => {
     // Debounce text search to prevent excessive API calls
-    const timeoutId = setTimeout(() => {
-      if (onFilterChangeRef.current) {
-        const filters = {
-          keyword,
-          title,
-          slug,
-          address,
-          country,
-          state,
-          lga,
-          district,
-          priceRange,
-        };
-        onFilterChangeRef.current(filters);
-      }
-    }, keyword || title || slug || address ? 500 : 0); // 500ms debounce for text, immediate for others
+    const timeoutId = setTimeout(
+      () => {
+        if (onFilterChangeRef.current) {
+          const filters = {
+            keyword,
+            title,
+            slug,
+            address,
+            country,
+            state,
+            lga,
+            district,
+            priceRange,
+          };
+          onFilterChangeRef.current(filters);
+        }
+      },
+      keyword || title || slug || address ? 500 : 0,
+    ); // 500ms debounce for text, immediate for others
 
     return () => clearTimeout(timeoutId);
-  }, [
-    keyword,
-    title,
-    slug,
-    address,
-    country,
-    state,
-    lga,
-    district,
-    priceRange,
-  ]);
+  }, [keyword, title, slug, address, country, state, lga, district, priceRange]);
 
   //**Get States from Country_ID data */
   const [statesloading, setStatesLoading] = useState(false);
@@ -122,7 +106,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
         function () {
           setStatesLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -142,7 +126,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -259,10 +243,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
         <Divider className="my-4" />
 
         {/* Location Section */}
-        <Typography
-          variant="subtitle2"
-          className="font-medium text-gray-700 pt-2"
-        >
+        <Typography variant="subtitle2" className="font-medium text-gray-700 pt-2">
           Location
         </Typography>
 
@@ -351,10 +332,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
 
         {/* Price Range */}
         <div className="pt-2">
-          <Typography
-            variant="subtitle2"
-            className="font-medium text-gray-700 mb-2"
-          >
+          <Typography variant="subtitle2" className="font-medium text-gray-700 mb-2">
             Price Range (Average Meal)
           </Typography>
           <Box className="px-2">

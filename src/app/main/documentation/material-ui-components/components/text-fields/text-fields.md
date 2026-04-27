@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Text Field component
 components: FilledInput, FormControl, FormHelperText, Input, InputAdornment, InputBase, InputLabel, OutlinedInput, TextField
-githubLabel: 'component: text field'
+githubLabel: "component: text field"
 materialDesign: https://m2.material.io/components/text-fields
 unstyled: /base-ui/react-input/
 ---
@@ -166,7 +166,7 @@ This hook returns the context value of the parent `FormControl` component.
 **API**
 
 ```jsx
-import { useFormControl } from '@mui/material/FormControl';
+import { useFormControl } from "@mui/material/FormControl";
 ```
 
 **Returns**
@@ -201,7 +201,7 @@ If you are loading a large number of Text Field components at once, it might be 
 Make sure to inject `GlobalStyles` for the auto-fill keyframes at the top of your application.
 
 ```jsx
-import { GlobalStyles, createTheme, ThemeProvider } from '@mui/material';
+import { GlobalStyles, createTheme, ThemeProvider } from "@mui/material";
 
 const theme = createTheme({
   components: {
@@ -218,8 +218,8 @@ export default function App() {
     <ThemeProvider theme={theme}>
       <GlobalStyles
         styles={{
-          '@keyframes mui-auto-fill': { from: { display: 'block' } },
-          '@keyframes mui-auto-fill-cancel': { from: { display: 'block' } },
+          "@keyframes mui-auto-fill": { from: { display: "block" } },
+          "@keyframes mui-auto-fill-cancel": { from: { display: "block" } },
         }}
       />
       ...

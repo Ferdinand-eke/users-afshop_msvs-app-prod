@@ -6,33 +6,20 @@ import RealtorProfile from "./RealtorProfile";
 import GlobalChat from "./GlobalChat";
 import PropertyInteractionCard from "./PropertyInteractionCard";
 
+const DetailsRight = React.memo(({ listing }) => {
+  const [isChatOpen, setIsChatOpen] = useState(false);
 
-const DetailsRight = React.memo(
-  ({
-    listing,
-  }) => {
-    const [isChatOpen, setIsChatOpen] = useState(false);
+  return (
+    <div className="space-y-4">
+      {/* Realtor Profile Component */}
+      <RealtorProfile realtor={listing?.realtor} />
 
+      {/* Property Interaction Card */}
+      <PropertyInteractionCard propertyData={listing} realtorInfo={listing?.realtor} />
 
-    return (
-      <div className="space-y-4">
-
-        {/* Realtor Profile Component */}
-        <RealtorProfile realtor={listing?.realtor} />
-        
-
-        {/* Property Interaction Card */}
-        <PropertyInteractionCard
-          propertyData={listing}
-          realtorInfo={listing?.realtor}
-        />
-
-        {/* {coordinates && <Map center={coordinates} />} */}
-
-
-      </div>
-    );
-  }
-);
+      {/* {coordinates && <Map center={coordinates} />} */}
+    </div>
+  );
+});
 
 export default DetailsRight;

@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Transition component
 components: Collapse, Fade, Grow, Slide, Zoom
-githubLabel: 'component: transitions'
+githubLabel: "component: transitions"
 ---
 
 # Transitions

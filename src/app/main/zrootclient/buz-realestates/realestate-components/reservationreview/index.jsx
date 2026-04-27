@@ -4,8 +4,6 @@ import { Range } from "react-date-range";
 import { Calender } from "../calender";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
-
-
 export const ListingReservation = ({
   price,
   totalPrice,

@@ -3,7 +3,6 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
 
-
 // import ClienttErrorPage from "../../components/ClienttErrorPage";
 import { Typography } from "@mui/material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
@@ -14,8 +13,7 @@ import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPa
  * Demo Content
  */
 function DemoContent(props) {
-  const {isLoading,isError, products, } = props
-
+  const { isLoading, isError, products } = props;
 
   // if (isLoading) {
   //   return <FuseLoading />;
@@ -51,10 +49,7 @@ function DemoContent(props) {
   if (!isLoading) {
     if (products && products.length > 0) {
       productItemsView = products.map((product, index) => (
-        <div
-          key={index}
-          className="bg-white p-4 rounded shadow flex flex-col relative"
-        >
+        <div key={index} className="bg-white p-4 rounded shadow flex flex-col relative">
           <div className="relative">
             <img
               src={product?.image}
@@ -85,16 +80,11 @@ function DemoContent(props) {
             </Typography>
             <p className="text-orange-500 font-bold mt-2">
               {formatCurrency(product?.price)}{" "}
-              <span className="text-[10px]">
-                {" "}
-                per {product?.quantityunitweight?.unitname}
-              </span>
+              <span className="text-[10px]"> per {product?.quantityunitweight?.unitname}</span>
             </p>
 
             {product?.listprice && (
-              <p className="text-gray-500 line-through">
-                {formatCurrency(product?.listprice)}
-              </p>
+              <p className="text-gray-500 line-through">{formatCurrency(product?.listprice)}</p>
             )}
 
             <p className="text-green-500">-70%</p>
@@ -187,9 +177,8 @@ function DemoContent(props) {
           ))}
         </div> */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 p-8">
-        {productItemsView}
+          {productItemsView}
         </div>
-       
       </div>
     </div>
   );

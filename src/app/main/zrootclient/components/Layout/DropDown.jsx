@@ -1,6 +1,6 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
-import styles from '../../styles/style';
+import React from "react";
+import { useNavigate } from "react-router-dom";
+import styles from "../../styles/style";
 
 const DropDown = ({ categoriesData, setDropDown }) => {
   const navigate = useNavigate();
@@ -13,19 +13,15 @@ const DropDown = ({ categoriesData, setDropDown }) => {
     <div className="pb-4 w-[270px] bg-[#fff] absolute z-30 rounded-b-md shadow-sm">
       {categoriesData &&
         categoriesData.map((i, index) => (
-          <div
-            key={index}
-            className={`${styles.noramlFlex}`}
-            onClick={() => submitHandle(i)}
-          >
+          <div key={index} className={`${styles.noramlFlex}`} onClick={() => submitHandle(i)}>
             <img
               src={i.image_Url}
               style={{
-                width: '25px',
-                height: '25px',
-                objectFit: 'contain',
-                marginLeft: '10px',
-                userSelect: 'none',
+                width: "25px",
+                height: "25px",
+                objectFit: "contain",
+                marginLeft: "10px",
+                userSelect: "none",
               }}
               alt=""
             />

@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Paper component
 components: Paper
-githubLabel: 'component: Paper'
+githubLabel: "component: Paper"
 materialDesign: https://m2.material.io/design/environment/elevation.html
 ---
 
@@ -29,7 +29,7 @@ If you just need a generic container, you may prefer to use the [Box](/material-
 ## Component
 
 ```jsx
-import Paper from '@mui/material/Paper';
+import Paper from "@mui/material/Paper";
 ```
 
 ## Customization

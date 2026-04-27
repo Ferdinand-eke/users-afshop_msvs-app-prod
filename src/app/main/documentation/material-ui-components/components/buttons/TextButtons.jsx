@@ -1,10 +1,12 @@
-import * as React from 'react';
-import Button from '@mui/material/Button';
-import Stack from '@mui/material/Stack';
+import * as React from "react";
+import Button from "@mui/material/Button";
+import Stack from "@mui/material/Stack";
 export default function TextButtons() {
-    return (<Stack direction="row" spacing={2}>
+  return (
+    <Stack direction="row" spacing={2}>
       <Button>Primary</Button>
       <Button disabled>Disabled</Button>
       <Button href="#text-buttons">Link</Button>
-    </Stack>);
+    </Stack>
+  );
 }

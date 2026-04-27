@@ -100,7 +100,8 @@ const DevelopmentModePage = ({ serviceName = "Service" }) => {
             color="text.secondary"
             sx={{ mb: 4, lineHeight: 1.7 }}
           >
-            We're actively working on exciting new features and improvements for our {serviceName.toLowerCase()} service.
+            We're actively working on exciting new features and improvements for our{" "}
+            {serviceName.toLowerCase()} service.
           </Typography>
 
           <FeatureBox>
@@ -118,11 +119,7 @@ const DevelopmentModePage = ({ serviceName = "Service" }) => {
           </FeatureBox>
 
           <Box sx={{ mt: 5 }}>
-            <Typography
-              variant="body2"
-              color="text.secondary"
-              sx={{ mb: 3 }}
-            >
+            <Typography variant="body2" color="text.secondary" sx={{ mb: 3 }}>
               Check back soon for updates!
             </Typography>
 

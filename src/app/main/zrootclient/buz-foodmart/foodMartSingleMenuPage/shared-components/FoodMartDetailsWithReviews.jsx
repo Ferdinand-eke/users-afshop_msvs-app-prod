@@ -83,9 +83,7 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
           >
             Menu Item Details
           </h5>
-          {active === 1 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
+          {active === 1 ? <div className={`${siteStyle.active_indicator}`} /> : null}
         </div>
         <div className="relative">
           <h5
@@ -96,17 +94,13 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
           >
             Menu Reviews
           </h5>
-          {active === 2 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
+          {active === 2 ? <div className={`${siteStyle.active_indicator}`} /> : null}
         </div>
       </div>
 
       {/* Menu Details Tab */}
       {active === 1 ? (
-        <div
-          className="w-full bg-white flex flex-col h-auto"
-        >
+        <div className="w-full bg-white flex flex-col h-auto">
           <div className={`${isMobile ? "p-4" : "p-8"}`}>
             <Typography
               variant={isMobile ? "body2" : "body1"}
@@ -195,15 +189,11 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
 
       {/* Reviews Tab */}
       {active === 2 ? (
-        <div
-          className="w-full bg-white flex flex-col h-auto"
-        >
+        <div className="w-full bg-white flex flex-col h-auto">
           {user?.email && (
             <>
               {/* Add Comment Section */}
-              <div
-                className={`${isMobile ? "p-4" : "p-8"} border-b bg-gray-50`}
-              >
+              <div className={`${isMobile ? "p-4" : "p-8"} border-b bg-gray-50`}>
                 <Typography
                   variant={isMobile ? "subtitle2" : "subtitle1"}
                   className="font-semibold mb-3"
@@ -211,10 +201,7 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
                   Add a Review
                 </Typography>
                 <div className={`${isMobile ? "mb-3" : "mb-4"}`}>
-                  <Typography
-                    variant={isMobile ? "body2" : "body1"}
-                    className="text-gray-700 mb-2"
-                  >
+                  <Typography variant={isMobile ? "body2" : "body1"} className="text-gray-700 mb-2">
                     Your Rating
                   </Typography>
                   <Rating
@@ -284,9 +271,7 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
               </div>
 
               {/* Reviews/Comments List */}
-              <div
-                className={`${isMobile ? "p-4" : "p-8"}`}
-              >
+              <div className={`${isMobile ? "p-4" : "p-8"}`}>
                 <div
                   className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-5"} px-2`}
                 >
@@ -307,10 +292,7 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
 
                 <div className={`${isMobile ? "space-y-3" : "space-y-5"}`}>
                   {reviews.map((review) => (
-                    <div
-                      key={review.id}
-                      className={`${isMobile ? "space-y-2" : "space-y-3"}`}
-                    >
+                    <div key={review.id} className={`${isMobile ? "space-y-2" : "space-y-3"}`}>
                       <div className={`flex ${isMobile ? "gap-2" : "gap-4"}`}>
                         <Avatar
                           src={review.authorImage}
@@ -362,21 +344,13 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
                             <button
                               className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-sm" : "text-base"}`}
                             >
-                              <ThumbUp
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 16 : 18 }}
-                              />
-                              <span>
-                                {review.likes > 0 ? review.likes : "Like"}
-                              </span>
+                              <ThumbUp fontSize="small" sx={{ fontSize: isMobile ? 16 : 18 }} />
+                              <span>{review.likes > 0 ? review.likes : "Like"}</span>
                             </button>
                             <button
                               className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-sm" : "text-base"}`}
                             >
-                              <Reply
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 16 : 18 }}
-                              />
+                              <Reply fontSize="small" sx={{ fontSize: isMobile ? 16 : 18 }} />
                               <span>Reply</span>
                             </button>
                           </div>
@@ -389,10 +363,7 @@ const FoodMartDetailsWithReviews = ({ menuData }) => {
                           className={`${isMobile ? "ml-10 space-y-2 mt-3" : "ml-14 space-y-4 mt-4"}`}
                         >
                           {review.replies.map((reply) => (
-                            <div
-                              key={reply.id}
-                              className={`flex ${isMobile ? "gap-2" : "gap-3"}`}
-                            >
+                            <div key={reply.id} className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                               <Avatar
                                 src={reply.authorImage}
                                 alt={reply.author}

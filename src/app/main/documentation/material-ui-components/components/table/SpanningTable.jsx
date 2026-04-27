@@ -1,35 +1,36 @@
-import * as React from 'react';
-import Table from '@mui/material/Table';
-import TableBody from '@mui/material/TableBody';
-import TableCell from '@mui/material/TableCell';
-import TableContainer from '@mui/material/TableContainer';
-import TableHead from '@mui/material/TableHead';
-import TableRow from '@mui/material/TableRow';
-import Paper from '@mui/material/Paper';
+import * as React from "react";
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
 const TAX_RATE = 0.07;
 function ccyFormat(num) {
-    return `${num.toFixed(2)}`;
+  return `${num.toFixed(2)}`;
 }
 function priceRow(qty, unit) {
-    return qty * unit;
+  return qty * unit;
 }
 function createRow(desc, qty, unit) {
-    const price = priceRow(qty, unit);
-    return { desc, qty, unit, price };
+  const price = priceRow(qty, unit);
+  return { desc, qty, unit, price };
 }
 function subtotal(items) {
-    return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
+  return items.map(({ price }) => price).reduce((sum, i) => sum + i, 0);
 }
 const rows = [
-    createRow('Paperclips (Box)', 100, 1.15),
-    createRow('Paper (Case)', 10, 45.99),
-    createRow('Waste Basket', 2, 17.99),
+  createRow("Paperclips (Box)", 100, 1.15),
+  createRow("Paper (Case)", 10, 45.99),
+  createRow("Waste Basket", 2, 17.99),
 ];
 const invoiceSubtotal = subtotal(rows);
 const invoiceTaxes = TAX_RATE * invoiceSubtotal;
 const invoiceTotal = invoiceTaxes + invoiceSubtotal;
 export default function SpanningTable() {
-    return (<TableContainer component={Paper}>
+  return (
+    <TableContainer component={Paper}>
       <Table sx={{ minWidth: 700 }} aria-label="spanning table">
         <TableHead>
           <TableRow>
@@ -46,14 +47,16 @@ export default function SpanningTable() {
           </TableRow>
         </TableHead>
         <TableBody>
-          {rows.map((row) => (<TableRow key={row.desc}>
+          {rows.map((row) => (
+            <TableRow key={row.desc}>
               <TableCell>{row.desc}</TableCell>
               <TableCell align="right">{row.qty}</TableCell>
               <TableCell align="right">{row.unit}</TableCell>
               <TableCell align="right">{ccyFormat(row.price)}</TableCell>
-            </TableRow>))}
+            </TableRow>
+          ))}
           <TableRow>
-            <TableCell rowSpan={3}/>
+            <TableCell rowSpan={3} />
             <TableCell colSpan={2}>Subtotal</TableCell>
             <TableCell align="right">{ccyFormat(invoiceSubtotal)}</TableCell>
           </TableRow>
@@ -68,5 +71,6 @@ export default function SpanningTable() {
           </TableRow>
         </TableBody>
       </Table>
-    </TableContainer>);
+    </TableContainer>
+  );
 }

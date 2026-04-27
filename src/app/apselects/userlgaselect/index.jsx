@@ -7,9 +7,7 @@ import useSellerCountries from "app/configs/data/server-calls/countries/useCount
 const UserLgaSelect = ({ value, onChange, blgas }) => {
   return (
     <div>
-      <label style={{ fontSize: "12px", fontWeight: "800" }}>
-        *LGA/County scan
-      </label>
+      <label style={{ fontSize: "12px", fontWeight: "800" }}>*LGA/County scan</label>
       <Select
         placeholder="What LGA/County?"
         isClearable

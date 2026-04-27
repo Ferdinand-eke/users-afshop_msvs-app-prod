@@ -160,9 +160,7 @@ function DemoSidebarRight(props) {
   return (
     <div className="px-12 py-24 h-screen">
       {/* min-h-6xl  */}
-      <div className="mx-12 text-3xl font-bold tracking-tighter">
-        Map Location Site Views
-      </div>
+      <div className="mx-12 text-3xl font-bold tracking-tighter">Map Location Site Views</div>
 
       {center && items && <FoodMartMapSingle center={center} items={items} />}
     </div>

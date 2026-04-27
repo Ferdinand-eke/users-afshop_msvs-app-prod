@@ -74,19 +74,11 @@ function CountdownTimer({ initialMinutes = 10, onExpire }) {
       <div className="flex items-center justify-between mb-8">
         <div className="flex items-center gap-8">
           <AccessTime sx={{ fontSize: "1.25rem", color: getColor() }} />
-          <Typography
-            variant="body2"
-            className="font-semibold"
-            style={{ color: getColor() }}
-          >
+          <Typography variant="body2" className="font-semibold" style={{ color: getColor() }}>
             {isExpired ? "Code Expired" : "Time Remaining"}
           </Typography>
         </div>
-        <Typography
-          variant="body1"
-          className="font-mono font-bold"
-          style={{ color: getColor() }}
-        >
+        <Typography variant="body1" className="font-mono font-bold" style={{ color: getColor() }}>
           {isExpired
             ? "00:00"
             : `${String(minutes).padStart(2, "0")}:${String(seconds).padStart(2, "0")}`}
@@ -107,10 +99,7 @@ function CountdownTimer({ initialMinutes = 10, onExpire }) {
         }}
       />
       {isExpired && (
-        <Typography
-          variant="caption"
-          className="text-red-600 mt-8 block text-center"
-        >
+        <Typography variant="caption" className="text-red-600 mt-8 block text-center">
           Your verification code has expired. Please request a new one.
         </Typography>
       )}
@@ -128,13 +117,12 @@ function UserModernReversedActivatePage({ resendOTP }) {
   const clientSignUpData = getResendMerchantSignUpOtp();
   const [isCodeExpired, setIsCodeExpired] = useState(false);
 
-  console.log("remote__User", remoteResponseToken)
-  const { control, formState, handleSubmit, reset, getValues, setValue } =
-    useForm({
-      mode: "onChange",
-      defaultValues,
-      resolver: zodResolver(schema),
-    });
+  console.log("remote__User", remoteResponseToken);
+  const { control, formState, handleSubmit, reset, getValues, setValue } = useForm({
+    mode: "onChange",
+    defaultValues,
+    resolver: zodResolver(schema),
+  });
 
   const { isValid, dirtyFields, errors } = formState;
 
@@ -163,16 +151,11 @@ function UserModernReversedActivatePage({ resendOTP }) {
 
   return (
     <div className="flex min-w-0 flex-auto flex-col items-center sm:justify-center md:p-32">
-       
-
       <Paper className="flex min-h-full w-full overflow-hidden rounded-0 sm:min-h-auto sm:w-auto sm:rounded-2xl sm:shadow md:w-full md:max-w-6xl">
         {/* Left Side - Illustration */}
-       
 
         {/* Right Side - Form */}
         <div className="w-full px-16 py-32 ltr:border-l-1 rtl:border-r-1 sm:w-auto sm:p-48 md:p-64">
-
-         
           <div className="mx-auto w-full max-w-320 sm:mx-0 sm:w-320">
             {/* Logo with Orange Gradient Background */}
             <div
@@ -182,11 +165,7 @@ function UserModernReversedActivatePage({ resendOTP }) {
                 boxShadow: "0 4px 20px rgba(234, 88, 12, 0.3)",
               }}
             >
-              <img
-                className="w-40"
-                src="assets/images/afslogo/afslogo.png"
-                alt="logo"
-              />
+              <img className="w-40" src="assets/images/afslogo/afslogo.png" alt="logo" />
             </div>
 
             <Typography className="text-4xl font-extrabold leading-tight tracking-tight">
@@ -219,10 +198,7 @@ function UserModernReversedActivatePage({ resendOTP }) {
                   : "rgba(254, 215, 170, 0.1)",
               }}
             >
-              <CountdownTimer
-                initialMinutes={10}
-                onExpire={() => setIsCodeExpired(true)}
-              />
+              <CountdownTimer initialMinutes={10} onExpire={() => setIsCodeExpired(true)} />
             </div>
 
             {/* Info Box */}
@@ -351,10 +327,7 @@ function UserModernReversedActivatePage({ resendOTP }) {
                 className="w-full mt-16"
                 aria-label="Verify"
                 disabled={
-                  _.isEmpty(dirtyFields) ||
-                  !isValid ||
-                  avtivateMerchant.isLoading ||
-                  isCodeExpired
+                  _.isEmpty(dirtyFields) || !isValid || avtivateMerchant.isLoading || isCodeExpired
                 }
                 type="submit"
                 size="large"

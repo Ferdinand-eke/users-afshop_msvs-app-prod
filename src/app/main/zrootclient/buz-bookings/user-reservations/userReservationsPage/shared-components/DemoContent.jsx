@@ -1,13 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useState } from "react";
 import { CircularProgress, Typography, Button } from "@mui/material";
-import {
-  CheckCircle,
-  Cancel,
-  CalendarToday,
-  EventAvailable,
-  Refresh,
-} from "@mui/icons-material";
+import { CheckCircle, Cancel, CalendarToday, EventAvailable, Refresh } from "@mui/icons-material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
@@ -56,9 +50,7 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={"Error occurred while retrieving reservations"}
-        />
+        <ClienttErrorPage message={"Error occurred while retrieving reservations"} />
       </motion.div>
     );
   }
@@ -74,7 +66,8 @@ function DemoContent(props) {
         <div
           className="w-20 h-20 rounded-full flex items-center justify-center mb-6"
           style={{
-            background: "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%)",
+            background:
+              "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.1) 100%)",
           }}
         >
           <CalendarToday sx={{ fontSize: "2.5rem", color: "#ea580c" }} />
@@ -119,12 +112,8 @@ function DemoContent(props) {
           animate={{ opacity: 1, y: 0 }}
           className="mb-6"
         >
-          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">
-            My Reservations
-          </h1>
-          <p className="text-gray-600">
-            Manage your bookings and track your stays
-          </p>
+          <h1 className="text-2xl md:text-3xl font-bold text-gray-900 mb-2">My Reservations</h1>
+          <p className="text-gray-600">Manage your bookings and track your stays</p>
         </motion.div>
 
         {/* Tabs */}
@@ -143,8 +132,7 @@ function DemoContent(props) {
             style={
               activeTab === "active"
                 ? {
-                    background:
-                      "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                   }
                 : {}
             }
@@ -168,8 +156,7 @@ function DemoContent(props) {
             style={
               activeTab === "cancelled"
                 ? {
-                    background:
-                      "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                    background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                   }
                 : {}
             }
@@ -188,13 +175,9 @@ function DemoContent(props) {
       {/* Content Area */}
       <div className="flex-1 overflow-y-auto px-6 md:px-8 pb-8">
         <AnimatePresence mode="wait">
-          {activeTab === "active" && (
-            <ActiveReservationsList reservations={activeReservations} />
-          )}
+          {activeTab === "active" && <ActiveReservationsList reservations={activeReservations} />}
           {activeTab === "cancelled" && (
-            <CancelledReservationsList
-              cancelledReservations={cancelledList}
-            />
+            <CancelledReservationsList cancelledReservations={cancelledList} />
           )}
         </AnimatePresence>
       </div>
@@ -255,6 +238,16 @@ function ActiveReservationsList({ reservations }) {
                   )}
                 </div>
 
+                {/* Property Info */}
+                {reservation.bookingPropertyName && (
+                  <div className="mb-4">
+                    <p className="text-base font-semibold text-gray-900">{reservation.bookingPropertyName}</p>
+                    {reservation.bookingPropertyAddress && (
+                      <p className="text-sm text-gray-500">{reservation.bookingPropertyAddress}</p>
+                    )}
+                  </div>
+                )}
+
                 {/* Price */}
                 <div className="mb-4">
                   <span className="text-sm text-gray-600">Total Price</span>
@@ -275,9 +268,7 @@ function ActiveReservationsList({ reservations }) {
                   <div className="flex items-center gap-2 text-gray-700">
                     <CalendarToday sx={{ fontSize: "1rem", color: "#ea580c" }} />
                     <span className="text-sm font-medium">Check-out:</span>
-                    <span className="text-sm">
-                      {new Date(reservation.endDate).toDateString()}
-                    </span>
+                    <span className="text-sm">{new Date(reservation.endDate).toDateString()}</span>
                   </div>
                 </div>
               </div>
@@ -291,12 +282,10 @@ function ActiveReservationsList({ reservations }) {
                     to={`/bookings/${reservation.id}/reservation-detail`}
                     sx={{
                       textTransform: "none",
-                      background:
-                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                       fontWeight: 600,
                       "&:hover": {
-                        background:
-                          "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
                         boxShadow: "0 8px 20px rgba(234, 88, 12, 0.4)",
                       },
                     }}
@@ -310,12 +299,10 @@ function ActiveReservationsList({ reservations }) {
                     to={`/bookings/reservation/review/${reservation.id}`}
                     sx={{
                       textTransform: "none",
-                      background:
-                        "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                       fontWeight: 600,
                       "&:hover": {
-                        background:
-                          "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                        background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
                         boxShadow: "0 8px 20px rgba(234, 88, 12, 0.4)",
                       },
                     }}
@@ -388,6 +375,16 @@ function CancelledReservationsList({ cancelledReservations }) {
                     </div>
                   </div>
 
+                  {/* Property Info */}
+                  {reservation?.bookingPropertyName && (
+                    <div className="mb-4">
+                      <p className="text-base font-semibold text-gray-900">{reservation.bookingPropertyName}</p>
+                      {reservation?.bookingPropertyAddress && (
+                        <p className="text-sm text-gray-500">{reservation.bookingPropertyAddress}</p>
+                      )}
+                    </div>
+                  )}
+
                   {/* Transaction ID */}
                   {reservation?.paymentResult?.transaction && (
                     <p className="text-sm text-gray-600 mb-2 font-mono">
@@ -419,18 +416,14 @@ function CancelledReservationsList({ cancelledReservations }) {
                   {/* Dates */}
                   <div className="space-y-2">
                     <div className="flex items-center gap-2 text-gray-700">
-                      <CalendarToday
-                        sx={{ fontSize: "1rem", color: "#ef4444" }}
-                      />
+                      <CalendarToday sx={{ fontSize: "1rem", color: "#ef4444" }} />
                       <span className="text-sm font-medium">Check-in:</span>
                       <span className="text-sm">
                         {new Date(reservation?.startDate).toDateString()}
                       </span>
                     </div>
                     <div className="flex items-center gap-2 text-gray-700">
-                      <CalendarToday
-                        sx={{ fontSize: "1rem", color: "#ef4444" }}
-                      />
+                      <CalendarToday sx={{ fontSize: "1rem", color: "#ef4444" }} />
                       <span className="text-sm font-medium">Check-out:</span>
                       <span className="text-sm">
                         {new Date(reservation?.endDate).toDateString()}

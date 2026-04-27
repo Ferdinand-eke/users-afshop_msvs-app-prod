@@ -161,49 +161,45 @@ function DemoSidebar(props) {
       {/* min-h-6xl */}
 
       <div className="flex flex-col justify-between space-y-8">
-		{store && <div>
-          <div className="flex flex-col items-center">
-            <img
-              src={store?.coverimage}
-              alt="Store logo"
-              className="rounded-full mb-4"
-            />
-            <div className="text-center">
-              <p className="text-gray-500">Since 2023</p>
-              <Typography className="text-xl font-bold">
-                {store?.shopname}{" "}
-              </Typography>
-              <p className="text-gray-500">{products?.length} products</p>
+        {store && (
+          <div>
+            <div className="flex flex-col items-center">
+              <img src={store?.coverimage} alt="Store logo" className="rounded-full mb-4" />
+              <div className="text-center">
+                <p className="text-gray-500">Since 2023</p>
+                <Typography className="text-xl font-bold">{store?.shopname} </Typography>
+                <p className="text-gray-500">{products?.length} products</p>
+              </div>
+            </div>
+            <div className="mt-6 grid grid-cols-2 gap-4">
+              <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
+                <i className="fas fa-ticket-alt text-xl"></i>
+                <span className="ml-2">Coupons</span>
+              </button>
+              <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
+                <i className="fas fa-address-book text-xl"></i>
+                <span className="ml-2">Contact</span>
+              </button>
+              <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
+                <i className="fas fa-globe text-xl"></i>
+                <span className="ml-2">Website</span>
+              </button>
+              <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
+                <i className="fas fa-file-alt text-xl"></i>
+                <span className="ml-2">Terms</span>
+              </button>
+              <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
+                <i className="fas fa-question-circle text-xl"></i>
+                <span className="ml-2">FAQs</span>
+              </button>
+            </div>
+            <div className="mt-6">
+              <h3 className="font-bold">Address</h3>
+              <p className="text-gray-500">{store?.address}</p>
             </div>
           </div>
-          <div className="mt-6 grid grid-cols-2 gap-4">
-            <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
-              <i className="fas fa-ticket-alt text-xl"></i>
-              <span className="ml-2">Coupons</span>
-            </button>
-            <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
-              <i className="fas fa-address-book text-xl"></i>
-              <span className="ml-2">Contact</span>
-            </button>
-            <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
-              <i className="fas fa-globe text-xl"></i>
-              <span className="ml-2">Website</span>
-            </button>
-            <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
-              <i className="fas fa-file-alt text-xl"></i>
-              <span className="ml-2">Terms</span>
-            </button>
-            <button className="bg-gray-100 p-2 rounded-lg flex items-center justify-center">
-              <i className="fas fa-question-circle text-xl"></i>
-              <span className="ml-2">FAQs</span>
-            </button>
-          </div>
-          <div className="mt-6">
-            <h3 className="font-bold">Address</h3>
-            <p className="text-gray-500">{store?.address}</p>
-          </div>
-        </div>}
-        
+        )}
+
         <div>
           {/* Map component to be here */}
           <p>Put map here</p>

@@ -7,15 +7,11 @@ import { useQuery } from 'react-query';
  * @returns {object} React Query result with merchant data
  */
 export function useGetMerchantPreview(merchantId) {
-  console.log("useGetMerchantPreview", merchantId);
+	console.log('useGetMerchantPreview', merchantId);
 
-  return useQuery(
-    ['__merchantPreview', merchantId],
-    () => getMerchantPreviewApi(merchantId),
-    {
-      enabled: Boolean(merchantId), // Only run query if merchantId exists
-      staleTime: 30000, // Consider data fresh for 30 seconds
-      retry: 2, // Retry failed requests up to 2 times
-    }
-  );
+	return useQuery(['__merchantPreview', merchantId], () => getMerchantPreviewApi(merchantId), {
+		enabled: Boolean(merchantId), // Only run query if merchantId exists
+		staleTime: 30000, // Consider data fresh for 30 seconds
+		retry: 2 // Retry failed requests up to 2 times
+	});
 }

@@ -28,8 +28,6 @@ const FoodCartSummaryAndPay = ({
   dirtyFields,
   isValid,
 }) => {
-
-
   const user = useAppSelector(selectUser);
 
   let checkItemsArrayForTotal = [];
@@ -40,7 +38,6 @@ const FoodCartSummaryAndPay = ({
     });
   });
 
-
   // console.log("foodMart__Review", intemsInCart)
 
   const totalAmount = calculateCartTotalAmount(checkItemsArrayForTotal);
@@ -48,17 +45,15 @@ const FoodCartSummaryAndPay = ({
   const vat = 800;
   // const publicKey = "pk_test_2af8648e2d689f0a4d5263e706543f3835c2fe6a";
 
-  const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY; 
+  const publicKey = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
 
-  const { mutate: verifyPaymentAndCreateOrder, isLoading:payFoodLoading } = usePayAndPlaceFoodOrder();
-
-
+  const { mutate: verifyPaymentAndCreateOrder, isLoading: payFoodLoading } =
+    usePayAndPlaceFoodOrder();
 
   const onSuccess = async (paystackResponse) => {
     const payloadData = getFoodVendorSession();
 
     try {
-
       const oderData = {
         refOrderId: "AFSH" + generateClientUID() + "FMKT",
         foodCartItems: intemsInCart,
@@ -82,11 +77,11 @@ const FoodCartSummaryAndPay = ({
           phone: phone,
           address: address,
         },
-        foodMart:  payloadData?.foodMartId,
-        reference:paystackResponse?.reference
+        foodMart: payloadData?.foodMartId,
+        reference: paystackResponse?.reference,
       };
 
-       verifyPaymentAndCreateOrder(oderData);
+      verifyPaymentAndCreateOrder(oderData);
     } catch (error) {}
   };
   const onClose = () => {
@@ -113,75 +108,66 @@ const FoodCartSummaryAndPay = ({
         <div className="flex justify-between font-semibold mb-4">
           <p>Grand Total</p>
 
-          {(totalAmount && (totalAmount > 0)) &&  <p className="text-orange-800">
-            ₦
-            {formatCurrency(
-              parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-            )}
-          </p>}
-         
+          {totalAmount && totalAmount > 0 && (
+            <p className="text-orange-800">
+              ₦{formatCurrency(parseInt(totalAmount) + parseInt(delivery) + parseInt(vat))}
+            </p>
+          )}
         </div>
 
         <div className="flex mb-4">
-          <input
-            type="text"
-            placeholder="Enter code here"
-            className="border p-2 flex-grow mr-2"
-          />
+          <input type="text" placeholder="Enter code here" className="border p-2 flex-grow mr-2" />
           <button className="bg-gray-200 p-2">APPLY</button>
         </div>
-       
+
         {methodOfPay === "FLUTTERWAVE" && (
           <button className="bg-orange-500 hover:bg-orange-800 text-white w-full p-2 rounded-lg">
             Pay WIth Flutterwave ₦
-            {formatCurrency(
-              parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-            )}
+            {formatCurrency(parseInt(totalAmount) + parseInt(delivery) + parseInt(vat))}
           </button>
         )}
         {methodOfPay === "PAYONDELIVERY" && (
           <button className="bg-orange-500 hover:bg-orange-800 text-white w-full p-2 rounded-lg">
             Pay On Delivery ₦
-            {formatCurrency(
-              parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-            )}
+            {formatCurrency(parseInt(totalAmount) + parseInt(delivery) + parseInt(vat))}
           </button>
         )}
         {methodOfPay === "PAYSTACK" && (
-        <>
-
-        {(totalAmount && (totalAmount > 0)) && <PaystackButton
-            text={payFoodLoading ? 'payment processing...' : ` Make Payment of ${formatCurrency(
-              parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)
-            )}`}
-              className="bg-orange-500 text-black w-full p-2 rounded-lg"
-            reference={"AFSH" + generateClientUID() + "REF"}
-            email={user?.email}
-            amount={
-              (parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)) * 100
-            }
-            publicKey={publicKey}
-            onSuccess={(reference) => onSuccess(reference)}
-            onClose={() => onClose()}
-            disabled={
-              _.isEmpty(dirtyFields) ||
-              !isValid ||
-              !name ||
-              !phone ||
-              !address ||
-              !orderCountryDestination ||
-              !orderStateProvinceDestination ||
-              !orderLgaDestination ||
-              !orderMarketPickupDestination ||
-              !district ||
-              !totalAmount
-              || payFoodLoading
-            }
-          />}
-        
-        </>
+          <>
+            {totalAmount && totalAmount > 0 && (
+              <PaystackButton
+                text={
+                  payFoodLoading
+                    ? "payment processing..."
+                    : ` Make Payment of ${formatCurrency(
+                        parseInt(totalAmount) + parseInt(delivery) + parseInt(vat),
+                      )}`
+                }
+                className="bg-orange-500 text-black w-full p-2 rounded-lg"
+                reference={"AFSH" + generateClientUID() + "REF"}
+                email={user?.email}
+                amount={(parseInt(totalAmount) + parseInt(delivery) + parseInt(vat)) * 100}
+                publicKey={publicKey}
+                onSuccess={(reference) => onSuccess(reference)}
+                onClose={() => onClose()}
+                disabled={
+                  _.isEmpty(dirtyFields) ||
+                  !isValid ||
+                  !name ||
+                  !phone ||
+                  !address ||
+                  !orderCountryDestination ||
+                  !orderStateProvinceDestination ||
+                  !orderLgaDestination ||
+                  !orderMarketPickupDestination ||
+                  !district ||
+                  !totalAmount ||
+                  payFoodLoading
+                }
+              />
+            )}
+          </>
         )}
-     
 
         <p className="text-sm text-gray-500 mt-2">
           By proceeding, you are automatically accepting the{" "}

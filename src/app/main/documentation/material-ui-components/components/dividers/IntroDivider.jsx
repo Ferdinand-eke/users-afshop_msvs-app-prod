@@ -1,12 +1,13 @@
-import * as React from 'react';
-import Card from '@mui/material/Card';
-import Box from '@mui/material/Box';
-import Chip from '@mui/material/Chip';
-import Stack from '@mui/material/Stack';
-import Divider from '@mui/material/Divider';
-import Typography from '@mui/material/Typography';
+import * as React from "react";
+import Card from "@mui/material/Card";
+import Box from "@mui/material/Box";
+import Chip from "@mui/material/Chip";
+import Stack from "@mui/material/Stack";
+import Divider from "@mui/material/Divider";
+import Typography from "@mui/material/Typography";
 export default function IntroDivider() {
-    return (<Card variant="outlined" sx={{ maxWidth: 360 }}>
+  return (
+    <Card variant="outlined" sx={{ maxWidth: 360 }}>
       <Box sx={{ p: 2 }}>
         <Stack direction="row" justifyContent="space-between" alignItems="center">
           <Typography gutterBottom variant="h5" component="div">
@@ -17,8 +18,8 @@ export default function IntroDivider() {
           </Typography>
         </Stack>
         <Typography color="text.secondary" variant="body2">
-          Pinstriped cornflower blue cotton blouse takes you on a walk to the park or
-          just down the hall.
+          Pinstriped cornflower blue cotton blouse takes you on a walk to the park or just down the
+          hall.
         </Typography>
       </Box>
       <Divider />
@@ -27,10 +28,11 @@ export default function IntroDivider() {
           Select type
         </Typography>
         <Stack direction="row" spacing={1}>
-          <Chip color="primary" label="Soft" size="small"/>
-          <Chip label="Medium" size="small"/>
-          <Chip label="Hard" size="small"/>
+          <Chip color="primary" label="Soft" size="small" />
+          <Chip label="Medium" size="small" />
+          <Chip label="Hard" size="small" />
         </Stack>
       </Box>
-    </Card>);
+    </Card>
+  );
 }

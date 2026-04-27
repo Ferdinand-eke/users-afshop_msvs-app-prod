@@ -1,4 +1,4 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { useQuery } from 'react-query';
 import { getProdCatById, getProdCats } from '../../client/RepositoryClient';
 // import {
 //   // createProdCat,
@@ -8,21 +8,16 @@ import { getProdCatById, getProdCats } from '../../client/RepositoryClient';
 // } from '../../client/clientToApiRoutes';
 
 export default function useProductCats() {
-  return useQuery(['__productcats'], getProdCats);
-} //(Msvs => Done)
+	return useQuery(['__productcats'], getProdCats);
+} // (Msvs => Done)
 
-//get single product category
+// get single product category
 export function useSingleProductCat(proCatId) {
-  return useQuery(
-    ['__productcatsById', proCatId],
-    () => getProdCatById(proCatId),
-    {
-      enabled: Boolean(proCatId),
-      // staleTime: 5000,
-    }
-  );
+	return useQuery(['__productcatsById', proCatId], () => getProdCatById(proCatId), {
+		enabled: Boolean(proCatId)
+		// staleTime: 5000,
+	});
 }
-
 
 // //create new product category
 // export function useAddProductCatMutation() {

@@ -1,7 +1,7 @@
-import { useState } from 'react';
-import { Typography, IconButton, Button } from '@mui/material';
-import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from '@mui/icons-material';
-import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
+import { useState } from "react";
+import { Typography, IconButton, Button } from "@mui/material";
+import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from "@mui/icons-material";
+import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 
 /**
  * FoodMartCard Component
@@ -14,10 +14,10 @@ function FoodMartCard({
   images = [],
   title,
   location,
-  category = 'Restaurant',
+  category = "Restaurant",
   rating = 0,
   reviewCount = 0,
-  priceRange = '$$'
+  priceRange = "$$",
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -25,17 +25,13 @@ function FoodMartCard({
   const handlePrevImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleNextImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const toggleFavorite = (e) => {
@@ -52,20 +48,26 @@ function FoodMartCard({
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <span key={`full-${i}`} className="text-orange-500">★</span>
+        <span key={`full-${i}`} className="text-orange-500">
+          ★
+        </span>,
       );
     }
 
     if (hasHalfStar) {
       stars.push(
-        <span key="half" className="text-orange-500">⯨</span>
+        <span key="half" className="text-orange-500">
+          ⯨
+        </span>,
       );
     }
 
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
       stars.push(
-        <span key={`empty-${i}`} className="text-gray-300">★</span>
+        <span key={`empty-${i}`} className="text-gray-300">
+          ★
+        </span>,
       );
     }
 
@@ -132,9 +134,7 @@ function FoodMartCard({
                       setCurrentImageIndex(index);
                     }}
                     className={`w-6 h-6 rounded-full transition-all ${
-                      index === currentImageIndex
-                        ? 'bg-white w-6'
-                        : 'bg-white/60 hover:bg-white/80'
+                      index === currentImageIndex ? "bg-white w-6" : "bg-white/60 hover:bg-white/80"
                     }`}
                     aria-label={`Go to image ${index + 1}`}
                   />
@@ -170,11 +170,9 @@ function FoodMartCard({
 
         {/* Rating Row */}
         <div className="flex items-center gap-2 mb-4">
-          <div className="flex text-xs">
-            {renderStars()}
-          </div>
+          <div className="flex text-xs">{renderStars()}</div>
           <Typography variant="body2" className="text-gray-600 text-sm">
-            ({reviewCount.toString().padStart(2, '0')})
+            ({reviewCount.toString().padStart(2, "0")})
           </Typography>
         </div>
 
@@ -182,7 +180,6 @@ function FoodMartCard({
         <Button
           size="small"
           component={NavLinkAdapter}
-
           to={`/foodmarts/${slug}/visit-mart/${slug}/`}
           fullWidth
           className="bg-orange-600 hover:bg-orange-800 text-white font-medium py-1.5 rounded-lg transition-colors duration-200"

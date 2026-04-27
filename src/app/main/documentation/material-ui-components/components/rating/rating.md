@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Rating component
 components: Rating
-githubLabel: 'component: rating'
+githubLabel: "component: rating"
 waiAria: https://www.w3.org/WAI/tutorials/forms/custom-controls/#a-star-rating
 ---
 

@@ -3,7 +3,7 @@ productId: material-ui
 title: React Checkbox component
 components: Checkbox, FormControl, FormGroup, FormLabel, FormControlLabel
 materialDesign: https://m2.material.io/components/selection-controls#checkboxes
-githubLabel: 'component: checkbox'
+githubLabel: "component: checkbox"
 waiAria: https://www.w3.org/WAI/ARIA/apg/patterns/checkbox/
 ---
 
@@ -100,7 +100,7 @@ You can learn more about this in the [overrides documentation page](/material-ui
 <Checkbox
   value="checkedA"
   inputProps={{
-    'aria-label': 'Checkbox A',
+    "aria-label": "Checkbox A",
   }}
 />
 ```

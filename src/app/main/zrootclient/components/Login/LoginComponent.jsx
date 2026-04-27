@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
-import { AiOutlineEye, AiOutlineEyeInvisible } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
-import styles from '../../styles/style';
+import React, { useState } from "react";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { Link } from "react-router-dom";
+import styles from "../../styles/style";
 
 const LoginComponent = () => {
   const [visible, setVisible] = useState(false);
@@ -17,10 +17,7 @@ const LoginComponent = () => {
         <div className="bg-white py-8 px-4 shadow sm:rounded-lg sm:px-10">
           <form className="space-y-6">
             <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium text-gray-200"
-              >
+              <label htmlFor="email" className="block text-sm font-medium text-gray-200">
                 Email address
               </label>
               <div className="mt-1">
@@ -37,15 +34,12 @@ const LoginComponent = () => {
             </div>
 
             <div>
-              <label
-                htmlFor="password"
-                className="block text-sm font-medium text-gray-200"
-              >
+              <label htmlFor="password" className="block text-sm font-medium text-gray-200">
                 Password
               </label>
               <div className="mt-1 relative">
                 <input
-                  type={visible ? 'text' : 'password'}
+                  type={visible ? "text" : "password"}
                   name="password"
                   autoComplete="password"
                   required
@@ -78,10 +72,7 @@ const LoginComponent = () => {
                   id="remember-me"
                   className="h-4 w-4 text-green-600 focus:ring-green-500 border-gray-300 rounded"
                 />
-                <label
-                  htmlFor="remember-me"
-                  className="ml-2 block text-sm text-gray-900"
-                >
+                <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-900">
                   Remember me
                 </label>
               </div>

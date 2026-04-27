@@ -1,7 +1,7 @@
-import JwtSignUpForm from '../../../auth/services/jwt/components/JwtSignUpForm';
+import JwtSignUpForm from "../../../auth/services/jwt/components/JwtSignUpForm";
 
 function JwtSignUpTab() {
-	return <JwtSignUpForm />;
+  return <JwtSignUpForm />;
 }
 
 export default JwtSignUpTab;

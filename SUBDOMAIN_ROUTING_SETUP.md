@@ -7,6 +7,7 @@ This guide explains how to integrate the new merchant subdomain routing system i
 ## What Was Created
 
 ### 1. **Utility Functions** (`src/app/utils/subdomainUtils.js`)
+
 - `getSubdomain()` - Extract subdomain from current URL
 - `isSubdomainRoute()` - Check if user is on a subdomain
 - `getMerchantSubdomainUrl(slug, path)` - Generate merchant subdomain URL
@@ -14,11 +15,13 @@ This guide explains how to integrate the new merchant subdomain routing system i
 - `navigateToMainDomain(path)` - Navigate back to main domain
 
 ### 2. **Components**
+
 - `MerchantSubdomainRoutes.jsx` - Router for subdomain pages
 - `MerchantHospitalityPage.jsx` - Main merchant profile page
 - `MerchantNotFoundPage.jsx` - 404 page for invalid merchants
 
 ### 3. **Updated Components**
+
 - `MerchantProfile.jsx` - "View Full Profile" button now redirects to subdomain
 
 ## Integration Steps
@@ -30,8 +33,8 @@ You need to add subdomain detection to your main App.jsx or wherever your routes
 **Location:** `src/app/App.jsx` (or your main routing file)
 
 ```javascript
-import { isSubdomainRoute } from 'src/app/utils/subdomainUtils';
-import MerchantSubdomainRoutes from 'src/app/main/merchant-subdomain/MerchantSubdomainRoutes';
+import { isSubdomainRoute } from "src/app/utils/subdomainUtils";
+import MerchantSubdomainRoutes from "src/app/main/merchant-subdomain/MerchantSubdomainRoutes";
 
 function App() {
   // Detect if we're on a merchant subdomain
@@ -56,7 +59,6 @@ function App() {
               {/* ... all your other routes ... */}
             </Routes>
           )}
-
         </QueryClientProvider>
       </Provider>
     </BrowserRouter>
@@ -70,10 +72,10 @@ If you prefer a cleaner approach, create a routing wrapper:
 
 ```javascript
 // src/app/AppRoutes.jsx
-import { Routes, Route } from 'react-router-dom';
-import { isSubdomainRoute } from 'src/app/utils/subdomainUtils';
-import MerchantSubdomainRoutes from 'src/app/main/merchant-subdomain/MerchantSubdomainRoutes';
-import YourExistingRoutes from './YourExistingRoutes';
+import { Routes, Route } from "react-router-dom";
+import { isSubdomainRoute } from "src/app/utils/subdomainUtils";
+import MerchantSubdomainRoutes from "src/app/main/merchant-subdomain/MerchantSubdomainRoutes";
+import YourExistingRoutes from "./YourExistingRoutes";
 
 function AppRoutes() {
   if (isSubdomainRoute()) {
@@ -87,8 +89,9 @@ export default AppRoutes;
 ```
 
 Then in App.jsx:
+
 ```javascript
-import AppRoutes from './AppRoutes';
+import AppRoutes from "./AppRoutes";
 
 function App() {
   return (
@@ -189,6 +192,7 @@ getSubdomain(); // Returns "merchant-name"
 For production (`africanshops.org`), you'll need to configure DNS:
 
 1. **Add Wildcard DNS Record:**
+
    ```
    Type: A
    Host: *
@@ -197,6 +201,7 @@ For production (`africanshops.org`), you'll need to configure DNS:
    ```
 
    Or if using a service like Cloudflare:
+
    ```
    Type: CNAME
    Name: *
@@ -233,6 +238,7 @@ You can add more pages to the merchant subdomain by updating `MerchantSubdomainR
 ```
 
 Example URLs:
+
 - `http://african-foods.africanshops.org/hospitality` - Hospitality listings
 - `http://african-foods.africanshops.org/products` - Products
 - `http://african-foods.africanshops.org/about` - About page
@@ -241,39 +247,49 @@ Example URLs:
 ## Troubleshooting
 
 ### Issue: Subdomain not detected
+
 **Solution:** Check browser console:
+
 ```javascript
 console.log(window.location.hostname); // Should show "merchant.localhost"
 console.log(getSubdomain()); // Should return "merchant"
 ```
 
 ### Issue: Merchant not found even with valid slug
+
 **Solution:**
+
 1. Check if merchant API is returning data
 2. Check browser console for API errors
 3. Verify merchant slug matches exactly
 
 ### Issue: Infinite redirects
+
 **Solution:** Ensure you're not calling navigation functions inside render loops
 
 ### Issue: Works on localhost but not production
+
 **Solution:**
+
 1. Verify DNS wildcard record is configured
 2. Check REACT_APP_BASE_DOMAIN environment variable
-3. Ensure SSL certificate covers wildcard subdomain (*.africanshops.org)
+3. Ensure SSL certificate covers wildcard subdomain (\*.africanshops.org)
 
 ## Summary
 
 ✅ **Created:**
+
 - Subdomain detection utilities
 - Merchant subdomain routes
 - Merchant hospitality page
 - Merchant not found page
 
 ✅ **Updated:**
+
 - MerchantProfile button to use subdomain navigation
 
 🔲 **TODO:**
+
 - Integrate routing wrapper in your main App.jsx
 - Test with real merchant data
 - Configure production DNS when ready

@@ -9,7 +9,6 @@ const OrderCard = ({ orderData }) => {
 
   // console.log("SINGLE_ORDER__DATA", orderData);
 
-
   return (
     <>
       <div className="flex space-x-4">
@@ -22,9 +21,7 @@ const OrderCard = ({ orderData }) => {
 
         <div className="flex-1">
           <h3 className="font-bold">{orderData?.shippingAddress?.fullName}</h3>
-          <p className="text-[12px]">
-            Order: {orderData?.paymentResult?.reference}
-          </p>
+          <p className="text-[12px]">Order: {orderData?.paymentResult?.reference}</p>
           <p className="text-[12px] text-orange-800">
             Amount: {formatCurrency(orderData?.totalPrice)}
           </p>
@@ -38,10 +35,7 @@ const OrderCard = ({ orderData }) => {
               ORDER UN-CONFIRMED
             </span>
           )}
-          <p className="text-md">
-            On: {new Date(orderData?.createdAt)?.toDateString()}
-          </p>
-        
+          <p className="text-md">On: {new Date(orderData?.createdAt)?.toDateString()}</p>
         </div>
         {orderData?.isPaid && (
           <Typography

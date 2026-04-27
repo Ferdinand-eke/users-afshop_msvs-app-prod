@@ -5,7 +5,16 @@ import { motion } from "framer-motion";
 import { useCallback, useEffect, useState } from "react";
 import Box from "@mui/material/Box";
 import Switch from "@mui/material/Switch";
-import { Button, FormControlLabel, Backdrop, Dialog, DialogTitle, DialogContent, DialogActions, CircularProgress } from "@mui/material";
+import {
+  Button,
+  FormControlLabel,
+  Backdrop,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  CircularProgress,
+} from "@mui/material";
 import FusePageSimple from "@fuse/core/FusePageSimple";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import FuseLoading from "@fuse/core/FuseLoading";
@@ -75,7 +84,6 @@ const schema = z.object({
     .min(5, "The adress must be at least 5 characters"),
 });
 
-
 /**
  * The Courses page.
  */
@@ -97,12 +105,7 @@ function ReviewReservation() {
   const routeParams = useParams();
   const { reservationId } = routeParams;
 
-  const {
-    data: singlereservation,
-    isLoading,
-    isError,
-  } = useGetUserSingleTrip(reservationId);
-
+  const { data: singlereservation, isLoading, isError } = useGetUserSingleTrip(reservationId);
 
   const methods = useForm({
     mode: "onChange",
@@ -127,10 +130,11 @@ function ReviewReservation() {
   const cancelReservation = useCancelUserReservation();
 
   const VITE_PAYSTACK_PUBLIC_KEY = import.meta.env.VITE_PAYSTACK_PUBLIC_KEY;
-  const amount = parseInt(
-    singlereservation?.data?.reservation?.totalPrice * 100
-  );
+  const amount = parseInt(singlereservation?.data?.reservation?.totalPrice * 100);
   const email = user?.email;
+  const vatRate =  parseInt(singlereservation?.data?.reservation?.totalPrice * 0.075)
+
+  console.log("VVAT RATE...>>", vatRate)
 
   const onSuccess = async (paystackResponse) => {
     //1. Verify payment from backend
@@ -147,6 +151,7 @@ function ReviewReservation() {
       phone: phone,
       address: address,
       amount: amount,
+      vat: vatRate,
       reservationToPay: singlereservation?.data?.reservation?.id,
       paymentResult: paystackResponse,
       reference: paystackResponse?.reference,
@@ -213,8 +218,6 @@ function ReviewReservation() {
     // toast.success("Address populated successfully!");
   };
 
-
-
   if (isLoading) {
     return <FuseLoading />;
   }
@@ -227,9 +230,7 @@ function ReviewReservation() {
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
         <ClienttErrorPage
-          message={
-            " Error occurred while retriving your reservation for onward processing"
-          }
+          message={" Error occurred while retriving your reservation for onward processing"}
         />
       </motion.div>
     );
@@ -285,14 +286,15 @@ function ReviewReservation() {
                         transition={{ duration: 0.5 }}
                         className="bg-white rounded-2xl shadow-lg mb-6 overflow-hidden"
                         style={{
-                          border: '2px solid rgba(234, 88, 12, 0.1)'
+                          border: "2px solid rgba(234, 88, 12, 0.1)",
                         }}
                       >
                         {/* Header with Gradient */}
                         <div
                           className="p-4 sm:p-6"
                           style={{
-                            background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.05) 100%)'
+                            background:
+                              "linear-gradient(135deg, rgba(249, 115, 22, 0.08) 0%, rgba(234, 88, 12, 0.05) 100%)",
                           }}
                         >
                           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
@@ -300,11 +302,21 @@ function ReviewReservation() {
                               <div
                                 className="w-12 h-12 rounded-xl flex items-center justify-center flex-shrink-0"
                                 style={{
-                                  background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+                                  background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                                 }}
                               >
-                                <svg className="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                <svg
+                                  className="w-6 h-6 text-white"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                  />
                                 </svg>
                               </div>
                               <div>
@@ -320,13 +332,28 @@ function ReviewReservation() {
                               onClick={() => setAddressModalOpen(true)}
                               className="flex items-center justify-center gap-2 px-4 py-2 rounded-lg transition-all hover:shadow-md text-xs sm:text-sm font-semibold w-full sm:w-auto"
                               style={{
-                                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                                color: 'white'
+                                background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                                color: "white",
                               }}
                             >
-                              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                              <svg
+                                className="w-4 h-4"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                />
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                />
                               </svg>
                               Use Saved Address
                             </button>
@@ -342,13 +369,24 @@ function ReviewReservation() {
                               animate={{ opacity: 1 }}
                               className="p-4 rounded-xl mb-4"
                               style={{
-                                background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)',
-                                border: '1px solid rgba(34, 197, 94, 0.2)'
+                                background:
+                                  "linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)",
+                                border: "1px solid rgba(34, 197, 94, 0.2)",
                               }}
                             >
                               <div className="flex items-start gap-3">
-                                <svg className="w-5 h-5 text-green-600 mt-1 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                                <svg
+                                  className="w-5 h-5 text-green-600 mt-1 flex-shrink-0"
+                                  fill="none"
+                                  viewBox="0 0 24 24"
+                                  stroke="currentColor"
+                                >
+                                  <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                                  />
                                 </svg>
                                 <div className="flex-1">
                                   {name && <p className="font-semibold text-gray-800">{name}</p>}
@@ -378,20 +416,30 @@ function ReviewReservation() {
                                 helperText={errors?.name?.message}
                                 InputProps={{
                                   startAdornment: (
-                                    <svg className="w-5 h-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                                    <svg
+                                      className="w-5 h-5 text-gray-400 mr-2"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
+                                      />
                                     </svg>
-                                  )
+                                  ),
                                 }}
                                 sx={{
-                                  '& .MuiOutlinedInput-root': {
-                                    '&:hover fieldset': {
-                                      borderColor: '#f97316'
+                                  "& .MuiOutlinedInput-root": {
+                                    "&:hover fieldset": {
+                                      borderColor: "#f97316",
                                     },
-                                    '&.Mui-focused fieldset': {
-                                      borderColor: '#ea580c'
-                                    }
-                                  }
+                                    "&.Mui-focused fieldset": {
+                                      borderColor: "#ea580c",
+                                    },
+                                  },
                                 }}
                               />
                             )}
@@ -413,20 +461,30 @@ function ReviewReservation() {
                                 helperText={errors?.phone?.message}
                                 InputProps={{
                                   startAdornment: (
-                                    <svg className="w-5 h-5 text-gray-400 mr-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                                    <svg
+                                      className="w-5 h-5 text-gray-400 mr-2"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"
+                                      />
                                     </svg>
-                                  )
+                                  ),
                                 }}
                                 sx={{
-                                  '& .MuiOutlinedInput-root': {
-                                    '&:hover fieldset': {
-                                      borderColor: '#f97316'
+                                  "& .MuiOutlinedInput-root": {
+                                    "&:hover fieldset": {
+                                      borderColor: "#f97316",
                                     },
-                                    '&.Mui-focused fieldset': {
-                                      borderColor: '#ea580c'
-                                    }
-                                  }
+                                    "&.Mui-focused fieldset": {
+                                      borderColor: "#ea580c",
+                                    },
+                                  },
                                 }}
                               />
                             )}
@@ -447,24 +505,42 @@ function ReviewReservation() {
                                 multiline
                                 rows={3}
                                 error={!!errors.address}
-                                helperText={errors?.address?.message || "Include street, city, state for verification"}
+                                helperText={
+                                  errors?.address?.message ||
+                                  "Include street, city, state for verification"
+                                }
                                 InputProps={{
                                   startAdornment: (
-                                    <svg className="w-5 h-5 text-gray-400 mr-2 mt-2" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                                    <svg
+                                      className="w-5 h-5 text-gray-400 mr-2 mt-2"
+                                      fill="none"
+                                      viewBox="0 0 24 24"
+                                      stroke="currentColor"
+                                    >
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"
+                                      />
+                                      <path
+                                        strokeLinecap="round"
+                                        strokeLinejoin="round"
+                                        strokeWidth={2}
+                                        d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"
+                                      />
                                     </svg>
-                                  )
+                                  ),
                                 }}
                                 sx={{
-                                  '& .MuiOutlinedInput-root': {
-                                    '&:hover fieldset': {
-                                      borderColor: '#f97316'
+                                  "& .MuiOutlinedInput-root": {
+                                    "&:hover fieldset": {
+                                      borderColor: "#f97316",
                                     },
-                                    '&.Mui-focused fieldset': {
-                                      borderColor: '#ea580c'
-                                    }
-                                  }
+                                    "&.Mui-focused fieldset": {
+                                      borderColor: "#ea580c",
+                                    },
+                                  },
                                 }}
                               />
                             )}
@@ -474,15 +550,27 @@ function ReviewReservation() {
                           <div
                             className="p-4 rounded-xl flex items-start gap-3"
                             style={{
-                              background: 'rgba(59, 130, 246, 0.05)',
-                              border: '1px solid rgba(59, 130, 246, 0.2)'
+                              background: "rgba(59, 130, 246, 0.05)",
+                              border: "1px solid rgba(59, 130, 246, 0.2)",
                             }}
                           >
-                            <svg className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <svg
+                              className="w-5 h-5 text-blue-600 mt-0.5 flex-shrink-0"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
                             </svg>
                             <p className="text-sm text-gray-700">
-                              Your information is securely stored and will only be used for booking confirmation and communication purposes. We comply with data protection regulations.
+                              Your information is securely stored and will only be used for booking
+                              confirmation and communication purposes. We comply with data
+                              protection regulations.
                             </p>
                           </div>
                         </div>
@@ -504,94 +592,79 @@ function ReviewReservation() {
                   {/* Terms & Conditions */}
                   <div className="bg-white p-4 rounded-lg shadow-md mb-4">
                     <div className="border-b pb-2 mb-2">
-                      <h2 className="text-lg font-semibold">
-                        3. TERMS & CONDITIONS
-                      </h2>
+                      <h2 className="text-lg font-semibold">3. TERMS & CONDITIONS</h2>
                     </div>
 
-                    <div className="mb-4 max-h-[480px] overflow-y-auto border border-gray-200 rounded p-3"
-                      style={{ lineHeight: '1.6' }}>
+                    <div
+                      className="mb-4 max-h-[480px] overflow-y-auto border border-gray-200 rounded p-3"
+                      style={{ lineHeight: "1.6" }}
+                    >
                       <div className="flex items-center mb-2"></div>
                       <div className="bg-gray-100 p-2 rounded-lg pb-4">
                         <p className="text-blue-500 font-semibold">
-                          Terms and condition on booking a reservation on
-                          Africanshops.
+                          Terms and condition on booking a reservation on Africanshops.
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
 
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                         <p className="text-sm">
-                          This may be because: 1) Your order is below the
-                          minimum purchase amount of 2,000 naira or above the
-                          maximum purchase amount of 250,000 naira; or 2) Cash
-                          on delivery is not available for your delivery address
-                          or the pick-up station selected; or 3) You have had
-                          multiple failed delivery attempts or cancelled orders;
-                          or 4) the number you are using to place the order is a
+                          This may be because: 1) Your order is below the minimum purchase amount of
+                          2,000 naira or above the maximum purchase amount of 250,000 naira; or 2)
+                          Cash on delivery is not available for your delivery address or the pick-up
+                          station selected; or 3) You have had multiple failed delivery attempts or
+                          cancelled orders; or 4) the number you are using to place the order is a
                           number that has a restriction
                         </p>
                       </div>
-                      <br/>
-                       <br/>
-                        <br/>
+                      <br />
+                      <br />
+                      <br />
                     </div>
                   </div>
                 </div>
@@ -606,26 +679,34 @@ function ReviewReservation() {
                   transition={{ duration: 0.5, delay: 0.2 }}
                   className="bg-white rounded-2xl shadow-2xl overflow-hidden"
                   style={{
-                    border: '2px solid rgba(234, 88, 12, 0.15)'
+                    border: "2px solid rgba(234, 88, 12, 0.15)",
                   }}
                 >
                   {/* Header with Gradient */}
                   <div
                     className="p-4 sm:p-6"
                     style={{
-                      background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)'
+                      background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
                     }}
                   >
                     <div className="flex items-center gap-3">
                       <div className="w-10 h-10 sm:w-12 sm:h-12 bg-white/20 backdrop-blur-sm rounded-xl flex items-center justify-center flex-shrink-0">
-                        <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01" />
+                        <svg
+                          className="w-5 h-5 sm:w-6 sm:h-6 text-white"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"
+                          />
                         </svg>
                       </div>
                       <div>
-                        <h2 className="text-lg sm:text-xl font-bold text-white">
-                          Booking Summary
-                        </h2>
+                        <h2 className="text-lg sm:text-xl font-bold text-white">Booking Summary</h2>
                         <p className="text-xs sm:text-sm text-white/80">
                           Review your reservation details
                         </p>
@@ -639,12 +720,23 @@ function ReviewReservation() {
                     <div
                       className="relative h-40 rounded-xl overflow-hidden"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)'
+                        background:
+                          "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)",
                       }}
                     >
                       <div className="absolute inset-0 flex items-center justify-center">
-                        <svg className="w-20 h-20 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        <svg
+                          className="w-20 h-20 text-orange-400"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={1.5}
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
+                          />
                         </svg>
                       </div>
                     </div>
@@ -654,13 +746,24 @@ function ReviewReservation() {
                       <div
                         className="p-3 sm:p-4 rounded-xl"
                         style={{
-                          background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)',
-                          border: '1px solid rgba(34, 197, 94, 0.2)'
+                          background:
+                            "linear-gradient(135deg, rgba(34, 197, 94, 0.08) 0%, rgba(22, 163, 74, 0.05) 100%)",
+                          border: "1px solid rgba(34, 197, 94, 0.2)",
                         }}
                       >
                         <div className="flex items-center gap-2 mb-2">
-                          <svg className="w-4 h-4 text-green-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                          <svg
+                            className="w-4 h-4 text-green-600 flex-shrink-0"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"
+                            />
                           </svg>
                           <span className="text-xs font-semibold text-gray-600">Check In</span>
                         </div>
@@ -672,13 +775,24 @@ function ReviewReservation() {
                       <div
                         className="p-3 sm:p-4 rounded-xl"
                         style={{
-                          background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.05) 100%)',
-                          border: '1px solid rgba(239, 68, 68, 0.2)'
+                          background:
+                            "linear-gradient(135deg, rgba(239, 68, 68, 0.08) 0%, rgba(220, 38, 38, 0.05) 100%)",
+                          border: "1px solid rgba(239, 68, 68, 0.2)",
                         }}
                       >
                         <div className="flex items-center gap-2 mb-2">
-                          <svg className="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
+                          <svg
+                            className="w-4 h-4 text-red-600 flex-shrink-0"
+                            fill="none"
+                            viewBox="0 0 24 24"
+                            stroke="currentColor"
+                          >
+                            <path
+                              strokeLinecap="round"
+                              strokeLinejoin="round"
+                              strokeWidth={2}
+                              d="M13 7l5 5m0 0l-5 5m5-5H6"
+                            />
                           </svg>
                           <span className="text-xs font-semibold text-gray-600">Check Out</span>
                         </div>
@@ -692,8 +806,9 @@ function ReviewReservation() {
                     <div
                       className="p-4 rounded-xl space-y-3"
                       style={{
-                        background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.02) 100%)',
-                        border: '1px solid rgba(234, 88, 12, 0.15)'
+                        background:
+                          "linear-gradient(135deg, rgba(249, 115, 22, 0.05) 0%, rgba(234, 88, 12, 0.02) 100%)",
+                        border: "1px solid rgba(234, 88, 12, 0.15)",
                       }}
                     >
                       <div className="flex justify-between text-sm">
@@ -708,8 +823,18 @@ function ReviewReservation() {
                         <div className="flex items-center gap-2">
                           <span className="text-gray-600">VAT (7.5%)</span>
                           <div className="group relative">
-                            <svg className="w-4 h-4 text-gray-400 cursor-help" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            <svg
+                              className="w-4 h-4 text-gray-400 cursor-help"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke="currentColor"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                strokeWidth={2}
+                                d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                              />
                             </svg>
                             <div className="absolute hidden group-hover:block bottom-full left-1/2 transform -translate-x-1/2 mb-2 px-3 py-2 bg-gray-800 text-white text-xs rounded-lg whitespace-nowrap z-10">
                               Required for tax compliance
@@ -717,7 +842,8 @@ function ReviewReservation() {
                           </div>
                         </div>
                         <span className="font-semibold text-gray-800">
-                          ₦ {formatCurrency(singlereservation?.data?.reservation?.totalPrice * 0.075)}
+                          ₦{" "}
+                          {formatCurrency(singlereservation?.data?.reservation?.totalPrice * 0.075)}
                         </span>
                       </div>
 
@@ -730,17 +856,18 @@ function ReviewReservation() {
                           <span
                             className="text-2xl font-extrabold"
                             style={{
-                              background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                              WebkitBackgroundClip: 'text',
-                              WebkitTextFillColor: 'transparent',
-                              backgroundClip: 'text'
+                              background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                              WebkitBackgroundClip: "text",
+                              WebkitTextFillColor: "transparent",
+                              backgroundClip: "text",
                             }}
                           >
-                            ₦ {formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)}
+                            ₦{" "}
+                            {formatCurrency(
+                              singlereservation?.data?.reservation?.totalPrice * 1.075,
+                            )}
                           </span>
-                          <p className="text-xs text-gray-500 mt-1">
-                            (incl. VAT)
-                          </p>
+                          <p className="text-xs text-gray-500 mt-1">(incl. VAT)</p>
                         </div>
                       </div>
                     </div>
@@ -755,9 +882,10 @@ function ReviewReservation() {
                       <button
                         className="px-6 py-3 rounded-xl font-semibold text-sm transition-all hover:shadow-md"
                         style={{
-                          background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(234, 88, 12, 0.1) 100%)',
-                          color: '#ea580c',
-                          border: '2px solid rgba(234, 88, 12, 0.2)'
+                          background:
+                            "linear-gradient(135deg, rgba(249, 115, 22, 0.15) 0%, rgba(234, 88, 12, 0.1) 100%)",
+                          color: "#ea580c",
+                          border: "2px solid rgba(234, 88, 12, 0.2)",
                         }}
                       >
                         APPLY
@@ -781,34 +909,41 @@ function ReviewReservation() {
                         <PaystackButton
                           text={`🔒 Pay ₦${formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)}`}
                           className={`w-full py-3 sm:py-4 rounded-xl font-bold text-sm sm:text-base md:text-lg transition-all duration-300 ${
-                            (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
-                              ? ''
-                              : 'paystack-button-enabled'
+                            !isValid || _.isEmpty(dirtyFields) || !name || !phone || !address
+                              ? ""
+                              : "paystack-button-enabled"
                           }`}
                           style={{
-                            background: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
-                              ? 'linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)'
-                              : 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                            color: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
-                              ? '#9ca3af'
-                              : 'white',
-                            border: 'none',
-                            cursor: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address) ? 'not-allowed' : 'pointer',
-                            boxShadow: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
-                              ? 'none'
-                              : '0 4px 15px rgba(234, 88, 12, 0.4)',
-                            filter: (!isValid || _.isEmpty(dirtyFields) || !name || !phone || !address)
-                              ? 'grayscale(20%)'
-                              : 'none',
-                            whiteSpace: 'nowrap',
-                            overflow: 'hidden',
-                            textOverflow: 'ellipsis'
+                            background:
+                              !isValid || _.isEmpty(dirtyFields) || !name || !phone || !address
+                                ? "linear-gradient(135deg, #fed7aa 0%, #fdba74 100%)"
+                                : "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                            color:
+                              !isValid || _.isEmpty(dirtyFields) || !name || !phone || !address
+                                ? "#9ca3af"
+                                : "white",
+                            border: "none",
+                            cursor:
+                              !isValid || _.isEmpty(dirtyFields) || !name || !phone || !address
+                                ? "not-allowed"
+                                : "pointer",
+                            boxShadow:
+                              !isValid || _.isEmpty(dirtyFields) || !name || !phone || !address
+                                ? "none"
+                                : "0 4px 15px rgba(234, 88, 12, 0.4)",
+                            filter:
+                              !isValid || _.isEmpty(dirtyFields) || !name || !phone || !address
+                                ? "grayscale(20%)"
+                                : "none",
+                            whiteSpace: "nowrap",
+                            overflow: "hidden",
+                            textOverflow: "ellipsis",
                           }}
-                          reference={"BK" + generateClientUID() + "REF"}
+                          // reference={"BK" + generateClientUID() + "REF"}
+                          reference={"BK" + `${reservationId}`}
                           email={email}
-                          amount={
-                            singlereservation?.data?.reservation?.totalPrice * 1.075 * 100
-                          }
+                          amount={singlereservation?.data?.reservation?.totalPrice * 1.075 * 100}
+                          vat={vatRate}
                           publicKey={VITE_PAYSTACK_PUBLIC_KEY}
                           onSuccess={(reference) => onSuccess(reference)}
                           onClose={() => onClose()}
@@ -826,12 +961,23 @@ function ReviewReservation() {
                             <div
                               className="inline-flex items-center gap-2 px-4 py-2 rounded-lg"
                               style={{
-                                background: 'linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%)',
-                                border: '1px solid rgba(239, 68, 68, 0.2)'
+                                background:
+                                  "linear-gradient(135deg, rgba(239, 68, 68, 0.1) 0%, rgba(220, 38, 38, 0.05) 100%)",
+                                border: "1px solid rgba(239, 68, 68, 0.2)",
                               }}
                             >
-                              <svg className="w-4 h-4 text-red-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                              <svg
+                                className="w-4 h-4 text-red-600 flex-shrink-0"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                              >
+                                <path
+                                  strokeLinecap="round"
+                                  strokeLinejoin="round"
+                                  strokeWidth={2}
+                                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                                />
                               </svg>
                               <p className="text-xs text-red-700 font-semibold">
                                 Please fill in all customer information above to proceed
@@ -849,19 +995,33 @@ function ReviewReservation() {
                         animate={{ scale: 1, opacity: 1 }}
                         className="p-4 rounded-xl flex items-center gap-3"
                         style={{
-                          background: 'linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.1) 100%)',
-                          border: '2px solid rgba(34, 197, 94, 0.3)'
+                          background:
+                            "linear-gradient(135deg, rgba(34, 197, 94, 0.15) 0%, rgba(22, 163, 74, 0.1) 100%)",
+                          border: "2px solid rgba(34, 197, 94, 0.3)",
                         }}
                       >
-                        <svg className="w-8 h-8 text-green-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <svg
+                          className="w-8 h-8 text-green-600 flex-shrink-0"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                          />
                         </svg>
                         <div>
-                          <p className="font-bold text-green-800 text-sm">
-                            Payment Successful!
-                          </p>
+                          <p className="font-bold text-green-800 text-sm">Payment Successful!</p>
                           <p className="text-xs text-green-700 mt-1">
-                            ₦{formatCurrency(singlereservation?.data?.reservation?.totalPrice * 1.075)} paid. Track your trip below.
+                            ₦
+                            {formatCurrency(
+                              // singlereservation?.data?.reservation?.totalPrice * 1.075,
+                              vatRate
+                            )}{" "}
+                            paid. Track your trip below.
                           </p>
                         </div>
                       </motion.div>
@@ -870,15 +1030,35 @@ function ReviewReservation() {
                     {/* Security Badges */}
                     <div className="flex items-center justify-center gap-4 pt-4 border-t border-gray-200">
                       <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                        <svg
+                          className="w-4 h-4 text-green-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
                         </svg>
                         <span className="text-xs text-gray-600 font-medium">Secure Payment</span>
                       </div>
                       <div className="w-px h-4 bg-gray-300" />
                       <div className="flex items-center gap-2">
-                        <svg className="w-4 h-4 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                        <svg
+                          className="w-4 h-4 text-blue-600"
+                          fill="none"
+                          viewBox="0 0 24 24"
+                          stroke="currentColor"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                          />
                         </svg>
                         <span className="text-xs text-gray-600 font-medium">Protected</span>
                       </div>
@@ -916,8 +1096,8 @@ function ReviewReservation() {
           <Backdrop
             sx={{
               zIndex: (theme) => theme.zIndex.modal + 1000,
-              backgroundColor: 'rgba(0, 0, 0, 0.75)',
-              backdropFilter: 'blur(8px)',
+              backgroundColor: "rgba(0, 0, 0, 0.75)",
+              backdropFilter: "blur(8px)",
             }}
             open={verifyPayment?.isLoading || false}
           >
@@ -1025,8 +1205,18 @@ function ReviewReservation() {
                 className="flex items-center gap-4 mt-4"
               >
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm">
-                  <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  <svg
+                    className="w-5 h-5 text-green-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                    />
                   </svg>
                   <Typography variant="caption" className="text-white font-semibold">
                     Secure
@@ -1034,8 +1224,18 @@ function ReviewReservation() {
                 </div>
 
                 <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm">
-                  <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  <svg
+                    className="w-5 h-5 text-blue-400"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                    />
                   </svg>
                   <Typography variant="caption" className="text-white font-semibold">
                     Protected
@@ -1058,8 +1258,18 @@ function ReviewReservation() {
                     backdropFilter: "blur(10px)",
                   }}
                 >
-                  <svg className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                  <svg
+                    className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                    />
                   </svg>
                   <div>
                     <Typography
@@ -1097,28 +1307,33 @@ function ReviewReservation() {
             fullWidth
             PaperProps={{
               sx: {
-                borderRadius: '16px',
-                overflow: 'hidden'
-              }
+                borderRadius: "16px",
+                overflow: "hidden",
+              },
             }}
           >
             <DialogTitle
               sx={{
-                background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                color: 'white',
-                padding: '24px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2
+                background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                color: "white",
+                padding: "24px",
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
               }}
             >
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
               </svg>
               <span className="font-bold text-xl">Complete Your Reservation</span>
             </DialogTitle>
 
-            <DialogContent sx={{ padding: '32px 24px' }}>
+            <DialogContent sx={{ padding: "32px 24px" }}>
               <div className="space-y-4">
                 <Typography variant="h6" className="font-bold text-gray-800">
                   Don't miss out on your booking!
@@ -1130,8 +1345,18 @@ function ReviewReservation() {
 
                 <div className="space-y-3 ml-4">
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
                       <strong>Losing this property</strong> - Other guests are actively booking
@@ -1139,8 +1364,18 @@ function ReviewReservation() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
                       <strong>Price increases</strong> - Rates may change based on demand
@@ -1148,11 +1383,22 @@ function ReviewReservation() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
-                      <strong>Cancellation of reservation</strong> - Unpaid bookings expire after 30 minutes
+                      <strong>Cancellation of reservation</strong> - Unpaid bookings expire after 30
+                      minutes
                     </Typography>
                   </div>
                 </div>
@@ -1160,13 +1406,24 @@ function ReviewReservation() {
                 <div
                   className="p-4 rounded-xl mt-6"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)',
-                    border: '2px solid rgba(234, 88, 12, 0.2)'
+                    background:
+                      "linear-gradient(135deg, rgba(249, 115, 22, 0.1) 0%, rgba(234, 88, 12, 0.05) 100%)",
+                    border: "2px solid rgba(234, 88, 12, 0.2)",
                   }}
                 >
                   <div className="flex items-center gap-3">
-                    <svg className="w-6 h-6 text-orange-600 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                    <svg
+                      className="w-6 h-6 text-orange-600 flex-shrink-0"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
+                      />
                     </svg>
                     <div>
                       <Typography variant="body2" className="font-bold text-gray-800">
@@ -1183,9 +1440,9 @@ function ReviewReservation() {
 
             <DialogActions
               sx={{
-                padding: '16px 24px 24px',
+                padding: "16px 24px 24px",
                 gap: 2,
-                flexDirection: { xs: 'column', sm: 'row' }
+                flexDirection: { xs: "column", sm: "row" },
               }}
             >
               <Button
@@ -1193,15 +1450,15 @@ function ReviewReservation() {
                 variant="outlined"
                 fullWidth
                 sx={{
-                  borderColor: '#9ca3af',
-                  color: '#6b7280',
-                  '&:hover': {
-                    borderColor: '#6b7280',
-                    backgroundColor: '#f3f4f6'
+                  borderColor: "#9ca3af",
+                  color: "#6b7280",
+                  "&:hover": {
+                    borderColor: "#6b7280",
+                    backgroundColor: "#f3f4f6",
                   },
-                  textTransform: 'none',
+                  textTransform: "none",
                   fontWeight: 600,
-                  padding: '10px 24px'
+                  padding: "10px 24px",
                 }}
               >
                 Leave Without Payment
@@ -1215,15 +1472,15 @@ function ReviewReservation() {
                 variant="contained"
                 fullWidth
                 sx={{
-                  background: 'linear-gradient(135deg, #f97316 0%, #ea580c 100%)',
-                  color: 'white',
-                  '&:hover': {
-                    background: 'linear-gradient(135deg, #ea580c 0%, #c2410c 100%)',
-                    boxShadow: '0 8px 20px rgba(234, 88, 12, 0.4)'
+                  background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+                  color: "white",
+                  "&:hover": {
+                    background: "linear-gradient(135deg, #ea580c 0%, #c2410c 100%)",
+                    boxShadow: "0 8px 20px rgba(234, 88, 12, 0.4)",
                   },
-                  textTransform: 'none',
-                  fontWeight: 'bold',
-                  padding: '10px 24px'
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  padding: "10px 24px",
                 }}
               >
                 Complete Payment Now
@@ -1239,28 +1496,33 @@ function ReviewReservation() {
             fullWidth
             PaperProps={{
               sx: {
-                borderRadius: '16px',
-                overflow: 'hidden'
-              }
+                borderRadius: "16px",
+                overflow: "hidden",
+              },
             }}
           >
             <DialogTitle
               sx={{
-                background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-                color: 'white',
-                padding: '24px',
-                display: 'flex',
-                alignItems: 'center',
-                gap: 2
+                background: "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
+                color: "white",
+                padding: "24px",
+                display: "flex",
+                alignItems: "center",
+                gap: 2,
               }}
             >
               <svg className="w-8 h-8" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                />
               </svg>
               <span className="font-bold text-xl">Cancel Reservation?</span>
             </DialogTitle>
 
-            <DialogContent sx={{ padding: '32px 24px' }}>
+            <DialogContent sx={{ padding: "32px 24px" }}>
               <div className="space-y-4">
                 <Typography variant="h6" className="font-bold text-gray-800">
                   Are you sure you want to cancel this reservation?
@@ -1272,8 +1534,18 @@ function ReviewReservation() {
 
                 <div className="space-y-3 ml-4">
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
                       <strong>Your reservation will be permanently cancelled</strong>
@@ -1281,17 +1553,38 @@ function ReviewReservation() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
-                      <strong>This property may not be available later</strong> - Other guests are actively booking
+                      <strong>This property may not be available later</strong> - Other guests are
+                      actively booking
                     </Typography>
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
                       <strong>Prices may increase</strong> if you try to book again
@@ -1299,8 +1592,18 @@ function ReviewReservation() {
                   </div>
 
                   <div className="flex items-start gap-3">
-                    <svg className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    <svg
+                      className="w-5 h-5 text-red-600 flex-shrink-0 mt-0.5"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                      stroke="currentColor"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M6 18L18 6M6 6l12 12"
+                      />
                     </svg>
                     <Typography variant="body2" className="text-gray-600">
                       <strong>Cancellation is immediate and cannot be undone</strong>
@@ -1312,8 +1615,9 @@ function ReviewReservation() {
                 <div
                   className="p-4 rounded-xl mt-6"
                   style={{
-                    background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.05) 100%)',
-                    border: '2px solid rgba(220, 38, 38, 0.2)'
+                    background:
+                      "linear-gradient(135deg, rgba(220, 38, 38, 0.1) 0%, rgba(185, 28, 28, 0.05) 100%)",
+                    border: "2px solid rgba(220, 38, 38, 0.2)",
                   }}
                 >
                   <Typography variant="body2" className="font-bold text-gray-800 mb-2">
@@ -1344,15 +1648,26 @@ function ReviewReservation() {
                 <div
                   className="p-3 rounded-lg flex items-start gap-3"
                   style={{
-                    background: 'rgba(59, 130, 246, 0.05)',
-                    border: '1px solid rgba(59, 130, 246, 0.2)'
+                    background: "rgba(59, 130, 246, 0.05)",
+                    border: "1px solid rgba(59, 130, 246, 0.2)",
                   }}
                 >
-                  <svg className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  <svg
+                    className="w-5 h-5 text-blue-600 flex-shrink-0 mt-0.5"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
+                    />
                   </svg>
                   <Typography variant="caption" className="text-gray-700">
-                    <strong>Note:</strong> If you're experiencing issues with payment, please contact our support team instead of cancelling.
+                    <strong>Note:</strong> If you're experiencing issues with payment, please
+                    contact our support team instead of cancelling.
                   </Typography>
                 </div>
               </div>
@@ -1360,9 +1675,9 @@ function ReviewReservation() {
 
             <DialogActions
               sx={{
-                padding: '16px 24px 24px',
+                padding: "16px 24px 24px",
                 gap: 2,
-                flexDirection: { xs: 'column', sm: 'row' }
+                flexDirection: { xs: "column", sm: "row" },
               }}
             >
               <Button
@@ -1370,15 +1685,15 @@ function ReviewReservation() {
                 variant="outlined"
                 fullWidth
                 sx={{
-                  borderColor: '#9ca3af',
-                  color: '#6b7280',
-                  '&:hover': {
-                    borderColor: '#6b7280',
-                    backgroundColor: '#f3f4f6'
+                  borderColor: "#9ca3af",
+                  color: "#6b7280",
+                  "&:hover": {
+                    borderColor: "#6b7280",
+                    backgroundColor: "#f3f4f6",
                   },
-                  textTransform: 'none',
+                  textTransform: "none",
                   fontWeight: 600,
-                  padding: '10px 24px'
+                  padding: "10px 24px",
                 }}
               >
                 Keep My Reservation
@@ -1390,31 +1705,43 @@ function ReviewReservation() {
                 fullWidth
                 disabled={cancelReservation.isLoading}
                 sx={{
-                  background: 'linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)',
-                  color: 'white',
-                  '&:hover': {
-                    background: 'linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)',
-                    boxShadow: '0 8px 20px rgba(220, 38, 38, 0.4)'
+                  background: "linear-gradient(135deg, #dc2626 0%, #b91c1c 100%)",
+                  color: "white",
+                  "&:hover": {
+                    background: "linear-gradient(135deg, #b91c1c 0%, #991b1b 100%)",
+                    boxShadow: "0 8px 20px rgba(220, 38, 38, 0.4)",
                   },
-                  '&:disabled': {
-                    background: 'linear-gradient(135deg, rgba(220, 38, 38, 0.5) 0%, rgba(185, 28, 28, 0.5) 100%)',
-                    color: 'rgba(255, 255, 255, 0.7)'
+                  "&:disabled": {
+                    background:
+                      "linear-gradient(135deg, rgba(220, 38, 38, 0.5) 0%, rgba(185, 28, 28, 0.5) 100%)",
+                    color: "rgba(255, 255, 255, 0.7)",
                   },
-                  textTransform: 'none',
-                  fontWeight: 'bold',
-                  padding: '10px 24px'
+                  textTransform: "none",
+                  fontWeight: "bold",
+                  padding: "10px 24px",
                 }}
               >
                 {cancelReservation.isLoading ? (
                   <div className="flex items-center gap-2">
                     <svg className="animate-spin h-5 w-5" fill="none" viewBox="0 0 24 24">
-                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
-                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z" />
+                      <circle
+                        className="opacity-25"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                      />
                     </svg>
                     Cancelling...
                   </div>
                 ) : (
-                  'Yes, Cancel Reservation'
+                  "Yes, Cancel Reservation"
                 )}
               </Button>
             </DialogActions>

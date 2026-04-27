@@ -6,11 +6,7 @@ import Popover from "@mui/material/Popover";
 import Typography from "@mui/material/Typography";
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import {
-  changeLanguage,
-  selectCurrentLanguage,
-  selectLanguages,
-} from "app/store/i18nSlice";
+import { changeLanguage, selectCurrentLanguage, selectLanguages } from "app/store/i18nSlice";
 import { useAppDispatch, useAppSelector } from "app/store/hooks";
 import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
@@ -44,10 +40,7 @@ function LanHubSwitcher() {
           alt={currentLanguage.title}
         /> */}
 
-        <Typography
-          className="mx-4 font-semibold text-sm uppercase"
-          color="text.secondary"
-        >
+        <Typography className="mx-4 font-semibold text-sm uppercase" color="text.secondary">
           services
         </Typography>
       </Button>
@@ -68,7 +61,6 @@ function LanHubSwitcher() {
           paper: "py-8",
         }}
       >
-
         <MenuItem component={NavLinkAdapter} to="/bookings/listings">
           <ListItemIcon className="min-w-40">
             <FuseSvgIcon>heroicons-outline:book-open</FuseSvgIcon>
@@ -78,7 +70,6 @@ function LanHubSwitcher() {
 
         <MenuItem component={NavLinkAdapter} to="/realestate/listings">
           <ListItemIcon className="min-w-40">
-           
             <FuseSvgIcon>heroicons-outline:briefcase</FuseSvgIcon>
           </ListItemIcon>
           <ListItemText primary={`Real Estate`} />
@@ -89,8 +80,6 @@ function LanHubSwitcher() {
           </ListItemIcon>
           <ListItemText primary={`marketplace`} />
         </MenuItem>
-
-        
 
         <MenuItem component={NavLinkAdapter} to="/foodmarts/listings">
           <ListItemIcon className="min-w-40">

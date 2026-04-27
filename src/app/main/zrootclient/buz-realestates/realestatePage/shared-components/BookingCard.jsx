@@ -1,8 +1,8 @@
-import { useState } from 'react';
-import { Typography, IconButton, Button } from '@mui/material';
-import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from '@mui/icons-material';
-import NavLinkAdapter from '@fuse/core/NavLinkAdapter';
-import { formatCurrency } from 'src/app/main/vendors-shop/PosUtils';
+import { useState } from "react";
+import { Typography, IconButton, Button } from "@mui/material";
+import { FavoriteBorder, Favorite, NavigateBefore, NavigateNext } from "@mui/icons-material";
+import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
+import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
 /**
  * BookingCard Component
@@ -18,9 +18,9 @@ function BookingCard({
   roomCount,
   rating = 0,
   reviewCount = 0,
-  duration = '3 - 8 hours',
-  host = 'Captain',
-  leaseTerm
+  duration = "3 - 8 hours",
+  host = "Captain",
+  leaseTerm,
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [isFavorite, setIsFavorite] = useState(false);
@@ -28,17 +28,13 @@ function BookingCard({
   const handlePrevImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImageIndex((prev) =>
-      prev === 0 ? images.length - 1 : prev - 1
-    );
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
   };
 
   const handleNextImage = (e) => {
     e.preventDefault();
     e.stopPropagation();
-    setCurrentImageIndex((prev) =>
-      prev === images.length - 1 ? 0 : prev + 1
-    );
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
   };
 
   const toggleFavorite = (e) => {
@@ -55,20 +51,26 @@ function BookingCard({
 
     for (let i = 0; i < fullStars; i++) {
       stars.push(
-        <span key={`full-${i}`} className="text-black">★</span>
+        <span key={`full-${i}`} className="text-black">
+          ★
+        </span>,
       );
     }
 
     if (hasHalfStar) {
       stars.push(
-        <span key="half" className="text-black">⯨</span>
+        <span key="half" className="text-black">
+          ⯨
+        </span>,
       );
     }
 
     const emptyStars = 5 - Math.ceil(rating);
     for (let i = 0; i < emptyStars; i++) {
       stars.push(
-        <span key={`empty-${i}`} className="text-gray-300">★</span>
+        <span key={`empty-${i}`} className="text-gray-300">
+          ★
+        </span>,
       );
     }
 
@@ -136,9 +138,7 @@ function BookingCard({
                       setCurrentImageIndex(index);
                     }}
                     className={`w-6 h-6 rounded-full transition-all ${
-                      index === currentImageIndex
-                        ? 'bg-white w-6'
-                        : 'bg-white/60 hover:bg-white/80'
+                      index === currentImageIndex ? "bg-white w-6" : "bg-white/60 hover:bg-white/80"
                     }`}
                     aria-label={`Go to image ${index + 1}`}
                   />
@@ -182,15 +182,12 @@ function BookingCard({
               /{leaseTerm}
             </Typography>
           </div>
-          
 
           {/* Rating */}
           <div className="flex items-center gap-2">
-            <div className="flex text-xs">
-              {renderStars()}
-            </div>
+            <div className="flex text-xs">{renderStars()}</div>
             <Typography variant="body2" className="text-gray-600 text-sm">
-              ({reviewCount.toString().padStart(2, '0')})
+              ({reviewCount.toString().padStart(2, "0")})
             </Typography>
           </div>
         </div>
@@ -199,13 +196,13 @@ function BookingCard({
         {roomCount && (
           <Typography variant="body2" className="text-gray-600 mb-4">
             <i className="fas fa-door-open mr-2"></i>
-            {roomCount} {roomCount === 1 ? 'Room' : 'Rooms'}
+            {roomCount} {roomCount === 1 ? "Room" : "Rooms"}
           </Typography>
         )}
 
         {/* View More Button */}
         <Button
-         size="small"
+          size="small"
           component={NavLinkAdapter}
           to={`/realestate/listings/${slug}/view`}
           fullWidth

@@ -44,6 +44,7 @@ import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
  * Full-screen modal for viewing product images with integrated review/comment functionality
  */
 function ProductImageGalleryView({ open, onClose, images = [], productData = {} }) {
+  
   const user = useAppSelector(selectUser);
   const theme = useTheme();
   const isMobile = useMediaQuery(theme.breakpoints.down("md"));
@@ -201,9 +202,7 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
                   animate={{ opacity: 1, scale: isZoomed ? 1.5 : 1 }}
                   exit={{ opacity: 0, scale: 0.9 }}
                   transition={{ duration: 0.3 }}
-                  src={
-                    images[currentImageIndex]?.url || images[currentImageIndex]
-                  }
+                  src={images[currentImageIndex]?.url || images[currentImageIndex]}
                   alt={`Product image ${currentImageIndex + 1}`}
                   className={`${isMobile ? "max-h-full" : "h-full"} w-full object-contain rounded-2xl cursor-pointer`}
                   onClick={() => setIsZoomed(!isZoomed)}
@@ -418,17 +417,11 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
                 />
               )}
 
-              <Typography
-                variant={isMobile ? "h6" : "h5"}
-                className="font-bold text-gray-900 mb-2"
-              >
+              <Typography variant={isMobile ? "h6" : "h5"} className="font-bold text-gray-900 mb-2">
                 {productData?.name || "Product Details"}
               </Typography>
 
-              <Typography
-                variant={isMobile ? "body2" : "body1"}
-                className="text-gray-600 mb-3"
-              >
+              <Typography variant={isMobile ? "body2" : "body1"} className="text-gray-600 mb-3">
                 {productData?.shortDescription || "Share your thoughts about this product"}
               </Typography>
 
@@ -525,10 +518,7 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
 
                   {/* Rating Input */}
                   <div className="mb-3">
-                    <Typography
-                      variant="body2"
-                      className="text-gray-700 font-semibold mb-2"
-                    >
+                    <Typography variant="body2" className="text-gray-700 font-semibold mb-2">
                       Your Rating
                     </Typography>
                     <div className="flex items-center gap-3">
@@ -652,9 +642,7 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
                 </motion.div>
 
                 {/* Reviews/Comments List - Enhanced */}
-                <div
-                  className={`flex-1 overflow-y-auto ${isMobile ? "p-4" : "p-6"}`}
-                >
+                <div className={`flex-1 overflow-y-auto ${isMobile ? "p-4" : "p-6"}`}>
                   <div
                     className={`flex items-center justify-between ${isMobile ? "mb-3" : "mb-5"}`}
                   >
@@ -703,10 +691,7 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
                               >
                                 {review.author}
                               </Typography>
-                              <Typography
-                                variant="caption"
-                                className="text-gray-500"
-                              >
+                              <Typography variant="caption" className="text-gray-500">
                                 • {review.timeAgo}
                               </Typography>
                               {review.isAuthor && (
@@ -750,23 +735,15 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
                                 whileTap={{ scale: 0.95 }}
                                 className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"} font-semibold`}
                               >
-                                <ThumbUp
-                                  fontSize="small"
-                                  sx={{ fontSize: isMobile ? 14 : 16 }}
-                                />
-                                <span>
-                                  {review.likes > 0 ? review.likes : "Like"}
-                                </span>
+                                <ThumbUp fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
+                                <span>{review.likes > 0 ? review.likes : "Like"}</span>
                               </motion.button>
                               <motion.button
                                 whileHover={{ scale: 1.05 }}
                                 whileTap={{ scale: 0.95 }}
                                 className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"} font-semibold`}
                               >
-                                <Reply
-                                  fontSize="small"
-                                  sx={{ fontSize: isMobile ? 14 : 16 }}
-                                />
+                                <Reply fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
                                 <span>Reply</span>
                               </motion.button>
                             </div>
@@ -801,10 +778,7 @@ function ProductImageGalleryView({ open, onClose, images = [], productData = {} 
                                     >
                                       {reply.author}
                                     </Typography>
-                                    <Typography
-                                      variant="caption"
-                                      className="text-gray-500"
-                                    >
+                                    <Typography variant="caption" className="text-gray-500">
                                       • {reply.timeAgo}
                                     </Typography>
                                     {reply.isAuthor && (

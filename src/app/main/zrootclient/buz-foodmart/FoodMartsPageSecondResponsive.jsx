@@ -47,85 +47,84 @@ function FoodMartsPageSecondResponsive() {
     <FusePageSimple
       content={
         <>
+          <div className="h-screen flex flex-col">
+            {/* Top Bar */}
+            <div className="h-16 bg-gray-800 text-white flex items-center px-4">
+              <h1 className="text-xl font-bold">Top Bar</h1>
+            </div>
 
-<div className="h-screen flex flex-col">
-  {/* Top Bar */}
-  <div className="h-16 bg-gray-800 text-white flex items-center px-4">
-    <h1 className="text-xl font-bold">Top Bar</h1>
-  </div>
+            {/* Main Layout */}
+            <div className="flex flex-1 flex-col md:flex-row">
+              {/* Sidebar */}
+              <div className="w-full md:w-1/5 bg-white p-4 sticky top-16 h-screen overflow-y-auto">
+                <div className="text-2xl font-bold text-blue-600 mb-8">Categories</div>
+                <div className="mb-8">
+                  <h2 className="text-lg font-semibold mb-4">New Feeds</h2>
+                  <ul>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-newspaper text-blue-500 mr-2"></i>
+                      <span>Newsfeed</span>
+                    </li>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-award text-orange-500 mr-2"></i>
+                      <span>Badges</span>
+                    </li>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-compass text-yellow-500 mr-2"></i>
+                      <span>Explore Stories</span>
+                    </li>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-users text-red-500 mr-2"></i>
+                      <span>Popular Groups</span>
+                    </li>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-user text-blue-500 mr-2"></i>
+                      <span>Author Profile</span>
+                    </li>
+                  </ul>
+                </div>
+                <div>
+                  <h2 className="text-lg font-semibold mb-4">More Pages</h2>
+                  <ul>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-envelope text-blue-500 mr-2"></i>
+                      <span>Email Box</span>
+                      <span className="ml-auto bg-red-500 text-white rounded-full px-2 py-1 text-xs">
+                        584
+                      </span>
+                    </li>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-hotel text-blue-500 mr-2"></i>
+                      <span>Near Hotel</span>
+                    </li>
+                    <li className="flex items-center mb-4">
+                      <i className="fas fa-calendar-alt text-blue-500 mr-2"></i>
+                      <span>Latest Event</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-  {/* Main Layout */}
-  <div className="flex flex-1 flex-col md:flex-row">
-    {/* Sidebar */}
-    <div className="w-full md:w-1/5 bg-white p-4 sticky top-16 h-screen overflow-y-auto">
-      <div className="text-2xl font-bold text-blue-600 mb-8">Categories</div>
-      <div className="mb-8">
-        <h2 className="text-lg font-semibold mb-4">New Feeds</h2>
-        <ul>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-newspaper text-blue-500 mr-2"></i>
-            <span>Newsfeed</span>
-          </li>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-award text-orange-500 mr-2"></i>
-            <span>Badges</span>
-          </li>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-compass text-yellow-500 mr-2"></i>
-            <span>Explore Stories</span>
-          </li>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-users text-red-500 mr-2"></i>
-            <span>Popular Groups</span>
-          </li>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-user text-blue-500 mr-2"></i>
-            <span>Author Profile</span>
-          </li>
-        </ul>
-      </div>
-      <div>
-        <h2 className="text-lg font-semibold mb-4">More Pages</h2>
-        <ul>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-envelope text-blue-500 mr-2"></i>
-            <span>Email Box</span>
-            <span className="ml-auto bg-red-500 text-white rounded-full px-2 py-1 text-xs">
-              584
-            </span>
-          </li>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-hotel text-blue-500 mr-2"></i>
-            <span>Near Hotel</span>
-          </li>
-          <li className="flex items-center mb-4">
-            <i className="fas fa-calendar-alt text-blue-500 mr-2"></i>
-            <span>Latest Event</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-
-    {/* Main Content */}
-    <div className="flex-1 overflow-y-auto p-4">
-      <div className="flex flex-col md:flex-row items-center mb-8">
-        <input
-          type="text"
-          placeholder="Start typing to search..."
-          className="flex-1 p-2 border rounded-lg mb-4 md:mb-0"
-        />
-        <div className="flex items-center md:ml-4 space-x-4">
-          <i className="fas fa-home text-gray-500"></i>
-          <i className="fas fa-bolt text-gray-500"></i>
-          <i className="fas fa-bell text-gray-500"></i>
-          <i className="fas fa-user text-gray-500"></i>
-          <i className="fas fa-moon text-gray-500"></i>
-        </div>
-      </div>
-      <h1 className="text-2xl font-bold mb-4">Restaurants And Food Vendors Around You</h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
-        {/* Add the card elements as before */}
-        <div className="bg-white rounded-lg shadow p-4">
+              {/* Main Content */}
+              <div className="flex-1 overflow-y-auto p-4">
+                <div className="flex flex-col md:flex-row items-center mb-8">
+                  <input
+                    type="text"
+                    placeholder="Start typing to search..."
+                    className="flex-1 p-2 border rounded-lg mb-4 md:mb-0"
+                  />
+                  <div className="flex items-center md:ml-4 space-x-4">
+                    <i className="fas fa-home text-gray-500"></i>
+                    <i className="fas fa-bolt text-gray-500"></i>
+                    <i className="fas fa-bell text-gray-500"></i>
+                    <i className="fas fa-user text-gray-500"></i>
+                    <i className="fas fa-moon text-gray-500"></i>
+                  </div>
+                </div>
+                <h1 className="text-2xl font-bold mb-4">Restaurants And Food Vendors Around You</h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 gap-4">
+                  {/* Add the card elements as before */}
+                  <div className="bg-white rounded-lg shadow p-4">
                     <div className="relative">
                       <img
                         src="https://placehold.co/300x200"
@@ -143,9 +142,7 @@ function FoodMartsPageSecondResponsive() {
                     >
                       Jay's Kitchen
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -165,9 +162,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $320/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$320/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -186,9 +181,7 @@ function FoodMartsPageSecondResponsive() {
                     >
                       Chef Makamba
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -208,9 +201,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -229,9 +220,7 @@ function FoodMartsPageSecondResponsive() {
                     >
                       Today's Kitchen
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -251,9 +240,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -272,9 +259,7 @@ function FoodMartsPageSecondResponsive() {
                     >
                       HotStop Kitchen
                     </Typography>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -294,9 +279,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -309,12 +292,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -334,9 +313,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -348,12 +325,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -373,9 +346,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -387,12 +358,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -412,9 +379,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -426,12 +391,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -451,9 +412,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -465,12 +424,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -490,9 +445,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -504,12 +457,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -529,9 +478,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -543,12 +490,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -568,9 +511,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -582,12 +523,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -607,9 +544,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -621,12 +556,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -646,9 +577,7 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
@@ -660,12 +589,8 @@ function FoodMartsPageSecondResponsive() {
                         className="rounded-lg mb-4"
                       />
                     </div>
-                    <h2 className="text-lg font-semibold">
-                      Himalayan Wind Horse
-                    </h2>
-                    <p className="text-gray-500">
-                      323 Geldenfe Ave Park, Flodia City
-                    </p>
+                    <h2 className="text-lg font-semibold">Himalayan Wind Horse</h2>
+                    <p className="text-gray-500">323 Geldenfe Ave Park, Flodia City</p>
                     <div className="flex items-center my-2">
                       <i className="fas fa-star text-yellow-500"></i>
                       <i className="fas fa-star text-yellow-500"></i>
@@ -685,36 +610,32 @@ function FoodMartsPageSecondResponsive() {
                       </span>
                     </div>
                     <div className="flex items-center justify-between">
-                      <span className="text-green-500 text-xl font-bold">
-                        $140/mo
-                      </span>
+                      <span className="text-green-500 text-xl font-bold">$140/mo</span>
                       <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">{`view =>`}</button>
                     </div>
                   </div>
-        {/* ... */}
-      </div>
-    </div>
+                  {/* ... */}
+                </div>
+              </div>
 
-    {/* Map */}
-    <div className="w-full md:w-1/3 bg-gray-200 h-64 md:h-screen sticky top-16  overflow-y-auto">
-      <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
-        <div className="bg-white p-4 rounded-lg shadow-lg">
-          <p className="text-gray-700 mb-4">
-            This page can't load Google Maps correctly.
-          </p>
-          <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
-        </div>
-      </div>
-      <img
-        src="https://placehold.co/400x600"
-        alt="Map placeholder"
-        className="w-full h-full object-cover"
-      />
-    </div>
-  </div>
-</div>
-
-
+              {/* Map */}
+              <div className="w-full md:w-1/3 bg-gray-200 h-64 md:h-screen sticky top-16  overflow-y-auto">
+                <div className="absolute inset-0 flex items-center justify-center bg-white bg-opacity-75">
+                  <div className="bg-white p-4 rounded-lg shadow-lg">
+                    <p className="text-gray-700 mb-4">
+                      This page can't load Google Maps correctly.
+                    </p>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
+                  </div>
+                </div>
+                <img
+                  src="https://placehold.co/400x600"
+                  alt="Map placeholder"
+                  className="w-full h-full object-cover"
+                />
+              </div>
+            </div>
+          </div>
         </>
       }
       //make sidebar static, main content scroll, and map static

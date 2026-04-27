@@ -43,7 +43,6 @@ function EstateOffersPage() {
   const offers = offersData?.data?.offers;
   const pagination = offersData?.data?.pagination;
 
-
   console.log("Estate Offers Data:", offersData);
   console.log("Offers Payload:", offers);
   console.log("Pagination Info:", pagination);

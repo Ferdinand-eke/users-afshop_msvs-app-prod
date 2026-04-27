@@ -8,9 +8,7 @@ const UserCountrySelect = ({ value, onChange }) => {
   const { data: countries } = useSellerCountries();
   return (
     <div>
-      <label style={{ fontSize: "12px", fontWeight: "800" }}>
-        *Country to scan
-      </label>
+      <label style={{ fontSize: "12px", fontWeight: "800" }}>*Country to scan</label>
       <Select
         placeholder="Choose a country?"
         isClearable

@@ -12,23 +12,18 @@ import { useState } from "react";
  * The DemoSidebarRight component.
  */
 function DemoSidebarRight(props) {
-  
   const {
     isLoading,
 
     listing,
-   
   } = props;
 
   // const [isChatOpen, setIsChatOpen] = useState(false);
 
   return (
     <div className="px-12 py-24 h-screen">
-     
-
       <div>
         <div className="bg-white p-4 shadow-md">
-          
           <div className="mt-4">
             {isLoading ? (
               <>
@@ -37,12 +32,9 @@ function DemoSidebarRight(props) {
                 </Box>
               </>
             ) : listing ? (
-
               <>
                 <Box>
-                  <DetailsRight
-                    listing={listing}
-                  />
+                  <DetailsRight listing={listing} />
                 </Box>
               </>
             ) : (
@@ -50,15 +42,9 @@ function DemoSidebarRight(props) {
                 <Typography>Data Not Found</Typography>
               </Box>
             )}
-
-            
           </div>
         </div>
-
-        
       </div>
-
-
     </div>
   );
 }

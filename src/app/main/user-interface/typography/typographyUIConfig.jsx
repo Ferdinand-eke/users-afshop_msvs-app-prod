@@ -1,17 +1,17 @@
-import { lazy } from 'react';
+import { lazy } from "react";
 
-const TypographyUI = lazy(() => import('./TypographyUI'));
+const TypographyUI = lazy(() => import("./TypographyUI"));
 const typographyUIConfig = {
-	settings: {
-		layout: {
-			config: {}
-		}
-	},
-	routes: [
-		{
-			path: 'ui/typography',
-			element: <TypographyUI />
-		}
-	]
+  settings: {
+    layout: {
+      config: {},
+    },
+  },
+  routes: [
+    {
+      path: "ui/typography",
+      element: <TypographyUI />,
+    },
+  ],
 };
 export default typographyUIConfig;

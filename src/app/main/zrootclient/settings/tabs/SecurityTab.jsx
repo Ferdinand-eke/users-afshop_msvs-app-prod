@@ -15,7 +15,7 @@ import ChangeEmailSetting from "./securitsettings/ChangeEmailSetting";
 import CloseAccountSetting from "./securitsettings/CloseAccountSetting";
 import {
   useUserSettingsResetPass,
-  useGetAuthUserDetails
+  useGetAuthUserDetails,
 } from "app/configs/data/server-calls/useUsers/useUsersQuery";
 
 const defaultValues = {
@@ -89,7 +89,7 @@ function SecurityTab() {
     if (resetShopPass?.isError) {
       toast.error(
         resetShopPass?.error?.response?.data?.message ||
-        "Failed to change password. Please try again."
+          "Failed to change password. Please try again.",
       );
     }
   }, [resetShopPass?.isError]);
@@ -309,9 +309,7 @@ function SecurityTab() {
                       endAdornment: (
                         <InputAdornment position="end">
                           <IconButton
-                            onClick={() =>
-                              setShowConfirmPassword(!showConfirmPassword)
-                            }
+                            onClick={() => setShowConfirmPassword(!showConfirmPassword)}
                             edge="end"
                           >
                             <FuseSvgIcon size={20} className="text-gray-500">

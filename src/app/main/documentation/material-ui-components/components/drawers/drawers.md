@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Drawer component
 components: Drawer, SwipeableDrawer
-githubLabel: 'component: drawer'
+githubLabel: "component: drawer"
 materialDesign: https://m2.material.io/components/navigation-drawer
 ---
 
@@ -52,8 +52,7 @@ The following properties are used in this documentation website for optimal usab
   with the discovery feature, so discovery has to be disabled.
 
 ```jsx
-const iOS =
-  typeof navigator !== 'undefined' && /iPad|iPhone|iPod/.test(navigator.userAgent);
+const iOS = typeof navigator !== "undefined" && /iPad|iPhone|iPod/.test(navigator.userAgent);
 
 <SwipeableDrawer disableBackdropTransition={!iOS} disableDiscovery={iOS} />;
 ```

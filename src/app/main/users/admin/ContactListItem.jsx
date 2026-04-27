@@ -21,7 +21,7 @@ function ContactListItem(props) {
         to={`/users/admin/${contact?.id}`}
         // to={`/users/admin/${contact?.id}`}
       >
-{/* productId */}
+        {/* productId */}
         <ListItemAvatar>
           <Avatar alt={contact?.name} src={contact?.avatar} />
         </ListItemAvatar>
@@ -30,23 +30,13 @@ function ContactListItem(props) {
           classes={{ root: "m-0", primary: "font-medium leading-5 truncate" }}
           primary={contact?.name}
           secondary={
-            <Typography
-              className="inline"
-              component="span"
-              variant="body2"
-              color="text.secondary"
-            >
+            <Typography className="inline" component="span" variant="body2" color="text.secondary">
               {contact?.email}
             </Typography>
           }
         />
 
-        <Typography
-          className="inline"
-          component="span"
-          variant="body2"
-          color="text.secondary"
-        >
+        <Typography className="inline" component="span" variant="body2" color="text.secondary">
           {contact?.role}
         </Typography>
       </ListItemButton>

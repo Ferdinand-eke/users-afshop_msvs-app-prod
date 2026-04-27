@@ -47,8 +47,6 @@ function RealEstatesPage() {
 
   const { data: estates, isLoading, isError } = useGetAllEstateProperties();
 
-
-
   const [loading, setLoading] = useState(false);
   const [stateData, setStateData] = useState([]);
   const [blgas, setBlgas] = useState([]);
@@ -70,7 +68,6 @@ function RealEstatesPage() {
   // const [products, setProducts] = useState([])
   const { data: countries } = useSellerCountries();
 
-
   /****Use-EFFECT to manage request for Country=>state=>LGA fetch */
   useEffect(() => {
     if (selectCountry?.length > 0) {
@@ -80,7 +77,6 @@ function RealEstatesPage() {
     if (selectCountry && selectState) {
       getLgasFromState(selectState);
     }
-
   }, [selectCountry, selectState, selectLga]);
 
   async function findStatesByCountry(countryId) {
@@ -94,7 +90,7 @@ function RealEstatesPage() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -110,7 +106,7 @@ function RealEstatesPage() {
         function () {
           setLoading(false);
         }.bind(this),
-        250
+        250,
       );
     }
   }
@@ -126,7 +122,7 @@ function RealEstatesPage() {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage message={" Error occurred while retriving listings"}/>
+        <ClienttErrorPage message={" Error occurred while retriving listings"} />
       </motion.div>
     );
   }
@@ -189,20 +185,10 @@ function RealEstatesPage() {
                 </div>
                 <h2 className="font-bold mt-6 mb-4">PRICE (₦)</h2>
                 <div className="flex items-center space-x-2">
-                  <input
-                    type="number"
-                    className="border rounded p-2 w-20"
-                    placeholder="6090"
-                  />
+                  <input type="number" className="border rounded p-2 w-20" placeholder="6090" />
                   <span>-</span>
-                  <input
-                    type="number"
-                    className="border rounded p-2 w-20"
-                    placeholder="9999999"
-                  />
-                  <button className="bg-orange-500 text-white px-4 py-2 rounded">
-                    APPLY
-                  </button>
+                  <input type="number" className="border rounded p-2 w-20" placeholder="9999999" />
+                  <button className="bg-orange-500 text-white px-4 py-2 rounded">APPLY</button>
                 </div>
                 <h2 className="font-bold mt-6 mb-4">DISCOUNT PERCENTAGE</h2>
                 <div className="space-y-2">
@@ -228,13 +214,9 @@ function RealEstatesPage() {
 
               {/* Main Content */}
               <main className="mt-10 flex-1 p-4 rounded-md">
-              
                 <div className=" bg-white flex flex-col md:flex-row justify-between items-center mb-4 p-4">
-                  <h1 className="text-xl font-bold">
-                   Listings 
-                  </h1>
+                  <h1 className="text-xl font-bold">Listings</h1>
                   <div className="flex mx-4 space-x-4 mt-4 md:mt-0 text-[10px]">
-                   
                     <Controller
                       name="selectCountry"
                       control={control}
@@ -271,7 +253,7 @@ function RealEstatesPage() {
                         defaultValue={[]}
                         render={({ field: { onChange, value } }) => (
                           <Select
-                            className="border rounded px-4 py-2 h-[10px] text-[10px]"  
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"
                             id="selectState"
                             label="selectState"
                             fullWidth
@@ -283,9 +265,11 @@ function RealEstatesPage() {
                           >
                             {stateData &&
                               stateData?.map((option, id) => (
-                                <MenuItem 
-                                className="border rounded px-4 my-4 h-[12px] text-[14px]"
-                                key={option._id} value={option._id}>
+                                <MenuItem
+                                  className="border rounded px-4 my-4 h-[12px] text-[14px]"
+                                  key={option._id}
+                                  value={option._id}
+                                >
                                   {option.name}
                                 </MenuItem>
                               ))}
@@ -301,7 +285,7 @@ function RealEstatesPage() {
                         defaultValue={[]}
                         render={({ field: { onChange, value } }) => (
                           <Select
-                            className="border rounded px-4 py-2 h-[10px] text-[10px]"                            
+                            className="border rounded px-4 py-2 h-[10px] text-[10px]"
                             id="selectLga"
                             label="selectLga"
                             fullWidth
@@ -313,9 +297,11 @@ function RealEstatesPage() {
                           >
                             {blgas &&
                               blgas?.map((option, id) => (
-                                <MenuItem 
-                                className="border rounded px-4 my-4 h-[12px] text-[14px]"
-                                key={option._id} value={option._id}>
+                                <MenuItem
+                                  className="border rounded px-4 my-4 h-[12px] text-[14px]"
+                                  key={option._id}
+                                  value={option._id}
+                                >
                                   {option.name}
                                 </MenuItem>
                               ))}
@@ -334,13 +320,13 @@ function RealEstatesPage() {
                     >
                       <div className="relative">
                         {
-                           <img
-                          src={property?.image ? property?.image : "https://placehold.co/300x200"}
-                          alt={property?.title}
-                          className="w-full rounded-lg mb-8 transition ease-in-out delay-150  hover:scale-105 object-cover "
-                        />
+                          <img
+                            src={property?.image ? property?.image : "https://placehold.co/300x200"}
+                            alt={property?.title}
+                            className="w-full rounded-lg mb-8 transition ease-in-out delay-150  hover:scale-105 object-cover "
+                          />
                         }
-                       
+
                         <span className="absolute top-2 left-2 bg-blue-500 text-white text-xs px-2 py-1 rounded">
                           FEATURED
                         </span>
@@ -376,13 +362,13 @@ function RealEstatesPage() {
                         <span className="text-orange-500 text-xl font-bold">
                           ₦{formatCurrency(property?.price)}/Annum
                         </span>
-                        
                       </div>
-                      <Button 
-                      size="small"
+                      <Button
+                        size="small"
                         component={NavLinkAdapter}
                         to={`/realestate/listings/${property?.id}/${property?.slug}`}
-                      className="bg-orange-500 text-white px-4 py-2 rounded-lg bottom-0 h-[20px]">{`view =>`}</Button>
+                        className="bg-orange-500 text-white px-4 py-2 rounded-lg bottom-0 h-[20px]"
+                      >{`view =>`}</Button>
                     </div>
                   ))}
 
@@ -1020,9 +1006,7 @@ function RealEstatesPage() {
                     <p className="text-gray-700 mb-4">
                       This page can't load Google Maps correctly.
                     </p>
-                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">
-                      OK
-                    </button>
+                    <button className="bg-blue-500 text-white px-4 py-2 rounded-lg">OK</button>
                   </div>
                 </div>
                 <img

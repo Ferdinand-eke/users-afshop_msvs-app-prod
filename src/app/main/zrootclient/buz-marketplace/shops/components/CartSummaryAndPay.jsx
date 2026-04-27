@@ -55,7 +55,7 @@ const PLACEHOLDER_STATE_COORDINATES = {
   1: { lat: 6.5244, lng: 3.3792, name: "Lagos" }, // Lagos
   2: { lat: 9.082, lng: 8.6753, name: "Abuja" }, // Abuja
   3: { lat: 7.3775, lng: 3.947, name: "Ibadan" }, // Oyo
-  4: { lat: 6.3350, lng: 5.6037, name: "Benin City" }, // Edo
+  4: { lat: 6.335, lng: 5.6037, name: "Benin City" }, // Edo
   5: { lat: 5.0162, lng: 7.9333, name: "Enugu" }, // Enugu
   // Add more states as needed
 };
@@ -71,8 +71,6 @@ const PLACEHOLDER_TAX_RATES = {
   4: { rate: 0.18, name: "South Africa", label: "VAT (18%)" }, // South Africa - 18% VAT
   // Add more countries as needed
 };
-
-
 
 const CartSummaryAndPay = ({
   cartSessionPayload,
@@ -92,7 +90,6 @@ const CartSummaryAndPay = ({
   console.log("CartSummaryAndPay render with cartSessionPayload:", cartSessionPayload);
   const user = useAppSelector(selectUser);
 
-  
   // State for calculated delivery fee
   const [deliveryFee, setDeliveryFee] = useState(0);
   const [deliveryDistance, setDeliveryDistance] = useState(0);
@@ -107,7 +104,7 @@ const CartSummaryAndPay = ({
     if (element?.isBulkOrder && element?.bulkPriceTierId) {
       // Find the matching price tier from product's priceTiers array
       const matchingTier = element?.product?.priceTiers?.find(
-        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId
+        (tier) => (tier?.id || tier?._id) === element?.bulkPriceTierId,
       );
 
       if (matchingTier) {
@@ -122,7 +119,6 @@ const CartSummaryAndPay = ({
   });
 
   const subtotal = calculateCartTotalAmount(checkItemsArrayForTotal);
-
 
   // Calculate delivery fee based on distance
   useEffect(() => {
@@ -143,7 +139,7 @@ const CartSummaryAndPay = ({
 
       // Find appropriate shipping rate based on distance
       const shippingRate = PLACEHOLDER_SHIPPING_RATES.find(
-        (rate) => distance >= rate.minDistance && distance < rate.maxDistance
+        (rate) => distance >= rate.minDistance && distance < rate.maxDistance,
       );
 
       if (shippingRate) {
@@ -162,10 +158,7 @@ const CartSummaryAndPay = ({
   // Calculate VAT based on country (placeholder - will be from API)
   const getTaxRate = () => {
     if (orderCountryDestination) {
-      return (
-        PLACEHOLDER_TAX_RATES[orderCountryDestination] ||
-        PLACEHOLDER_TAX_RATES[1]
-      ); // Default to Nigeria
+      return PLACEHOLDER_TAX_RATES[orderCountryDestination] || PLACEHOLDER_TAX_RATES[1]; // Default to Nigeria
     }
     return PLACEHOLDER_TAX_RATES[1]; // Default to Nigeria
   };
@@ -264,9 +257,7 @@ const CartSummaryAndPay = ({
           </div>
           <div>
             <h2 className="text-lg sm:text-xl font-bold text-white">Order Summary</h2>
-            <p className="text-xs sm:text-sm text-white/80">
-              Review your cart before payment
-            </p>
+            <p className="text-xs sm:text-sm text-white/80">Review your cart before payment</p>
           </div>
         </div>
       </div>
@@ -310,9 +301,7 @@ const CartSummaryAndPay = ({
           {/* Subtotal */}
           <div className="flex justify-between text-sm">
             <span className="text-gray-600">Subtotal</span>
-            <span className="font-semibold text-gray-800">
-              ₦{formatCurrency(subtotal)}
-            </span>
+            <span className="font-semibold text-gray-800">₦{formatCurrency(subtotal)}</span>
           </div>
 
           {/* Delivery Fees with Distance Info */}
@@ -340,9 +329,7 @@ const CartSummaryAndPay = ({
                 </div>
               )}
             </div>
-            <span className="font-semibold text-gray-800">
-              ₦{formatCurrency(deliveryFee)}
-            </span>
+            <span className="font-semibold text-gray-800">₦{formatCurrency(deliveryFee)}</span>
           </div>
 
           {/* VAT with Country Info */}
@@ -368,9 +355,7 @@ const CartSummaryAndPay = ({
                 </div>
               </div>
             </div>
-            <span className="font-semibold text-gray-800">
-              ₦{formatCurrency(vatAmount)}
-            </span>
+            <span className="font-semibold text-gray-800">₦{formatCurrency(vatAmount)}</span>
           </div>
 
           <div className="h-px bg-gradient-to-r from-transparent via-orange-300 to-transparent" />

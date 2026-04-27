@@ -39,7 +39,7 @@ import {
   Balcony,
   Pets,
   Elevator,
-  CheckCircle
+  CheckCircle,
 } from "@mui/icons-material";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
@@ -83,7 +83,6 @@ function DemoContent(props) {
     );
   }
 
-
   return (
     <div className="flex-auto p-8 sm:p-12 ">
       <div className="h-7xl min-h-7xl max-h-7xl ">
@@ -111,13 +110,9 @@ function DemoContent(props) {
               />
             </div>
             <div className="bg-white px-6 py-4 mt-4 shadow-md">
-              <div className="flex items-center justify-between px-2">
-             
-              </div>
+              <div className="flex items-center justify-between px-2"></div>
               <h1 className="text-2xl font-bold mt-2 px-2">{estatePropertyData?.title}</h1>
-              <p className="text-gray-600 mt-2 px-2">
-                {estatePropertyData?.shortDescription}
-              </p>
+              <p className="text-gray-600 mt-2 px-2">{estatePropertyData?.shortDescription}</p>
               <div className="flex items-center mt-2 px-2 gap-2">
                 <span className="text-gray-600">Share:</span>
                 <IconButton size="small" className="text-blue-600 hover:bg-blue-50">
@@ -137,33 +132,43 @@ function DemoContent(props) {
               <div className="mt-4 bg-gradient-to-br from-orange-50 via-orange-100 to-red-50 rounded-xl p-6 border-2 border-orange-200 shadow-lg">
                 <div className="flex items-start justify-between mb-4">
                   <div className="flex-1">
-                    <Typography variant="caption" className="text-orange-800 font-semibold uppercase tracking-wide">
+                    <Typography
+                      variant="caption"
+                      className="text-orange-800 font-semibold uppercase tracking-wide"
+                    >
                       Price
                     </Typography>
                     <Typography variant="h4" className="font-black text-gray-900 mt-1">
                       ₦{formatCurrency(estatePropertyData?.price)}
                     </Typography>
-                    {estatePropertyData?.propertyUseCase === "RENT" && <>
-                     <Typography variant="caption" className="text-gray-600 mt-1">
-                      {estatePropertyData?.leaseTerm || 'Per Annum'}
-                    </Typography>
-                    </>}
-                   
+                    {estatePropertyData?.propertyUseCase === "RENT" && (
+                      <>
+                        <Typography variant="caption" className="text-gray-600 mt-1">
+                          {estatePropertyData?.leaseTerm || "Per Annum"}
+                        </Typography>
+                      </>
+                    )}
                   </div>
 
                   {estatePropertyData?.propertyUseCase && (
                     <div className="px-4 py-2 bg-white rounded-lg shadow-sm border border-orange-200">
-                      <Typography variant="caption" className="text-orange-700 font-semibold block text-center">
+                      <Typography
+                        variant="caption"
+                        className="text-orange-700 font-semibold block text-center"
+                      >
                         Use Case
                       </Typography>
-                      <Typography variant="body2" className="text-gray-800 font-bold text-center capitalize mt-1">
+                      <Typography
+                        variant="body2"
+                        className="text-gray-800 font-bold text-center capitalize mt-1"
+                      >
                         {estatePropertyData?.propertyUseCase}
                       </Typography>
                     </div>
                   )}
                 </div>
 
-                <Divider sx={{ marginY: 2, borderColor: 'rgba(234, 88, 12, 0.2)' }} />
+                <Divider sx={{ marginY: 2, borderColor: "rgba(234, 88, 12, 0.2)" }} />
 
                 {/* <div className="flex gap-3">
                   <Button
@@ -208,7 +213,7 @@ function DemoContent(props) {
                 </div> */}
               </div>
             </div>
-            
+
             <div className="bg-white px-6 py-6 mt-4 shadow-md rounded-lg">
               <Typography variant="h5" className="font-bold mb-4 px-2">
                 Amenities & Features
@@ -217,20 +222,22 @@ function DemoContent(props) {
               {/* Amenities Grid */}
               <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 px-2">
                 {/* Use actual amenities from database or fallback to placeholder */}
-                {(estatePropertyData?.amenities || [
-                  { id: 1, name: "WiFi", icon: "wifi", available: true },
-                  { id: 2, name: "Parking", icon: "parking", available: true },
-                  { id: 3, name: "Swimming Pool", icon: "pool", available: true },
-                  { id: 4, name: "Gym/Fitness Center", icon: "fitness", available: true },
-                  { id: 5, name: "Air Conditioning", icon: "ac", available: true },
-                  { id: 6, name: "Modern Kitchen", icon: "kitchen", available: true },
-                  { id: 7, name: "Cable TV", icon: "tv", available: true },
-                  { id: 8, name: "Laundry Service", icon: "laundry", available: true },
-                  { id: 9, name: "24/7 Security", icon: "security", available: true },
-                  { id: 10, name: "Balcony/Terrace", icon: "balcony", available: true },
-                  { id: 11, name: "Pet Friendly", icon: "pets", available: false },
-                  { id: 12, name: "Elevator Access", icon: "elevator", available: true },
-                ]).map((amenity) => {
+                {(
+                  estatePropertyData?.amenities || [
+                    { id: 1, name: "WiFi", icon: "wifi", available: true },
+                    { id: 2, name: "Parking", icon: "parking", available: true },
+                    { id: 3, name: "Swimming Pool", icon: "pool", available: true },
+                    { id: 4, name: "Gym/Fitness Center", icon: "fitness", available: true },
+                    { id: 5, name: "Air Conditioning", icon: "ac", available: true },
+                    { id: 6, name: "Modern Kitchen", icon: "kitchen", available: true },
+                    { id: 7, name: "Cable TV", icon: "tv", available: true },
+                    { id: 8, name: "Laundry Service", icon: "laundry", available: true },
+                    { id: 9, name: "24/7 Security", icon: "security", available: true },
+                    { id: 10, name: "Balcony/Terrace", icon: "balcony", available: true },
+                    { id: 11, name: "Pet Friendly", icon: "pets", available: false },
+                    { id: 12, name: "Elevator Access", icon: "elevator", available: true },
+                  ]
+                ).map((amenity) => {
                   // Icon mapping
                   const getAmenityIcon = (iconName) => {
                     const iconMap = {
@@ -278,9 +285,7 @@ function DemoContent(props) {
                         </Typography>
                       </div>
                       {amenity.available && (
-                        <CheckCircle
-                          sx={{ fontSize: "1rem", color: "#16a34a" }}
-                        />
+                        <CheckCircle sx={{ fontSize: "1rem", color: "#16a34a" }} />
                       )}
                     </div>
                   );
@@ -432,9 +437,7 @@ const ProductDetailsInfo = ({
           >
             Description
           </h5>
-          {active === 1 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
+          {active === 1 ? <div className={`${siteStyle.active_indicator}`} /> : null}
         </div>
         <div className="relative">
           <h5
@@ -445,9 +448,7 @@ const ProductDetailsInfo = ({
           >
             Apartment Reviews
           </h5>
-          {active === 2 ? (
-            <div className={`${siteStyle.active_indicator}`} />
-          ) : null}
+          {active === 2 ? <div className={`${siteStyle.active_indicator}`} /> : null}
         </div>
       </div>
       {active === 1 ? (
@@ -456,10 +457,7 @@ const ProductDetailsInfo = ({
             className={`${isMobile ? "w-full" : "w-1/1"} bg-white flex flex-col ${isMobile ? "h-[60vh]" : ""}`}
           >
             <div className={`${isMobile ? "p-3" : "p-6"} border-b`}>
-              <Typography
-                variant={isMobile ? "caption" : "body2"}
-                className="text-gray-600 mb-2"
-              >
+              <Typography variant={isMobile ? "caption" : "body2"} className="text-gray-600 mb-2">
                 {propertyData?.description}
               </Typography>
             </div>
@@ -474,9 +472,7 @@ const ProductDetailsInfo = ({
           {user?.email && (
             <>
               {/* Add Comment Section */}
-              <div
-                className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}
-              >
+              <div className={`${isMobile ? "p-3" : "p-6"} border-b bg-gray-50`}>
                 <Typography
                   variant={isMobile ? "caption" : "subtitle2"}
                   className="font-semibold mb-2"
@@ -556,9 +552,7 @@ const ProductDetailsInfo = ({
               </div>
 
               {/* Reviews/Comments List */}
-              <div
-                className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}
-              >
+              <div className={`flex-1 overflow-y-auto ${isMobile ? "p-3" : "p-6"}`}>
                 <div
                   className={`flex items-center justify-between ${isMobile ? "mb-2" : "mb-4"} px-2`}
                 >
@@ -579,10 +573,7 @@ const ProductDetailsInfo = ({
 
                 <div className={`${isMobile ? "space-y-2" : "space-y-4"}`}>
                   {reviews.map((review) => (
-                    <div
-                      key={review.id}
-                      className={`${isMobile ? "space-y-1" : "space-y-2"}`}
-                    >
+                    <div key={review.id} className={`${isMobile ? "space-y-1" : "space-y-2"}`}>
                       <div className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                         <Avatar
                           src={review.authorImage}
@@ -618,12 +609,7 @@ const ProductDetailsInfo = ({
                             )}
                           </div>
                           {review.rating && (
-                            <Rating
-                              value={review.rating}
-                              readOnly
-                              size="small"
-                              className="mb-1"
-                            />
+                            <Rating value={review.rating} readOnly size="small" className="mb-1" />
                           )}
                           <Typography
                             variant={isMobile ? "caption" : "body2"}
@@ -637,21 +623,13 @@ const ProductDetailsInfo = ({
                             <button
                               className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
                             >
-                              <ThumbUp
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 14 : 16 }}
-                              />
-                              <span>
-                                {review.likes > 0 ? review.likes : "Like"}
-                              </span>
+                              <ThumbUp fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
+                              <span>{review.likes > 0 ? review.likes : "Like"}</span>
                             </button>
                             <button
                               className={`flex items-center gap-1 text-gray-600 hover:text-orange-600 ${isMobile ? "text-xs" : "text-sm"}`}
                             >
-                              <Reply
-                                fontSize="small"
-                                sx={{ fontSize: isMobile ? 14 : 16 }}
-                              />
+                              <Reply fontSize="small" sx={{ fontSize: isMobile ? 14 : 16 }} />
                               <span>Reply</span>
                             </button>
                           </div>
@@ -664,10 +642,7 @@ const ProductDetailsInfo = ({
                           className={`${isMobile ? "ml-8 space-y-2 mt-2" : "ml-12 space-y-3 mt-3"}`}
                         >
                           {review.replies.map((reply) => (
-                            <div
-                              key={reply.id}
-                              className={`flex ${isMobile ? "gap-2" : "gap-3"}`}
-                            >
+                            <div key={reply.id} className={`flex ${isMobile ? "gap-2" : "gap-3"}`}>
                               <Avatar
                                 src={reply.authorImage}
                                 alt={reply.author}
@@ -684,9 +659,7 @@ const ProductDetailsInfo = ({
                                     variant={isMobile ? "caption" : "body2"}
                                     className="font-semibold"
                                     sx={{
-                                      fontSize: isMobile
-                                        ? "0.75rem"
-                                        : "0.875rem",
+                                      fontSize: isMobile ? "0.75rem" : "0.875rem",
                                     }}
                                   >
                                     {reply.author}
@@ -695,9 +668,7 @@ const ProductDetailsInfo = ({
                                     variant="caption"
                                     className="text-gray-500"
                                     sx={{
-                                      fontSize: isMobile
-                                        ? "0.65rem"
-                                        : "0.75rem",
+                                      fontSize: isMobile ? "0.65rem" : "0.75rem",
                                     }}
                                   >
                                     • {reply.timeAgo}
@@ -767,18 +738,13 @@ const ProductDetailsInfo = ({
                   variant={isMobile ? "caption" : "body2"}
                   className="text-gray-600 mb-2 px-2"
                 >
-                  {propertyData?.shortDescription ||
-                    "Share your thoughts about this property"}
+                  {propertyData?.shortDescription || "Share your thoughts about this property"}
                 </Typography>
                 {propertyData?.rating && (
                   <div className="flex items-center gap-2 px-2">
                     <Rating value={propertyData.rating} readOnly size="small" />
-                    <Typography
-                      variant={isMobile ? "caption" : "body2"}
-                      className="text-gray-600"
-                    >
-                      {propertyData.rating} ({propertyData.reviewCount || 0}{" "}
-                      reviews)
+                    <Typography variant={isMobile ? "caption" : "body2"} className="text-gray-600">
+                      {propertyData.rating} ({propertyData.reviewCount || 0} reviews)
                     </Typography>
                   </div>
                 )}

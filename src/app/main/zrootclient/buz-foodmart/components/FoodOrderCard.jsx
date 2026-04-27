@@ -12,7 +12,7 @@ const FoodOrderCard = ({ orderData }) => {
       <div className="flex space-x-4">
         <img
           // src="assets/images/afslogo/foodorder/foodordertwo.png"
-           src={orderData?.foodOrderItems[0]?.image}
+          src={orderData?.foodOrderItems[0]?.image}
           alt="assets/images/afslogo/foodorder/foodordertwo.png"
           className="w-80 h-140 object-contain rounded-lg"
         />
@@ -20,9 +20,7 @@ const FoodOrderCard = ({ orderData }) => {
         <div className="flex-1">
           <h3 className="font-bold">{orderData?.shippingAddress?.fullName}</h3>
 
-          <p className="text-[12px]">
-            Order: {orderData?.paymentResult?.reference}
-          </p>
+          <p className="text-[12px]">Order: {orderData?.paymentResult?.reference}</p>
           <p className="text-[12px] text-orange-800">
             Amount: {formatCurrency(orderData?.totalPrice)}
           </p>
@@ -36,9 +34,7 @@ const FoodOrderCard = ({ orderData }) => {
               ORDER UN-CONFIRMED
             </span>
           )}
-          <p className="text-md">
-            On: {new Date(orderData?.createdAt)?.toDateString()}
-          </p>
+          <p className="text-md">On: {new Date(orderData?.createdAt)?.toDateString()}</p>
         </div>
         {orderData?.isPaid && (
           <Typography

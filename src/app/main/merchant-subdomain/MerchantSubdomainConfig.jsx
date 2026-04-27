@@ -1,6 +1,6 @@
-import { lazy } from 'react';
-import MerchantSubdomainLayout from './MerchantSubdomainLayout';
-import MerchantHospitalityPage from './MerchantHospitalityPage';
+import { lazy } from "react";
+import MerchantSubdomainLayout from "./MerchantSubdomainLayout";
+import MerchantHospitalityPage from "./MerchantHospitalityPage";
 
 // Lazy load future page components when needed
 // const MerchantProductsPage = lazy(() => import('./MerchantProductsPage'));
@@ -43,13 +43,13 @@ const MerchantSubdomainConfig = {
     // On main domain: Shows normal homepage
     // On merchant subdomain: Shows merchant profile
     {
-      path: '/',
+      path: "/",
       element: <MerchantSubdomainLayout PageComponent={MerchantHospitalityPage} />,
     },
 
     // Merchant Profile (explicit path)
     {
-      path: '/profile',
+      path: "/profile",
       element: <MerchantSubdomainLayout PageComponent={MerchantHospitalityPage} />,
     },
 

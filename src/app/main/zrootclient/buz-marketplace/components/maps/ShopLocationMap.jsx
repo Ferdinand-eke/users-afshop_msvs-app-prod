@@ -15,7 +15,8 @@ L.Icon.Default.mergeOptions({
 
 // Custom shop location marker icon (orange/red)
 const shopIcon = new L.Icon({
-  iconUrl: "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAzMiA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDQ4QzE2IDQ4IDMyIDI5LjMzMzMgMzIgMTZDMzIgNy4xNjM0NCAyNC44MzY2IDAgMTYgMEM3LjE2MzQ0IDAgMCA3LjE2MzQ0IDAgMTZDMCAyOS4zMzMzIDE2IDQ4IDE2IDQ4WiIgZmlsbD0iI2VhNTgwYyIvPgo8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
+  iconUrl:
+    "data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMzIiIGhlaWdodD0iNDgiIHZpZXdCb3g9IjAgMCAzMiA0OCIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPHBhdGggZD0iTTE2IDQ4QzE2IDQ4IDMyIDI5LjMzMzMgMzIgMTZDMzIgNy4xNjM0NCAyNC44MzY2IDAgMTYgMEM3LjE2MzQ0IDAgMCA3LjE2MzQ0IDAgMTZDMCAyOS4zMzMzIDE2IDQ4IDE2IDQ4WiIgZmlsbD0iI2VhNTgwYyIvPgo8Y2lyY2xlIGN4PSIxNiIgY3k9IjE2IiByPSI4IiBmaWxsPSJ3aGl0ZSIvPgo8L3N2Zz4K",
   iconSize: [32, 48],
   iconAnchor: [16, 48],
   popupAnchor: [0, -48],
@@ -47,23 +48,24 @@ function ShopLocationMap({ shopData }) {
   // This will be replaced with actual shop data from API
   const shopLocation = useMemo(() => {
     // Use provided shopData or fallback to dummy data
-    return shopData || {
-      id: "shop-123",
-      shopName: "Premium Electronics Store",
-      address: "123 Marina Road, Lagos Island",
-      city: "Lagos",
-      state: "Lagos State",
-      country: "Nigeria",
-      coordinates: [6.4541, 3.3947], // Lagos Island coordinates
-      zoom: 14,
-      phone: "+234 803 123 4567",
-      isVerified: true,
-      rating: 4.8,
-      totalSales: 1234,
-    };
+    return (
+      shopData || {
+        id: "shop-123",
+        shopName: "Premium Electronics Store",
+        address: "123 Marina Road, Lagos Island",
+        city: "Lagos",
+        state: "Lagos State",
+        country: "Nigeria",
+        coordinates: [6.4541, 3.3947], // Lagos Island coordinates
+        zoom: 14,
+        phone: "+234 803 123 4567",
+        isVerified: true,
+        rating: 4.8,
+        totalSales: 1234,
+      }
+    );
   }, [shopData]);
 
-  
   return (
     <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-lg">
       {/* Map Header Overlay */}
@@ -272,9 +274,7 @@ function ShopLocationMap({ shopData }) {
 
               <div className="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
                 <div>
-                  <Typography sx={{ fontSize: "0.75rem", color: "#6b7280" }}>
-                    Rating
-                  </Typography>
+                  <Typography sx={{ fontSize: "0.75rem", color: "#6b7280" }}>Rating</Typography>
                   <Typography
                     sx={{
                       fontSize: "1.25rem",

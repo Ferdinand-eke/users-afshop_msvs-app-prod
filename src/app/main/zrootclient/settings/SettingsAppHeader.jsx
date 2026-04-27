@@ -20,10 +20,7 @@ function SettingsAppHeader(props) {
       initial={{ opacity: 0, y: -10 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, delay: 0.1 }}
-      className={clsx(
-        "flex items-center justify-between -mx-6 md:mx-0 pb-4 border-b",
-        className
-      )}
+      className={clsx("flex items-center justify-between -mx-6 md:mx-0 pb-4 border-b", className)}
       style={{
         borderColor: "rgba(234, 88, 12, 0.1)",
       }}
@@ -52,7 +49,8 @@ function SettingsAppHeader(props) {
             <div
               className="hidden sm:flex w-12 h-12 rounded-xl items-center justify-center flex-shrink-0"
               style={{
-                background: "linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(234, 88, 12, 0.08) 100%)",
+                background:
+                  "linear-gradient(135deg, rgba(249, 115, 22, 0.12) 0%, rgba(234, 88, 12, 0.08) 100%)",
                 border: "2px solid rgba(234, 88, 12, 0.2)",
               }}
             >

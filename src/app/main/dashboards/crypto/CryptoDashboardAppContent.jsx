@@ -1,10 +1,10 @@
-import BtcMainChart from './widgets/BTCMainChart';
+import BtcMainChart from "./widgets/BTCMainChart";
 
 /**
  * Crypto Dashboard App Content
  */
 function CryptoDashboardAppContent() {
-	return <BtcMainChart />;
+  return <BtcMainChart />;
 }
 
 export default CryptoDashboardAppContent;

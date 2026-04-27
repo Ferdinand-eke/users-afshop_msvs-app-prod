@@ -13,19 +13,7 @@ import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
  * ProductCard Component
  * Displays hotel/apartment listing with image slider
  */
-function ProductCard({
-  id,
-  slug,
-  image,
-  name,
-  price,
-  address,
-  listprice,
-  unitweight,
-}) {
-
-
-    
+function ProductCard({ id, slug, image, name, price, address, listprice, unitweight }) {
   return (
     <>
       <div
@@ -62,15 +50,12 @@ function ProductCard({
             {/* .slice(0,20) */}
           </Typography>
           <p className="text-orange-500 font-bold mt-2">
-            ₦ {formatCurrency(price)}{" "}
-            <span className="text-[10px]"> per {unitweight}</span>
+            ₦ {formatCurrency(price)} <span className="text-[10px]"> per {unitweight}</span>
           </p>
 
           {listprice && (
             <>
-              <p className="text-gray-500 line-through">
-                ₦ {formatCurrency(listprice)}
-              </p>
+              <p className="text-gray-500 line-through">₦ {formatCurrency(listprice)}</p>
             </>
           )}
 

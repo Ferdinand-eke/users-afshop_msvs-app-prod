@@ -157,7 +157,7 @@ const navigationData = [
 function DemoSidebar() {
   return (
     <div className="px-12 py-24 ">
-{/*h-screen min-h-6xl */}
+      {/*h-screen min-h-6xl */}
       <UserAccountLeads />
     </div>
   );

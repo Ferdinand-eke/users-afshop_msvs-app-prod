@@ -14,7 +14,8 @@ function ApartmentAdsSlider() {
       id: 1,
       title: "Luxury Apartments in Lagos",
       description: "Premium waterfront living",
-      image: "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=85",
+      image:
+        "https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=600&auto=format&fit=crop&q=85",
       link: "/bookings/listings",
       bgGradient: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
     },
@@ -22,7 +23,8 @@ function ApartmentAdsSlider() {
       id: 2,
       title: "Cozy Studio Apartments",
       description: "Perfect for business travelers",
-      image: "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&auto=format&fit=crop&q=85",
+      image:
+        "https://images.unsplash.com/photo-1522708323590-d24dbb6b0267?w=600&auto=format&fit=crop&q=85",
       link: "/bookings/listings",
       bgGradient: "linear-gradient(135deg, #3b82f6 0%, #2563eb 100%)",
     },
@@ -30,7 +32,8 @@ function ApartmentAdsSlider() {
       id: 3,
       title: "Family Villas & Houses",
       description: "Spacious homes for your family",
-      image: "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=85",
+      image:
+        "https://images.unsplash.com/photo-1512917774080-9991f1c4c750?w=600&auto=format&fit=crop&q=85",
       link: "/bookings/listings",
       bgGradient: "linear-gradient(135deg, #10b981 0%, #059669 100%)",
     },
@@ -38,7 +41,8 @@ function ApartmentAdsSlider() {
       id: 4,
       title: "Beachfront Resorts",
       description: "Vacation paradise awaits",
-      image: "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&auto=format&fit=crop&q=85",
+      image:
+        "https://images.unsplash.com/photo-1582719508461-905c673771fd?w=600&auto=format&fit=crop&q=85",
       link: "/bookings/listings",
       bgGradient: "linear-gradient(135deg, #a855f7 0%, #9333ea 100%)",
     },

@@ -60,26 +60,16 @@ function LandingCenterHome() {
           className="relative pt-32 pb-112 px-16 sm:pt-80 sm:pb-192 sm:px-64 overflow-hidden"
           sx={{
             backgroundColor: "primary.dark",
-            color: (theme) =>
-              theme.palette.getContrastText(theme.palette.primary.main),
+            color: (theme) => theme.palette.getContrastText(theme.palette.primary.main),
           }}
         >
           <div className="flex flex-col items-center justify-center  mx-auto w-full">
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0 } }}
-            >
-              <Typography
-                color="inherit"
-                className="text-4 md:text-18 text-center font-semibold"
-              >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0 } }}>
+              <Typography color="inherit" className="text-4 md:text-18 text-center font-semibold">
                 BECOME A PART OF OUR COMMUNITY, AS WE DRIVE AFRICA'S TRADE HUB
               </Typography>
             </motion.div>
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1, transition: { delay: 0 } }}
-            >
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1, transition: { delay: 0 } }}>
               <Typography className="mt-4 text-24 sm:text-32 font-extrabold tracking-tight leading-tight text-center">
                 Millions Of Shoppers Can’t Wait To See What You Have In Store
               </Typography>
@@ -124,15 +114,15 @@ function LandingCenterHome() {
                     Fresh Deals
                   </h1> */}
                   <Carousel
-                  autoPlay={true}
-                  infiniteLoop={true}
-                  interval={5000}
-                  showIndicators={true}
-                  showStatus={false}
-                  showThumbs={false}
-                  transitionTime={600}
-                  swipeable={true}
-                  emulateTouch={true}
+                    autoPlay={true}
+                    infiniteLoop={true}
+                    interval={5000}
+                    showIndicators={true}
+                    showStatus={false}
+                    showThumbs={false}
+                    transitionTime={600}
+                    swipeable={true}
+                    emulateTouch={true}
                   >
                     <div>
                       <img
@@ -143,14 +133,16 @@ function LandingCenterHome() {
                       <p className="legend cursor-pointer">Africanshops</p>
                     </div>
                     <div>
-                      <img src="https://plus.unsplash.com/premium_photo-1699855177060-7202c67834b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww" 
-                      className="rounded-lg w-full h-[300px] p-8"
+                      <img
+                        src="https://plus.unsplash.com/premium_photo-1699855177060-7202c67834b9?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
+                        className="rounded-lg w-full h-[300px] p-8"
                       />
                       <p className="legend cursor-pointer">Legend 2</p>
                     </div>
                     <div>
-                      <img src="https://images.unsplash.com/photo-1644161170685-2f5678222db8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww" 
-                      className="rounded-lg w-full h-[300px] p-8"
+                      <img
+                        src="https://images.unsplash.com/photo-1644161170685-2f5678222db8?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTF8fHNob3AlMjBiYW5uZXJzfGVufDB8fDB8fHww"
+                        className="rounded-lg w-full h-[300px] p-8"
                       />
                       <p className="legend cursor-pointer">Legend 3</p>
                     </div>
@@ -186,13 +178,9 @@ function LandingCenterHome() {
                   <div className="flex flex-col justify-between">
                     <div className="flex items-center">
                       <i className="fas fa-star mr-2"></i>
-                      <span className="font-500 text-sm">
-                        AFRICANSHOPS WORK FORCE
-                      </span>
+                      <span className="font-500 text-sm">AFRICANSHOPS WORK FORCE</span>
                     </div>
-                    <p className="mt-8 cursor-pointer text-center font-800">
-                      JOIN NOW
-                    </p>
+                    <p className="mt-8 cursor-pointer text-center font-800">JOIN NOW</p>
                   </div>
                 </div>
               </div>

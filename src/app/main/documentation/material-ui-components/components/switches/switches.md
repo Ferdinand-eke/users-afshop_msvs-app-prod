@@ -2,7 +2,7 @@
 productId: material-ui
 title: React Switch component
 components: Switch, FormControl, FormGroup, FormLabel, FormControlLabel
-githubLabel: 'component: switch'
+githubLabel: "component: switch"
 materialDesign: https://m2.material.io/components/selection-controls#switches
 unstyled: /base-ui/react-switch/
 ---
@@ -80,5 +80,5 @@ You can change the placement of the label:
   In this case, you can apply the additional attribute (for example `aria-label`, `aria-labelledby`, `title`) via the `inputProps` prop.
 
 ```jsx
-<Switch value="checkedA" inputProps={{ 'aria-label': 'Switch A' }} />
+<Switch value="checkedA" inputProps={{ "aria-label": "Switch A" }} />
 ```

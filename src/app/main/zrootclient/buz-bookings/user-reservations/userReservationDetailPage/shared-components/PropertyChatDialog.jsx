@@ -1,21 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Dialog,
-  TextField,
-  IconButton,
-  Typography,
-  Avatar,
-  Divider,
-  Chip,
-} from "@mui/material";
-import {
-  Close,
-  Send,
-  AttachFile,
-  EmojiEmotions,
-  MoreVert,
-} from "@mui/icons-material";
+import { Dialog, TextField, IconButton, Typography, Avatar, Divider, Chip } from "@mui/material";
+import { Close, Send, AttachFile, EmojiEmotions, MoreVert } from "@mui/icons-material";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 
@@ -33,9 +19,7 @@ function PropertyChatDialog({ open, onClose, reservation }) {
   // Load messages from localStorage on mount
   useEffect(() => {
     if (reservation?.id) {
-      const savedMessages = localStorage.getItem(
-        `chat_messages_${reservation.id}`
-      );
+      const savedMessages = localStorage.getItem(`chat_messages_${reservation.id}`);
       if (savedMessages) {
         try {
           setMessages(JSON.parse(savedMessages));
@@ -49,10 +33,7 @@ function PropertyChatDialog({ open, onClose, reservation }) {
   // Save messages to localStorage whenever they change
   useEffect(() => {
     if (reservation?.id && messages.length > 0) {
-      localStorage.setItem(
-        `chat_messages_${reservation.id}`,
-        JSON.stringify(messages)
-      );
+      localStorage.setItem(`chat_messages_${reservation.id}`, JSON.stringify(messages));
     }
   }, [messages, reservation?.id]);
 
@@ -139,10 +120,7 @@ function PropertyChatDialog({ open, onClose, reservation }) {
               PH
             </Avatar>
             <div>
-              <Typography
-                variant="h6"
-                className="font-bold text-white leading-tight"
-              >
+              <Typography variant="h6" className="font-bold text-white leading-tight">
                 Property Host
               </Typography>
               <div className="flex items-center gap-2">
@@ -219,8 +197,8 @@ function PropertyChatDialog({ open, onClose, reservation }) {
               Start a Conversation
             </Typography>
             <Typography variant="body2" className="text-gray-600 max-w-xs mx-auto">
-              Send a message to connect with your property host. They typically
-              respond within a few hours.
+              Send a message to connect with your property host. They typically respond within a few
+              hours.
             </Typography>
           </motion.div>
         )}
@@ -234,9 +212,7 @@ function PropertyChatDialog({ open, onClose, reservation }) {
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -20 }}
               transition={{ delay: index * 0.05 }}
-              className={`flex ${
-                msg.sender === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex ${msg.sender === "user" ? "justify-end" : "justify-start"}`}
             >
               <div
                 className={`flex gap-3 max-w-[75%] ${
@@ -262,9 +238,7 @@ function PropertyChatDialog({ open, onClose, reservation }) {
                 <div>
                   <div
                     className={`p-4 rounded-2xl ${
-                      msg.sender === "user"
-                        ? "rounded-tr-none"
-                        : "rounded-tl-none"
+                      msg.sender === "user" ? "rounded-tr-none" : "rounded-tl-none"
                     }`}
                     style={{
                       background:
@@ -377,26 +351,23 @@ function PropertyChatDialog({ open, onClose, reservation }) {
           <Typography variant="caption" className="text-gray-500">
             Quick actions:
           </Typography>
-          {[
-            "Check-in details",
-            "Property amenities",
-            "Directions",
-            "Emergency contact",
-          ].map((action, index) => (
-            <Chip
-              key={index}
-              label={action}
-              size="small"
-              onClick={() => setMessage(action)}
-              sx={{
-                fontSize: "0.75rem",
-                cursor: "pointer",
-                "&:hover": {
-                  backgroundColor: "#fed7aa",
-                },
-              }}
-            />
-          ))}
+          {["Check-in details", "Property amenities", "Directions", "Emergency contact"].map(
+            (action, index) => (
+              <Chip
+                key={index}
+                label={action}
+                size="small"
+                onClick={() => setMessage(action)}
+                sx={{
+                  fontSize: "0.75rem",
+                  cursor: "pointer",
+                  "&:hover": {
+                    backgroundColor: "#fed7aa",
+                  },
+                }}
+              />
+            ),
+          )}
         </div>
       </div>
     </Dialog>

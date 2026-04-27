@@ -3,11 +3,13 @@
 ## ✅ All Issues Resolved
 
 ### Issue 1: Main Domain Homepage Not Accessible
+
 **Problem**: Visiting `localhost:3000/` showed blank or broken page.
 
 **Root Cause**: The `/` route in `routesConfig.jsx` (line 232) was hardcoded to always show `ModernLandingPage`, overriding the merchant subdomain route.
 
 **Fix**: Made the main homepage route conditional:
+
 ```javascript
 // Only show ModernLandingPage on main domain
 ...(!onMerchantSubdomain
@@ -16,15 +18,18 @@
 ```
 
 **Result**:
+
 - `localhost:3000/` → Shows `ModernLandingPage` ✅
 - `cindy-fabrics.localhost:3000/` → Shows merchant profile ✅
 
 ---
 
 ### Issue 2: All Routes Need to Work on Both Domains
+
 **Problem**: Routes should be accessible on both main domain AND merchant subdomains.
 
 **Fix**: Updated `MerchantSubdomainLayout` to return `null` if no subdomain detected:
+
 ```javascript
 // If no subdomain, return null (let other routes handle it)
 if (!merchantSlug) {
@@ -33,6 +38,7 @@ if (!merchantSlug) {
 ```
 
 **Result**:
+
 - Main domain routes work normally ✅
 - Merchant subdomain routes overlay merchant branding ✅
 - No interference between the two ✅
@@ -40,6 +46,7 @@ if (!merchantSlug) {
 ---
 
 ### Issue 3: Authentication Per Subdomain
+
 **Confirmed**: Each subdomain has its own authentication/localStorage.
 
 **Status**: Working as expected. This is intentional behavior for now - will implement cookie-based shared auth when activating premium feature.
@@ -49,6 +56,7 @@ if (!merchantSlug) {
 ## How It Works Now
 
 ### Main Domain (`localhost:3000`)
+
 ```
 /                           → ModernLandingPage (homepage)
 /about                      → About page
@@ -64,6 +72,7 @@ if (!merchantSlug) {
 All routes work normally ✅
 
 ### Merchant Subdomain (`cindy-fabrics.localhost:3000`)
+
 ```
 /                           → Cindy Fabrics profile (MerchantHospitalityPage)
 /profile                    → Cindy Fabrics profile (explicit)
@@ -76,6 +85,7 @@ All routes work normally ✅
 Merchant profile shows on `/`, other routes work normally ✅
 
 ### Different Merchant (`reens-apartments.localhost:3000`)
+
 ```
 /                           → Reens Apartments profile
 /profile                    → Reens Apartments profile
@@ -89,16 +99,18 @@ Each merchant gets their own profile ✅
 ## URL Navigation
 
 ### From Main Domain to Merchant Subdomain
+
 ```javascript
 // User clicks "View Full Profile" on Cindy Fabrics property
-navigateToMerchantSubdomain('cindy-fabrics', '/');
+navigateToMerchantSubdomain("cindy-fabrics", "/");
 // Result: http://cindy-fabrics.localhost:3000/
 ```
 
 ### From Merchant Subdomain to Another Merchant
+
 ```javascript
 // From cindy-fabrics.localhost, navigate to Reens
-navigateToMerchantSubdomain('reens-apartments', '/');
+navigateToMerchantSubdomain("reens-apartments", "/");
 // Result: http://reens-apartments.localhost:3000/
 // NOT: http://reens-apartments.cindy-fabrics.localhost ❌
 ```
@@ -106,9 +118,10 @@ navigateToMerchantSubdomain('reens-apartments', '/');
 No cascading issues ✅
 
 ### From Merchant Subdomain to Main Domain
+
 ```javascript
 // Click "Back to AfricanShops"
-navigateToMainDomain('/');
+navigateToMainDomain("/");
 // Result: http://localhost:3000/
 ```
 
@@ -142,18 +155,22 @@ Navigating to Merchant Subdomain:
 ## Files Modified
 
 ### 1. `src/app/configs/routesConfig.jsx`
+
 - Made `/` route conditional based on subdomain presence
 - Lines 229-236: Only render `ModernLandingPage` on main domain
 
 ### 2. `src/app/main/merchant-subdomain/MerchantSubdomainLayout.jsx`
+
 - Return `null` instead of 404 when no subdomain detected
 - Line 44-46: Allows main domain routes to work normally
 
 ### 3. `src/app/main/merchant-subdomain/MerchantSubdomainConfig.jsx`
+
 - Re-enabled `/` route for merchant profile
 - Lines 45-48: Root route shows merchant profile on subdomains
 
 ### 4. `src/app/utils/subdomainUtils.js`
+
 - Added detailed console logging
 - Proper subdomain detection for `.localhost` pattern
 - Clean domain stripping (no cascading)
@@ -163,23 +180,27 @@ Navigating to Merchant Subdomain:
 ## Testing Checklist
 
 ### ✅ Main Domain
+
 - [ ] Visit `http://localhost:3000/` → Shows ModernLandingPage
 - [ ] Visit `http://localhost:3000/about` → Shows About page
 - [ ] Visit `http://localhost:3000/bookings/listings` → Shows listings
 - [ ] Login on main domain → Auth works
 
 ### ✅ Merchant Subdomains
+
 - [ ] Visit `http://cindy-fabrics.localhost:3000/` → Shows Cindy profile
 - [ ] Visit `http://reens-apartments.localhost:3000/` → Shows Reens profile
 - [ ] Visit `http://cindy-fabrics.localhost:3000/bookings/listings` → Shows listings
 - [ ] Login on subdomain → Separate auth (expected)
 
 ### ✅ Navigation
+
 - [ ] Main domain → Click "View Profile" → Goes to merchant subdomain
 - [ ] Merchant subdomain → Click "Back" → Returns to main domain
 - [ ] One merchant subdomain → Navigate to another → Clean URL (no cascading)
 
 ### ✅ Invalid Merchant
+
 - [ ] Visit `http://invalid-merchant.localhost:3000/` → Shows 404 (merchant not found)
 
 ---
@@ -187,6 +208,7 @@ Navigating to Merchant Subdomain:
 ## Premium Feature Status
 
 ### Current State
+
 - ✅ Subdomain detection working perfectly
 - ✅ No cascading issues
 - ✅ Main domain and merchant subdomains coexist
@@ -195,6 +217,7 @@ Navigating to Merchant Subdomain:
 - ✅ Separate authentication per subdomain
 
 ### Ready to Enable
+
 - [ ] Cookie-based shared authentication
 - [ ] Merchant-branded booking flow
 - [ ] Merchant-branded marketplace
@@ -203,7 +226,9 @@ Navigating to Merchant Subdomain:
 - [ ] Analytics per merchant
 
 ### Monetization
+
 This is ready to be packaged as a **Premium Feature**:
+
 - Free tier: Listed on main domain only
 - Premium tier ($X/mo): Own subdomain with full branding
 - Enterprise tier ($Y/mo): Custom domain + white-label
@@ -245,17 +270,20 @@ User visits URL
 ## Production Deployment
 
 ### DNS
+
 ```bash
 *.africanshops.org → A → your-server-ip
 ```
 
 ### SSL
+
 ```bash
 # Wildcard certificate
 *.africanshops.org + africanshops.org
 ```
 
 ### Server Config (Nginx)
+
 ```nginx
 server {
     server_name africanshops.org *.africanshops.org;

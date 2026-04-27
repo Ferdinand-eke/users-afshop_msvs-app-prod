@@ -4,8 +4,6 @@ import { Range } from "react-date-range";
 import { Calender } from "../calender";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 
-
-
 export const ListingReservation = ({
   price,
   totalPrice,
@@ -27,10 +25,7 @@ export const ListingReservation = ({
     >
       {/* Price Header */}
       <div className="px-4 py-4 border-b border-neutral-200">
-        <Typography
-          className="text-dark dark:text-white/[.87] text-[24px] font-bold"
-          as="h3"
-        >
+        <Typography className="text-dark dark:text-white/[.87] text-[24px] font-bold" as="h3">
           <span className="text-base text-light dark:text-white/60">₦</span>
           <span>
             {formatCurrency(price)}{" "}
@@ -61,17 +56,17 @@ export const ListingReservation = ({
           onClick={onSubmit}
           disabled={disabled}
           sx={{
-            backgroundColor: '#ea580c',
-            '&:hover': {
-              backgroundColor: '#c2410c',
-              transform: 'translateY(-2px)',
-              boxShadow: '0 10px 20px rgba(234, 88, 12, 0.3)',
+            backgroundColor: "#ea580c",
+            "&:hover": {
+              backgroundColor: "#c2410c",
+              transform: "translateY(-2px)",
+              boxShadow: "0 10px 20px rgba(234, 88, 12, 0.3)",
             },
-            '&:disabled': {
-              backgroundColor: '#9ca3af',
-              cursor: 'not-allowed',
+            "&:disabled": {
+              backgroundColor: "#9ca3af",
+              cursor: "not-allowed",
             },
-            textTransform: 'none',
+            textTransform: "none",
           }}
         >
           Reserve Now

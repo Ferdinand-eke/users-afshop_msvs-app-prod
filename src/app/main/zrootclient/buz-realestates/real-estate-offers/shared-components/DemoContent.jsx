@@ -1,17 +1,34 @@
 import FuseLoading from "@fuse/core/FuseLoading";
 import { motion } from "framer-motion";
-import { Typography, Card, CardContent, Chip, Button, Pagination, Dialog, DialogTitle, DialogContent, DialogActions, TextField, Divider } from "@mui/material";
+import {
+  Typography,
+  Card,
+  CardContent,
+  Chip,
+  Button,
+  Pagination,
+  Dialog,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  TextField,
+  Divider,
+} from "@mui/material";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
 import { format, parseISO } from "date-fns";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useUpdateOfferBid, useWithdrawOffer } from "app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo";
+import {
+  useUpdateOfferBid,
+  useWithdrawOffer,
+} from "app/configs/data/server-calls/auth/userapp/a_estates/useOffersRepo";
 
 /**
  * Demo Content - Estate Offers List with Pagination
  */
 function DemoContent(props) {
-  const { isLoading, isError, offers, pagination, currentPage, onPageChange, isPreviousData } = props;
+  const { isLoading, isError, offers, pagination, currentPage, onPageChange, isPreviousData } =
+    props;
 
   const navigate = useNavigate();
   const [upgradeDialogOpen, setUpgradeDialogOpen] = useState(false);
@@ -22,7 +39,7 @@ function DemoContent(props) {
   const [acceptedOfferDetails, setAcceptedOfferDetails] = useState(null);
   const [newOfferAmount, setNewOfferAmount] = useState("");
 
-  console.log("Real_Estate Offers", offers)
+  console.log("Real_Estate Offers", offers);
 
   // Mutations
   const updateOfferMutation = useUpdateOfferBid();
@@ -37,18 +54,21 @@ function DemoContent(props) {
   const handleSubmitUpgrade = () => {
     console.log("Submitting upgraded offer:", selectedOffer, newOfferAmount);
     if (selectedOffer && newOfferAmount) {
-      updateOfferMutation.mutate({
-        offerId: selectedOffer.id,
-        formData: {
-          offerAmount: parseInt(newOfferAmount),
+      updateOfferMutation.mutate(
+        {
+          offerId: selectedOffer.id,
+          formData: {
+            offerAmount: parseInt(newOfferAmount),
+          },
         },
-      }, {
-        onSuccess: () => {
-          setUpgradeDialogOpen(false);
-          setSelectedOffer(null);
-          setNewOfferAmount("");
+        {
+          onSuccess: () => {
+            setUpgradeDialogOpen(false);
+            setSelectedOffer(null);
+            setNewOfferAmount("");
+          },
         },
-      });
+      );
     }
   };
 
@@ -88,7 +108,7 @@ function DemoContent(props) {
   const proceedToAcquisition = () => {
     if (acceptedOfferDetails) {
       navigate(`/realestate/property-acquisition/${acceptedOfferDetails.id}`, {
-        state: { offerDetails: acceptedOfferDetails }
+        state: { offerDetails: acceptedOfferDetails },
       });
     }
   };
@@ -104,9 +124,7 @@ function DemoContent(props) {
         animate={{ opacity: 1, transition: { delay: 0.1 } }}
         className="flex flex-col flex-1 items-center justify-center h-full"
       >
-        <ClienttErrorPage
-          message={"Error occurred while retrieving estate offers"}
-        />
+        <ClienttErrorPage message={"Error occurred while retrieving estate offers"} />
       </motion.div>
     );
   }
@@ -157,9 +175,9 @@ function DemoContent(props) {
   };
 
   const formatCurrency = (amount) => {
-    return new Intl.NumberFormat('en-NG', {
-      style: 'currency',
-      currency: 'NGN',
+    return new Intl.NumberFormat("en-NG", {
+      style: "currency",
+      currency: "NGN",
     }).format(amount || 0);
   };
 
@@ -170,9 +188,7 @@ function DemoContent(props) {
       <div className="h-7xl min-h-7xl max-h-7xl">
         <main className="w-full p-4 overflow-y-scroll">
           <div className="flex justify-between items-center mb-4">
-            <h1 className="text-xl font-bold">
-              My Property Offers ({pagination?.total || 0})
-            </h1>
+            <h1 className="text-xl font-bold">My Property Offers ({pagination?.total || 0})</h1>
             <Typography variant="caption" className="text-gray-600">
               Page {currentPage} of {totalPages}
             </Typography>
@@ -184,8 +200,12 @@ function DemoContent(props) {
                 key={offer?.id}
                 className="bg-white shadow-md hover:shadow-lg transition-all duration-300 border-l-4"
                 style={{
-                  borderLeftColor: offer?.status?.toLowerCase() === 'accepted' ? '#22c55e' :
-                                   offer?.status?.toLowerCase() === 'rejected' ? '#ef4444' : '#f59e0b'
+                  borderLeftColor:
+                    offer?.status?.toLowerCase() === "accepted"
+                      ? "#22c55e"
+                      : offer?.status?.toLowerCase() === "rejected"
+                        ? "#ef4444"
+                        : "#f59e0b",
                 }}
               >
                 <CardContent>
@@ -229,7 +249,10 @@ function DemoContent(props) {
                   <div className="bg-gradient-to-r from-green-50 to-green-100 p-4 rounded-lg mb-4 border border-green-200">
                     <div className="grid grid-cols-2 gap-4">
                       <div>
-                        <Typography variant="caption" className="text-green-800 font-semibold block">
+                        <Typography
+                          variant="caption"
+                          className="text-green-800 font-semibold block"
+                        >
                           Your Offer Amount
                         </Typography>
                         <Typography variant="h5" className="font-bold text-green-900">
@@ -238,14 +261,18 @@ function DemoContent(props) {
                       </div>
                       {offer?.property.price && (
                         <div className="text-right">
-                          <Typography variant="caption" className="text-gray-600 font-semibold block">
+                          <Typography
+                            variant="caption"
+                            className="text-gray-600 font-semibold block"
+                          >
                             Listed Price
                           </Typography>
                           <Typography variant="h6" className="font-semibold text-gray-700">
                             {formatCurrency(offer?.property.price)}
                           </Typography>
                           <Typography variant="caption" className="text-gray-500">
-                            {((offer?.offerAmount / offer?.property.price) * 100).toFixed(1)}% of asking
+                            {((offer?.offerAmount / offer?.property.price) * 100).toFixed(1)}% of
+                            asking
                           </Typography>
                         </div>
                       )}
@@ -255,31 +282,39 @@ function DemoContent(props) {
                   {/* Contact & Details Grid */}
                   <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
                     <div>
-                      <Typography variant="caption" color="text.secondary" className="font-semibold block">
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        className="font-semibold block"
+                      >
                         Buyer Name
                       </Typography>
                       <div className="flex items-center gap-2">
                         <i className="fas fa-user text-green-500"></i>
-                        <Typography variant="body2">
-                          {offer?.buyerName || "N/A"}
-                        </Typography>
+                        <Typography variant="body2">{offer?.buyerName || "N/A"}</Typography>
                       </div>
                     </div>
 
                     <div>
-                      <Typography variant="caption" color="text.secondary" className="font-semibold block">
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        className="font-semibold block"
+                      >
                         Contact Phone
                       </Typography>
                       <div className="flex items-center gap-2">
                         <i className="fas fa-phone text-green-500"></i>
-                        <Typography variant="body2">
-                          {offer?.buyerPhone || "N/A"}
-                        </Typography>
+                        <Typography variant="body2">{offer?.buyerPhone || "N/A"}</Typography>
                       </div>
                     </div>
 
                     <div>
-                      <Typography variant="caption" color="text.secondary" className="font-semibold block">
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        className="font-semibold block"
+                      >
                         Contact Email
                       </Typography>
                       <div className="flex items-center gap-2">
@@ -291,7 +326,11 @@ function DemoContent(props) {
                     </div>
 
                     <div>
-                      <Typography variant="caption" color="text.secondary" className="font-semibold block">
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        className="font-semibold block"
+                      >
                         Submitted On
                       </Typography>
                       <div className="flex items-center gap-2">
@@ -303,7 +342,11 @@ function DemoContent(props) {
                     </div>
 
                     <div>
-                      <Typography variant="caption" color="text.secondary" className="font-semibold block">
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        className="font-semibold block"
+                      >
                         Last Updated
                       </Typography>
                       <div className="flex items-center gap-2">
@@ -315,7 +358,11 @@ function DemoContent(props) {
                     </div>
 
                     <div>
-                      <Typography variant="caption" color="text.secondary" className="font-semibold block">
+                      <Typography
+                        variant="caption"
+                        color="text.secondary"
+                        className="font-semibold block"
+                      >
                         Offer ID
                       </Typography>
                       <div className="flex items-center gap-2">
@@ -330,7 +377,10 @@ function DemoContent(props) {
                   {/* Message Section */}
                   {offer?.message && (
                     <div className="mt-4 p-3 bg-blue-50 rounded-lg border border-blue-200">
-                      <Typography variant="caption" className="text-blue-800 font-semibold block mb-1">
+                      <Typography
+                        variant="caption"
+                        className="text-blue-800 font-semibold block mb-1"
+                      >
                         <i className="fas fa-comment text-blue-600 mr-1"></i>
                         Your Message
                       </Typography>
@@ -380,10 +430,10 @@ function DemoContent(props) {
                           startIcon={<i className="fas fa-arrow-right"></i>}
                           onClick={() => handleViewAcceptedOffer(offer)}
                           sx={{
-                            background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-                            '&:hover': {
-                              background: 'linear-gradient(135deg, #16a34a 0%, #15803d 100%)',
-                            }
+                            background: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+                            "&:hover": {
+                              background: "linear-gradient(135deg, #16a34a 0%, #15803d 100%)",
+                            },
                           }}
                         >
                           Proceed to Purchase
@@ -462,7 +512,8 @@ function DemoContent(props) {
               </Typography>
               {selectedOffer?.propertyPrice && (
                 <Typography variant="caption" className="text-gray-500 mt-1 block">
-                  {((selectedOffer?.offerAmount / selectedOffer?.propertyPrice) * 100).toFixed(1)}% of listed price
+                  {((selectedOffer?.offerAmount / selectedOffer?.propertyPrice) * 100).toFixed(1)}%
+                  of listed price
                 </Typography>
               )}
             </div>
@@ -491,7 +542,8 @@ function DemoContent(props) {
                     {formatCurrency(parseFloat(newOfferAmount))}
                   </Typography>
                   <Typography variant="caption" className="text-green-700">
-                    {((parseFloat(newOfferAmount) / selectedOffer?.propertyPrice) * 100).toFixed(1)}% of listed price
+                    {((parseFloat(newOfferAmount) / selectedOffer?.propertyPrice) * 100).toFixed(1)}
+                    % of listed price
                   </Typography>
                 </div>
               </div>
@@ -508,7 +560,11 @@ function DemoContent(props) {
           <Button
             onClick={handleSubmitUpgrade}
             variant="contained"
-            disabled={!newOfferAmount || parseFloat(newOfferAmount) <= selectedOffer?.offerAmount || updateOfferMutation.isLoading}
+            disabled={
+              !newOfferAmount ||
+              parseFloat(newOfferAmount) <= selectedOffer?.offerAmount ||
+              updateOfferMutation.isLoading
+            }
             sx={{
               backgroundColor: "#22c55e",
               "&:hover": { backgroundColor: "#16a34a" },
@@ -529,16 +585,18 @@ function DemoContent(props) {
         fullWidth
         PaperProps={{
           sx: {
-            borderRadius: '20px',
-            boxShadow: '0 20px 60px rgba(0, 0, 0, 0.2)',
-          }
+            borderRadius: "20px",
+            boxShadow: "0 20px 60px rgba(0, 0, 0, 0.2)",
+          },
         }}
       >
-        <DialogTitle sx={{
-          background: 'linear-gradient(135deg, #22c55e 0%, #16a34a 100%)',
-          color: 'white',
-          padding: '28px',
-        }}>
+        <DialogTitle
+          sx={{
+            background: "linear-gradient(135deg, #22c55e 0%, #16a34a 100%)",
+            color: "white",
+            padding: "28px",
+          }}
+        >
           <div className="flex items-center gap-4">
             <div className="w-14 h-14 bg-white/20 rounded-full flex items-center justify-center">
               <i className="fas fa-check-circle text-white text-2xl"></i>
@@ -554,7 +612,7 @@ function DemoContent(props) {
           </div>
         </DialogTitle>
 
-        <DialogContent sx={{ padding: '32px 28px' }}>
+        <DialogContent sx={{ padding: "32px 28px" }}>
           <div className="space-y-5">
             {/* Success Message */}
             <div className="bg-gradient-to-br from-green-50 to-emerald-50 border-l-4 border-green-500 p-5 rounded-r-xl">
@@ -565,7 +623,8 @@ function DemoContent(props) {
                     Your offer has been accepted by the seller!
                   </Typography>
                   <Typography variant="body2" className="text-gray-700">
-                    Review the complete cost breakdown below and proceed to finalize your property acquisition.
+                    Review the complete cost breakdown below and proceed to finalize your property
+                    acquisition.
                   </Typography>
                 </div>
               </div>
@@ -576,7 +635,10 @@ function DemoContent(props) {
               <>
                 <Card className="border-2 border-green-200 shadow-md">
                   <CardContent className="p-5">
-                    <Typography variant="caption" className="text-green-800 font-bold block mb-4 uppercase tracking-wider">
+                    <Typography
+                      variant="caption"
+                      className="text-green-800 font-bold block mb-4 uppercase tracking-wider"
+                    >
                       <i className="fas fa-building text-green-600 mr-2"></i>
                       Property & Offer Information
                     </Typography>
@@ -640,7 +702,10 @@ function DemoContent(props) {
                 {/* Cost Breakdown */}
                 <Card className="border-2 border-orange-200 shadow-lg">
                   <CardContent className="p-5">
-                    <Typography variant="caption" className="text-orange-800 font-bold block mb-4 uppercase tracking-wider">
+                    <Typography
+                      variant="caption"
+                      className="text-orange-800 font-bold block mb-4 uppercase tracking-wider"
+                    >
                       <i className="fas fa-calculator text-orange-600 mr-2"></i>
                       Complete Cost Breakdown
                     </Typography>
@@ -666,7 +731,10 @@ function DemoContent(props) {
                       {/* Agency Fee */}
                       <div className="flex justify-between items-center p-4 bg-gradient-to-r from-purple-50 to-purple-100 rounded-lg">
                         <div>
-                          <Typography variant="body2" className="text-purple-900 font-semibold mb-1">
+                          <Typography
+                            variant="body2"
+                            className="text-purple-900 font-semibold mb-1"
+                          >
                             Agency Fee (5%)
                           </Typography>
                           <Typography variant="caption" className="text-purple-700">
@@ -681,7 +749,10 @@ function DemoContent(props) {
                       {/* Legal Fee */}
                       <div className="flex justify-between items-center p-4 bg-gradient-to-r from-indigo-50 to-indigo-100 rounded-lg">
                         <div>
-                          <Typography variant="body2" className="text-indigo-900 font-semibold mb-1">
+                          <Typography
+                            variant="body2"
+                            className="text-indigo-900 font-semibold mb-1"
+                          >
                             Legal Fee (2%)
                           </Typography>
                           <Typography variant="caption" className="text-indigo-700">
@@ -693,7 +764,7 @@ function DemoContent(props) {
                         </Typography>
                       </div>
 
-                      <Divider sx={{ borderStyle: 'dashed', borderWidth: 2 }} />
+                      <Divider sx={{ borderStyle: "dashed", borderWidth: 2 }} />
 
                       {/* Total Cost */}
                       <div className="flex justify-between items-center p-5 bg-gradient-to-r from-orange-100 via-orange-200 to-red-100 rounded-xl border-2 border-orange-400 shadow-md">
@@ -723,14 +794,18 @@ function DemoContent(props) {
                         Secure Payment Notice
                       </Typography>
                       <Typography variant="body2" className="text-yellow-800 mb-2">
-                        All payments are processed securely through the company's official account. Funds will be held in escrow and remitted to the merchant only after:
+                        All payments are processed securely through the company's official account.
+                        Funds will be held in escrow and remitted to the merchant only after:
                       </Typography>
                       <ul className="list-disc list-inside space-y-1 text-sm text-yellow-800">
                         <li>Payment verification by our finance team</li>
                         <li>Completion of all required documentation</li>
                         <li>Final approval from legal department</li>
                       </ul>
-                      <Typography variant="caption" className="text-yellow-700 block mt-3 font-semibold">
+                      <Typography
+                        variant="caption"
+                        className="text-yellow-700 block mt-3 font-semibold"
+                      >
                         <i className="fas fa-info-circle mr-1"></i>
                         Never make payments directly to individual sellers
                       </Typography>
@@ -747,7 +822,9 @@ function DemoContent(props) {
                   <div className="space-y-2">
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <Typography variant="caption" className="text-white font-bold">1</Typography>
+                        <Typography variant="caption" className="text-white font-bold">
+                          1
+                        </Typography>
                       </div>
                       <Typography variant="body2" className="text-green-800">
                         Click "Proceed to Payment" to continue to the acquisition portal
@@ -755,7 +832,9 @@ function DemoContent(props) {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <Typography variant="caption" className="text-white font-bold">2</Typography>
+                        <Typography variant="caption" className="text-white font-bold">
+                          2
+                        </Typography>
                       </div>
                       <Typography variant="body2" className="text-green-800">
                         Submit payment to the company's official account
@@ -763,7 +842,9 @@ function DemoContent(props) {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <Typography variant="caption" className="text-white font-bold">3</Typography>
+                        <Typography variant="caption" className="text-white font-bold">
+                          3
+                        </Typography>
                       </div>
                       <Typography variant="body2" className="text-green-800">
                         Upload required documents for property transfer
@@ -771,7 +852,9 @@ function DemoContent(props) {
                     </div>
                     <div className="flex items-center gap-2">
                       <div className="w-6 h-6 bg-green-500 rounded-full flex items-center justify-center">
-                        <Typography variant="caption" className="text-white font-bold">4</Typography>
+                        <Typography variant="caption" className="text-white font-bold">
+                          4
+                        </Typography>
                       </div>
                       <Typography variant="body2" className="text-green-800">
                         Await verification and approval from our teams
@@ -784,25 +867,27 @@ function DemoContent(props) {
           </div>
         </DialogContent>
 
-        <DialogActions sx={{
-          padding: '20px 28px',
-          background: '#f9fafb',
-          borderTop: '1px solid #e5e7eb',
-          gap: 2,
-        }}>
+        <DialogActions
+          sx={{
+            padding: "20px 28px",
+            background: "#f9fafb",
+            borderTop: "1px solid #e5e7eb",
+            gap: 2,
+          }}
+        >
           <Button
             onClick={() => setAcceptedOfferDialogOpen(false)}
             variant="outlined"
             sx={{
               textTransform: "none",
               fontSize: "1rem",
-              borderColor: '#d1d5db',
-              color: '#374151',
+              borderColor: "#d1d5db",
+              color: "#374151",
               paddingX: 4,
               paddingY: 1.5,
-              '&:hover': {
-                borderColor: '#9ca3af',
-                background: '#f3f4f6',
+              "&:hover": {
+                borderColor: "#9ca3af",
+                background: "#f3f4f6",
               },
             }}
           >
@@ -813,16 +898,16 @@ function DemoContent(props) {
             variant="contained"
             startIcon={<i className="fas fa-arrow-right"></i>}
             sx={{
-              background: 'linear-gradient(135deg, #ea580c 0%, #dc2626 100%)',
-              color: 'white',
+              background: "linear-gradient(135deg, #ea580c 0%, #dc2626 100%)",
+              color: "white",
               textTransform: "none",
               fontSize: "1rem",
               paddingX: 4,
               paddingY: 1.5,
-              boxShadow: '0 4px 12px rgba(234, 88, 12, 0.3)',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)',
-                boxShadow: '0 6px 16px rgba(234, 88, 12, 0.4)',
+              boxShadow: "0 4px 12px rgba(234, 88, 12, 0.3)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #c2410c 0%, #b91c1c 100%)",
+                boxShadow: "0 6px 16px rgba(234, 88, 12, 0.4)",
               },
             }}
           >
@@ -839,16 +924,18 @@ function DemoContent(props) {
         fullWidth
         PaperProps={{
           sx: {
-            borderRadius: '16px',
-            boxShadow: '0 10px 40px rgba(0, 0, 0, 0.15)',
-          }
+            borderRadius: "16px",
+            boxShadow: "0 10px 40px rgba(0, 0, 0, 0.15)",
+          },
         }}
       >
-        <DialogTitle sx={{
-          background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
-          color: 'white',
-          padding: '24px',
-        }}>
+        <DialogTitle
+          sx={{
+            background: "linear-gradient(135deg, #dc2626 0%, #ef4444 100%)",
+            color: "white",
+            padding: "24px",
+          }}
+        >
           <div className="flex items-center gap-3">
             <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
               <i className="fas fa-exclamation-triangle text-white text-xl"></i>
@@ -864,7 +951,7 @@ function DemoContent(props) {
           </div>
         </DialogTitle>
 
-        <DialogContent sx={{ padding: '32px 24px' }}>
+        <DialogContent sx={{ padding: "32px 24px" }}>
           <div className="space-y-4">
             {/* Warning Message */}
             <div className="bg-red-50 border-l-4 border-red-500 p-4 rounded-r-lg">
@@ -875,7 +962,8 @@ function DemoContent(props) {
                     Are you sure you want to withdraw this offer?
                   </Typography>
                   <Typography variant="caption" className="text-gray-600">
-                    Once withdrawn, you will need to submit a new offer if you wish to bid on this property again.
+                    Once withdrawn, you will need to submit a new offer if you wish to bid on this
+                    property again.
                   </Typography>
                 </div>
               </div>
@@ -950,30 +1038,32 @@ function DemoContent(props) {
             <div className="flex items-start gap-2 p-3 bg-yellow-50 rounded-lg border border-yellow-200">
               <i className="fas fa-lightbulb text-yellow-600 mt-0.5"></i>
               <Typography variant="caption" className="text-yellow-800">
-                <strong>Note:</strong> Withdrawing this offer will remove it from the seller's consideration.
-                You can submit a new offer later if you change your mind.
+                <strong>Note:</strong> Withdrawing this offer will remove it from the seller's
+                consideration. You can submit a new offer later if you change your mind.
               </Typography>
             </div>
           </div>
         </DialogContent>
 
-        <DialogActions sx={{
-          padding: '16px 24px',
-          background: '#f9fafb',
-          borderTop: '1px solid #e5e7eb',
-          gap: 2,
-        }}>
+        <DialogActions
+          sx={{
+            padding: "16px 24px",
+            background: "#f9fafb",
+            borderTop: "1px solid #e5e7eb",
+            gap: 2,
+          }}
+        >
           <Button
             onClick={() => setWithdrawDialogOpen(false)}
             variant="outlined"
             sx={{
               textTransform: "none",
               fontSize: "0.95rem",
-              borderColor: '#d1d5db',
-              color: '#374151',
-              '&:hover': {
-                borderColor: '#9ca3af',
-                background: '#f3f4f6',
+              borderColor: "#d1d5db",
+              color: "#374151",
+              "&:hover": {
+                borderColor: "#9ca3af",
+                background: "#f3f4f6",
               },
               paddingX: 3,
             }}
@@ -984,22 +1074,24 @@ function DemoContent(props) {
             onClick={confirmWithdrawOffer}
             variant="contained"
             disabled={withdrawOfferMutation.isLoading}
-            startIcon={withdrawOfferMutation.isLoading ? null : <i className="fas fa-times-circle"></i>}
+            startIcon={
+              withdrawOfferMutation.isLoading ? null : <i className="fas fa-times-circle"></i>
+            }
             sx={{
-              background: 'linear-gradient(135deg, #dc2626 0%, #ef4444 100%)',
-              color: 'white',
+              background: "linear-gradient(135deg, #dc2626 0%, #ef4444 100%)",
+              color: "white",
               textTransform: "none",
               fontSize: "0.95rem",
               paddingX: 3,
-              boxShadow: '0 4px 6px rgba(220, 38, 38, 0.2)',
-              '&:hover': {
-                background: 'linear-gradient(135deg, #b91c1c 0%, #dc2626 100%)',
-                boxShadow: '0 6px 8px rgba(220, 38, 38, 0.3)',
+              boxShadow: "0 4px 6px rgba(220, 38, 38, 0.2)",
+              "&:hover": {
+                background: "linear-gradient(135deg, #b91c1c 0%, #dc2626 100%)",
+                boxShadow: "0 6px 8px rgba(220, 38, 38, 0.3)",
               },
-              '&:disabled': {
-                background: '#9ca3af',
-                color: '#fff',
-              }
+              "&:disabled": {
+                background: "#9ca3af",
+                color: "#fff",
+              },
             }}
           >
             {withdrawOfferMutation.isLoading ? (

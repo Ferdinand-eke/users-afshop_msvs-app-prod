@@ -15,7 +15,7 @@ function DemoSidebar() {
         </label>
       </div> */}
 
-	  <OfferDemoLeftSidebar />
+      <OfferDemoLeftSidebar />
     </div>
   );
 }

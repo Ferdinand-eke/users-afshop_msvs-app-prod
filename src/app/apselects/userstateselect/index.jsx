@@ -10,9 +10,7 @@ const UserStateSelect = ({ value, onChange, states }) => {
 
   return (
     <div>
-      <label style={{ fontSize: "12px", fontWeight: "800" }}>
-        *State scan
-      </label>
+      <label style={{ fontSize: "12px", fontWeight: "800" }}>*State scan</label>
       <Select
         placeholder="What state?"
         isClearable

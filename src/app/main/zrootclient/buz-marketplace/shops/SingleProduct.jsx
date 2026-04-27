@@ -50,7 +50,6 @@ const item = {
   },
 };
 
-
 /**
  * The Courses page.
  */
@@ -66,8 +65,9 @@ function SingleProduct() {
 
   // const [cartloading, setCartLoading] = useState(false);
   const [cart, setCart] = useState([]);
-  const {data:userCartData, isLoading:loadingCart} = useGetMyMarketplaceCartByUserCred(user?.id)
-
+  const { data: userCartData, isLoading: loadingCart } = useGetMyMarketplaceCartByUserCred(
+    user?.id,
+  );
 
   const onAddToUserCart = useCallback(() => {
     if (!user?.email) {
@@ -80,10 +80,8 @@ function SingleProduct() {
       quantity: 1,
       product: product?.data?._id,
       seller: product?.data?.shop?._id,
-      shoppingSession:''
+      shoppingSession: "",
     };
-
-   
 
     if (userCartData?.data?.cartItems?.length === 0) {
       const sessionPayload = {
@@ -92,55 +90,46 @@ function SingleProduct() {
         shopStateProvinceOrigin: product?.data?.shop?.businezState,
         shopLgaProvinceOrigin: product?.data?.shop?.businezLga,
         shopMarketId: product?.data?.market?._id,
-      }
+      };
       const setCartSessionPayload = storeShoppingSession(sessionPayload);
       // console.log('shoppinSESSION', setCartSessionPayload)
-      if(setCartSessionPayload){
+      if (setCartSessionPayload) {
         addToart(formData);
         // getCartWhenAuth()
-        return
+        return;
       }
-      
     } else {
-      const payloadData = getShoppingSession()
-      console.log("clientSESSION_LGA", payloadData?.shopLgaProvinceOrigin)
+      const payloadData = getShoppingSession();
+      console.log("clientSESSION_LGA", payloadData?.shopLgaProvinceOrigin);
 
       //get shopping _client_session
       // return;
       if (payloadData?.shopLgaProvinceOrigin === product?.data?.shop?.businezLga) {
-         addToart(formData);
+        addToart(formData);
         // getCartWhenAuth()
-        return
+        return;
       } else {
         alert("You must shop in one L.G.A/County at a time");
-        return
+        return;
       }
     }
-
-    
   }, [
     product?.data?._id,
     routeParams,
     user,
     userCartData?.data?.cartItems,
-    userCartData?.data?.cartItems?.length
+    userCartData?.data?.cartItems?.length,
   ]);
-
-
-
 
   /**use\
    * UseEffect actions
    */
-
 
   // useEffect(() => {
   //   if (user?.email) {
   //     getCartWhenAuth();
   //   }
   // }, [user?.email, cart?.length]);
-
- 
 
   // async function getCartWhenAuth() {
   //   setCartLoading(true);
@@ -158,8 +147,6 @@ function SingleProduct() {
   //   }
   // }
 
-  
-
   // console.log("CARTS_ITEMS", cart);
 
   if (isLoading) {
@@ -176,9 +163,7 @@ function SingleProduct() {
         {/* <Typography color="text.secondary" variant="h5">
           Error occurred while retriving products
         </Typography> */}
-        <ClienttErrorPage
-          message={" Error occurred while retriving product details"}
-        />
+        <ClienttErrorPage message={" Error occurred while retriving product details"} />
       </motion.div>
     );
   }
@@ -237,9 +222,7 @@ function SingleProduct() {
                         Black Friday deal
                       </span>
                     </div>
-                    <h1 className="text-2xl font-bold mt-2">
-                      {product?.data?.name}
-                    </h1>
+                    <h1 className="text-2xl font-bold mt-2">{product?.data?.name}</h1>
                     <Typography
                       className="text-gray-500"
                       component={NavLinkAdapter}
@@ -259,7 +242,6 @@ function SingleProduct() {
                             per {product?.data?.quantityunitweight?.unitname}
                           </p>
                         </span>{" "}
-                    
                       </div>
                       {product?.data?.listprice && (
                         <span className="text-gray-500 line-through ml-2">
@@ -272,8 +254,8 @@ function SingleProduct() {
                       </span>
                     </div>
                     <p className="text-red-500 mt-2">
-                      {product?.data?.quantityInStock}{" "}
-                      {product?.data?.quantityunitweight?.unitname} left
+                      {product?.data?.quantityInStock} {product?.data?.quantityunitweight?.unitname}{" "}
+                      left
                     </p>
                     <p className="text-gray-500">
                       + shipping from ₦ 1,080 to LEKKI-AJAH (SANGOTEDO)
@@ -286,9 +268,7 @@ function SingleProduct() {
                         <i className="far fa-star text-gray-400"></i>
                         <i className="far fa-star text-gray-400"></i>
                       </div>
-                      <span className="text-gray-500 ml-2">
-                        (No ratings available)
-                      </span>
+                      <span className="text-gray-500 ml-2">(No ratings available)</span>
                     </div>
 
                     <AddToProductCartButton
@@ -301,13 +281,9 @@ function SingleProduct() {
                       <h2 className="text-lg font-bold">PROMOTIONS</h2>
                       <ul className="list-disc list-inside text-gray-700">
                         <li>Call 07006000000 To Place Your Order</li>
+                        <li>Need extra money? Loan up to N500,000 on the JumiaPay Android app.</li>
                         <li>
-                          Need extra money? Loan up to N500,000 on the JumiaPay
-                          Android app.
-                        </li>
-                        <li>
-                          Enjoy cheaper shipping fees when you select a PickUp
-                          Station at checkout.
+                          Enjoy cheaper shipping fees when you select a PickUp Station at checkout.
                         </li>
                       </ul>
                     </div>
@@ -319,9 +295,7 @@ function SingleProduct() {
                 <div className="bg-white p-4 rounded">
                   <h2 className="text-lg font-bold">DELIVERY & RETURNS</h2>
                   <div className="mt-2">
-                    <label className="block text-gray-700">
-                      Choose your location
-                    </label>
+                    <label className="block text-gray-700">Choose your location</label>
                     <select className="w-full mt-1 p-2 border rounded">
                       <option>Lagos</option>
                     </select>
@@ -335,8 +309,7 @@ function SingleProduct() {
                         <h3 className="font-bold">Pickup Station</h3>
                         <p className="text-gray-500">Delivery Fees ₦ 1,080</p>
                         <p className="text-gray-500">
-                          Arriving between 21 November & 22 November. Order
-                          within 3mins
+                          Arriving between 21 November & 22 November. Order within 3mins
                         </p>
                       </div>
                       <a href="#" className="text-blue-500">
@@ -348,8 +321,8 @@ function SingleProduct() {
                         <h3 className="font-bold">Door Delivery</h3>
                         <p className="text-gray-500">Delivery Fees ₦ 1,790</p>
                         <p className="text-gray-500">
-                          Ready for delivery between 21 November & 22 November
-                          when you order within next 3mins
+                          Ready for delivery between 21 November & 22 November when you order within
+                          next 3mins
                         </p>
                       </div>
                       <a href="#" className="text-blue-500">
@@ -385,15 +358,11 @@ function SingleProduct() {
                     </div>
                     <div className="flex items-center mt-2">
                       <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">
-                        Quality score: Excellent
-                      </p>
+                      <p className="text-gray-700 ml-2">Quality score: Excellent</p>
                     </div>
                     <div className="flex items-center mt-2">
                       <i className="fas fa-check-circle text-green-500"></i>
-                      <p className="text-gray-700 ml-2">
-                        Customer rating: Good
-                      </p>
+                      <p className="text-gray-700 ml-2">Customer rating: Good</p>
                     </div>
                   </div>
                 </div>
@@ -441,8 +410,7 @@ function SingleProduct() {
                       <i className="fas fa-file-alt mr-2"></i>Specifications
                     </li>
                     <li className="mb-2">
-                      <i className="fas fa-comments mr-2"></i>Verified Customer
-                      Feedback
+                      <i className="fas fa-comments mr-2"></i>Verified Customer Feedback
                     </li>
                   </ul>
                 </div>
@@ -452,12 +420,8 @@ function SingleProduct() {
                     alt="Apple MacBook Pro 14-inch"
                     className="mb-2 w-full h-100"
                   />
-                  <h2 className="text-lg font-bold">
-                    Apple MacBook Pro 14-inch
-                  </h2>
-                  <p className="text-xl font-bold text-orange-600">
-                    ₦ 2,999,999
-                  </p>
+                  <h2 className="text-lg font-bold">Apple MacBook Pro 14-inch</h2>
+                  <p className="text-xl font-bold text-orange-600">₦ 2,999,999</p>
                   <p className="text-gray-500 line-through">₦ 9,999,999</p>
                   <p className="text-orange-600 font-bold">-70%</p>
                   <button className="bg-orange-500 text-white py-2 px-4 rounded mt-2 w-full">
@@ -465,9 +429,7 @@ function SingleProduct() {
                   </button>
                 </div>
                 <div className="bg-white p-4 border rounded">
-                  <h2 className="text-lg font-bold mb-2">
-                    Questions about this product?
-                  </h2>
+                  <h2 className="text-lg font-bold mb-2">Questions about this product?</h2>
                   <button className="bg-orange-500 text-white py-2 px-4 rounded w-full">
                     CHAT
                   </button>

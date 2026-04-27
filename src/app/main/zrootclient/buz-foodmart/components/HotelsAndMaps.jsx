@@ -1,9 +1,7 @@
 import React from "react";
 import GoogleMapReact from "google-map-react";
 
-const Pagetitle = ({ title }) => (
-  <h2 className="text-2xl font-bold text-gray-800 mb-4">{title}</h2>
-);
+const Pagetitle = ({ title }) => <h2 className="text-2xl font-bold text-gray-800 mb-4">{title}</h2>;
 
 const AnyReactComponent = ({ text }) => (
   <div className="bg-blue-500 text-white p-2 rounded">{text}</div>
@@ -17,10 +15,7 @@ const HotelsAndMap = ({ hotelList, center, zoom }) => {
         <Pagetitle title="Hotels" />
         <div className="grid grid-cols-2 gap-4">
           {hotelList.map((hotel, index) => (
-            <div
-              key={index}
-              className="bg-white shadow-md rounded-lg overflow-hidden"
-            >
+            <div key={index} className="bg-white shadow-md rounded-lg overflow-hidden">
               {hotel.feature && (
                 <span className="absolute top-3 left-3 bg-gradient-to-r from-blue-500 to-purple-500 text-white text-xs font-semibold py-1 px-2 rounded">
                   Featured
@@ -37,10 +32,7 @@ const HotelsAndMap = ({ hotelList, center, zoom }) => {
               </div>
               <div className="p-4">
                 <h4 className="text-lg font-semibold mb-1">
-                  <a
-                    href="/default-hotel-details"
-                    className="text-gray-800 hover:text-blue-500"
-                  >
+                  <a href="/default-hotel-details" className="text-gray-800 hover:text-blue-500">
                     {hotel.title}
                   </a>
                 </h4>
@@ -49,9 +41,7 @@ const HotelsAndMap = ({ hotelList, center, zoom }) => {
                   {Array.from({ length: 5 }).map((_, i) => (
                     <img
                       key={i}
-                      src={`assets/images/${
-                        i < hotel.rating ? "star.png" : "star-disable.png"
-                      }`}
+                      src={`assets/images/${i < hotel.rating ? "star.png" : "star-disable.png"}`}
                       alt={`${i < hotel.rating ? "star" : "no star"}`}
                       className="w-4 h-4"
                     />
