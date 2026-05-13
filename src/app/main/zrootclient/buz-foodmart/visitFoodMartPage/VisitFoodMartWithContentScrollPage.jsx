@@ -139,6 +139,7 @@ function ActiveVisitFoodMartPage() {
 // Memoize ActiveVisitFoodMartPage to prevent unnecessary re-renders when parent re-renders
 const MemoizedActiveVisitFoodMartPage = memo(ActiveVisitFoodMartPage);
 
+
 /**
  * Main Visit Food Mart Page Component with Service Status Check
  * Wraps the active visit food mart page with service status landing pages

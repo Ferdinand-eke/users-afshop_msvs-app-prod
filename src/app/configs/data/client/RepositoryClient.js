@@ -234,7 +234,7 @@ export const getAllFoodMarts = (filters = {}) => {
 }; // (Mcsvs => Done)
 export const getFoodMartMenuApi = (rcsId) => Api().get(`/food-marts/${rcsId}/view`); // (Mcsvs => Done)
 
-export const getRcsFoodMartMenuItemsApi = (rcsId) => Api().get(`/rcs-menu`); // (Mcsvs => Done)
+export const getRcsFoodMartMenuItemsApi = (rcsId) => Api().get(`/rcs-menu/${rcsId}/menus`); // (Mcsvs => Done)
 
 export const getFoodMartSingleMenuItemApi = (rcsId, menuSlug) =>
 	Api().get(`/rcs-menu/foodmart/${rcsId}/menu/${menuSlug}/view`); // (Mcsvs => Done)

@@ -57,24 +57,27 @@ function ActiveFoodMartPage() {
       apiFilters.limit = itemsPerPage;
       apiFilters.offset = (currentPage - 1) * itemsPerPage;
 
-      // Keyword search (maps to title)
+      // Keyword / title search
       if (newFilters.keyword) {
         apiFilters.title = newFilters.keyword;
       }
-
-      // Title filter
       if (newFilters.title) {
         apiFilters.title = newFilters.title;
-      }
-
-      // Slug filter
-      if (newFilters.slug) {
-        apiFilters.slug = newFilters.slug;
       }
 
       // Address filter
       if (newFilters.address) {
         apiFilters.address = newFilters.address;
+      }
+
+      // Category filter
+      if (newFilters.category) {
+        apiFilters.foodMartCategory = newFilters.category;
+      }
+
+      // Operation mode filter
+      if (newFilters.operationMode) {
+        apiFilters.operationMode = newFilters.operationMode;
       }
 
       // Location filters - using foodMart prefix as per API convention
@@ -86,9 +89,6 @@ function ActiveFoodMartPage() {
       }
       if (newFilters.lga) {
         apiFilters.foodMartLga = newFilters.lga;
-      }
-      if (newFilters.district) {
-        apiFilters.foodMartDistrict = newFilters.district;
       }
 
       // Update filters state (this will trigger useGetAllFoodMarts to refetch)

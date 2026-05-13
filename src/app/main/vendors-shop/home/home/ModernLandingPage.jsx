@@ -44,6 +44,8 @@ function ModernLandingPage() {
   const merchantUrl = import.meta.env.VITE_AFSHO_MERCHNATPORTAL_URL;
   const [activeService, setActiveService] = useState("marketplace");
 
+  console.log('Merchant Portal', merchantUrl)
+
   // Animation variants
   const fadeInUp = {
     hidden: { opacity: 0, y: 60 },

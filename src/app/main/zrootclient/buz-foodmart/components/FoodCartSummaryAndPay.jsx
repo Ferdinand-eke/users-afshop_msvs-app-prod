@@ -13,7 +13,9 @@ import {
   getFoodVendorSession,
   getShoppingSession,
 } from "src/app/main/vendors-shop/PosUtils";
+
 const FoodCartSummaryAndPay = ({
+  cartSession,
   intemsInCart,
   methodOfPay,
   name,
@@ -29,6 +31,20 @@ const FoodCartSummaryAndPay = ({
   isValid,
 }) => {
   const user = useAppSelector(selectUser);
+  // console.log("FoodCartSummaryAndPay", {
+  //   cartSession,
+  //   // intemsInCart,
+  //   // methodOfPay,
+  //   // name,
+  //   // phone,
+  //   // address,
+  //   // orderCountryDestination,
+  //   // orderStateProvinceDestination,
+  //   // orderLgaDestination,
+  //   // orderMarketPickupDestination,
+  //   // district,
+  // });
+  // console.log('cart session', cartSession?.id)
 
   let checkItemsArrayForTotal = [];
   intemsInCart?.forEach((element) => {
@@ -55,7 +71,7 @@ const FoodCartSummaryAndPay = ({
 
     try {
       const oderData = {
-        refOrderId: "AFSH" + generateClientUID() + "FMKT",
+        refOrderId: "AFSHFMKT" + cartSession?.id,
         foodCartItems: intemsInCart,
 
         itemsPrice: parseInt(totalAmount),

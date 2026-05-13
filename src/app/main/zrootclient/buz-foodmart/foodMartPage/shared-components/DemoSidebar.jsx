@@ -1,15 +1,32 @@
 import FoodMartFilterList from "./FoodMartFilterList";
+import FoodMartAdsSlider from "./FoodMartAdsSlider";
 
-/**
- * The DemoSidebar component.
- */
 function DemoSidebar({ onFilterChange }) {
   return (
-    <>
-      <div className="flex flex-col gap-16 px-12 py-24 h-screen">
+    <div
+      className="flex flex-col h-screen p-6"
+      style={{
+        background: "linear-gradient(180deg, #f9fafb 0%, #f3f4f6 100%)",
+      }}
+    >
+      {/* Filter Section — 70% */}
+      <div className="flex-[7] overflow-y-auto overflow-x-hidden mb-4">
         <FoodMartFilterList onFilterChange={onFilterChange} />
       </div>
-    </>
+
+      {/* Ads Slider Section — 30% */}
+      <div
+        className="flex-[3] min-h-0 rounded-2xl overflow-hidden shadow-lg"
+        style={{
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          padding: "4px",
+        }}
+      >
+        <div className="h-full rounded-xl overflow-hidden bg-white">
+          <FoodMartAdsSlider />
+        </div>
+      </div>
+    </div>
   );
 }
 

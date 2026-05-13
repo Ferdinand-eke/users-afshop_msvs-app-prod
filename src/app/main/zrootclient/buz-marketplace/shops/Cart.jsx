@@ -1229,9 +1229,9 @@ function Cart() {
                       </div>
                       {/* Right side - Fixed cart summary (30% width) */}
                       <div className="w-full lg:w-[30%] lg:flex-shrink-0">
-                        {/* <FoodCartSummary
+                        <FoodCartSummary
                           intemsInFoodCart={foodCart?.data?.userFoodCartSession?.cartProducts || []}
-                        /> */}
+                        />
                       </div>
                     </motion.div>
                   )}

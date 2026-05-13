@@ -5,53 +5,69 @@ import {
   InputLabel,
   Select,
   MenuItem,
-  Slider,
   Typography,
   Button,
   InputAdornment,
   IconButton,
   Divider,
-  Box,
 } from "@mui/material";
 import { Search, Clear, FilterList as FilterListIcon } from "@mui/icons-material";
 import useSellerCountries from "app/configs/data/server-calls/countries/useCountries";
 import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/RepositoryClient";
 
-/**
- * FoodMartFilterList Component
- * A comprehensive filter panel for food mart listings with cascading location filters,
- * price range, and search by title/slug/address
- */
+const FOODMART_CATEGORIES = [
+  { value: "restaurant", label: "🍽️ Restaurant" },
+  { value: "bar", label: "🍺 Bar" },
+  { value: "club", label: "🎵 Club / Nightclub" },
+  { value: "lounge", label: "🍹 Lounge" },
+  { value: "cafe", label: "☕ Café" },
+  { value: "bakery", label: "🥐 Bakery" },
+  { value: "fastfood", label: "🍔 Fast Food" },
+  { value: "spot", label: "📍 Spot" },
+];
+
+const OPERATION_MODES = [
+  { value: "RESTAURANT", label: "Dine-in Restaurant" },
+  { value: "TAKE_OUT", label: "Take Out" },
+  { value: "DELIVERY", label: "Delivery" },
+  { value: "BAR", label: "Bar" },
+  { value: "CLUB", label: "Club" },
+];
+
+const inputSx = {
+  backgroundColor: "white",
+  borderRadius: "8px",
+  "& .MuiOutlinedInput-root": {
+    "&:hover fieldset": { borderColor: "#f97316" },
+    "&.Mui-focused fieldset": { borderColor: "#ea580c" },
+  },
+};
+
 function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
   const { data: COUNTRIES } = useSellerCountries();
-
-  // Use ref to store the latest onFilterChange callback
   const onFilterChangeRef = useRef(onFilterChange);
 
-  // Update ref when onFilterChange changes
   useEffect(() => {
     onFilterChangeRef.current = onFilterChange;
   }, [onFilterChange]);
 
-  // Filter state
   const [keyword, setKeyword] = useState(initialFilters.keyword || "");
   const [title, setTitle] = useState(initialFilters.title || "");
-  const [slug, setSlug] = useState(initialFilters.slug || "");
   const [address, setAddress] = useState(initialFilters.address || "");
+  const [category, setCategory] = useState(initialFilters.category || "");
+  const [operationMode, setOperationMode] = useState(initialFilters.operationMode || "");
   const [country, setCountry] = useState(initialFilters.country || "");
   const [state, setState] = useState(initialFilters.state || "");
   const [lga, setLga] = useState(initialFilters.lga || "");
-  const [district, setDistrict] = useState(initialFilters.district || "");
-  const [priceRange, setPriceRange] = useState(initialFilters.priceRange || [0, 100000]);
 
-  // UI state
   const [availableStates, setAvailableStates] = useState([]);
   const [availableLgas, setAvailableLgas] = useState([]);
+  const [statesLoading, setStatesLoading] = useState(false);
+  const [lgasLoading, setLgasLoading] = useState(false);
 
-  // Update available locations based on selections
   useEffect(() => {
     if (country) {
-      findStatesByCountry(country);
+      fetchStatesByCountry(country);
     } else {
       setAvailableStates([]);
     }
@@ -59,118 +75,99 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
 
   useEffect(() => {
     if (state) {
-      getLgasFromState(state);
+      fetchLgasByState(state);
     } else {
       setAvailableLgas([]);
     }
   }, [state]);
 
-  // Emit filter changes to parent component with debounce for text inputs
   useEffect(() => {
-    // Debounce text search to prevent excessive API calls
     const timeoutId = setTimeout(
       () => {
         if (onFilterChangeRef.current) {
-          const filters = {
+          onFilterChangeRef.current({
             keyword,
             title,
-            slug,
             address,
+            category,
+            operationMode,
             country,
             state,
             lga,
-            district,
-            priceRange,
-          };
-          onFilterChangeRef.current(filters);
+          });
         }
       },
-      keyword || title || slug || address ? 500 : 0,
-    ); // 500ms debounce for text, immediate for others
-
+      keyword || title || address ? 500 : 0,
+    );
     return () => clearTimeout(timeoutId);
-  }, [keyword, title, slug, address, country, state, lga, district, priceRange]);
+  }, [keyword, title, address, category, operationMode, country, state, lga]);
 
-  //**Get States from Country_ID data */
-  const [statesloading, setStatesLoading] = useState(false);
-  async function findStatesByCountry(countryId) {
+  async function fetchStatesByCountry(countryId) {
     setStatesLoading(true);
-    const stateResponseData = await getStateByCountryId(countryId);
-    if (stateResponseData) {
-      setAvailableStates(stateResponseData?.data?.states || []);
+    const res = await getStateByCountryId(countryId);
+    if (res) {
+      setAvailableStates(res?.data?.states || []);
       setState("");
       setLga("");
-      setDistrict("");
-      setStatesLoading(false);
-      setTimeout(
-        function () {
-          setStatesLoading(false);
-        }.bind(this),
-        250,
-      );
     }
+    setStatesLoading(false);
   }
 
-  //**Get L.G.As from state_ID data */
-  const [loading, setLoading] = useState(false);
-  async function getLgasFromState(sid) {
-    setLoading(true);
-    const responseData = await getLgasByStateId(sid);
-
-    if (responseData) {
-      setAvailableLgas(responseData?.data?.lgas || []);
+  async function fetchLgasByState(stateId) {
+    setLgasLoading(true);
+    const res = await getLgasByStateId(stateId);
+    if (res) {
+      setAvailableLgas(res?.data?.lgas || []);
       setLga("");
-      setDistrict("");
-      setLoading(false);
-      setTimeout(
-        function () {
-          setLoading(false);
-        }.bind(this),
-        250,
-      );
     }
+    setLgasLoading(false);
   }
 
-  // Clear all filters
   const handleClearFilters = () => {
     setKeyword("");
     setTitle("");
-    setSlug("");
     setAddress("");
+    setCategory("");
+    setOperationMode("");
     setCountry("");
     setState("");
     setLga("");
-    setDistrict("");
-    setPriceRange([0, 100000]);
-  };
-
-  // Format price display
-  const formatPrice = (value) => {
-    return `NGN ${value.toLocaleString()}`;
   };
 
   return (
-    <div className="bg-white rounded-lg shadow-md p-6 max-w-md mx-auto lg:max-w-xs">
-      {/* Header */}
-      <div className="flex items-center gap-2 mb-6">
-        <FilterListIcon className="text-orange-600" />
-        <Typography variant="h6" className="font-semibold text-gray-900">
-          Filter Food Marts
+    <div
+      className="rounded-2xl shadow-lg p-6 max-w-md mx-auto lg:max-w-xs overflow-hidden"
+      style={{
+        background: "linear-gradient(135deg, #ffffff 0%, #fff7ed 50%, #ffedd5 100%)",
+      }}
+    >
+      {/* Gradient Header */}
+      <div
+        className="flex items-center gap-3 mb-6 p-4 rounded-xl -mx-6 -mt-6"
+        style={{
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          boxShadow: "0 4px 15px rgba(249, 115, 22, 0.3)",
+        }}
+      >
+        <FilterListIcon sx={{ color: "white", fontSize: "1.75rem" }} />
+        <Typography variant="h6" sx={{ fontWeight: 700, color: "white", fontSize: "1.25rem" }}>
+          Filter Restaurants
         </Typography>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-4 overflow-y-auto overflow-x-hidden mt-4" style={{ maxHeight: "calc(100% - 80px)" }}>
         {/* Keyword Search */}
         <TextField
           fullWidth
           size="small"
-          placeholder="Search by keyword..."
+          placeholder="Search restaurants..."
           value={keyword}
           onChange={(e) => setKeyword(e.target.value)}
+          sx={inputSx}
           InputProps={{
             startAdornment: (
               <InputAdornment position="start">
-                <Search className="text-gray-400" fontSize="small" />
+                <Search className="text-orange-500" fontSize="small" />
               </InputAdornment>
             ),
             endAdornment: keyword && (
@@ -183,14 +180,15 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
           }}
         />
 
-        {/* Title Search */}
+        {/* Name Search */}
         <TextField
           fullWidth
           size="small"
-          placeholder="Search by restaurant name..."
+          label="Restaurant Name"
+          placeholder="Search by name..."
           value={title}
           onChange={(e) => setTitle(e.target.value)}
-          label="Restaurant Name"
+          sx={inputSx}
           InputProps={{
             endAdornment: title && (
               <InputAdornment position="end">
@@ -202,33 +200,15 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
           }}
         />
 
-        {/* Slug Search */}
-        <TextField
-          fullWidth
-          size="small"
-          placeholder="Search by slug..."
-          value={slug}
-          onChange={(e) => setSlug(e.target.value)}
-          label="Slug"
-          InputProps={{
-            endAdornment: slug && (
-              <InputAdornment position="end">
-                <IconButton size="small" onClick={() => setSlug("")}>
-                  <Clear fontSize="small" />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-
         {/* Address Search */}
         <TextField
           fullWidth
           size="small"
+          label="Address"
           placeholder="Search by address..."
           value={address}
           onChange={(e) => setAddress(e.target.value)}
-          label="Address"
+          sx={inputSx}
           InputProps={{
             endAdornment: address && (
               <InputAdornment position="end">
@@ -240,15 +220,61 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
           }}
         />
 
-        <Divider className="my-4" />
+        <Divider className="my-2" />
+
+        {/* Category */}
+        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: "#374151", paddingTop: "4px" }}>
+          Establishment Type
+        </Typography>
+
+        <FormControl fullWidth size="small" sx={inputSx}>
+          <InputLabel id="category-label">Category</InputLabel>
+          <Select
+            labelId="category-label"
+            value={category}
+            label="Category"
+            onChange={(e) => setCategory(e.target.value)}
+          >
+            <MenuItem value="">
+              <em>All Categories</em>
+            </MenuItem>
+            {FOODMART_CATEGORIES.map((c) => (
+              <MenuItem key={c.value} value={c.value}>
+                {c.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        {/* Operation Mode */}
+        <FormControl fullWidth size="small" sx={inputSx}>
+          <InputLabel id="opmode-label">Operation Mode</InputLabel>
+          <Select
+            labelId="opmode-label"
+            value={operationMode}
+            label="Operation Mode"
+            onChange={(e) => setOperationMode(e.target.value)}
+          >
+            <MenuItem value="">
+              <em>All Modes</em>
+            </MenuItem>
+            {OPERATION_MODES.map((m) => (
+              <MenuItem key={m.value} value={m.value}>
+                {m.label}
+              </MenuItem>
+            ))}
+          </Select>
+        </FormControl>
+
+        <Divider className="my-2" />
 
         {/* Location Section */}
-        <Typography variant="subtitle2" className="font-medium text-gray-700 pt-2">
+        <Typography variant="subtitle2" sx={{ fontWeight: 600, color: "#374151", paddingTop: "4px" }}>
           Location
         </Typography>
 
         {/* Country */}
-        <FormControl fullWidth size="small">
+        <FormControl fullWidth size="small" sx={inputSx}>
           <InputLabel id="country-label">Country</InputLabel>
           <Select
             labelId="country-label"
@@ -268,7 +294,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* State */}
-        <FormControl fullWidth size="small" disabled={!country}>
+        <FormControl fullWidth size="small" disabled={!country} sx={inputSx}>
           <InputLabel id="state-label">State</InputLabel>
           <Select
             labelId="state-label"
@@ -279,7 +305,11 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
             <MenuItem value="">
               <em>All States</em>
             </MenuItem>
-            {statesloading && <p className="text-[12px]">loading...</p>}
+            {statesLoading && (
+              <MenuItem disabled>
+                <em>Loading...</em>
+              </MenuItem>
+            )}
             {availableStates?.map((s) => (
               <MenuItem key={s.id} value={s.id}>
                 {s.name}
@@ -289,7 +319,7 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
         </FormControl>
 
         {/* LGA */}
-        <FormControl fullWidth size="small" disabled={!state}>
+        <FormControl fullWidth size="small" disabled={!state} sx={inputSx}>
           <InputLabel id="lga-label">LGA</InputLabel>
           <Select
             labelId="lga-label"
@@ -300,7 +330,11 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
             <MenuItem value="">
               <em>All LGAs</em>
             </MenuItem>
-            {loading && <p className="text-[12px]">loading...</p>}
+            {lgasLoading && (
+              <MenuItem disabled>
+                <em>Loading...</em>
+              </MenuItem>
+            )}
             {availableLgas?.map((l) => (
               <MenuItem key={l.id} value={l.id}>
                 {l.name}
@@ -309,66 +343,15 @@ function FoodMartFilterList({ onFilterChange, initialFilters = {} }) {
           </Select>
         </FormControl>
 
-        {/* District */}
-        <TextField
-          fullWidth
-          size="small"
-          placeholder="Enter district..."
-          value={district}
-          onChange={(e) => setDistrict(e.target.value)}
-          label="District"
-          InputProps={{
-            endAdornment: district && (
-              <InputAdornment position="end">
-                <IconButton size="small" onClick={() => setDistrict("")}>
-                  <Clear fontSize="small" />
-                </IconButton>
-              </InputAdornment>
-            ),
-          }}
-        />
-
-        <Divider className="my-4" />
-
-        {/* Price Range */}
-        <div className="pt-2">
-          <Typography variant="subtitle2" className="font-medium text-gray-700 mb-2">
-            Price Range (Average Meal)
-          </Typography>
-          <Box className="px-2">
-            <Slider
-              value={priceRange}
-              onChange={(e, newValue) => setPriceRange(newValue)}
-              valueLabelDisplay="auto"
-              valueLabelFormat={formatPrice}
-              min={0}
-              max={100000}
-              step={500}
-              sx={{
-                color: "#ea580c",
-                "& .MuiSlider-thumb": {
-                  "&:hover, &.Mui-focusVisible": {
-                    boxShadow: "0 0 0 8px rgba(234, 88, 12, 0.16)",
-                  },
-                },
-              }}
-            />
-            <div className="flex justify-between text-sm text-gray-600 mt-1">
-              <span>{formatPrice(priceRange[0])}</span>
-              <span>{formatPrice(priceRange[1])}</span>
-            </div>
-          </Box>
-        </div>
-
-        {/* Clear Filters Button */}
+        {/* Clear Button */}
         <Button
           fullWidth
           variant="outlined"
           onClick={handleClearFilters}
-          className="mt-6 border-orange-600 text-orange-600 hover:bg-orange-50 hover:border-orange-700"
           sx={{
             borderColor: "#ea580c",
             color: "#ea580c",
+            marginTop: "8px",
             "&:hover": {
               borderColor: "#c2410c",
               backgroundColor: "#ffedd5",

@@ -2,7 +2,15 @@ import FuseLoading from "@fuse/core/FuseLoading";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Button, Typography, IconButton, Chip, Rating } from "@mui/material";
-import { Favorite, FavoriteBorder, Visibility, LocalOffer, Star } from "@mui/icons-material";
+import {
+  Favorite,
+  FavoriteBorder,
+  Visibility,
+  LocalOffer,
+  Star,
+  NavigateBefore,
+  NavigateNext,
+} from "@mui/icons-material";
 import NavLinkAdapter from "@fuse/core/NavLinkAdapter";
 import { formatCurrency } from "src/app/main/vendors-shop/PosUtils";
 import ClienttErrorPage from "src/app/main/zrootclient/components/ClienttErrorPage";
@@ -14,6 +22,23 @@ import { useGetRCSMenuItems } from "app/configs/data/server-calls/auth/userapp/a
 function MenuItemCard({ item, index }) {
   const [isFavorite, setIsFavorite] = useState(false);
   const [isHovered, setIsHovered] = useState(false);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
+
+  const images = item?.imageSrcs || [];
+  const hasImages = images.length > 0;
+  const hasMultiple = images.length > 1;
+
+  const handlePrev = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev === 0 ? images.length - 1 : prev - 1));
+  };
+
+  const handleNext = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setCurrentImageIndex((prev) => (prev === images.length - 1 ? 0 : prev + 1));
+  };
 
   const hasDiscount = item?.listprice && item?.listprice > item?.price;
   const discountPercent = hasDiscount
@@ -31,14 +56,60 @@ function MenuItemCard({ item, index }) {
     >
       {/* Image Section */}
       <div className="relative h-100 overflow-hidden bg-gray-100">
-        <img
-          src={item?.imageSrc}
-          alt={item?.title}
-          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-        />
+        {hasImages ? (
+          <img
+            src={images[currentImageIndex]?.url}
+            alt={`${item?.title} - image ${currentImageIndex + 1}`}
+            className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+          />
+        ) : (
+          <div
+            className="w-full h-full flex flex-col items-center justify-center"
+            style={{ background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)" }}
+          >
+            <span style={{ fontSize: "3rem" }}>🍽️</span>
+          </div>
+        )}
 
         {/* Overlay gradient */}
         <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+
+        {/* Prev / Next arrows — only when multiple images */}
+        {hasMultiple && (
+          <>
+            <IconButton
+              onClick={handlePrev}
+              size="small"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity shadow"
+            >
+              <NavigateBefore fontSize="small" />
+            </IconButton>
+            <IconButton
+              onClick={handleNext}
+              size="small"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-white/80 hover:bg-white opacity-0 group-hover:opacity-100 transition-opacity shadow"
+            >
+              <NavigateNext fontSize="small" />
+            </IconButton>
+
+            {/* Dot indicators */}
+            <div className="absolute bottom-10 left-1/2 -translate-x-1/2 flex gap-1.5">
+              {images.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    setCurrentImageIndex(i);
+                  }}
+                  className={`w-1.5 h-1.5 rounded-full transition-all ${
+                    i === currentImageIndex ? "bg-white w-3" : "bg-white/60"
+                  }`}
+                />
+              ))}
+            </div>
+          </>
+        )}
 
         {/* Discount Badge */}
         {hasDiscount && (
@@ -46,12 +117,8 @@ function MenuItemCard({ item, index }) {
             icon={<LocalOffer fontSize="small" />}
             label={`${discountPercent}% OFF`}
             size="small"
-            className="absolute top-3 left-3 bg-red-600 text-white font-bold shadow-lg"
-            sx={{
-              backgroundColor: "#dc2626",
-              color: "white",
-              fontWeight: "bold",
-            }}
+            className="absolute top-3 left-3 shadow-lg"
+            sx={{ backgroundColor: "#dc2626", color: "white", fontWeight: "bold" }}
           />
         )}
 
@@ -61,7 +128,12 @@ function MenuItemCard({ item, index }) {
             icon={<Star fontSize="small" />}
             label="Popular"
             size="small"
-            className="absolute top-3 right-3 bg-gradient-to-r from-yellow-500 to-orange-500 text-white font-semibold shadow-lg"
+            className="absolute top-3 right-3 shadow-lg"
+            sx={{
+              background: "linear-gradient(to right, #f59e0b, #f97316)",
+              color: "white",
+              fontWeight: 600,
+            }}
           />
         )}
 
@@ -197,6 +269,7 @@ function DemoContent(props) {
   const { rcsId } = props;
 
   const { data: RcsMenu, isLoading: menuLoading, isError: menuError } = useGetRCSMenuItems(rcsId);
+  console.log("RcsMenu data:", RcsMenu);
 
   if (menuLoading) {
     return <FuseLoading />;
