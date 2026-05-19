@@ -17,6 +17,70 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 
+/**
+ * Handles NestJS and generic API errors and displays appropriate toast messages.
+ * Covers: validation arrays, single strings, nested error objects, network errors, fallback.
+ *
+ * @param {Error} error - The error object from the API call
+ * @param {Object} options
+ * @param {boolean} options.logError - Whether to log the error to console (default: true)
+ * @param {string} options.fallbackMessage - Fallback message when no error message is found
+ * @param {Function} options.onErrorCallback - Optional callback after error handling (e.g. rollback)
+ */
+const handleApiError = (error, options = {}) => {
+	const {
+		logError = true,
+		fallbackMessage = 'An unexpected error occurred. Please try again.',
+		onErrorCallback = null
+	} = options;
+
+	if (logError) {
+		console.error('API Error:', error);
+		console.error('Error Response:', error?.response?.data);
+	}
+
+	const errorData = error?.response?.data;
+	const errorMessage = errorData?.message;
+
+	// Case 1: Array of validation error messages (NestJS class-validator)
+	if (Array.isArray(errorMessage)) {
+		errorMessage.forEach((msg) => toast.error(msg));
+		if (onErrorCallback) onErrorCallback();
+		return;
+	}
+
+	// Case 2: Single string message
+	if (typeof errorMessage === 'string') {
+		toast.error(errorMessage);
+		if (onErrorCallback) onErrorCallback();
+		return;
+	}
+
+	// Case 3: Nested error object  { error: 'Bad Request', message: '...' }
+	if (errorData?.error) {
+		toast.error(`${errorData.error}: ${errorData.message || 'Unknown error'}`);
+		if (onErrorCallback) onErrorCallback();
+		return;
+	}
+
+	// Case 4: Network / timeout errors — keep technical detail out of the UI
+	if (error?.message) {
+		if (error.message.includes('Network Error') || error.message.includes('timeout')) {
+			toast.error('Network error. Please check your connection and try again.');
+			if (onErrorCallback) onErrorCallback();
+			return;
+		}
+
+		toast.error(error.message);
+		if (onErrorCallback) onErrorCallback();
+		return;
+	}
+
+	// Case 5: Fallback
+	toast.error(fallbackMessage);
+	if (onErrorCallback) onErrorCallback();
+};
+
 /** *1) Get All FoodMart/RCS with filters */
 export default function useGetAllFoodMarts(filters = {}) {
 	return useQuery(['__foodmarts', filters], () => getAllFoodMarts(filters));
@@ -24,9 +88,6 @@ export default function useGetAllFoodMarts(filters = {}) {
 
 /** *2) Get single food-mart-SHOP/RCS */
 export function useGetMartMenu(martId) {
-	// if(!martId || martId === 'new'){
-	//   return {};
-	// }
 	return useQuery(['__foodmartsMenu', martId], () => getFoodMartMenuApi(martId), {
 		enabled: Boolean(martId)
 	});
@@ -34,9 +95,6 @@ export function useGetMartMenu(martId) {
 
 /** *get menu of single food-mart-SHOP/RCS-Listing */
 export function useGetRCSMenuItems(martId) {
-	// if(!martId || martId === 'new'){
-	//   return {};
-	// }
 	return useQuery(['__foodmartRcsMenu', martId], () => getRcsFoodMartMenuItemsApi(martId), {
 		enabled: Boolean(martId)
 	});
@@ -61,60 +119,34 @@ export function useGetMyFoodCart(userId) {
 	return useQuery(['__foodcart'], getUserFoodCartApi);
 } // (Mcsvs => Done)
 
-/** *get menu of single food-mart-SHOP */
+/** *get my food cart by user credentials */
 export function useGetMyFoodCartByUserCred(userId) {
 	if (!userId || userId === 'new') {
 		return {};
 	}
 
 	return useQuery(['__foodcart'], getMyFoodCartpi);
-
-	// return useQuery(
-	//   ['__foodcart', userId],
-	//   () => getMyFoodCartpi(userId),
-	//   {
-	//     enabled: Boolean(userId),
-
-	//   }
-	// );
 } // (Mcsvs => Done)
 
-/** **Manage FOOD-CART starts */
-/** **Create add to foodcart : => Done for Africanshops */
+/** **Create add to foodcart */
 export function useAddToFoodCart() {
-	// const navigate = useNavigate();
-
 	const queryClient = useQueryClient();
-	return useMutation(
-		(foodCartItem) => {
-			return addToUserFoodCartApi(foodCartItem);
-		},
 
+	return useMutation(
+		(foodCartItem) => addToUserFoodCartApi(foodCartItem),
 		{
 			onSuccess: (data) => {
 				if (data?.data?.success) {
-					toast.success(`${data?.data?.message ? data?.data?.message : 'added to cart successfully!'}`);
+					toast.success(data?.data?.message || 'Added to cart successfully!');
 					queryClient.invalidateQueries(['__foodcart']);
 					queryClient.refetchQueries('__foodcart', { force: true });
-					// navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
 				}
-
-				// else if (data?.data?.error) {
-				//   toast.error(data?.data?.error?.message);
-				//   return;
-				// } else {
-				//   toast.info("something unexpected happened");
-				//   return;
-				// }
-			}
-		},
-		{
-			onError: (error, rollback) => {
-				const {
-					response: { data }
-				} = error ?? {};
-				Array.isArray(data?.message) ? data?.message?.map((m) => toast.error(m)) : toast.error(data?.message);
-				rollback();
+			},
+			onError: (error, _variables, rollback) => {
+				handleApiError(error, {
+					fallbackMessage: 'Failed to add item to cart. Please try again.',
+					onErrorCallback: rollback
+				});
 			}
 		}
 	);
@@ -123,36 +155,27 @@ export function useAddToFoodCart() {
 /** Updated Food cart item quantity */
 export function useUpdateFoodCartItemQty() {
 	const queryClient = useQueryClient();
-	return useMutation(
-		(foodCartItem) => {
-			return updateUserFoodCartApi(foodCartItem);
-		},
 
+	return useMutation(
+		(foodCartItem) => updateUserFoodCartApi(foodCartItem),
 		{
 			onSuccess: (data) => {
 				if (data?.data?.success) {
-					toast.success(`${data?.data?.message ? data?.data?.message : 'cart updated successfully!'}`);
+					toast.success(data?.data?.message || 'Cart updated successfully!');
 					queryClient.invalidateQueries(['__foodcart']);
 					queryClient.refetchQueries('__foodcart', { force: true });
-					// navigate(`/bookings/reservation/review/${data?.data?.createdReservation?._id}`);
 				}
-			}
-		},
-		{
-			onError: (error, rollback) => {
-				toast.error(
-					error.response && error.response.data.message ? error.response.data.message : error.message
-				);
-
-				const {
-					response: { data }
-				} = error ?? {};
-				Array.isArray(data?.message) ? data?.message?.map((m) => toast.error(m)) : toast.error(data?.message);
-				rollback();
+			},
+			onError: (error, _variables, rollback) => {
+				handleApiError(error, {
+					fallbackMessage: 'Failed to update cart quantity. Please try again.',
+					onErrorCallback: rollback
+				});
 			}
 		}
 	);
 } // (Mcsvs => Done)
+
 /** *
  * #######################################################################################
  * FOOD CART MANAGEMENT ENDS HERE
@@ -166,51 +189,34 @@ export function useUpdateFoodCartItemQty() {
  * #################################################################
  */
 
-/** ***Pay and make payment for order */
+/** ***Pay and place food order */
 export function usePayAndPlaceFoodOrder() {
 	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 
 	return useMutation(
-		(orderData) => {
-			return payAndPlaceFoodOrderApi(orderData);
-		},
-
+		(orderData) => payAndPlaceFoodOrderApi(orderData),
 		{
 			onSuccess: (data) => {
 				if (data?.data?.success) {
-					toast.success(data?.data?.message);
-
+					toast.success(data?.data?.message || 'Order placed successfully!');
 					queryClient.invalidateQueries(['__foodcart']);
 					queryClient.refetchQueries('__foodcart', { force: true });
-					navigate(`/foodmarts/${data?.data?.foodOrder?.id}/payment-success`);
+					navigate(`/foodmarts/${data?.data?.order?.id || data?.data?.order?._id}/payment-success`);
 				}
-			}
-		},
-		{
-			onError: (error, rollback) => {
-				const {
-					response: { data }
-				} = error ?? {};
-				Array.isArray(data?.message) ? data?.message?.map((m) => toast.error(m)) : toast.error(data?.message);
-				rollback();
-
-				toast.error(
-					error.response && error.response.data.message ? error.response.data.message : error.message
-				);
-				// console.log("MutationError", error.response.data);
-				// console.log("MutationError", error.data);
-				rollback();
+			},
+			onError: (error, _variables, rollback) => {
+				handleApiError(error, {
+					fallbackMessage: 'Failed to place your order. Please try again.',
+					onErrorCallback: rollback
+				});
 			}
 		}
 	);
 } // (Mcsvs => Done)
 
-/** *Get Authenticated user food-orders useGetAuthUserFoodOrders */
+/** *Get Authenticated user food-orders */
 export function useGetAuthUserFoodOrders() {
-	// if(! ||  === 'new'){
-	//   return {};
-	// }
 	return useQuery(['__authuser_orders'], () => getUserFoodInvoicesEnpoint());
 } // (Mcsvs => Done)
 

@@ -65,6 +65,7 @@ function ShopLocationMap({ shopData }) {
       }
     );
   }, [shopData]);
+  
 
   return (
     <div className="w-full h-full relative rounded-2xl overflow-hidden shadow-lg">

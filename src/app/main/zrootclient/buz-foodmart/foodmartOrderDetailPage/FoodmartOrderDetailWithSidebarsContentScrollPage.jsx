@@ -1,5 +1,4 @@
 import { styled } from "@mui/material/styles";
-import FusePageSimple from "@fuse/core/FusePageSimple";
 import { useEffect, useState } from "react";
 import useThemeMediaQuery from "@fuse/hooks/useThemeMediaQuery";
 import DemoHeader from "./shared-components/DemoHeader";
@@ -9,7 +8,6 @@ import DemoSidebarRight from "./shared-components/DemoSidebarRight";
 import FusePageSimpleWithMargin from "@fuse/core/FusePageSimple/FusePageSimpleWithMargin";
 
 import { useParams } from "react-router";
-import { useGetAuthUserOrderItems } from "app/configs/data/server-calls/auth/userapp/a_marketplace/useProductsRepo";
 import { useGetAuthUserFoodOrdersAndItems } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 
 const Root = styled(FusePageSimpleWithMargin)(({ theme }) => ({
@@ -74,7 +72,7 @@ function FoodmartOrderDetailWithSidebarsContentScrollPage() {
       rightSidebarOnClose={() => {
         setRightSidebarOpen(false);
       }}
-      rightSidebarContent={<DemoSidebarRight />}
+      rightSidebarContent={<DemoSidebarRight orderData={orderData?.data?.rcs_order} />}
       scroll="content"
     />
   );

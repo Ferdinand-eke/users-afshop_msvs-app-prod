@@ -4,6 +4,7 @@ import FuseSvgIcon from "@fuse/core/FuseSvgIcon";
 import JwtSignInForm from "../../../auth/services/jwt/components/JwtSignInForm";
 
 function jwtSignInTab() {
+  
   return (
     <div className="w-full">
       <JwtSignInForm />

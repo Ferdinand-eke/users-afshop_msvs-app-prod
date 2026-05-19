@@ -64,6 +64,7 @@ function ActiveVisitFoodMartPage() {
     // resolver: zodResolver(schema)
   });
 
+  
   // Memoize sidebar toggle handlers to prevent re-renders
   const handleLeftSidebarToggle = useCallback(() => {
     setLeftSidebarOpen(!leftSidebarOpen);
@@ -117,7 +118,7 @@ function ActiveVisitFoodMartPage() {
 
   // Memoize right sidebar content
   const rightSidebarContentComponent = useMemo(
-    () => <DemoSidebarRight center={foodMart} items={foodMart} />,
+    () => <DemoSidebarRight item={foodMart} />,
     [foodMart],
   );
 
@@ -144,6 +145,7 @@ const MemoizedActiveVisitFoodMartPage = memo(ActiveVisitFoodMartPage);
  * Main Visit Food Mart Page Component with Service Status Check
  * Wraps the active visit food mart page with service status landing pages
  */
+
 function VisitFoodMartWithContentScrollPage() {
   // Fetch user app settings
   const {

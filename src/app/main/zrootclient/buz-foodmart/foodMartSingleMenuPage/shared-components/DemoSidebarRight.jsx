@@ -1,119 +1,99 @@
+import { Typography } from "@mui/material";
+import { DeliveryDining, Storefront } from "@mui/icons-material";
+import DeliveryRouteMap from "../../components/maps/DeliveryRouteMap";
 import SellerInformation from "src/app/main/zrootclient/components/SellerInformation";
-/**
- * Navigation data
- */
 
-/**
- * The DemoSidebarRight component.
- */
-function DemoSidebarRight(props) {
-  const { menu } = props;
-
+function SectionLabel({ icon, title }) {
   return (
-    <div className="px-12 py-24 h-screen">
-      {/* min-h-6xl  */}
-      {/* <div className="mx-12 text-3xl font-bold tracking-tighter">Map Location Site Views</div> */}
+    <div className="flex items-center gap-2 mb-3 flex-shrink-0">
+      <div
+        className="p-1.5 rounded-lg flex items-center justify-center"
+        style={{ background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)" }}
+      >
+        {icon}
+      </div>
+      <Typography
+        sx={{
+          fontWeight: 800,
+          fontSize: "0.875rem",
+          color: "#111827",
+          letterSpacing: "0.06em",
+          textTransform: "uppercase",
+        }}
+      >
+        {title}
+      </Typography>
+    </div>
+  );
+}
 
-      <div className="w-full p-4">
-        <div className="bg-white p-4 rounded">
-          <h2 className="text-lg font-bold">DELIVERY & RETURNS</h2>
-          <div className="mt-2 space-y-4">
-            <label className="block text-gray-800">Choose your location</label>
-            <select className="w-full mt-1 p-2 border rounded">
-              <option>Lagos</option>
-            </select>
-            <select className="w-full mt-1 p-2 border rounded">
-              <option>LEKKI-AJAH (SANGOTEDO)</option>
-            </select>
-          </div>
-          <div className="mt-4">
-            <div className="flex items-center justify-between">
-              <div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex gap-4">
-                    <img
-                      src="http://localhost:3000/assets/images/afslogo/afslogo.png"
-                      width={20}
-                      height={10}
-                    />
-                    <h3 className="font-bold">Pickup Station</h3>
-                  </div>
-                  <span href="#" className="text-orange-500 inline cursor-pointer">
-                    Details
-                  </span>
-                </div>
+/**
+ * DemoSidebarRight — right sidebar for the single menu-item page.
+ *
+ * Structure mirrors MarketplaceDemoSidebarRight.jsx:
+ *   Header  →  orange gradient bar with DeliveryDining icon
+ *   flex-1  →  DeliveryRouteMap (restaurant ↔ user route, placeholder when GPS off)
+ *   Bottom  →  FoodMart Official Restaurant (SellerInformation)
+ */
+function DemoSidebarRight({ menu, foodMart }) {
+  return (
+    <div
+      className="flex flex-col h-screen p-6"
+      style={{ background: "linear-gradient(180deg, #fafaf9 0%, #f3f4f6 100%)" }}
+    >
 
-                <p className="text-gray-500 text-sm">Delivery Fees ₦ 1,080</p>
-                <p className="text-gray-500 text-sm">
-                  Arriving between 21 November & 22 November. Order within 3mins
-                </p>
-              </div>
-            </div>
+      {/* ── Delivery Route section — 60% ── */}
+      <div className="flex-[6] flex flex-col min-h-0 mb-4">
 
-            <div className="flex items-center justify-between mt-4">
-              <div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex gap-4">
-                    <img
-                      src="http://localhost:3000/assets/images/afslogo/afslogo.png"
-                      width={20}
-                      height={10}
-                    />
-                    <h3 className="font-bold">Door Delivery</h3>
-                  </div>
-                  <span href="#" className="text-orange-500 inline cursor-pointer">
-                    Details
-                  </span>
-                </div>
-
-                <p className="text-gray-500 text-sm">Delivery Fees ₦ 1,790</p>
-                <p className="text-gray-500 text-sm">
-                  Ready for delivery between 21 November & 22 November when you order within next
-                  3mins
-                </p>
-              </div>
-            </div>
-
-            <div className="flex items-center justify-between mt-4">
-              <div>
-                <div className="flex flex-row justify-between">
-                  <div className="flex gap-4">
-                    {/* <img
-                      src="http://localhost:3000/assets/images/afslogo/afslogo.png"
-                      width={20}
-                      height={10}
-                    /> */}
-                    <h3 className="font-bold">Return Policy</h3>
-                  </div>
-                  <span href="#" className="text-orange-500 inline cursor-pointer">
-                    Details
-                  </span>
-                </div>
-
-                <p className="text-gray-500 text-sm">
-                  Free return within 7 days for ALL eligible items and items in food cart
-                </p>
-              </div>
-            </div>
-          </div>
+        {/* Header — same style as MarketplaceDemoSidebarRight */}
+        <div
+          className="mb-4 p-4 rounded-xl flex items-center gap-3 flex-shrink-0"
+          style={{
+            background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+            boxShadow: "0 4px 15px rgba(249, 115, 22, 0.3)",
+          }}
+        >
+          <DeliveryDining sx={{ color: "white", fontSize: "1.75rem" }} />
+          <Typography sx={{ fontSize: "1.25rem", fontWeight: 700, color: "white" }}>
+            Delivery Route
+          </Typography>
         </div>
 
-        {/* SELLER INFORMATION Section */}
-        <div className="mt-4">
+        {/* Map fills the remaining 60% height — mirrors MarketplaceDemoSidebarRight */}
+        <div className="flex-1 min-h-0 rounded-2xl overflow-hidden shadow-2xl">
+          <DeliveryRouteMap restaurant={foodMart} />
+        </div>
+
+      </div>
+
+      {/* ── FoodMart Official Restaurant — 40% ── */}
+      <div className="flex-[4] flex flex-col min-h-0">
+        <SectionLabel
+          icon={<Storefront sx={{ color: "white", fontSize: "1.1rem" }} />}
+          title="FoodMart Official Restaurant"
+        />
+        {/* Scrollable so it never overflows on short screens */}
+        <div className="flex-1 min-h-0 overflow-y-auto">
           <SellerInformation
-            sellerName="FoodMart Official Restaurant"
-            sellerDescription="Serving delicious meals since 2019"
+            sellerName={foodMart?.title || "FoodMart Official Restaurant"}
+            sellerDescription={
+              foodMart?.description
+                ? foodMart.description.length > 80
+                  ? `${foodMart.description.slice(0, 80)}…`
+                  : foodMart.description
+                : "Serving delicious meals with passion since day one"
+            }
             sellerScore={96}
-            followers={3200}
+            followers={foodMart?.followers ?? 3200}
             products={450}
             shippingSpeed={{ label: "Excellent", value: 97, color: "green" }}
             qualityScore={{ label: "Excellent", value: 99, color: "green" }}
             customerRating={{ label: "Excellent", value: 95, color: "green" }}
             responseTime={{ label: "Very Fast", value: 98, color: "blue" }}
-            // storePath={`/foodmarts/${menu?.slug}/visit-mart/${menu?.slug}`}
           />
         </div>
       </div>
+
     </div>
   );
 }

@@ -5,7 +5,7 @@ import Select from "@mui/material/Select";
 import TextField from "@mui/material/TextField";
 import Typography from "@mui/material/Typography";
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense, lazy } from "react";
 import {
   Button,
   Backdrop,
@@ -34,6 +34,11 @@ import {
 } from "app/configs/data/client/RepositoryClient";
 import { useGetMyFoodCart } from "app/configs/data/server-calls/auth/userapp/a_foodmart/useFoodMartsRepo";
 import MyAddresses from "./../../zrootclient/buz-bookings/user-reservations/MyAddresses";
+
+const ShopLocationMap = lazy(() => import("../buz-marketplace/components/maps/ShopLocationMap"));
+const ShopLocationMapLoadingPlaceholder = lazy(
+  () => import("../buz-marketplace/components/maps/ShopLocationMapLoadingPlaceholder"),
+);
 
 /**
  * Form Validation Schema — keeps all original food-order fields including district
@@ -93,6 +98,7 @@ function SectionHeader({ icon, title, subtitle, action }) {
     </div>
   );
 }
+
 
 /**
  * Individual food cart item row in the Order Review section
@@ -742,54 +748,97 @@ function FoodCartReview() {
                   </motion.div>
                 </div>
 
-                {/* ─── RIGHT: Order Summary (sticky) ─── */}
-                <div className="w-full lg:w-[35%] lg:sticky lg:top-20 lg:self-start">
-                  <div className="flex flex-col gap-4 lg:gap-6">
-                    <FoodCartSummaryAndPay
-                      cartSession={cartSession}
-                      intemsInCart={cartProducts}
-                      methodOfPay={selectedPaymentOption}
-                      name={name}
-                      phone={phone}
-                      address={address}
-                      orderCountryDestination={orderCountryDestination}
-                      orderStateProvinceDestination={orderStateProvinceDestination}
-                      orderLgaDestination={orderLgaDestination}
-                      orderMarketPickupDestination={orderMarketPickupDestination}
-                      district={district}
-                      dirtyFields={dirtyFields}
-                      isValid={isValid}
-                      setIsProcessingPayment={setIsProcessingPayment}
-                    />
+                {/* ─── RIGHT: Order Summary + Map (sticky) ─── */}
+                <div className="w-full lg:w-[30%] lg:sticky lg:top-20 lg:self-start">
+                  <div className="flex flex-col gap-4 lg:gap-6 lg:h-[calc(100vh-120px)]">
+                    {/* Payment Summary — 40% height on desktop */}
+                    <div className="lg:h-[40%] lg:min-h-[350px] lg:max-h-[500px]">
+                      <FoodCartSummaryAndPay
+                        cartSession={cartSession}
+                        intemsInCart={cartProducts}
+                        methodOfPay={selectedPaymentOption}
+                        name={name}
+                        phone={phone}
+                        address={address}
+                        orderCountryDestination={orderCountryDestination}
+                        orderStateProvinceDestination={orderStateProvinceDestination}
+                        orderLgaDestination={orderLgaDestination}
+                        orderMarketPickupDestination={orderMarketPickupDestination}
+                        district={district}
+                        dirtyFields={dirtyFields}
+                        isValid={isValid}
+                        setIsProcessingPayment={setIsProcessingPayment}
+                        selectedMarketData={selectedMarketData}
+                      />
+                    </div>
 
-                    {/* Quick-steps guide */}
-                    <motion.div
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.5, delay: 0.3 }}
-                      className="bg-white rounded-2xl shadow-lg p-5"
-                      style={{ border: "2px solid rgba(234,88,12,0.1)" }}
-                    >
-                      <h3 className="font-bold text-gray-800 mb-4 text-sm">How to complete your order</h3>
-                      <div className="space-y-3">
-                        {[
-                          { step: "1", label: "Fill in your delivery details above" },
-                          { step: "2", label: "Select your nearest market pickup point" },
-                          { step: "3", label: "Choose a payment method" },
-                          { step: "4", label: "Confirm & place your food order" },
-                        ].map((s) => (
-                          <div key={s.step} className="flex items-center gap-3">
+                    {/* Pickup Location Map — 60% height on desktop */}
+                    <div className="lg:h-[60%] lg:min-h-[450px] min-h-[400px]">
+                      {selectedMarketData?.lat && selectedMarketData?.lng ? (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.4 }}
+                          className="bg-white rounded-2xl shadow-lg overflow-hidden h-full w-full"
+                          style={{ border: "2px solid rgba(234,88,12,0.1)" }}
+                        >
+                          <Suspense
+                            fallback={
+                              <div className="w-full h-full flex items-center justify-center">
+                                <ShopLocationMapLoadingPlaceholder />
+                              </div>
+                            }
+                          >
+                            <ShopLocationMap
+                              shopData={{
+                                id: selectedMarketData?.id,
+                                shopName: selectedMarketData?.name,
+                                address: selectedMarketData?.address || "Market Address",
+                                city: selectedMarketData?.city || "City",
+                                state: selectedMarketData?.state || "State",
+                                country: selectedMarketData?.country || "Nigeria",
+                                coordinates: [
+                                  parseFloat(selectedMarketData?.lat),
+                                  parseFloat(selectedMarketData?.lng),
+                                ],
+                                zoom: 14,
+                                phone: selectedMarketData?.phone || "+234 800 000 0000",
+                                isVerified: true,
+                                rating: 4.8,
+                                totalSales: 1234,
+                              }}
+                            />
+                          </Suspense>
+                        </motion.div>
+                      ) : (
+                        <motion.div
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.5, delay: 0.4 }}
+                          className="bg-white rounded-2xl shadow-lg overflow-hidden h-full flex items-center justify-center p-6 sm:p-8"
+                          style={{
+                            border: "2px solid rgba(234,88,12,0.1)",
+                            background: "linear-gradient(135deg, rgba(249,115,22,0.05) 0%, rgba(234,88,12,0.02) 100%)",
+                          }}
+                        >
+                          <div className="text-center max-w-sm">
                             <div
-                              className="w-7 h-7 rounded-full flex items-center justify-center text-white text-xs font-bold flex-shrink-0"
-                              style={{ background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)" }}
+                              className="w-16 h-16 sm:w-20 sm:h-20 mx-auto mb-4 rounded-full flex items-center justify-center"
+                              style={{ background: "linear-gradient(135deg, rgba(249,115,22,0.15) 0%, rgba(234,88,12,0.1) 100%)" }}
                             >
-                              {s.step}
+                              <svg className="w-8 h-8 sm:w-10 sm:h-10 text-orange-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                              </svg>
                             </div>
-                            <p className="text-sm text-gray-600">{s.label}</p>
+                            <h3 className="text-base sm:text-lg font-bold text-gray-800 mb-2">Select a Pickup Location</h3>
+                            <p className="text-xs sm:text-sm text-gray-600 leading-relaxed">
+                              Choose a market pickup point from the delivery location section above to view its location on the map
+                            </p>
                           </div>
-                        ))}
-                      </div>
-                    </motion.div>
+                        </motion.div>
+                      )}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -822,6 +871,7 @@ function FoodCartReview() {
               transition={{ duration: 0.3 }}
               className="flex flex-col items-center gap-6 px-4"
             >
+              {/* Logo with Circular Progress */}
               <div className="relative">
                 <CircularProgress
                   size={160}
@@ -838,7 +888,7 @@ function FoodCartReview() {
                     className="w-20 h-20"
                     onError={(e) => {
                       e.target.style.display = "none";
-                      e.target.parentElement.innerHTML = `<div style="color:white;font-size:2.5rem;font-weight:900;">AS</div>`;
+                      e.target.parentElement.innerHTML = `<div style="color: white; font-size: 2.5rem; font-weight: 900;">AS</div>`;
                     }}
                   />
                 </div>
@@ -850,6 +900,7 @@ function FoodCartReview() {
                 />
               </div>
 
+              {/* Processing Text */}
               <motion.div
                 animate={{ opacity: [0.7, 1, 0.7] }}
                 transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}
@@ -868,25 +919,66 @@ function FoodCartReview() {
                 >
                   Processing Payment...
                 </Typography>
-                <Typography variant="body1" sx={{ color: "#e5e7eb", fontSize: { xs: "0.9rem", sm: "1rem" }, fontWeight: 500 }}>
+                <Typography
+                  variant="body1"
+                  sx={{ color: "#e5e7eb", fontSize: { xs: "0.9rem", sm: "1rem" }, fontWeight: 500 }}
+                >
                   Please wait while we confirm your food order
                 </Typography>
               </motion.div>
 
+              {/* Security Badges */}
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.3 }}
+                className="flex items-center gap-4 mt-4"
+              >
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm">
+                  <svg className="w-5 h-5 text-green-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+                  </svg>
+                  <Typography variant="caption" className="text-white font-semibold">Secure</Typography>
+                </div>
+                <div className="flex items-center gap-2 px-4 py-2 rounded-lg bg-white/10 backdrop-blur-sm">
+                  <svg className="w-5 h-5 text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
+                  </svg>
+                  <Typography variant="caption" className="text-white font-semibold">Protected</Typography>
+                </div>
+              </motion.div>
+
+              {/* Do-not-close Warning */}
               <motion.div
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ delay: 0.5 }}
-                className="p-4 rounded-xl max-w-md mx-auto"
-                style={{ background: "rgba(234,88,12,0.15)", border: "2px solid rgba(234,88,12,0.3)", backdropFilter: "blur(10px)" }}
+                className="max-w-md mx-auto mt-4"
               >
-                <div className="flex items-start gap-3">
+                <div
+                  className="p-4 rounded-xl flex items-start gap-3"
+                  style={{
+                    background: "rgba(234,88,12,0.15)",
+                    border: "2px solid rgba(234,88,12,0.3)",
+                    backdropFilter: "blur(10px)",
+                  }}
+                >
                   <svg className="w-5 h-5 text-orange-400 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
                   </svg>
                   <div>
-                    <Typography variant="body2" sx={{ color: "#fff", fontWeight: 600 }}>Do not close or refresh this page</Typography>
-                    <Typography variant="caption" sx={{ color: "#e5e7eb", display: "block", marginTop: "4px" }}>Your payment is being securely processed</Typography>
+                    <Typography
+                      variant="body2"
+                      sx={{ color: "#fff", fontWeight: 600, fontSize: { xs: "0.8rem", sm: "0.875rem" } }}
+                    >
+                      Do not close or refresh this page
+                    </Typography>
+                    <Typography
+                      variant="caption"
+                      sx={{ color: "#e5e7eb", fontSize: { xs: "0.7rem", sm: "0.75rem" }, display: "block", marginTop: "4px" }}
+                    >
+                      Your payment is being securely processed
+                    </Typography>
                   </div>
                 </div>
               </motion.div>

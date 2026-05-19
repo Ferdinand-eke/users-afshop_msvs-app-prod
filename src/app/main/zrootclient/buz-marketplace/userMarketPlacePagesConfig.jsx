@@ -50,6 +50,7 @@ const userMarketPlacePagesConfig = {
     },
   },
 
+  
   routes: [
     {
       path: "marketplace/cart",

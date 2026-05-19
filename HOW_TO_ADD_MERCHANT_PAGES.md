@@ -17,6 +17,7 @@ src/app/main/merchant-subdomain/
 └── MerchantSubdomainWrapper.jsx      ⚠️  Legacy (can be deleted)
 ```
 
+
 ---
 
 ## How It Works

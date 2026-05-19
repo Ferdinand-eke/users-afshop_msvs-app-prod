@@ -14,6 +14,7 @@ import { getLgasByStateId, getStateByCountryId } from "app/configs/data/client/R
 import useGetAllBookingProperties from "app/configs/data/server-calls/auth/userapp/a_bookings/useBookingPropertiesRepo";
 import useGetAllFoodMarts, {
   useAddToFoodCart,
+  useGetMartMenu,
   useGetMyFoodCart,
   useGetMyFoodCartByUserCred,
   useGetSingleMenuItem,
@@ -22,6 +23,7 @@ import { useNavigate, useParams } from "react-router";
 import { useAppSelector } from "app/store/hooks";
 import { selectUser } from "src/app/auth/user/store/userSlice";
 import { getFoodVendorSession, storeFoodVendorSession } from "src/app/main/vendors-shop/PosUtils";
+import { toast } from "react-toastify";
 import useGetUserAppSetting from "app/configs/data/server-calls/auth/userapp/a_userapp_settings/useAppSettingDomain";
 import ServiceStatusLandingPage from "../../aapp-settings-from-admin/ServiceStatusLandingPage";
 
@@ -56,7 +58,7 @@ function ActiveFoodMartSingleMenuPage() {
   const routeParams = useParams();
   const { rcsId, menuSlug } = routeParams;
   const { data: menu, isLoading, isError } = useGetSingleMenuItem(rcsId, menuSlug);
-  // console.log("FOOD___MENU_ITEM", menu?.data?.menu)
+  const { data: martMenuData } = useGetMartMenu(rcsId);
 
   const { mutate: addToFoodMenuToCart, isLoading: addFoodCartLoading } = useAddToFoodCart();
 
@@ -77,6 +79,7 @@ function ActiveFoodMartSingleMenuPage() {
       countryId: menu?.data?.menu?.foodMartMenuCountry,
       stateId: menu?.data?.menu?.foodMartMenuState,
       lgaId: menu?.data?.menu?.foodMartMenuLga,
+      districtId: menu?.data?.menu?.foodMartMenuDistrict,
       // shopMarketId: menu?.data?.menu?.market,
       // shoppingSession:''
     };
@@ -88,14 +91,24 @@ function ActiveFoodMartSingleMenuPage() {
       }
     } else {
       if (
-        foodCart?.data?.userFoodCartSession?.lgaId === menu?.data?.menu?.foodMartMenuLga ||
-        !foodCart?.data?.userFoodCartSession?.lgaId
+        foodCart?.data?.userFoodCartSession?.districtId === menu?.data?.menu?.foodMartMenuDistrict ||
+        !foodCart?.data?.userFoodCartSession?.districtId
       ) {
         addToFoodMenuToCart(formData);
         // getCartWhenAuth()
         return;
       } else {
-        alert("You must shop in one L.G.A/County at a time");
+        toast.info(
+          "🍽️ One restaurant at a time! Please complete or clear your current cart before ordering from a different Restaurant, Club, or Spot.",
+          {
+            position: "top-center",
+            autoClose: 6000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+          }
+        );
         return;
       }
     }
@@ -106,6 +119,8 @@ function ActiveFoodMartSingleMenuPage() {
     foodCart?.data?.userFoodCartSession?.cartProducts,
     foodCart?.data?.userFoodCartSession?.cartProducts?.length,
   ]);
+  console.log("FOOD CART SESSION", foodCart?.data?.userFoodCartSession);
+  console.log("MENU", menu?.data?.menu);
 
   // Memoize sidebar toggle handlers to prevent re-renders
   const handleLeftSidebarToggle = useCallback(() => {
@@ -126,6 +141,7 @@ function ActiveFoodMartSingleMenuPage() {
 
   // Memoize derived data to avoid recalculation on every render
   const menuData = useMemo(() => menu?.data?.menu, [menu?.data?.menu]);
+  const foodMart = useMemo(() => martMenuData?.data?.foodMart, [martMenuData?.data?.foodMart]);
   const userFoodCartSession = useMemo(
     () => foodCart?.data?.userFoodCartSession,
     [foodCart?.data?.userFoodCartSession],
@@ -162,8 +178,8 @@ function ActiveFoodMartSingleMenuPage() {
 
   // Memoize right sidebar content
   const rightSidebarContentComponent = useMemo(
-    () => <DemoSidebarRight menu={menuData} />,
-    [menuData],
+    () => <DemoSidebarRight menu={menuData} foodMart={foodMart} />,
+    [menuData, foodMart],
   );
 
   return (
@@ -188,6 +204,7 @@ const MemoizedActiveFoodMartSingleMenuPage = memo(ActiveFoodMartSingleMenuPage);
  * Main Food Mart Single Menu Page Component with Service Status Check
  * Wraps the active single menu page with service status landing pages
  */
+
 function FoodMartSingleMenuWithContentScrollPage() {
   // Fetch user app settings
   const {

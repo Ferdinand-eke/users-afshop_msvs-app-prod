@@ -1,168 +1,156 @@
-import FuseNavigation from "@fuse/core/FuseNavigation";
-import FoodMartMap from "../../components/maps/FoodMartMap";
-import FoodMartMapSingle from "../../components/maps/FoodMartMapSingle";
-/**
- * Navigation data
- */
-const navigationData = [
-  {
-    id: "1",
-    title: "Actions",
-    subtitle: "Task, project & team",
-    type: "group",
-    children: [
-      {
-        id: "1.1",
-        title: "Create task",
-        type: "item",
-        icon: "heroicons-outline:plus-circle",
-      },
-      {
-        id: "1.2",
-        title: "Create team",
-        type: "item",
-        icon: "heroicons-outline:user-group",
-      },
-      {
-        id: "1.3",
-        title: "Create project",
-        type: "item",
-        icon: "heroicons-outline:briefcase",
-      },
-      {
-        id: "1.4",
-        title: "Create user",
-        type: "item",
-        icon: "heroicons-outline:user-add",
-      },
-      {
-        id: "1.5",
-        title: "Assign user or team",
-        subtitle: "Assign to a task or a project",
-        type: "item",
-        icon: "heroicons-outline:badge-check",
-      },
-    ],
-  },
-  {
-    id: "2",
-    title: "Tasks",
-    type: "group",
-    children: [
-      {
-        id: "2.1",
-        title: "All tasks",
-        type: "item",
-        icon: "heroicons-outline:clipboard-list",
-        badge: {
-          title: "49",
-          classes: "px-2 bg-primary text-on-primary rounded-full",
-        },
-      },
-      {
-        id: "2.2",
-        title: "Ongoing tasks",
-        type: "item",
-        icon: "heroicons-outline:clipboard-copy",
-      },
-      {
-        id: "2.3",
-        title: "Completed tasks",
-        type: "item",
-        icon: "heroicons-outline:clipboard-check",
-      },
-      {
-        id: "2.4",
-        title: "Abandoned tasks",
-        type: "item",
-        icon: "heroicons-outline:clipboard",
-      },
-      {
-        id: "2.5",
-        title: "Assigned to me",
-        type: "item",
-        icon: "heroicons-outline:user",
-      },
-      {
-        id: "2.6",
-        title: "Assigned to my team",
-        type: "item",
-        icon: "heroicons-outline:users",
-      },
-    ],
-  },
-  {
-    id: "3",
-    title: "Settings",
-    type: "group",
-    children: [
-      {
-        id: "3.1",
-        title: "General",
-        type: "collapse",
-        icon: "heroicons-outline:cog",
-        children: [
-          {
-            id: "3.1.1",
-            title: "Tasks",
-            type: "item",
-          },
-          {
-            id: "3.1.2",
-            title: "Users",
-            type: "item",
-          },
-          {
-            id: "3.1.3",
-            title: "Teams",
-            type: "item",
-          },
-        ],
-      },
-      {
-        id: "3.2",
-        title: "Account",
-        type: "collapse",
-        icon: "heroicons-outline:user-circle",
-        children: [
-          {
-            id: "3.2.1",
-            title: "Personal",
-            type: "item",
-          },
-          {
-            id: "3.2.2",
-            title: "Payment",
-            type: "item",
-          },
-          {
-            id: "3.2.3",
-            title: "Security",
-            type: "item",
-          },
-        ],
-      },
-    ],
-  },
-  {
-    id: "4",
-    type: "divider",
-  },
-];
+import { motion } from "framer-motion";
+import { Typography } from "@mui/material";
+import { MapOutlined, LocationOffOutlined, LocationOnOutlined } from "@mui/icons-material";
+import ImprovedFoodMartMapSingle from "../../components/maps/ImprovedFoodMartMapSingle";
+import FoodMartMapLoadingPlaceholder from "../../foodMartPage/shared-components/FoodMartMapLoadingPlaceholder";
 
-/**
- * The DemoSidebarRight component.
- */
-function DemoSidebarRight(props) {
-  const { center, items } = props;
-  // console.log("CENTER", center);
-  // console.log("FOOD_MART", items);
+// ── Placeholder shown when the restaurant has no saved coordinates ──────────
+function LocationUnavailablePlaceholder({ itemName }) {
   return (
-    <div className="px-12 py-24 h-screen">
-      {/* min-h-6xl  */}
-      <div className="mx-12 text-3xl font-bold tracking-tighter">Map Location Site Views</div>
+    <div
+      className="flex flex-col h-screen p-6"
+      style={{ background: "linear-gradient(180deg, #fafaf9 0%, #f3f4f6 100%)" }}
+    >
+      {/* Header — same style as the live map view */}
+      <div
+        className="mb-6 p-4 rounded-xl flex items-center gap-3 flex-shrink-0"
+        style={{
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          boxShadow: "0 4px 15px rgba(249, 115, 22, 0.3)",
+        }}
+      >
+        <MapOutlined sx={{ color: "white", fontSize: "1.75rem" }} />
+        <Typography sx={{ fontSize: "1.25rem", fontWeight: 700, color: "white" }}>
+          Location
+        </Typography>
+      </div>
 
-      {center && items && <FoodMartMapSingle center={center} items={items} />}
+      {/* Placeholder body */}
+      <div
+        className="flex-1 rounded-2xl overflow-hidden shadow-2xl relative flex flex-col items-center justify-center gap-6 px-6"
+        style={{
+          background: "linear-gradient(135deg, #fff7ed 0%, #ffedd5 50%, #fed7aa 100%)",
+        }}
+      >
+        {/* Subtle grid pattern */}
+        <div
+          className="absolute inset-0 opacity-20"
+          style={{
+            backgroundImage: `
+              linear-gradient(0deg, rgba(234,88,12,0.15) 1px, transparent 1px),
+              linear-gradient(90deg, rgba(234,88,12,0.15) 1px, transparent 1px)
+            `,
+            backgroundSize: "40px 40px",
+          }}
+        />
+
+        {/* Animated pin icon */}
+        <motion.div
+          animate={{ y: [0, -12, 0] }}
+          transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
+          className="relative z-10"
+        >
+          <div
+            className="p-6 rounded-full shadow-xl"
+            style={{ background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)" }}
+          >
+            <LocationOffOutlined sx={{ fontSize: "3.5rem", color: "white" }} />
+          </div>
+        </motion.div>
+
+        {/* Message */}
+        <div className="relative z-10 text-center space-y-2">
+          <Typography sx={{ fontSize: "1.2rem", fontWeight: 700, color: "#9a3412" }}>
+            Location Not Yet Available
+          </Typography>
+          {itemName && (
+            <Typography sx={{ fontSize: "1rem", fontWeight: 600, color: "#c2410c" }}>
+              {itemName}
+            </Typography>
+          )}
+          <Typography sx={{ fontSize: "0.9rem", color: "#78350f", lineHeight: 1.6 }}>
+            This restaurant hasn't added their map coordinates yet.
+            <br />
+            Check back soon or contact them directly.
+          </Typography>
+        </div>
+
+        {/* Floating decorative pins */}
+        {[0, 1, 2].map((i) => (
+          <motion.div
+            key={i}
+            className="absolute"
+            style={{
+              top: `${20 + i * 25}%`,
+              left: `${10 + i * 30}%`,
+            }}
+            animate={{ y: [0, -8, 0], opacity: [0.2, 0.5, 0.2] }}
+            transition={{ duration: 2.5, repeat: Infinity, delay: i * 0.5 }}
+          >
+            <LocationOnOutlined sx={{ fontSize: "2rem", color: "#ea580c" }} />
+          </motion.div>
+        ))}
+      </div>
+
+      {/* Footer — same style as the live map view */}
+      <div className="mt-4 p-4 bg-white/80 backdrop-blur-sm rounded-xl shadow-md flex-shrink-0">
+        <Typography sx={{ fontSize: "0.875rem", color: "#6b7280", textAlign: "center" }}>
+          Location coordinates will appear here once configured
+        </Typography>
+      </div>
+    </div>
+  );
+}
+
+// ── Main sidebar component ───────────────────────────────────────────────────
+function DemoSidebarRight({ item }) {
+  // Still loading restaurant data
+  if (!item) {
+    return <FoodMartMapLoadingPlaceholder />;
+  }
+
+  const hasLocation =
+    item?.latitude &&
+    item?.longitude &&
+    !isNaN(item.latitude) &&
+    !isNaN(item.longitude);
+
+  // Restaurant data arrived but coordinates are missing
+  if (!hasLocation) {
+    return <LocationUnavailablePlaceholder itemName={item?.title} />;
+  }
+
+  // All good — show the live map
+  return (
+    <div
+      className="flex flex-col h-screen p-6"
+      style={{ background: "linear-gradient(180deg, #fafaf9 0%, #f3f4f6 100%)" }}
+    >
+      {/* Header */}
+      <div
+        className="mb-6 p-4 rounded-xl flex items-center gap-3 flex-shrink-0"
+        style={{
+          background: "linear-gradient(135deg, #f97316 0%, #ea580c 100%)",
+          boxShadow: "0 4px 15px rgba(249, 115, 22, 0.3)",
+        }}
+      >
+        <MapOutlined sx={{ color: "white", fontSize: "1.75rem" }} />
+        <Typography sx={{ fontSize: "1.25rem", fontWeight: 700, color: "white" }}>
+          Location
+        </Typography>
+      </div>
+
+      {/* Map */}
+      <div className="flex-1 rounded-2xl overflow-hidden shadow-2xl">
+        <ImprovedFoodMartMapSingle item={item} />
+      </div>
+
+      {/* Footer */}
+      <div className="mt-4 p-4 bg-white/80 backdrop-blur-sm rounded-xl shadow-md flex-shrink-0">
+        <Typography sx={{ fontSize: "0.875rem", color: "#6b7280", textAlign: "center" }}>
+          Click on the marker to view details
+        </Typography>
+      </div>
     </div>
   );
 }
